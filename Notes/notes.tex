@@ -1,0 +1,34 @@
+\documentclass{report}
+
+\input{../preamble.tex}
+
+\renewcommand{\contentsname}{Weeks}
+\renewcommand{\chaptername}{Week}
+
+\title{MATH 27300 (Basic Theory of Ordinary Differential Equations) Notes}
+\author{Steven Labalme}
+
+\begin{document}
+
+
+
+
+\maketitle
+
+
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+
+
+
+\pagenumbering{arabic}
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\subfile{Week1/week1.tex}
+
+
+
+
+\end{document}
