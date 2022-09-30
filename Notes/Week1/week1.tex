@@ -9,11 +9,191 @@
 
 
 \chapter{???}
-\section{???}
+\section{Definitions and Scope}
 \begin{itemize}
     \item \marginnote{9/28:}Questions:
     \begin{itemize}
         \item When will the PDFs be made available?
+    \end{itemize}
+    \item Office: Eckhart 309.
+    \begin{itemize}
+        \item Office hours: MWF 3:00-4:00.
+    \end{itemize}
+    \item Reader: Walker Lewis. His contact info is in the syllabus.
+    \item Final grade is based on\dots
+    \begin{itemize}
+        \item 2 midterms (15 pts. each; weeks 4 and 8).
+        \item Final exam (35 pts.).
+        \item HW (35 pts.).
+        \item Bonus problems (15 pts).
+    \end{itemize}
+    \item Total points for the quarter is 115. The bonus problems usually arise from advanced math and incorporate more advanced knowledge, and we are encouraged to seek out all relevant resources as long as we write up our own solutions.
+    \item \textbf{Ordinary differential equation}: Any equation that takes the form $F(t,y,y',\dots,y^{(n)})=0$. \emph{Also known as} \textbf{ODE}.
+    \begin{itemize}
+        \item $F$ is a known function.
+        \item $t$ is an argument (time). $x$ is also used (when space is involved).
+        \item $y=y(t)$ is an unknown function.
+    \end{itemize}
+    \item \textbf{Order $\bm{n}$} (ODE): An ODE for which the $n^\text{th}$ derivative of $y$ is the highest-order derivative involved (and is involved).
+    \item $y'=f(t,y)$ or $Y^{(n)}=F(t,Y,Y',\dots,Y^{(n-1)})$.
+    \begin{itemize}
+        \item We can transform this second form into the first form via
+        \begin{align*}
+            y &=
+            \begin{pmatrix}
+                Y\\
+                Y'\\
+                \vdots\\
+                Y^{(n-1)}\\
+            \end{pmatrix}&
+            f(t,y) &=
+            \begin{pmatrix}
+                y_2\\
+                y_3\\
+                \vdots\\
+                F(t,y_1,y_2,\dots,y_{(n-1)})\\
+            \end{pmatrix}
+        \end{align*}
+        making $y'=f(t,y)$ equal to the system of equations
+        \begin{align*}
+            y_1' &= y_2\\
+            y_2' &= y_3\\
+            &\vdots\\
+            y_{n-1}' &= F(t,y_1,\dots,y_{n-1})
+        \end{align*}
+        \begin{itemize}
+            \item Think about this conversion more.
+        \end{itemize}
+        \item Thus, we mainly focus on equations of the form $y'=f(t,y)$, because that's general enough.
+    \end{itemize}
+    \item \textbf{Linear} (ODE): Any ODE that can be written in the form
+    \begin{equation*}
+        y' = A(t)y+f(t)
+    \end{equation*}
+    \item Because of the above, this naturally includes equations of the form
+    \begin{equation*}
+        y^{(n)}+a_{n-1}(t)y^{(n-1)}+\cdots+a_0(t)y = b(t)
+    \end{equation*}
+    \item \textbf{Nonlinear} (ODE): An ODE that is not linear.
+    \item \textbf{Autonomous} (ODE): An ODE that can be written in the form
+    \begin{equation*}
+        y' = f(y)
+    \end{equation*}
+    \begin{itemize}
+        \item More equivalence w/ vector-valued functions?
+    \end{itemize}
+    \item \textbf{Nonautonomous} (ODE): An ODE that is not autonomous.
+    \begin{itemize}
+        \item We will not investigate these in this course.
+    \end{itemize}
+    \item \textbf{Initial value problem}: A problem of the form: Find $y(t)$ such that
+    \begin{equation*}
+        \begin{cases}
+            y' = f(t,y)\\
+            y(t_0) = y_0
+        \end{cases}
+    \end{equation*}
+    \emph{Also known as} \textbf{I.V.P.}, \textbf{Cauchy problem}.
+    \item Locally well-posed (L.W.P.) conditions:
+    \begin{enumerate}
+        \item Existence (local in time).
+        \item Uniqueness (you cannot have multiple solutions).
+        \item Local stability (if you perturb your initial value or equation a little bit, you do not expect your solution to vary crazily [esp. locally]).
+    \end{enumerate}
+    \item Example of a nonunique ODE:
+    \begin{itemize}
+        \item $y'=\sqrt{y}$, $y(0)=0$ has solutions $y_1(t)=0$ ($t\geq 0$) and $y_2(t)=t^2/4$ ($t\geq 0$).
+        \item We will investigate the reason later.
+    \end{itemize}
+    \item Preview of the reason: \textbf{Cauchy-Lipschitz Theorem} or \textbf{Picard-Lindelof Theorem}.
+    \begin{itemize}
+        \item As long as the ODE is \textbf{Lipschitz continuous}, it's locally stable.
+    \end{itemize}
+    \item \textbf{Lipschitz continuous} (function): A function $f$ such that
+    \begin{equation*}
+        |f(t,y_1)-f(t,y_2)| \leq L|y_1-y_2|
+    \end{equation*}
+    \begin{itemize}
+        \item But in the counterexample above, the slope of the chord from 0 to $y(t)$ approaches infinity as $t\to 0$.
+    \end{itemize}
+    \item \textbf{Peano Existence Theorem}: ...
+    \item \textbf{Dynamical system}: A law under which a particle evolves over time. $y'=f(t,y)$, I.V.P. is L.W.P.
+    \item Consider $\Phi(t,x)$ such that
+    \begin{equation*}
+        \begin{cases}
+            \dv{t}\Phi(t,x) = f(t,\Phi(t,x))\\
+            \Phi(0,x) = x
+        \end{cases}
+    \end{equation*}
+    \item \textbf{Steady flow}: A vector field on a manifold contained in $\R^2$ or $\R^3$ that does not vary with time.
+    \begin{itemize}
+        \item A velocity field.
+        \item Trajectory of a particle: At $x\in\Omega$, the velocity of the particle should coincide with $X(x)$.
+        \item The differential equation $\dot{x}=X(x)$ is what we're interested in.
+        \item A solid shape gets shifted and deformed (imagine a chunk of water falling out of the end of a pipe).
+        \item Differential geometry is the purview of such things.
+    \end{itemize}
+    \item Newton's law of motion $F=m\cdot a$ applied to $n$ particles is nothing but the system of equations
+    \begin{equation*}
+        m_ix_i'' = F_i(x_1,\dots,x_n)
+    \end{equation*}
+    for $i=1,\dots,n$.
+    \begin{itemize}
+        \item Many well-known examples.
+        \item The best known one perhaps is that of uniform acceleration of a single particle. In this case,
+        \begin{equation*}
+            m_0x'' = f_0
+        \end{equation*}
+        \begin{itemize}
+            \item The solution is
+            \begin{equation*}
+                x(t) = \frac{f_0}{2m_0}t^2+v_0t+x_0
+            \end{equation*}
+            where $x_0=x(0)$ and $v_0=x'(0)$ are the initial conditions.
+        \end{itemize}
+        \item A simple example is downwards motion due to gravity. Then
+        \begin{equation*}
+            x(t) = \frac{1}{2}
+            \begin{pmatrix}
+                0\\
+                0\\
+                -1\\
+            \end{pmatrix}
+            t^2+v_0t+x_0
+        \end{equation*}
+        \begin{itemize}
+            \item The trajectory in general is a parabola.
+        \end{itemize}
+        \item Another example: The mathematical pendulum.
+        \begin{itemize}
+            \item The radial directions balance ($mg\cos\theta$).
+            \item The tangential directions do not ($mg\sin\theta$). Thus, our ODE is
+            \begin{equation*}
+                l\dv[2]{\theta}{t} = g\sin\theta
+            \end{equation*}
+        \end{itemize}
+        \item One last set of examples from ecology:
+        \begin{itemize}
+            \item Imagine an petri dish of infinite nutrition. The population growth of the bacteria will obey the exponential growth law
+            \begin{equation*}
+                \dv{y}{t} = ky
+            \end{equation*}
+            \item Suppose we have a system capacity $M$. Then we obey the logistic growth law
+            \begin{equation*}
+                \dv{y}{t} = k(M-y)
+            \end{equation*}
+            \item Lotka-Volterra prey-predator model: Wolf population ($W$) and rabbit population ($R$). We have
+            \begin{align*}
+                R' &= k_1R-aWR\\
+                W' &= -k_2W+bWR
+            \end{align*}
+            \item We can also introduce more species and capacities and et cetera, et cetera.
+        \end{itemize}
+    \end{itemize}
+    \item Conclusion: Dynamical systems are everywhere, especially in physics, chemistry, and ecology.
+    \item We can also consider long-term behavior.
+    \begin{itemize}
+        \item We can have chaos, but chaos can be reasoned with using oscillation, systems that converge to oscillation, etc. We will mostly be focusing on the regular aspect of the long-term behavior.
     \end{itemize}
 \end{itemize}
 

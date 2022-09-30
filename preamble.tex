@@ -1,7 +1,9 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{fancyhdr}
 \usepackage{marginnote}
-\usepackage{subfiles}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{bm,physics}
 
 \fancypagestyle{main}{
     \fancyhf{}
@@ -15,3 +17,9 @@
 }
 
 \reversemarginpar
+
+\setitemize[3]{label={\scriptsize$\blacksquare$}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{subfiles}
