@@ -8,7 +8,7 @@
 
 
 
-\chapter{???}
+\chapter{Introduction to ODEs}
 \section{Definitions and Scope}
 \begin{itemize}
     \item \marginnote{9/28:}Questions:
@@ -93,8 +93,8 @@
             y(t_0) = y_0
         \end{cases}
     \end{equation*}
-    \emph{Also known as} \textbf{I.V.P.}, \textbf{Cauchy problem}.
-    \item Locally well-posed (L.W.P.) conditions:
+    \emph{Also known as} \textbf{IVP}, \textbf{Cauchy problem}.
+    \item Locally well-posed (LWP) conditions:
     \begin{enumerate}
         \item Existence (local in time).
         \item Uniqueness (you cannot have multiple solutions).
@@ -117,7 +117,7 @@
         \item But in the counterexample above, the slope of the chord from 0 to $y(t)$ approaches infinity as $t\to 0$.
     \end{itemize}
     \item \textbf{Peano Existence Theorem}: ...
-    \item \textbf{Dynamical system}: A law under which a particle evolves over time. $y'=f(t,y)$, I.V.P. is L.W.P.
+    \item \textbf{Dynamical system}: A law under which a particle evolves over time. $y'=f(t,y)$, IVP is LWP
     \item Consider $\Phi(t,x)$ such that
     \begin{equation*}
         \begin{cases}
@@ -195,6 +195,116 @@
     \begin{itemize}
         \item We can have chaos, but chaos can be reasoned with using oscillation, systems that converge to oscillation, etc. We will mostly be focusing on the regular aspect of the long-term behavior.
     \end{itemize}
+\end{itemize}
+
+
+
+\section{Origin of ODEs: Boundary Value Problems}
+\begin{itemize}
+    \item \marginnote{9/30:}Textbook PDFs will be posted today.
+    \item Today, we will consider boundary value problems, which are separate from dynamical systems but not entirely unrelated.
+    \item \textbf{Boundary Value Problem}: A problem in which we are solving for a $y$ that has fixed values at the boundaries $x=a,b$. \emph{Also known as} \textbf{BVP}.
+    \item The \textbf{Brachistochrone problem} is an example of a BVP.
+    \item \textbf{Brachistochrone problem}: Suppose you have a frictionless track from $(0,0)$ to $(a,y_0)$ and release a particle from $(0,0)$. Which path allows the particle to get to $(a,y_0)$ in the shortest amount of time? \emph{Etymology} brachisto "shortest" + chrone "time."
+    \begin{itemize}
+        \item Since the track is frictionless, the mechanical energy should be conserved.
+        \item At a given point along the curve, the particle has a velocity $v$ and is vertical distance $y$ from where it started. We know from physics that
+        \begin{align*}
+            \frac{1}{2}mv^2 &= mgy\\
+            v &= \sqrt{2gy}
+        \end{align*}
+        \item The time it takes for the particle to traverse an infinitesimal section of track of arc length $\ell$ is $\ell/v$.
+        \item The track should be given by $y=y(x)$.
+        \item Arc length
+        \begin{equation*}
+            \ell = \sqrt{1+(y'(x))^2}\dd{x}
+        \end{equation*}
+        \item Thus, the total time for the particle to traverse the curve is
+        \begin{equation*}
+            \int_0^a\frac{\sqrt{1+(y'(x))^2}\dd{x}}{\sqrt[]{2gy(x)}}
+        \end{equation*}
+        \item We also have $y(0)=0$ and $y(a)=y_0$.
+        \item Functionals: Mapping from a function space to numbers; we want to find $y$ such that the above integral is minimized.
+        \item Let $J[y]=\int_a^bF(x,y(x),y'(x))\dd{x}$.
+        \item The space of functions we're considering is $C^1$.
+        \item Take a function $h$, vanishing at $a,b$.
+        \item Let $f(t)=J[y+th]$. Then
+        \begin{equation*}
+            f(t) = \int_a^bF(x,\underbrace{y(x)+th(x)}_z,\underbrace{y'(x)+th'(x)}_w)\dd{x}
+        \end{equation*}
+        and hence
+        \begin{align*}
+            f'(t) &= \int_a^b\left( {\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)+{\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x))h'(x) \right)\dd{x}\\
+            &= \int_a^b{\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)\dd{x}-\dv{x}\left[ {\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x)) \right]h(x)\dd{x}
+        \end{align*}
+        \item Thus,
+        \begin{equation*}
+            f'(0) = \int_a^b\left\{ {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] \right\}h(x)\dd{x}
+            = 0
+        \end{equation*}
+        for all $h$.
+        \item Lemma: Let $\phi$ be continuous on $(a,b)$. If for every $h\in C^1([a,b])$ vanishing on $a,b$ we have that
+        \begin{equation*}
+            \int_a^b\phi(x)h(x)\dd{x} = 0
+        \end{equation*}
+        then $\phi(x)=0$.
+        \begin{proof}
+            Suppose for the sake of contradiction that (WLOG) $\phi(x_0)>0$. Then within some neighborhood $N_\delta(x)$ of $x_0$, $\phi(x)>0$ for all $x\in N_\delta(x)$. Now choose $h$ to be a bump function on that interval. Then $\int_a^b\phi(x)h(x)\dd{x}>0$, a contradiction.
+        \end{proof}
+        \item It follows that
+        \begin{equation*}
+            {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] = 0
+        \end{equation*}
+        \begin{itemize}
+            \item This is a second-order differential equation, specifically the \textbf{Euler-Lagrange equation}.
+            \item It is a necessary condition for $y$ to be an extrema.
+            \item Euler-Lagrange equations are not easy to solve in general. However, we're lucky here.
+        \end{itemize}
+        \item In our example,
+        \begin{equation*}
+            F(x,y,z) = \sqrt{\frac{1+w^2}{2gz}}
+        \end{equation*}
+        \item This gives us
+        \begin{align*}
+            \dv{x}\left[ F(y,y') \right] &= {\pdv{F}{z}}(y,y')\cdot y'+{\pdv{F}{w}}(y,y')\cdot y''\\
+            {\pdv{F}{z}}(y,y')y &= \dv{x}\left[ {\pdv{F}{w}}(y,y') \right]y'\\
+            \dv{x}\left[ F(y,y') \right] &= \underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}{\pdv{F}{w}}(y,y')}_U\cdot\underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}y''}_{V'}+\underbrace{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}_{U'}\cdot\underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}y'}_V\\
+            &= \dv{x}\left[ {\pdv{F}{w}}(y,y')\cdot y' \right]
+        \end{align*}
+        \item This reduces to the first-order equation
+        \begin{equation*}
+            F(y,y')-{\pdv{F}{w}}(y,y')\cdot y' = A
+        \end{equation*}
+        \item Since $F(x,z,w)$ is known, we have that
+        \begin{equation*}
+            {\pdv{F}{w}}(z,w) = \frac{w}{\sqrt{1+w^2}}\cdot\frac{1}{\sqrt{2gz}}
+        \end{equation*}
+        \item Plugging into the E-L equation gives us
+        \begin{align*}
+            \frac{1+(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}}-\frac{(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}} &= A\\
+            \frac{1}{\sqrt{2gy(1+(y')^2)}} &= A\\
+            (y')^2 &= \frac{2A^2g-y}{y}
+        \end{align*}
+        where the second line above is a separable differential equation.
+        \item The solution is the \textbf{cycloid}
+        \begin{equation*}
+            \begin{cases}
+                x = -a\sin\theta+a\theta\\
+                y = a(1-\cos\theta)
+            \end{cases}
+        \end{equation*}
+        where the specific parameters come from the boundary values.
+    \end{itemize}
+    \item \textbf{Sturm-Liouville problems}: Boundary value problems concerning the integral
+    \begin{equation*}
+        \int_a^b\left[ p(x)(y'(x))^2+q(x)(y(x))^2 \right]\dd{x}
+    \end{equation*}
+    \begin{itemize}
+        \item The most basic BVP is a vibrating string. In finding the eigenmode of the vibration, you need to solve the above differential equation.
+        \item Very important in physics.
+        \item If time permits at the end of the course, Shao will return to the following topic in detail.
+    \end{itemize}
+    \item Next several weeks: \emph{Solvable} differential equations.
 \end{itemize}
 
 
