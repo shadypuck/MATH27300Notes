@@ -3,6 +3,9 @@
 \usepackage{fancyhdr}
 \usepackage{marginnote}
 \usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage[bottom]{footmisc}
+\usepackage{graphicx}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm,physics}
 
@@ -23,6 +26,11 @@
 
 \setitemize[3]{label={\scriptsize$\blacksquare$}}
 
+\deffootnotemark{\textsuperscript{\textup{[}\thefootnotemark\textup{]}}}
+\deffootnote[1.8em]{0em}{0em}{\textsuperscript{\thefootnote}}
+
 \newcommand{\R}{\mathbb{R}}
+
+\newcommand{\e}[1][]{\text{e}^{#1}}
 
 \usepackage{subfiles}
