@@ -175,5 +175,38 @@
 
 
 
+\section{Office Hours (Shao)}
+\begin{itemize}
+    \item \textbf{Primitive}: An antiderivative.
+    \item \textbf{Law of composite differentiation}: The chain rule.
+    \item Went over how Shao has been applying the law of composite differentiation with respect to separable ODEs:
+    \begin{itemize}
+        \item Rearrange the initial separable ODE as follows.
+        \begin{equation*}
+            \frac{1}{g(y)}\cdot\dv{y}{t} = f(t)
+        \end{equation*}
+        \item Define $\dv*{H}{y}=1/g(y)$. Then, continuing from the above, we have by the law of composite differentiation that
+        \begin{align*}
+            \dv{H}{y}\cdot\dv{y}{t} &= f(t)\\
+            \dv{H}{t} &= f(t)
+        \end{align*}
+        \item From the definition of $H$, we know that $H(y)=\int_{y_0}^y\dd{w}/g(w)$. We also have from the FTC that $f(t)=\dv{t}\int_{t_0}^tf(\tau)\dd{\tau}$. Thus, continuing from the above, we have that
+        \begin{align*}
+            \dv{t}(H) &= f(t)\\
+            \dv{t}\left[ \int_{y_0}^y\frac{\dd{w}}{g(w)} \right] &= \dv{t}\int_{t_0}^tf(\tau)\dd{\tau}\\
+            \dv{t}\left[ \int_{y_0}^{y(t)}\frac{\dd{w}}{g(w)}-\int_{t_0}^tf(\tau)\dd{\tau} \right] &= 0
+        \end{align*}
+        as desired.
+        \item It follows since $y(t_0)=y_0$ that $C=H(y_0)=0$, so we can take the above to
+        \begin{equation*}
+            \int_{y_0}^{y(t)}\frac{\dd{w}}{g(w)} = \int_{t_0}^tf(\tau)\dd{\tau}
+        \end{equation*}
+        knowing that our constant of integration is zero.
+    \end{itemize}
+    \item Take away from Brachistochrone problem: Just an example of a BDE; we won't have to answer questions on it.
+\end{itemize}
+
+
+
 
 \end{document}
