@@ -2,15 +2,153 @@
 
 \pagestyle{main}
 \renewcommand{\leftmark}{Problem Set \thesection}
+\setenumerate[1]{label={\textbf{\arabic*.}}}
+\setenumerate[2]{label={(\arabic*)}}
 
 \begin{document}
 
 
 
 
-\section{???}
+\section{IVP Examples and Physical Problems}
+\subsection*{Required Problems}
 \begin{enumerate}
-    \item \marginnote{??/??:}
+    \item \marginnote{10/12:}Classify the following ordinary differential equations (systems) by indicating the order, if they are linear, and if they are autonomous.
+    \begin{enumerate}
+        \item $y'(x)+y(x)=0$.
+        \item $y''(t)=t\sin(y(t))$.
+        \item $x'=-y$, $y'=2x$.
+        \item $y'(t)=y(t)\sin(t)+\cos(y(t))$.
+    \end{enumerate}
+    \item Transform the following differential equations to first-order systems.
+    \begin{enumerate}
+        \item $y^{(3)}+2y''-y'+y=0$.
+        \item $x''-t\sin x'=x$.
+    \end{enumerate}
+    \item Solve the following differential equations with initial value $x(0)=x_0$. Also identify the set of $x_0$ for which these solutions are extendable to the whole of $t\geq 0$. When a solution cannot be extended to the whole of $t\geq 0$, determine its lifespan in terms of $x_0$.\par
+    \emph{Example}: Solve $x'=x^2$ with $x(0)=x_0$. By separation of variables, the solution reads
+    \begin{equation*}
+        \int_{x_0}^x\frac{\dd{w}}{w^2} = \int_0^t\dd\tau
+    \end{equation*}
+    where the integral on the left-hand side cannot pass through $w=0$. The result is
+    \begin{equation*}
+        -\frac{1}{x}+\frac{1}{x_0} = t
+        \quad\Longleftrightarrow\quad
+        x(t) = \frac{x_0}{1-x_0t}
+    \end{equation*}
+    When $x_0\leq 0$, the solution exists throughout $t\geq 0$. When $x_0>0$, the solution only exists in $[0,1/x_0)$.
+    \begin{enumerate}
+        \item $x'=x\sin t$.
+        \item $x'=t^2\tan x$.
+        \item $x'=1+x^2$.
+        \item $x'=\e[x]\sin t$.
+    \end{enumerate}
+    \item Consider the harmonic oscillator equation, as mentioned in class:
+    \begin{equation*}
+        x''+\mu x'+\omega^2x = 0
+    \end{equation*}
+    Here, the initial data $x(0)=x_0$ and $x'(0)=x_1$ are real numbers.
+    \begin{enumerate}
+        \item Derive two linearly independent \emph{real} solutions when $\mu>0$. (Hint: You should consider the cases $0<\mu<\omega$, $\mu=\omega$, and $\mu>\omega$ separately.)
+        \item Recall that $\mu=b/m$ and $\omega^2=k/m$. Recall also that the mechanical energy for the oscillator reads
+        \begin{equation*}
+            E = \frac{1}{2}m|x'|^2+\frac{1}{2}kx^2
+        \end{equation*}
+        Compute the time derivative of $E$ and conclude that $E$ is exponentially decaying for $b>0$, i.e., the mechanical energy is not conserved in this case. Does this violate the law of conservation of mechanical energy?
+    \end{enumerate}
+    \item Use the transformation $w=ty$ to convert
+    \begin{equation*}
+        y' = f(y/t)
+    \end{equation*}
+    to an ODE in $w$. Write down this equation for $w$. Use this transformation to solve
+    \begin{equation*}
+        tyy'+4t^2+y^2 = 0
+        ,\quad
+        y(2) = -7
+    \end{equation*}
+    Determine the lifespan (you can use a calculator for an approximate value).
+    \item Use the transformation $w=y^{1-\alpha}$ to convert Bernoulli's equation
+    \begin{equation*}
+        y'+p(t)y = q(t)y^\alpha
+        ,\quad
+        \alpha\neq 0,1
+    \end{equation*}
+    to an ODE in $w$. Write down this equation for $w$. Use this transformation to solve
+    \begin{equation*}
+        6y'-2y = ty^4
+        ,\quad
+        y(0) = -2
+    \end{equation*}
+    Determine the lifespan (you can use a calculator for an approximate value).
+    \item Show that
+    \begin{equation*}
+        (4bxy+3x+5)y'+3x^2+8ax+2by^2+3y = 0
+    \end{equation*}
+    is an exact equation, no matter what value $a,b$ take. Find the implicit relation satisfied by the solution $y(x)$ and $x$.
+    \item Let $a,b$ be constants. For Euler's equation
+    \begin{equation*}
+        t^2y''+aty'+bt = f(t)
+    \end{equation*}
+    consider the transformation $w(\tau)=y(\e[\tau])$. What is the differential equation satisfied by $w(\tau)$? Use this transformation to solve
+    \begin{equation*}
+        2t^2y''+3ty'-15y=0
+        ,\quad
+        y(1) = 0
+        ,\quad
+        y'(1) = 1
+    \end{equation*}
+    \item Suppose there is a capacitor with capacitance $C$ being charged by a battery of fixed voltage $V_0$. Suppose there is a resistor $R$ connected to $C$. Then the charge $Q(t)$ of the capacitor satisfies the differential equation
+    \begin{equation*}
+        RQ'(t)+\frac{Q(t)}{C} = V_0
+    \end{equation*}
+    This is the equation for an RC charging circuit.\par
+    Find the explicit solution of this equation with $Q(0)=0$. Explain why the product $RC$ is important in determining the charging time. For $R=\SI{e3}{\ohm}$, $V_0=\SI{1}{\volt}$, $C=\SI{1}{\micro\farad}$, how much time does it take for the capacitor to be charged to 98\%? (You may use a calculator.)
+    \item A parachutist is falling from a plane. Suppose the parachute is opened at height $H$, when the falling velocity is $v_0$. Suppose that the air resistance exerted on the parachute is proportional to the square of the velocity with ratio $\eta$. Let the gravitational constant be $g$, and suppose that the total mass of the parachutist and the parachute is $m$. Write down the differential equation satisfied by the shift $x$, together with the initial conditions. Solve this IVP. What is the velocity as $t\to +\infty$? Can you derive the final velocity based on physical considerations?
+\end{enumerate}
+
+
+\subsection*{Bonus Problems}
+\begin{enumerate}
+    \item \textbf{The Catenoid.} Suppose there are two metal rings of radius $a$ placed parallel to each other in an $xyz$-coordinate space, with the $x$-axis passing through their centers. Suppose these two rings are contained in the planes $x=l$ and $x=-l$, respectively. An axial symmetric soap film is spanned by these two rings. Suppose its shape is obtained by rotating the graph of the function $y=y(x)$ with respect to the $x$-axis. In order to attain a stable configuration, the surface area is supposed to be minimal among all such surfaces of revolution.
+    \begin{enumerate}
+        \item Write down the surface area functional in terms of $y(x)$, its derivative, and the boundary conditions for this variational problem.
+        \item Derive the Euler-Lagrange equation and find the solution. The shape is called a \textbf{catenoid}.
+        \item If the two rings are very far away from each other, i.e., $l$ is very large, will the catenoid still be of minimal area among all competing surfaces that span these two rings? You do not have to give a mathematically rigorous answer; just imagine the physical situation. (Hint: What about two distinct disks spanned by these two rings?)
+    \end{enumerate}
+    \item \textbf{A Formulation of the Isoperimetric Problem.} Recall from multivariable calculus that in order to find a local extremum of the function $f(x_1,\dots,x_n)$ under the constraint $g(x_1,\dots,x_n)=0$, we can introduce a parameter $\lambda$ called the \textbf{Lagrange multiplier} and find the stationary point of the function
+    \begin{equation*}
+        f(x_1,\dots,x_n)-\lambda g(x_1,\dots,x_n)
+    \end{equation*}
+    \begin{enumerate}
+        \item Write down the equations that must be satisfied by the stationary point $(x_1,\dots,x_n)$ of the function $f-\lambda g$ with the parameter $\lambda$ involved.
+        \item Use the Lagrange multiplier method to find the maxima and minima of $f(x,y)=x+y$ under the constraint $x^2+y^2=1$.
+        \item Now let us generalize this method to functionals. If we aim to find the extrema of a functional
+        \begin{equation*}
+            J[y] = \int_a^bF(x,y(x),y'(x))\dd{x}
+        \end{equation*}
+        under the constraint
+        \begin{equation*}
+            R[y] = \int_a^bG(x,y(x),y'(x))\dd{x} = 0
+        \end{equation*}
+        where $F(x,z,w)$ and $G(x,z,w)$ are known functions, we can try to find the extrema of the functional
+        \begin{equation*}
+            J[y]-\lambda R[y]
+        \end{equation*}
+        first. What is the Euler-Lagrange equation satisfied by this extrema (with $\lambda$ involved)?
+        \item Now let us consider a version of the isoperimetric problem. We aim to find the function $y(x)$, whose graph connects two given points $(a,A)$, $(b,B)$ on the $xy$-plane, with a prescribed arclength
+        \begin{equation*}
+            l = \int_a^b\sqrt{1+|y'(x)|^2}\dd{x}
+        \end{equation*}
+        such that the area between the graph and the $x$-axis is the largest. The functional in consideration is
+        \begin{equation*}
+            J[y] = \int_a^by(x)\dd{x}
+        \end{equation*}
+        with constraint
+        \begin{equation*}
+            R[y] = \int_a^b\sqrt{1+|y'(x)|^2}\dd{x} = l
+        \end{equation*}
+        Write down the Euler-Lagrange equation involving the multiplier $\lambda$ and show that the solution must be a part of a circle.
+    \end{enumerate}
 \end{enumerate}
 
 
