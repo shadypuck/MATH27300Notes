@@ -208,5 +208,211 @@
 
 
 
+\section{ODEs of Exact Form}
+\begin{itemize}
+    \item \marginnote{10/5:}Last time, we discussed separable ODEs.
+    \item Today, we will study \textbf{exact form} equations, as discussed last class.
+    \item \textbf{Exact form} (ODE): An ODE of the form
+    \begin{equation*}
+        g(x,y)\dv{y}{x}+f(x,y) = 0
+    \end{equation*}
+    where
+    \begin{equation*}
+        \pdv{g}{x} = \pdv{f}{y}
+    \end{equation*}
+    \item For equations of this form, there exists $F(x,y)$ such that
+    \begin{align*}
+        \pdv{F}{x} &= f&
+        \pdv{F}{y} &= g&
+        F(x,y(x)) &= C
+    \end{align*}
+    for some $C\in\R$.
+    \item To solve equations of this form, we need an \textbf{integrating factor}.
+    \item \textbf{Integrating factor}: A number or function $\mu$ such that
+    \begin{align*}
+        \mu g\dv{y}{x}+\mu f &= 0&
+        \pdv{x}(\mu g) &= \pdv{y}(\mu f)
+    \end{align*}
+    \item For linear homogeneous equations $\dv*{y}{t}=p(t)y$, we have
+    \begin{equation*}
+        y(t) = y_0\exp[\int_{t_0}^tp(\tau)\dd\tau]
+    \end{equation*}
+    \item Recall that $\e[a+ib]=\e[a](\cos b+i\sin b)$, so
+    \begin{align*}
+        \e[ix] &= \cos x+i\sin x&
+        \cos x &= \frac{1}{2}(\e[ix]+\e[-ix])&
+        \sin x &= \frac{1}{2i}(\e[ix]-\e[-ix])
+    \end{align*}
+    \item Example: If $y'=ky$, then $y'=-\lambda y$.
+    \item If we have an inhomogeneous linear equation $\dv*{y}{t}=p(t)y+f(t)$, then
+    \begin{equation*}
+        \dv{y}{t}-py-f = 0
+    \end{equation*}
+    but
+    \begin{equation*}
+        0 = \dv{t}(1) \neq \dv{y}(-p(t)y-f(t))
+    \end{equation*}
+    \item We wish to find an integrating factor $\mu(t,y)$ such that
+    \begin{equation*}
+        \mu(t,y)\dv{y}{t}-\mu(t,y)p(t)y-\mu(t,y)f(t) = 0
+    \end{equation*}
+    and
+    \begin{equation*}
+        \dv{t}(\mu) = \dv{y}(-\mu py-\mu f)
+    \end{equation*}
+    \item Solution: Take $\mu$ to be a function of $t$, alone. Then
+    \begin{equation*}
+        \mu'(t) = \dv{y}(-\mu py-\mu f) = -\mu(t)p(t)
+    \end{equation*}
+    and we now have a homogeneous linear equation with solution
+    \begin{equation*}
+        \mu(t) = \exp[-\int_{t_0}^tp(\tau)\dd\tau]
+    \end{equation*}
+    \begin{itemize}
+        \item If we let $P(t)=\int_{t_0}^tp(\tau)\dd\tau$, then
+        \begin{align*}
+            \e[-P(t)]y'(t)-p(t)y(t)\e[-P(t)] &= \e[-P(t)]f(t)\\
+            \dv{t}(\e[-P(t)]y(t)) &= \e[-P(t)]f(t)\\
+            \e[-P(t)]y(t) &= \int_{t_0}^t\e[-P(\tau)]f(\tau)\dd\tau
+        \end{align*}
+        \item Thus, we finally have the solution to the inhomogeneous problem as follows: The IVP $y'=py+f$, $y(t_0)=y_0$ has solution
+        \begin{equation*}
+            y(t) = y_0\e[P(t)-P(t_0)]+\e[P(t)]\int_0^t\e[-P(\tau)]f(\tau)\dd\tau
+        \end{equation*}
+        where $P$ is any anti-derivative of $p$.
+    \end{itemize}
+    \item In particular, when $p(t)=a$, we get the \textbf{Duhamel formula} (which we should memorize).
+    \item \textbf{Duhamel formula}: The following equation, which is the solution to an inhomogeneous linear equation with $p(t)=a$.
+    \begin{equation*}
+        y(t) = y_0\e[a(t-t_0)]+\int_{t_0}^t\e[a(t-\tau)]f(\tau)\dd\tau
+    \end{equation*}
+    \begin{itemize}
+        \item Important for computing forced oscillation.
+    \end{itemize}
+    \item Inspecting the inhomogeneous solution.
+    \begin{itemize}
+        \item The first term is the solution to the homogeneous form. The second term deals with the initial value.
+    \end{itemize}
+    \item Given an inhomogeneous equation, you can always write its solution as the combination of the solution to the homogeneous problem plus a particular solution, i.e.,
+    \begin{equation*}
+        y = y_h+y_p
+    \end{equation*}
+    \begin{itemize}
+        \item "The general solution equals the homogeneous solution plus a particular solution."
+        \item This is related to linear algebra, where the solution to $Ax=b$ is a particular solution $x_p$ plus any vector $x\in\ker A$.
+        \item Thus, this idea will reappear in the theory of systems of linear ODEs.
+    \end{itemize}
+    \item We now look at systems of linear ODEs.
+    \item Consider the harmonic oscillator: A particle of mass $m$ connected to an ideal spring (obeys Hooke's law) with no friction or gravity.
+    \begin{itemize}
+        \item Newton's second law: The acceleration is proportional to the restoring force.
+        \item Hooke's law: The restoring force is of magnitude $kx$ in the opposite direction to the displacement.
+        \item Thus, the ODE is of the form
+        \begin{equation*}
+            x'' = -\frac{k}{m}x
+        \end{equation*}
+    \end{itemize}
+    \item Consider an ODE of the form
+    \begin{equation*}
+        y''+ay'+by = 0
+    \end{equation*}
+    for $a,b\in\C$.
+    \begin{itemize}
+        \item Aim: Find $\mu,\lambda\in\C$ such that
+        \begin{equation*}
+            (y'-\mu y)'-\lambda(y'-\mu y) = 0
+        \end{equation*}
+        \item To find the parameters, we expand the above to
+        \begin{equation*}
+            y''-(\mu+\lambda)y'+\mu\lambda y = 0
+        \end{equation*}
+        \item Comparing with the original form, we have that $a=-(\mu+\lambda)$ and $b=\mu\lambda$.
+        \item It follows that $\mu,\lambda$ are the roots of $x^2+ax+b=0$, which we will call the \textbf{characteristic polynomial} of the ODE.
+    \end{itemize}
+    \item Example:
+    \begin{itemize}
+        \item Consider
+        \begin{equation*}
+            y'-\mu y = A\e[\lambda t]
+        \end{equation*}
+        \item By the Duhamel equation, we have that a particular solution is of the form
+        \begin{equation*}
+            A\int_0^t\e[\mu(t-\tau)]\e[\lambda\tau]\dd\tau
+        \end{equation*}
+        \item Thus, general solutions are of the form
+        \begin{equation*}
+            y(t) = B\e[\mu t]+C\e[\mu t]\int_0^t\e[(\lambda-\mu)\tau]\dd\tau
+        \end{equation*}
+        \item Evaluating the integral, we get
+        \begin{equation*}
+            y(t) = B\e[\mu t]+C\e[\mu t]\frac{\e[(\lambda-\mu)t]-1}{\lambda-\mu}
+        \end{equation*}
+        which simplifies (by incorporating constants, etc.) to
+        \begin{equation*}
+            y(t) = A_1\e[\mu t]+B_1\e[\lambda t]
+        \end{equation*}
+        for $\mu\neq\lambda$, or
+        \begin{equation*}
+            y(t) = A_1\e[\mu t]+B_1t\e[\mu t]
+        \end{equation*}
+        for $\mu=\lambda$.
+    \end{itemize}
+    \item If our equation is of the form $y''+ay'+by=f(t)$, then we just need to apply the Duhamel formula twice.
+    \item Returning to the simple harmonic oscillator problem, we substitute $\omega=\sqrt{k/m}$ to get
+    \begin{equation*}
+        x'' = \omega^2x
+    \end{equation*}
+    \begin{itemize}
+        \item The characteristic polynomial is
+        \begin{equation*}
+            0 = x^2+\omega^2
+            = (x+i\omega)(x-i\omega)
+        \end{equation*}
+        \item Thus, solutions are of the form
+        \begin{equation*}
+            x = A_1\e[i\omega t]+B_1\e[-i\omega t]
+        \end{equation*}
+        \item It follows that the period is $T=2\pi/\omega$.
+        \item To get a real (usable) solution, apply Euler's formula to get
+        \begin{align*}
+            x(t) &= A_1(\cos\omega t+i\sin\omega t)+B_1(\cos\omega t-i\sin\omega t)\\
+            &= A\cos\omega t+B\sin\omega t
+        \end{align*}
+        where $A=A_1+B_1$, $B=iA_1-iB_1$.
+        \item To match the initial condition $x(0)=x_0$, $x'(0)=v_0$, we use
+        \begin{equation*}
+            x(t) = x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t
+        \end{equation*}
+        \item In other words,
+        \begin{align*}
+            &
+            \begin{cases}
+                A=x_0\\
+                \omega B=v_0
+            \end{cases}
+            &&
+            \begin{cases}
+                A_1+B_1=x_0\\
+                i\omega A_1-i\omega B_1=v_0
+            \end{cases}
+        \end{align*}
+        so
+        \begin{align*}
+            &
+            \begin{cases}
+                A=x_0\\
+                B=\frac{v_0}{\omega}
+            \end{cases}
+            &&
+            \begin{cases}
+                A_1=\frac{1}{2}\left[ x_0-\frac{iv_0}{\omega} \right]\\
+                B_1=\frac{1}{2}\left[ x_0+\frac{iv_0}{\omega} \right]
+            \end{cases}
+        \end{align*}
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}
