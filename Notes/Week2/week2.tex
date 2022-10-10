@@ -9,7 +9,7 @@
 
 
 
-\chapter{???}
+\chapter{Solving Simple ODEs}
 \section{Separable ODEs}
 \begin{itemize}
     \item \marginnote{10/3:}Do not sit on the left side of the classroom: The sun sucks!
@@ -409,6 +409,189 @@
                 B_1=\frac{1}{2}\left[ x_0+\frac{iv_0}{\omega} \right]
             \end{cases}
         \end{align*}
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{ODE Examples}
+\begin{itemize}
+    \item \marginnote{10/7:}Today, we will investigate a variety of examples of ODEs arising in real life.
+    \item Michaelis-Menten kinetics: If E is an enzyme, S is its substrate, and P is the product, then the mechanism is
+    \begin{equation*}
+        \ce{E + S <=>[$k_1$][$k_{-1}$] ES ->[$k_2$] E + P}
+    \end{equation*}
+    \item The concentrations that we are concerned with are $\cnc{E},\cnc{S},\cnc{ES},\cnc{P}$.
+    \item From the above mechanism, we can write the four rate laws
+    \begin{align*}
+        \dv{t}\cnc{S} &= -k_1\cnc{E}\cnc{S}+k_{-1}\cnc{ES}\tag{1}\\
+        \dv{t}\cnc{E} &= -k_1\cnc{E}\cnc{S}+(k_{-1}+k_2)\cnc{ES}\tag{2}\\
+        \dv{t}\cnc{ES} &= k_1\cnc{E}\cnc{S}-(k_{-1}+k_2)\cnc{ES}\tag{3}\\
+        \dv{t}\cnc{P} &= k_2\cnc{ES}\tag{4}
+    \end{align*}
+    \item We can reduce these rate laws to the 2D system
+    \begin{align*}
+        \dv{t}\cnc{S} &= -k_1(\cnc[0]{E}-\cnc{ES})\cnc{S}+k_{-1}\cnc{ES}\tag{5}\\
+        \dv{t}\cnc{ES} &= k_1(\cnc[0]{E}-\cnc{ES})\cnc{S}-(k_{-1}+k_2)\cnc{ES}\tag{6}
+    \end{align*}
+    \item QSSA: Quasi steady-state assumption.
+    \begin{itemize}
+        \item Assume that $\cnc[0]{E}/\cnc[0]{S}\lll 1$.
+        \item Also assume that $\dv*{\cnc{ES}}{t}\approx 0$.
+    \end{itemize}
+    \item Then
+    \begin{equation*}
+        \cnc{ES} = \frac{\cnc[0]{E}\cnc{S}}{K_M+\cnc{S}}
+    \end{equation*}
+    where $k_M=(k_{-1}+k_2)/k_1$.
+    \item Sub in the above to Equation 5:
+    \begin{equation*}
+        \dv{t}\cnc{S} = -\frac{k_2\cnc[0]{E}\cnc{S}}{k_M+\cnc{S}}
+    \end{equation*}
+    \begin{itemize}
+        \item Note that $v_\text{max}=k_2\cnc[0]{E}$.
+    \end{itemize}
+    \item The above is now a differential equation of separable form; it's solution is
+    \begin{align*}
+        \int_{\cnc[0]{S}}^{\cnc{S}}-\frac{(k_M+z)\dd{z}}{zv_\text{max}} &= \int_0^t\dd{t}\\
+        -\frac{k_M}{v_\text{max}}\log\frac{\cnc{S}}{\cnc[0]{S}}-\frac{1}{v_\text{max}}(\cnc{S}-\cnc[0]{S}) &= t\\
+        -\frac{k_M}{v_\text{max}}\frac{\cnc{S}}{\cnc[0]{S}}\e[{-v_\text{max}^{-1}(\cnc{S}-\cnc[0]{S})}] &= \e[t]
+    \end{align*}
+    \item The above equation is of the following form, for $x>0$, $w(x)\sim s$, $x\sim 0$, and $w(x)\sim\log x$??
+    \begin{equation*}
+        w(x)\e[w(x)] = x
+    \end{equation*}
+    \item Harmonic oscillator.
+    \item Recall that
+    \begin{equation*}
+        x''+\frac{k}{m}x = 0
+    \end{equation*}
+    \item Substituting $\omega=\sqrt{k/m}$, we can solve the above for
+    \begin{equation*}
+        x(t) = x(0)\cos(\omega t)+\frac{x'(0)}{\omega}\sin(\omega t)
+    \end{equation*}
+    \item This is an integrable system with $n$ degrees of freedom and $n-1$ scalar conservation laws??
+    \item Conservation of mechanical energy:
+    \begin{equation*}
+        E = \frac{1}{2}m|x'|^2+\frac{1}{2}kx^2
+    \end{equation*}
+    \begin{figure}[h!]
+        \centering
+        \begin{tikzpicture}
+            \footnotesize
+            \draw
+                (-3,0) -- (3,0) node[right]{$x$}
+                (0,-2) -- (0,2) node[above]{$x'$}
+            ;
+
+            \draw [rex,thick]
+                ellipse (6mm and 4mm)
+                ellipse (12mm and 8mm)
+                ellipse (18mm and 12mm)
+            ;
+        \end{tikzpicture}
+        \caption{Conservation of mechanical energy in the harmonic oscillator.}
+        \label{fig:harmonicEConservation}
+    \end{figure}
+    \begin{itemize}
+        \item Differentiating wrt. $x$ yields
+        \begin{align*}
+            0 &= mx'x''+kxx'\\
+            &= \dv{t}(\frac{1}{2}m(x')^2)+\dv{t}(\frac{1}{2}kx^2)
+        \end{align*}
+        \item This means that the solution is an ellipse in the $xx'$-plane, where each ellipse corresponds to an initial displacement and velocity.
+    \end{itemize}
+    \item Mathematical pendulum.
+    \item Equation of motion:
+    \begin{align*}
+        0 &= l\theta'+g\sin\theta\\
+        &= \ell\theta''\theta'+g\sin\theta\cdot\theta'\\
+        &= \dv{t}\bigg( \underbrace{\frac{\ell}{2}|\theta'|^2-g\cos\theta}_E \bigg)
+    \end{align*}
+    \item It follows from the above that
+    \begin{align*}
+        \frac{\ell}{2}|\theta'|^2-g\cos\theta_0 &= -g\cos\theta\\
+        \dv{\theta}{t} &= \sqrt{\frac{2g}{\ell}(\cos\theta_0-\cos\theta)}\\
+        \int_{\theta_0}^\theta\sqrt{\frac{\ell}{2g(\cos\theta_0-\cos\phi)}}\dd\phi &= t
+    \end{align*}
+    \begin{itemize}
+        \item This is an elliptical integral (and thus cannot be expressed in terms of the elementary functions).
+    \end{itemize}
+    \item Suppose $\theta_0$ is small. Then $\theta$ is small, and we can invoke the small angle approximation $\sin\theta\approx\theta$.
+    \begin{itemize}
+        \item This yields an approximate equation of motion:
+        \begin{equation*}
+            \ell\theta''+g\theta = 0
+        \end{equation*}
+        \item From here, we can determine that $\theta(t)\approx\theta_0\cos\sqrt{g/\ell}\cdot t$ and $T=2\pi\sqrt{\ell/g}$.
+    \end{itemize}
+    \item Kepler problem.
+    \item Two bodies of mass $m_1,m_2$ are located at positions $x_1,x_2$ pulling on each other gravitationally.
+    \item From Newton's second and third law, we get
+    \begin{align*}
+        m_1x_1'' &= \frac{U'(|x_1-x_2|)^{x_1-x_2}}{|x_1-x_2|}&
+        m_2x_2'' &= \frac{U'(|x_1-x_2|)^{x_1-x_2}}{|x_1-x_2|}
+    \end{align*}
+    \item Conservation of momentum:
+    \begin{align*}
+        (m_1x_1+m_2x_2)'' &= 0\\
+        m_1x_1'+m_2x_2' &= C
+    \end{align*}
+    \begin{itemize}
+        \item Let $M=m_1+m_2$. Then
+        \begin{equation*}
+            \frac{m_1}{M}x_1+\frac{m_2}{M}x_2
+        \end{equation*}
+        moves inertially.
+        \item Define the center of mass to be the origin.
+    \end{itemize}
+    \item Conservation of angular momentum:
+    \begin{equation*}
+        [\mu(x_1-x_2)'\times(x_1-x_2)]' = 0
+    \end{equation*}
+    \begin{itemize}
+        \item $\mu=m_1m_2/(m_1+m_2)$.
+        \item $\times$ indicates the cross product.
+        \item $L=\mu(x_1-x_2)\times(x_1-x_2)$.
+    \end{itemize}
+    \item Conservation of mechanical energy:
+    \begin{align*}
+        \mu q''+U'(|q|)\frac{q}{|q|} &= 0\\
+        \frac{\mu}{2}|q'|^2+U(|q|) &= E
+    \end{align*}
+    \begin{itemize}
+        \item $q=x_1-x_2$.
+    \end{itemize}
+    \item Introduce polar coordinates $(r,\phi)$.
+    \begin{itemize}
+        \item Then $r^2\phi'/2=\ell_0$, $r=r(\phi)$, and $\dv*{r}{\phi}=r'(t)/\phi'(t)$.
+        \item It follows that
+        \begin{equation*}
+            \frac{\mu}{2}(|r'|^2+|\phi'|^2)+U(r) = E
+        \end{equation*}
+        \item Then
+        \begin{equation*}
+            \left( \dv{r}{\phi} \right)^2+r^2 = \frac{2G\mu r^3}{\ell_0^2}+\frac{2Er^4}{\mu\ell_0^2}
+        \end{equation*}
+        \item The substitution $\mu=1/r$ yields
+        \begin{equation*}
+            \left( \dv{\mu}{\phi} \right)^2+\mu^2 = \frac{2G\mu}{\ell_0^2}\mu+\frac{2E}{\mu\ell_0^2}
+        \end{equation*}
+        \item Differentiating again gives
+        \begin{equation*}
+            2\dv{\mu}{\phi}\dv[2]{\mu}{\phi}+2\dv{\mu}{\phi}\mu = \frac{2G\mu}{\ell_0^2}\dv{\mu}{\phi}
+        \end{equation*}
+        \item Substituting $\mu=\cos(t)$ gives
+        \begin{equation*}
+            \dv[2]{\mu}{\phi}+2\mu = \frac{2G\mu}{\ell_0^2}
+        \end{equation*}
+        or
+        \begin{equation*}
+            r = \frac{1}{G\mu/\ell_0^2+\varepsilon\cos(\phi-\phi_0)}
+        \end{equation*}
+        \begin{itemize}
+            \item This is a conic section!
+        \end{itemize}
     \end{itemize}
 \end{itemize}
 

@@ -5,9 +5,10 @@
 \usepackage{enumitem}
 \usepackage{scrextend}
 \usepackage[bottom]{footmisc}
-\usepackage{graphicx}
+\usepackage{graphicx,tikz}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm,physics}
+\usepackage{mhchem}
 \usepackage[hidelinks]{hyperref}
 
 \MakeOuterQuote{"}
@@ -30,9 +31,12 @@
 \deffootnotemark{\textsuperscript{\textup{[}\thefootnotemark\textup{]}}}
 \deffootnote[1.8em]{0em}{0em}{\textsuperscript{\thefootnote}}
 
+\colorlet{rex}{red!80!black!90!orange!80}
+
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 
 \newcommand{\e}[1][]{\text{e}^{#1}}
+\newcommand{\cnc}[2][]{[\ce{#2}]_\text{#1}}
 
 \usepackage{subfiles}
