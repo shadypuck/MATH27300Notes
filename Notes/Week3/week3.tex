@@ -1,0 +1,197 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{2}
+
+\begin{document}
+
+
+
+
+\chapter{???}
+\section{Linear Algebra Review}
+\begin{itemize}
+    \item \marginnote{10/10:}Today: Review of linear algebra.
+    \item Start with a \textbf{vector space} over $\R$ or $\C$ or, more generally, any field $K$.
+    \item \textbf{Vector space} (over $K$): A set equipped with addition and scalar multiplication such that the following axioms are satisfied.
+    \begin{enumerate}
+        \item Commutativity and associativity of addition.
+        \item Additive identity and inverse.
+        \item Compatibility of scalar multiplication and addition (distributive laws).
+        \item The additive identity times any vector is zero.
+    \end{enumerate}
+    \item In $\R^n,\C^n$, addition is component-wise and scalar multiplication is scaling of the element.
+    \item For a homogeneous equation
+    \begin{equation*}
+        y' = A(t)y
+        =
+        \begin{pmatrix}
+            a_{11}(t)y^1+a_{12}(t)y^2+\cdots\\
+            \vdots\\
+        \end{pmatrix}
+        \begin{pmatrix}
+            y^1\\
+            y^2\\
+            \vdots\\
+            y^n
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item If $y_1,y_2$ are solutions, any linear combination of them is a solution. This is called the \textbf{solution space} of the equation.
+    \end{itemize}
+    \item \textbf{Linearly independent} (set of vectors): A set of vectors $x_1,\dots,x_m\in V$ such that the only coefficients $\lambda_1,\dots,\lambda_m$ such that
+    \begin{equation*}
+        \lambda_1x_1+\cdots+\lambda_mx_m = 0
+    \end{equation*}
+    is $\lambda_1=\cdots=\lambda_m=0$.
+    \begin{itemize}
+        \item $\lambda_m\neq 0$ implies
+        \begin{equation*}
+            x_m = -\frac{1}{\lambda_m}(\lambda_1x_1+\cdots+\lambda_{m-1}x_{m-1})
+        \end{equation*}
+    \end{itemize}
+    \item \textbf{Maximal linear independence group}: A subset $X\subset V$ such that for any $y\in V$, $\{y\}\cup X$ is not linearly independent. \emph{Also known as} \textbf{basis}.
+    \item Theorem: Any basis in $V$ has the same cardinality.
+    \item \textbf{Dimension} (of $V$): The cardinality given by the above theorem. \emph{Denoted by} $\bm{\dim V}$.
+    \item We usually denoted a basis as an ordered $n$-tuple since the order often matters (for orientation?).
+    \item Notational onventions.
+    \begin{itemize}
+        \item For $\R^n,\C^n$, we will always use column vectors.
+        \item $x_1,x_2,\dots$ denotes vectors.
+        \item $x^1,x^2,\dots$ denotes the components of a column vector.
+        \item A vector component squared may be denoted $(x^1)^2$.
+    \end{itemize}
+    \item \textbf{Standard basis} (for $\R^n$): The set of $n$ vectors of length $n$ which have a 1 as one entry and a zero in all the others and are all distinct.
+    \item \textbf{Linear transformation} (of $V$ to $V$): A mapping $\phi:V\to V$ satisfying
+    \begin{equation*}
+        \phi(\lambda x+\mu y) = \lambda\phi(x)+\mu\phi(y)
+    \end{equation*}
+    \item A mapping is completely determined by its action on the basis vectors:
+    \begin{equation*}
+        \phi\left( \sum_{k=1}^nx^ke_k \right) = \sum_{k=1}^nx^k\phi(e_k)
+    \end{equation*}
+    \item \textbf{Matrix} (of a linear transformation wrt. the standard basis): The $n\times n$ array
+    \begin{equation*}
+        \begin{pmatrix}
+            \phi(e_1) & \cdots & \phi(e_n)\\
+        \end{pmatrix}
+    \end{equation*}
+    \item If $\phi,\psi:V\to V$ are linear, $\phi\circ\psi$ is also linear.
+    \begin{itemize}
+        \item Composition of linear transformations corresponds to matrix multiplication.
+    \end{itemize}
+    \item Matrix multiplication: If
+    \begin{equation*}
+        B =
+        \begin{pmatrix}
+            b_1 & \cdots & b_n\\
+        \end{pmatrix}
+    \end{equation*}
+    then
+    \begin{equation*}
+        AB =
+        \begin{pmatrix}
+            Ab_1 & \cdots & Ab_n\\
+        \end{pmatrix}
+    \end{equation*}
+    where
+    \begin{equation*}
+        Ax =
+        \begin{pmatrix}
+            a_{11}x^1+\cdots+a_{1n}x^n\\
+            \vdots\\
+            a_{n1}x^1+\cdots+a_{nn}x^n\\
+        \end{pmatrix}
+    \end{equation*}
+    \item We can talk about matrix inverses: If it exists, it is unique, and
+    \begin{equation*}
+        AA^{-1} = A^{-1}A = I_n
+    \end{equation*}
+    \item Matrix multiplication is not commutative in general. Shao gives a counterexample.
+    \item $A$ is invertible iff the columns of $A$ are a basis for $\R^n$ (resp. $\C^n$).
+    \item \textbf{Determinant} (of $A$): Not defined.
+    \item Properties of the determinant.
+    \begin{itemize}
+        \item Multilinear.
+        \begin{equation*}
+            \det
+            \begin{pmatrix}
+                a_1 & \cdots & \lambda a_k+\mu\tilde{a}_k & \cdots & a_n\\
+            \end{pmatrix}
+            = \lambda\det
+            \begin{pmatrix}
+                a_1 & \cdots & a_k & \cdots & a_n\\
+            \end{pmatrix}
+            +\mu\det
+            \begin{pmatrix}
+                a_1 & \cdots & \tilde{a}_k & \cdots & a_n\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Skew-symmetric.
+        \begin{equation*}
+            \det
+            \begin{pmatrix}
+                a_1 & \cdots & a_i & \cdots & a_j & \cdots & a_n\\
+            \end{pmatrix}
+            = -\det
+            \begin{pmatrix}
+                a_1 & \cdots & a_j & \cdots & a_i & \cdots & a_n\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Theorem: The determinant is uniquely characterized by these three (??) axioms.
+    \item $\det I_n=1$.
+    \item Shao goes over computing the determinant via minors.
+    \item Special cases:
+    \begin{itemize}
+        \item If the matrix is upper- or lower-triangular, the determinant is equal to the product of the diagonal entries.
+        \item If the matrix is blocked upper- or lower-triangular, e.g.,
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                A_1 & *\\
+                0 & A_2\\
+            \end{pmatrix}
+        \end{equation*}
+        then $\det A=\det A_1\cdot\det A_2$.
+    \end{itemize}
+    \item $\det(AB)=\det(A)\det(B)$.
+    \item $\det A\neq 0$ iff $A$ is invertible.
+    \item Direct formula to compute the inverse.
+    \begin{equation*}
+        A^{-1} = \frac{1}{\det A}
+        \begin{pmatrix}
+            a_{\ell k}(-1)^{k+\ell}\det A_{k\ell}
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Tedious for higher-dimensional cases, but quite sufficient for $n=2,3$.
+    \end{itemize}
+    \item Let $A$ be $n\times n$, and let $Ax=b$.
+    \begin{itemize}
+        \item If $A$ is invertible, then $x=A^{-1}b$.
+        \item If $A$ is not invertible and $b\in\spn(a_1,\dots,a_n)$, then $x=x_h+x_p$ where $Ax_h=0$ and $Ax_p=b$.
+    \end{itemize}
+    \item \textbf{Kernel} (of $A$): The set of all vectors $y\in\R^n$ (resp. $\C^n$) such that $Ay=0$.
+    \item \textbf{Range} (of $A$): The set of all linear combinations of $a_1,\dots,a_n$.
+    \item Suppose $\phi:\R^n\to\R^n$ has matrix $A$ under $(e_1,\dots,e_n)$. Let $(q_1,\dots,q_n)$ be another basis.
+    \begin{itemize}
+        \item There exists a matrix $Q$ such that $q_k=Qe_k$. $Q$ is called the \textbf{connecting matrix} between $(e_1,\dots,e_n)$ and $(q_1,\dots,q_n)$.
+        \item Claim: Let $x\in\R^n$ have representation $x=(x^1,\dots,x^n)$ under the standard basis. Then under the $Q$ basis, $x$ has representation $x'=Q^{-1}(x^1,\dots,x^n)$. Similarly, $x=Qx'$.
+        \item Claim: $\phi$ has matrix $B=Q^{-1}AQ$ with respect to the $Q$ basis.
+    \end{itemize}
+    \item Matrix similarity: $A\sim B$ iff there exists $Q$ invertible such that $B=Q^{-1}AQ$.
+    \begin{itemize}
+        \item Implies that $A$ and $B$ describe the same matrix under different bases.
+        \item Matrix product under the old and new bases are related.
+        \begin{equation*}
+            Q^{-1}ABQ = (Q^{-1}AQ)(Q^{-1}BQ)
+        \end{equation*}
+        \item Similarity preserves the determinant:
+        \begin{equation*}
+            \det(Q^{-1}AQ) = \det(Q^{-1})\det(A)\det(Q)
+            = \det(A)\det(Q^{-1})\det(Q)
+            = \det(A)
+        \end{equation*}
+    
