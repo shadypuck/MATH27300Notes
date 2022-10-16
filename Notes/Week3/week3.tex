@@ -9,8 +9,8 @@
 
 
 
-\chapter{???}
-\section{Linear Algebra Review}
+\chapter{Linear Algebra Review}
+\section{Elements of Linear Algebra}
 \begin{itemize}
     \item \marginnote{10/10:}Today: Review of linear algebra.
     \item Start with a \textbf{vector space} over $\R$ or $\C$ or, more generally, any field $K$.
@@ -618,6 +618,231 @@
             \end{pmatrix}
         \end{equation*}
     \end{itemize}
+\end{itemize}
+
+
+
+
+\section{Matrix Calculus}
+\begin{itemize}
+    \item \marginnote{10/14:}Today: Matrix calculus.
+    \item We introduced the Jordan normal form because it is an easy form on which to do matrix calculus.
+    \item \textbf{Matrix norm}: A function for $n\times n$ complex matrices such that
+    \begin{enumerate}
+        \item $\norm{A}\geq 0$, $\norm{A}=0$ iff $A=0$.
+        \item $\norm{A+B}\leq\norm{A}+\norm{B}$.
+        \item $\norm{\lambda A}=|\lambda|\norm{A}$.
+        \item $\norm{AB}\leq\norm{A}\norm{B}$.
+    \end{enumerate}
+    \emph{Denoted by} $\bm{||\cdot||}$.
+    \begin{itemize}
+        \item The first three axioms above are the normal norm axioms; the last one is unique to matrix norms.
+    \end{itemize}
+    \item \textbf{Operator norm}: The norm defined by
+    \begin{equation*}
+        \norm{Ax} = \sup_{|x|=1}|Ax|
+    \end{equation*}
+    \item \textbf{??}: The norm defined by
+    \begin{equation*}
+        \norm{A} = \sum_{i,j=1}^n|a_{i,j}|
+    \end{equation*}
+    \item Theorem: Any two matrix norms are equivalent.
+    \item \textbf{Convergent} (sequence of matrices): A sequence of matrices $A_n$ for which there exists $A$ such that $\norm{A_n-A}\to 0$ as $n\to\infty$. \emph{Denoted by} $\bm{A_n\to A}$.
+    \begin{itemize}
+        \item Note that $\norm{A_n-A}\to 0$ iff the entries of $A_n$ converge to the entries of $A$.
+    \end{itemize}
+    \item Suppose $A(t)=(a_{ij}(t))_{i,j=1}^n$ is a matrix function. Then
+    \begin{align*}
+        A'(t) &= (a_{ij}'(t))_{i,j=1}^n&
+        \int_{t_0}^tA(t)\dd{t} &= \left( \int_{t_0}^ta_{ij}(\tau)\dd\tau \right)_{i,j=1}^n
+    \end{align*}
+    \item The product rule holds:
+    \begin{equation*}
+        \dv{t}[A(t)B(t)] = A'(t)B(t)+A(t)B'(t)
+    \end{equation*}
+    \item However, matrix multiplication is not commutative. This can get us into trouble in the following situation: We might think that
+    \begin{equation*}
+        \dv{t}[A(t)^2] = 2A'(t)A(t)
+    \end{equation*}
+    but, in fact,
+    \begin{equation*}
+        \dv{t}[A(t)^2] = A'(t)A(t)+A(t)A'(t)
+    \end{equation*}
+    \begin{itemize}
+        \item For example, let
+        \begin{equation*}
+            A(t) =
+            \begin{pmatrix}
+                0 & 1\\
+                t & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Then
+        \begin{equation*}
+            A'(t) =
+            \begin{pmatrix}
+                0 & 0\\
+                1 & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        \item It follows that
+        \begin{equation*}
+            \dv{t}[A'(t)^2] = \underbrace{
+                \begin{pmatrix}
+                    0 & 0\\
+                    0 & 1\\
+                \end{pmatrix}
+            }_{A'(t)A(t)}+\underbrace{
+                \begin{pmatrix}
+                    1 & 0\\
+                    0 & 0\\
+                \end{pmatrix}
+            }_{A(t)A'(t)}
+        \end{equation*}
+        \item Notice that $A'(t)A(t)\neq A(t)A'(t)$.
+    \end{itemize}
+    \item Suppose we have a matrix $A$ and we want to compute $A^{100}$.
+    \item If $A$ is diagonalizable, then $A^n=Q^{-1}\Lambda^nQ$.
+    \item What if $A$ is not diagonalizable?
+    \begin{itemize}
+        \item Then we convert to $A$ to Jordan normal form $A=Q^{-1}BQ$. Thus, we just need to compute the powers of the Jordan blocks.
+        \item Suppose
+        \begin{equation*}
+            J_d(\lambda) =
+            \begin{pmatrix}
+                \lambda & 1 &  & 0\\
+                 & \lambda & \ddots & \\
+                 &  & \ddots & 1\\
+                0 &  &  & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{itemize}
+            \item In a given Jordan block, all entries above the diagonal are 1.
+        \end{itemize}
+        \item Decompose
+        \begin{equation*}
+            J_d(\lambda) = \lambda I_d+N_d
+        \end{equation*}
+        \item Note that $N_d$ is nilpotent --- every successive power to which you raise it shifts the 1s up one row until it becomes the zero matrix.
+        \item In computing $[J_d(\lambda)]^m$, invoke the binomial expansion. When $m<d$ invoke the full expansion. When $m\geq d$, neglect all zero terms (terms with $N_d^i$ for $i\geq m$).
+        \begin{equation*}
+            [J_d(\lambda)]^m = \binom{m}{0}\lambda^mI_d+\binom{m}{1}\lambda^{m-1}N_d+\cdots+\binom{m}{m}N_d^m
+        \end{equation*}
+        \item Example: When $d=3$, then
+        \begin{equation*}
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                 & \lambda & 1\\
+                 &  & \lambda\\
+            \end{pmatrix}^3
+            =
+            \begin{pmatrix}
+                \lambda^m & m\lambda^{m-1} & m(m-1)\lambda^{m-2}\\
+                 & \lambda^m & m\lambda^{m-1}\\
+                 &  & \lambda^m\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item We will only compute JNF for $2\times 2$ and $3\times 3$; Shao reviews these cases from last class.
+    \item We now have a formula to compute the powers of matrices with ease, so we can move onto more complicated functions of matrices now.
+    \item Consider the power series
+    \begin{equation*}
+        f(z) = c_0+c_1z+c_2z^2+\cdots
+    \end{equation*}
+    \begin{itemize}
+        \item The $c_i$ are complex coefficients.
+    \end{itemize}
+    \item \textbf{Analytic} (function): A function whose Taylor series (locally) converges and converges to the function in question.
+    \item We can consider an analytic function of matrices:
+    \begin{equation*}
+        f(z) = c_0I+c_1A+c_2A^2+\cdots
+    \end{equation*}
+    \item \textbf{Radius of convergence}: The number $R$ such that the series converges for $\norm{A}<R$.
+    \item \textbf{von Neumann series}: The series $I+A+A^2+\cdots$ converging to $(I_n-A)^{-1}$ for any $\norm{A}<1$.
+    \begin{itemize}
+        \item Example: We can check that the von Neumann series for $N_d$ converges.
+    \end{itemize}
+    \item Suppose $A=Q^{-1}BQ$. Then
+    \begin{align*}
+        f(A) &= f(Q^{-1}BQ)\\
+        &= c_0I+c_1(Q^{-1}BQ)+c_2(Q^{-1}BQ)^2+\cdots\\
+        &= Q^{-1}(c_0I+c_1B+c_2B^2+\cdots)Q\\
+        &= Q^{-1}f(B)Q
+    \end{align*}
+    \begin{itemize}
+        \item Going even further,
+        \begin{equation*}
+            B =
+            \begin{pmatrix}
+                B_1 & 0\\
+                0 & B_2\\
+            \end{pmatrix}
+            \quad\Longrightarrow\quad
+            f(B) =
+            \begin{pmatrix}
+                f(B_1) & 0\\
+                0 & f(B_2)\\
+            \end{pmatrix}
+        \end{equation*}
+        \item In particular, if $A$ is diagonalizable, then
+        \begin{equation*}
+            f(A) = Q^{-1}
+            \begin{pmatrix}
+                f(\lambda_1) &  & \\
+                 & \ddots & \\
+                 &  & f(\lambda_n)\\
+            \end{pmatrix}
+            Q
+        \end{equation*}
+    \end{itemize}
+    \item Suppose $A$ is not diagonalizable, and $f$ is some analytic function.
+    \begin{itemize}
+        \item Then in the viscinity of $a$, $f$ can be approximated by the Taylor series
+        \begin{equation*}
+            f(z) = f(a)+f'(a)(z-a)+\frac{1}{2!}f^{(2)}(a)(z-a)^2+\cdots
+        \end{equation*}
+        \item Similarly, we can approximate $f[J_d(\lambda)]$ in the viscinity of $\lambda I_d$ with the Taylor series
+        \begin{align*}
+            f[J_d(\lambda)] &= f(\lambda I_d+N_d)\\
+            &= f(\lambda I_d)+f'(\lambda I_d)[(\lambda I_d+N_d)-\lambda I_d]+\frac{1}{2!}f^{(2)}(\lambda I_d)[(\lambda I_d+N_d)-\lambda I_d]^2+\cdots\\
+            &= f(\lambda)I_d+f'(\lambda)N_d+\frac{1}{2!}f^{(2)}(\lambda)N_d^2+\cdots\\
+            &=
+            \begin{pNiceMatrix}
+                f(\lambda) & f'(\lambda) & \cdots & \frac{f^{(d-1)}(\lambda)}{(d-1)!}\\
+                 & f(\lambda) & \ddots & \vdots\\
+                 &  & \ddots & f'(\lambda)\\
+                 &  &  & f(\lambda)\\
+            \end{pNiceMatrix}
+        \end{align*}
+    \end{itemize}
+    \item \textbf{Matrix exponential} (of $A$): The matrix with identical dimensions to $A$ defined by the following power series. \emph{Denoted by} $\textbf{e}^{\bm{A}}$. \emph{Given by}
+    \begin{equation*}
+        \e[A] = I_n+A+\frac{1}{2!}A^2+\cdots
+    \end{equation*}
+    \begin{itemize}
+        \item This power series is convergent for matrices with $\norm{A}<1$ since $\norm{A^m}\leq\norm{A}^m\to 0$.
+        \item Usual rules that you might expect the matrix exponential to obey based on the notation are obeyed.
+        \begin{align*}
+            \e[(t+\tau)A] &= \e[tA]\e[\tau A]&
+            \e[A+B] &= \e[A]\e[B]
+        \end{align*}
+    \end{itemize}
+    \item An explicit formula for the $\e[tA]$.
+    \begin{itemize}
+        \item We know that $tA=tQBQ^{-1}$, where we may take $B$ be in JNF.
+        \item Consider $\e[tJ_3(\lambda)]$, for example.
+        \item Then from the above, we have that
+        \begin{equation*}
+            \e[tJ_3(\lambda)] =
+            \begin{pNiceMatrix}
+                \e[t\lambda] & t\e[t\lambda] & \frac{t^2}{2}\e[t\lambda]\\
+                 & \e[t\lambda] & t\e[t\lambda]\\
+                 &  & \e[t\lambda]\\
+            \end{pNiceMatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Next time: First order linear systems with constant coefficients; will make use of $\e[tA]$.
+    \item Next Wednesday: Review; next Friday: Midterm.
 \end{itemize}
 
 
