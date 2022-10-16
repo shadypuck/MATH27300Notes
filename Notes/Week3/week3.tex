@@ -194,4 +194,433 @@
             = \det(A)\det(Q^{-1})\det(Q)
             = \det(A)
         \end{equation*}
-    
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{Diagonalization and Jordan Normal Form}
+\begin{itemize}
+    \item \marginnote{10/12:}Similar matrices and Jordan Normal Form (JNF).
+    \item Suppose $A:\C^n\to\C^n$ is linear. We can express $A$ in a different basis with the help of the connecting matrix $Q$.
+    \item In this lecture, we seek to find the most convenient basis in which to discuss our linear transformation.
+    \item Today we will work in $\C^n$ (but all results hold for $\R^n$, too).
+    \item \textbf{Invariant subspace} (of $A$): A subspace $K\subset\C^n$ such that $A(K)=K$.
+    \item Suppose you have $m$ invariant subspaces $K_1,\dots,K_m\subset\C^n$ whose pairwise intersection is $\{0\}$.
+    \item \textbf{Direct sum} (of $K_1,\dots,K_m$): The collection of all vectors which can be represented as sums from each of the subspaces. \emph{Denoted by} $\bm{K_1\oplus\cdots\oplus K_m}$. \emph{Given by}
+    \begin{equation*}
+        K_1\oplus\cdots\oplus K_m = \left\{ x\in\C^n\mid x=\sum_{j=1}^mx_j,\ x_j\in K_j \right\}
+    \end{equation*}
+    \item Suppose $K_1,K_2\in\C^n$ are invariant subspaces of $A$ of dimension $n_1,n_2$, respectively, such that $K_1\oplus K_2=\C^n$. Then choosing a basis for $K_1$ and $K_2$, the matrix $A$ takes the form
+    \begin{equation*}
+        \begin{pmatrix}
+            B_1 & 0\\
+            0 & B_2\\
+        \end{pmatrix}
+    \end{equation*}
+    where $B_1$ is an $n_1\times n_1$ block and $B_2$ is an $n_2\times n_2$ block.
+    \item \textbf{Eigenvalue} (of $A$): A complex number $\lambda\in\C$ such that $A-\lambda I$ is not invertible. \emph{Denoted by} $\bm{\lambda}$.
+    \begin{itemize}
+        \item Equivalently, $\det(A-\lambda I)=0$.
+    \end{itemize}
+    \item \textbf{Characteristic polynomial}: The polynomial in $z$ defined as follows. \emph{Denoted by} $\bm{\chi_A(z)}$. \emph{Given by}
+    \begin{equation*}
+        \chi_A(z) = \det(A-zI)
+    \end{equation*}
+    \begin{itemize}
+        \item Similar matrices have the same characteristic polynomials.
+    \end{itemize}
+    \item \textbf{Spectrum} (of $A$): The set of all eigenvalues of $A$.
+    \item \textbf{Eigenvector} (of $A$): A vector $v\in\C^n$ corresponding to an eigenvalue $\lambda$ via
+    \begin{equation*}
+        Av = \lambda v
+    \end{equation*}
+    \item Claim: The set of all eigenvectors corresponding to $\lambda$ form an invariant subspace.
+    \begin{proof}
+        \begin{equation*}
+            A(v_1+v_2) = \lambda v_1+\lambda v_2
+            = \lambda(v_1+v_2)
+        \end{equation*}
+    \end{proof}
+    \item \textbf{Eigenspace} (of $\lambda$): The vector subspace of $\C^n$ equal to the span of the eigenvectors of $\lambda$. \emph{Denoted by} $\bm{V_\lambda}$.
+    \item \textbf{Algebraic multiplicity} (of $\lambda$): The degree of the $(z-\lambda)$ term in the factorization of the characteristic polynomial. \emph{Denoted by} $\bm{\alpha_\lambda}$.
+    \item \textbf{Geometric multiplicity} (of $\lambda$): The dimension of the eigenspace of $\lambda$. \emph{Denoted by} $\bm{\gamma_\lambda}$.
+    \item $\gamma_\lambda\leq\alpha_\lambda$.
+    \item If $\alpha_\lambda=\gamma_\lambda$ for each $\lambda$, then each eigenspace $V_\lambda$ has a basis such that $\oplus_\lambda V_\lambda=\C^n$.
+    \begin{itemize}
+        \item Under this basis, the matrix of $A$ is diagonal with all $\lambda$'s (along the diagonal) repeated according to their algebraic multiplicity.
+    \end{itemize}
+    \item \textbf{Superdiagonal}: The set of entries in a matrix which are directly above a diagonal entry.
+    \item \textbf{Jordan block}: A $d\times d$ matrix corresponding to an eigenvalue $\lambda$ that has $\lambda$ as every diagonal entry, 1 as every superdiagonal entry, and zeroes everywhere else. \emph{Denoted by} $\bm{J_d(\lambda)}$.
+    \begin{itemize}
+        \item The geometric multiplicity $\gamma_j$ is the number of Jordan blocks with eigenvalue $\lambda_j$. Of course, when $\gamma_j=\alpha_j$ (in particular, if $\alpha_j=1$), there is no Jordan block corresponding to $\lambda_j$ at all.
+    \end{itemize}
+    \item We have that
+    \begin{align*}
+        J_d(\lambda)
+        \begin{pmatrix}
+            1\\
+            0\\
+            \vdots\\
+            0\\
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            \lambda\\
+            0\\
+            \vdots\\
+            0\\
+        \end{pmatrix}
+        = \lambda
+        \begin{pmatrix}
+            1\\
+            0\\
+            \vdots\\
+            0\\
+        \end{pmatrix}
+        = \lambda e_1\\
+        J_d(\lambda)
+        \begin{pmatrix}
+            0\\
+            1\\
+            0\\
+            \vdots\\
+            0\\
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            1\\
+            \lambda\\
+            0\\
+            \vdots\\
+            0\\
+        \end{pmatrix}
+        = e_1+\lambda e_2\\
+        &\vdots\\
+        J_d(\lambda)e_{d-1} &= e_{d-2}+\lambda e_{d-1}
+    \end{align*}
+    \item For any linear transformation, we can find a basis such that the matrix is the diagonalized Jordon blocks.
+    \item Theorem: Let $A$ be an $n\times n$ complex matrix. Then there is a \textbf{Jordan basis} $Q$ under which
+    \begin{equation*}
+        Q^{-1}AQ =
+        \begin{pmatrix}
+            J_{h_1}(\lambda_1) &  & \\
+             & J_{h_{d_1}}(\lambda_1) & \\
+             &  & \ddots\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item We have that $h_1+\cdots+h_{d_1}=\alpha_1$??
+        \item The proof will not be tested --- it is very hard. Shao will sketch it, though.
+        \item The proof is constructive: It will tell you how to convert a matrix into the Jordan normal form.
+    \end{itemize}
+    \item Proof procedure:
+    \begin{enumerate}
+        \item Determine the eigenvalues as well as their algebraic and geometric multiplicities.
+        \begin{enumerate}
+            \item Compute $\chi_A(z)$.
+            \item Find $\lambda_1,\dots,\lambda_m$ (factor $\chi_A(z)$).
+            \item Find $\alpha_1,\dots,\alpha_m$ (combine like terms in the factorization of $\chi_A(z)$).
+            \item Find $\gamma_1,\dots,\gamma_m$ ($\gamma_i=n-\rank(A-\lambda_iI)$).
+        \end{enumerate}
+        \item Find the \textbf{generalized eigenspaces} of each $\lambda_i$. This will allow us to block-diagonalize $A$.
+        \begin{enumerate}
+            \item For each $\lambda_i$, compute the $\ker(A-\lambda_iI)\subset\ker(A-\lambda_iI)^2\subset\ker(A-\lambda_iI)^3\subset\cdots$.
+            \item The sequence will stop at some $d_i\in\N$. In particular, it will stop when $\dim\ker(A-\lambda I)^{d_j}=\alpha_i$.
+            \begin{itemize}
+                \item Claim: $K_i\cap K_j=\{0\}$. Let $j_i=\dim K_i$. Take the direct sum of all $K_i$. Then $j_1+\cdots+j_m=n$.
+            \end{itemize}
+            \item Since each $K_i$ is an invariant subspace of $A$, we know that there is a matrix of the linear transformation corresponding to $A$ of the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    B_1 &  & 0\\
+                     & \ddots & \\
+                    0 &  & B_m\\
+                \end{pmatrix}
+            \end{equation*}
+            We now just need to choose the \emph{best} basis of each $K_i$, i.e., the one that makes each $B_i$ into a (direct sum of) Jordan block(s).
+        \end{enumerate}
+        \item Find the best basis for each $K_i$.
+        \begin{enumerate}
+            \item Recall that each $\lambda_i$ corresponds to $\gamma=\gamma_i$ linearly independent eigenvectors, which we will denote $v_{i,1},\dots,v_{i,\gamma}$. We will block-diagonalize $B_i$ into $\gamma$ Jordan blocks, each of which corresponds to a $v_{i,j}$ as follows.\par
+            Every Jordan block is of the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    \lambda_i & 1 &  & 0\\
+                     & \lambda_i & \ddots & \\
+                     &  & \ddots & 1\\
+                    0 &  &  & \lambda_i\\
+                \end{pmatrix}
+            \end{equation*}
+            Let the above block be of dimension $k_{i,j}=d$. It follows that this block will be responsible for linearly transforming $d$ vectors in the Jordan basis. Let $v_{i,j,1}=v_{i,j}$ be the first of these $d$ vectors. Then the submatrix of $v_{i,j,1}$ in the Jordan basis corresponding to this Jordan block is
+            \begin{equation*}
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+            \end{equation*}
+            which should make sense since we want $Av_{i,j}=\lambda_iv_{i,j}$ and under this definition,
+            \begin{equation*}
+                \begin{pmatrix}
+                    \lambda_i & 1 &  & 0\\
+                     & \lambda_i & \ddots & \\
+                     &  & \ddots & 1\\
+                    0 &  &  & \lambda_i\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+                = \lambda_i
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+            \end{equation*}
+            Now let $v_{i,j,2}$ be the second of the $d$ vectors. Naturally, its submatrix in the Jordan basis should be
+            \begin{equation*}
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+            \end{equation*}
+            But this implies that
+            \begin{align*}
+                \begin{pmatrix}
+                    \lambda_i & 1 &  & 0\\
+                     & \lambda_i & \ddots & \\
+                     &  & \ddots & 1\\
+                    0 &  &  & \lambda_i\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    1\\
+                    \lambda_i\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}
+                +\lambda_i
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                    \vdots\\
+                    0\\
+                \end{pmatrix}\\
+                Av_{i,j,2} &= v_{i,j,1}+\lambda_iv_{i,j,2}\\
+                (A-\lambda I)v_{i,j,2} &= v_{i,j,1}
+            \end{align*}
+            Naturally, this process will generalize to show that $(A-\lambda_iI)v_{i,j,k}=v_{i,j,k-1}$, i.e., we can recursively determine the $v_{i,j,1},\dots,v_{i,j,k_{i,j}}$.
+            \item Thus, using the above process, we will find $k_{i,j}$ elements of the Jordan basis for each $v_{i,j}$. The full, ordered set of these vectors constitutes the Jordan basis.
+            \item Note that each of these vectors is naturally an element of the generalized eigenspace $K_i$ since for each $k=1,\dots,k_{i,j}$, the formula $(A-\lambda_iI)v_{i,j,k}=v_{i,j,k-1}$ implies that
+            \begin{equation*}
+                (A-\lambda_iI)^kv_{i,j,k} = 0
+            \end{equation*}
+            Also note that each $k_{i,j}\leq d_i$ and $k_{i,1}+\cdots+k_{i,\gamma}=d_i$.
+        \end{enumerate}
+    \end{enumerate}
+    \item \textbf{Generalized eigenspace} (of $\lambda$): The kernel of $(A-\lambda I)^{d_\lambda}$. \emph{Denoted by} $\bm{K_\lambda}$. \emph{Given by}
+    \begin{equation*}
+        K_\lambda = \ker(A-\lambda I)^{d_\lambda}
+    \end{equation*}
+    \item $\bm{d_\lambda}$: The power of $A-\lambda I$ for which the kernel stabilizes.
+    \item $\bm{j_\lambda}$: The dimension of the generalized eigenspace of $\lambda$. \emph{Given by}
+    \begin{equation*}
+        j_\lambda = \dim K_\lambda
+    \end{equation*}
+    \item The JNF computation can be really heavy; we'll only ever compute $2\times 2$ or $3\times 3$ versions.
+    \item Example:
+    \begin{itemize}
+        \item Consider
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                -2 & 2 & 1\\
+                -7 & 4 & 2\\
+                5 & 0 & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Then
+        \begin{equation*}
+            \chi_A(z) = z(z-1)^2
+        \end{equation*}
+        \item (1) It follows that
+        \begin{align*}
+            \lambda_1 &= 0&
+            \lambda_2 &= 1
+        \end{align*}
+        \item (2) We have that
+        \begin{align*}
+            \ker(A-0I) &= \spn\left\{
+                \begin{pmatrix}
+                    0\\
+                    -1\\
+                    2\\
+                \end{pmatrix}
+            \right\}&
+            \ker(A-1I) &= \spn\left\{
+                \begin{pmatrix}
+                    1\\
+                    -1\\
+                    5\\
+                \end{pmatrix}
+            \right\}
+        \end{align*}
+        \begin{itemize}
+            \item We call the left vector above $q_1$ and the right vector above $q_2$.
+        \end{itemize}
+        \item Thus,
+        \begin{equation*}
+            A \sim
+            \begin{pNiceArray}{c|cc}
+                0 &  & \\
+                \hline
+                 & 1 & x\\
+                 &  & 1\\
+            \end{pNiceArray}
+        \end{equation*}
+        \item We find that
+        \begin{equation*}
+            (A-1I)^2 =
+            \begin{pmatrix}
+                0 & 0 & 0\\
+                10 & -5 & -3\\
+                -20 & 10 & 6\\
+            \end{pmatrix}
+        \end{equation*}
+        so
+        \begin{equation*}
+            \ker(A-I)^2 = \spn\left\{
+                \begin{pmatrix}
+                    1\\
+                    2\\
+                    0\\
+                \end{pmatrix},
+                \begin{pmatrix}
+                    3\\
+                    0\\
+                    10\\
+                \end{pmatrix}
+            \right\}
+        \end{equation*}
+        \item Clearly,
+        \begin{equation*}
+            \ker(A-I) \subsetneq \ker(A-I)^2
+        \end{equation*}
+        so we can stop here because the dimension of the kernel has reached the algebraic multiplicity.
+        \item Since $q_2\in K_1$, $q_3$ solves the equation $(A-I)q_3=q_2$.
+        \item We know that
+        \begin{align*}
+            \begin{pmatrix}
+                \lambda & 1\\
+                0 & \lambda\\
+            \end{pmatrix}
+            e_1 &= \lambda e_1&
+            \begin{pmatrix}
+                \lambda & 1\\
+                0 & \lambda\\
+            \end{pmatrix}
+            e_2 &= e_1+\lambda e_2
+        \end{align*}
+        \item It follows that
+        \begin{equation*}
+            q_3 =
+            \begin{pmatrix}
+                0\\
+                3\\
+                -5\\
+            \end{pmatrix}
+        \end{equation*}
+        and hence
+        \begin{equation*}
+            Q =
+            \begin{pmatrix}
+                q_1 & q_2 & q_3\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                0 & 1 & 0\\
+                -1 & -1 & 3\\
+                2 & 5 & -5\\
+            \end{pmatrix}
+        \end{equation*}
+        and
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                0 & 0 & 0\\
+                0 & 1 & 1\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Simple cases.
+    \item The $2\times 2$ case.
+    \begin{itemize}
+        \item $A\in\mathcal{M}^2(\C)$ can only have nontrivial Jordan form if it has a single eigenvalue $\lambda$ with $\alpha_\lambda=2$ and $\gamma_\lambda=1$. If both equal 2, then $A=\lambda I_2$. If it has two eigenvalues, then it is regularly diagonalizable.
+        \item In this particular case, calculate $\lambda$ from $\chi_Z(z)=(z-\lambda)^2$, find one eigenvector $v$, and find the other generalized eigenvector $u$; $u$ will satisfy $(A-\lambda I)u=v$. The connecting matrix will be $Q=(v|u)$\footnote{Order matters! We need the eigenvector, specifically, to get scaled by $\lambda$ only.} and the JNF is
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1\\
+                0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item The $3\times 3$ case.
+    \begin{itemize}
+        \item We divide into three nontrivial cases: $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=2$, $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=1$, and $\chi_A(z)=(z-\lambda)^2(z-\mu)$ with $\gamma_\lambda=1$.
+        \item In the first case, we have two eigenvectors $v_1,v_2$. We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_1$ and $(A-\lambda I)u=v_2$ (only one of these will have a solution). WLOG let the first equation have a solution. Then $Q=(v_1|u|v_2)$ and the JNF is
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 0\\
+                0 & 0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        \item In the second case, we have one eigenvector $v$. We can find the second and third generalized eigenvectors by solving $(A-\lambda I)u_1=v$ and $(A-\lambda I)u_2=u_1$. Then $Q=(v|u_1|u_2)$ and
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 1\\
+                0 & 0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        \item In the third case, we have two eigenvectors $v_\lambda,v_\mu$. We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_\lambda$. Then $Q=(v_\lambda|u|v_\mu)$ and
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 0\\
+                0 & 0 & \mu\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\end{document}
