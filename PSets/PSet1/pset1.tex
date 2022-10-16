@@ -16,14 +16,95 @@
     \item \marginnote{10/12:}Classify the following ordinary differential equations (systems) by indicating the order, if they are linear, and if they are autonomous.
     \begin{enumerate}
         \item $y'(x)+y(x)=0$.
+        \begin{proof}[Answer]
+            {\color{white}hi}
+            \begin{center}
+                \small
+                \renewcommand{\arraystretch}{1.2}
+                \begin{tabular}{c|c|c}
+                    Order & Linear? & Autonomous?\\
+                    \hline
+                    1 & Yes & Yes\\
+                \end{tabular}
+            \end{center}
+        \end{proof}
         \item $y''(t)=t\sin(y(t))$.
+        \begin{proof}[Answer]
+            {\color{white}hi}
+            \begin{center}
+                \small
+                \renewcommand{\arraystretch}{1.2}
+                \begin{tabular}{c|c|c}
+                    Order & Linear? & Autonomous?\\
+                    \hline
+                    2 & No & No\\
+                \end{tabular}
+            \end{center}
+        \end{proof}
         \item $x'=-y$, $y'=2x$.
+        \begin{proof}[Answer]
+            {\color{white}hi}
+            \begin{center}
+                \small
+                \renewcommand{\arraystretch}{1.2}
+                \begin{tabular}{c|c|c}
+                    Order & Linear? & Autonomous?\\
+                    \hline
+                    1 & Yes & Yes\\
+                \end{tabular}
+            \end{center}
+        \end{proof}
         \item $y'(t)=y(t)\sin(t)+\cos(y(t))$.
+        \begin{proof}[Answer]
+            {\color{white}hi}
+            \begin{center}
+                \small
+                \renewcommand{\arraystretch}{1.2}
+                \begin{tabular}{c|c|c}
+                    Order & Linear? & Autonomous?\\
+                    \hline
+                    1 & Yes & No\\
+                \end{tabular}
+            \end{center}
+        \end{proof}
     \end{enumerate}
     \item Transform the following differential equations to first-order systems.
     \begin{enumerate}
         \item $y^{(3)}+2y''-y'+y=0$.
+        \begin{proof}
+            Let
+            \begin{equation*}
+                x =
+                \begin{pmatrix}
+                    y\\
+                    y'\\
+                    y''\\
+                \end{pmatrix}
+            \end{equation*}
+            Then
+            \begin{equation*}
+                x' =
+                \begin{pmatrix}
+                    y'\\
+                    y''\\
+                    y^{(3)}\\
+                \end{pmatrix}
+            \end{equation*}
+            so, by comparing components between the above two vectors and then using the original linear equation to define the last entry (with substitutions), we obtain
+            \begin{empheq}[box=\fbox]{align*}
+                x_1' &= x_2\\
+                x_2' &= x_3\\
+                x_3' &= -2x_3+x_2-x_1
+            \end{empheq}
+        \end{proof}
         \item $x''-t\sin x'=x$.
+        \begin{proof}
+            In an analogous manner to the above, we can determine that
+            \begin{empheq}[box=\fbox]{align*}
+                y_1' &= y_2\\
+                y_2' &= y_1+t\sin y_2
+            \end{empheq}
+        \end{proof}
     \end{enumerate}
     \item Solve the following differential equations with initial value $x(0)=x_0$. Also identify the set of $x_0$ for which these solutions are extendable to the whole of $t\geq 0$. When a solution cannot be extended to the whole of $t\geq 0$, determine its lifespan in terms of $x_0$.\par
     \emph{Example}: Solve $x'=x^2$ with $x(0)=x_0$. By separation of variables, the solution reads
@@ -39,9 +120,74 @@
     When $x_0\leq 0$, the solution exists throughout $t\geq 0$. When $x_0>0$, the solution only exists in $[0,1/x_0)$.
     \begin{enumerate}
         \item $x'=x\sin t$.
+        \begin{proof}
+            By separation of variables, the solution reads
+            \begin{equation*}
+                \int_{x_0}^x\frac{\dd{w}}{w} = \int_0^t\sin\tau\dd\tau
+            \end{equation*}
+            The result is
+            \begin{equation*}
+                \ln\frac{x}{x_0} = 1-\cos t
+                \quad\Longleftrightarrow\quad
+                \boxed{x(t) = x_0\e[1-\cos t]}
+            \end{equation*}
+            The set of $x_0$ for which this solution is extendable to the whole of $t\geq 0$ is $\boxed{\R}$.
+        \end{proof}
         \item $x'=t^2\tan x$.
+        \begin{proof}
+            By separation of variables, the solution reads
+            \begin{equation*}
+                \int_{x_0}^x\cot w\dd{w} = \int_0^t\tau^2\dd\tau
+            \end{equation*}
+            where the integral on the left-hand side cannot pass through $x=\pi n$ for any $n\in\Z$. The result is
+            \begin{equation*}
+                \ln\left| \frac{\sin x}{\sin x_0} \right| = \frac{t^3}{3}
+                \quad\Longleftrightarrow\quad
+                \boxed{x(t) = \arcsin(\e[t^3/3]\sin x_0)}
+            \end{equation*}
+            The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is $\boxed{\emptyset}$ because $\cot(x)$ blows up periodically. When $x_0=\pi n$ for any $n\in\Z$, there is no solution because cotangent is undefined at these values and the improper integral blows up. When $x_0\neq\pi n$, the solution only exists in
+            \begin{equation*}
+                \boxed{\left[ 0,\sqrt[3]{3\ln\left| \frac{1}{\sin(x_0)} \right|} \right)}
+            \end{equation*}
+        \end{proof}
         \item $x'=1+x^2$.
+        \begin{proof}
+            By separation of variables, the solution reads
+            \begin{equation*}
+                \int_{x_0}^x\frac{1}{1+w^2}\dd{w} = \int_0^t\dd\tau
+            \end{equation*}
+            The result is
+            \begin{equation*}
+                \tan(x)-\tan(x_0) = t
+                \quad\Longleftrightarrow\quad
+                \boxed{x(t) = \arctan(t+\tan(x_0))}
+            \end{equation*}
+            The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is
+            \begin{equation*}
+                \boxed{\R\setminus\left\{ \frac{\pi}{2}+\pi n\mid n\in\Z \right\}}
+            \end{equation*}
+        \end{proof}
         \item $x'=\e[x]\sin t$.
+        \begin{proof}
+            By separation of variables, the solution reads
+            \begin{equation*}
+                \int_{x_0}^x\e[-w]\dd{w} = \int_0^t\sin\tau\dd\tau
+            \end{equation*}
+            The result is
+            \begin{equation*}
+                -\e[-x]+\e[-x_0] = 1-\cos t
+                \quad\Longleftrightarrow\quad
+                \boxed{x(t) = -\ln(\e[-x_0]-1+\cos t)}
+            \end{equation*}
+            The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is
+            \begin{equation*}
+                \boxed{\{x_0\in\R\mid x_0<\ln(1/2)\}}
+            \end{equation*}
+            When $x_0\geq\ln(1/2)$, the solution only exists in
+            \begin{equation*}
+                \boxed{\left[ 0,\arccos(1-\e[-x_0]) \right)}
+            \end{equation*}
+        \end{proof}
     \end{enumerate}
     \item Consider the harmonic oscillator equation, as mentioned in class:
     \begin{equation*}
@@ -49,14 +195,96 @@
     \end{equation*}
     Here, the initial data $x(0)=x_0$ and $x'(0)=x_1$ are real numbers.
     \begin{enumerate}
-        \item Derive two linearly independent \emph{real} solutions when $\mu>0$. (Hint: You should consider the cases $0<\mu<\omega$, $\mu=\omega$, and $\mu>\omega$ separately.)
+        \item Derive two linearly independent \emph{real} solutions when $\mu>0$. (Hint: You should consider the cases $\mu<2\omega$ and $\mu>2\omega$ separately.)
+        \begin{proof}
+            We first state and prove the following claim: If $r$ is a zero of the characteristic polynomial $r^2+ar+b=0$, then $\e[rx]$ is a solution to the ODE $y''+ay'+by=0$. The proof is simple --- plugging $y=\e[rx]$ and its derivatives $y'=r\e[rx]$ and $y''=r^2\e[rx]$ into the original ODE, we have that
+            \begin{equation*}
+                r^2\e[rx]+ar\e[rx]+b\e[rx] = (r^2+ar+b)\e[rx]
+                = 0
+            \end{equation*}
+            iff $r^2+ar+b=0$, i.e., if $r$ is a root of said polynomial, as desired.\par
+            With this guiding idea, we will find the roots of
+            \begin{equation*}
+                r^2+\mu r+\omega^2 = 0
+            \end{equation*}
+            Using the quadratic formula, the two roots are
+            \begin{align*}
+                r_1 &= \frac{-\mu+\sqrt{\mu^2-4\omega^2}}{2}&
+                r_2 &= \frac{-\mu-\sqrt{\mu^2-4\omega^2}}{2}
+            \end{align*}
+            We now divide into two cases ($\mu>2\omega$ and $\mu<2\omega$). If $\mu>2\omega$, then $r_1,r_2$ are real and we take
+            \begin{equation*}
+                \boxed{\e[r_1t],\e[r_2t]}
+            \end{equation*}
+            to be our linearly independent, real solutions.\par
+            On the other hand, if $\mu<2\omega$, then $r_1,r_2$ are of the form $\alpha\pm i\beta$. However, we can still obtain real solutions from these by taking the following linear combinations.
+            \begin{align*}
+                s_1 &= r_1+r_2 = 2\alpha&
+                s_2 &= i(r_1-r_2) = 2\beta
+            \end{align*}
+            Thus, we take
+            \begin{equation*}
+                \boxed{\e[s_1t],\e[s_2t]}
+            \end{equation*}
+            to be our linearly independent, real solutions.\par
+            Thus, our general solution is of the form
+            \begin{equation*}
+                x(t) = A\e[c_1t]+B\e[c_2t]
+            \end{equation*}
+            where $c_1=r_1,s_1$ and $c_2=r_2,s_2$ for some $A,B\in\R$. Plugging in the initial conditions, we get
+            \begin{align*}
+                x_0 = x(0) &= A+B\\
+                x_1 = x'(0) &= Ac_1+Bc_2
+            \end{align*}
+            which we can solve for $A,B$, yielding
+            \begin{equation*}
+                \begin{cases}
+                    A = \frac{x_1-x_0c_2}{c_1-c_2}\\
+                    B = \frac{x_0c_1-x_1}{c_1-c_2}
+                \end{cases}
+            \end{equation*}
+            Therefore, our final particular solution is
+            \begin{equation*}
+                \boxed{x(t) = \frac{x_1-x_0c_2}{c_1-c_2}\e[c_1t]+\frac{x_0c_1-x_1}{c_1-c_2}\e[c_2t]}
+            \end{equation*}
+        \end{proof}
         \item Recall that $\mu=b/m$ and $\omega^2=k/m$. Recall also that the mechanical energy for the oscillator reads
         \begin{equation*}
             E = \frac{1}{2}m|x'|^2+\frac{1}{2}kx^2
         \end{equation*}
         Compute the time derivative of $E$ and conclude that $E$ is exponentially decaying for $b>0$, i.e., the mechanical energy is not conserved in this case. Does this violate the law of conservation of mechanical energy?
+        \begin{proof}
+            % From part (a), we have that
+            % \begin{align*}
+            %     x(t) &= A\e[c_1t]+B\e[c_2t]&
+            %     x'(t) &= Ac_1\e[c_1t]+Bc_2\e[c_2t]
+            % \end{align*}
+            % Thus,
+            % \begin{equation*}
+            %     E = \frac{1}{2}m\left| Ac_1\e[c_1t]+Bc_2\e[c_2t] \right|^2+\frac{1}{2}k\left( A\e[c_1t]+B\e[c_2t] \right)^2
+            % \end{equation*}
+            % Applying the chain rule, we have that
+            % \begin{align*}
+            %     \dv{E}{t} &= m\left( Ac_1\e[c_1t]+Bc_2\e[c_2t] \right)\left( Ac_1^2\e[c_1t]+Bc_2^2\e[c_2t] \right)+k\left( A\e[c_1t]+B\e[c_2t] \right)\left( Ac_1\e[c_1t]+Bc_2\e[c_2t] \right)\\
+            %     &= mx'x''+kxx'
+            % \end{align*}
+
+
+            Applying the chain rule, we have that
+            \begin{equation*}
+                \dv{E}{t} = mx'x''+kxx'
+            \end{equation*}
+            It follows that
+            \begin{align*}
+                \dv{E}{t} &= mx'(-\mu x'-\omega^2x)+kxx'\\
+                &= x'(-bx'-kx)+kxx'\\
+                &= -b(x')^2
+            \end{align*}
+            Now $x'\neq 0$ (as an exponential function). Hence, $(x')^2>0$. This and $b>0$ show that $\dv{E}{t}$ is always equal to a negative value. But this is characteristic of exponential decay, as desired.\par
+            Mechanical energy is conserved; it is dispersed from system to surroundings by the drag $b$.
+        \end{proof}
     \end{enumerate}
-    \item Use the transformation $w=ty$ to convert
+    \item Use the transformation $y=tw$ to convert
     \begin{equation*}
         y' = f(y/t)
     \end{equation*}
@@ -67,6 +295,44 @@
         y(2) = -7
     \end{equation*}
     Determine the lifespan (you can use a calculator for an approximate value).
+    \begin{proof}
+        If $y=tw$, then
+        \begin{equation*}
+            \dv{y}{t} = w+t\dv{w}{t}
+        \end{equation*}
+        Thus, the ODE in terms of $w$ is
+        \begin{equation*}
+            \boxed{\dv{w}{t} = \frac{f(w)-w}{t}}
+        \end{equation*}
+        which is a separable differential equation.\par
+        We have that
+        \begin{equation*}
+            tyy'+4t^2+y^2 = 0
+            \quad\Longleftrightarrow\quad
+            y' = -4\left( \frac{y}{t} \right)^{-1}-\frac{y}{t}
+        \end{equation*}
+        Using the above transformation yields
+        \begin{equation*}
+            \dv{w}{t} = \frac{(-4w^{-1}-w)-w}{t}
+        \end{equation*}
+        Transforming the initial condition as well gives
+        \begin{equation*}
+            w(2) = \frac{y(2)}{2} = -\frac{7}{2}
+        \end{equation*}
+        We can simplify and solve the above as follows.
+        \begin{align*}
+            \frac{\dd{w}}{-4w^{-1}-2w} &= \frac{\dd{t}}{t}\\
+            -\frac{1}{4}\int_{-7/2}^w\frac{2v\dd{v}}{v^2+2} &= \int_2^t\frac{\dd\tau}{\tau}\\
+            -\frac{1}{4}\left[ \ln(w^2+2)-\ln(14.25) \right] &= \ln(\frac{t}{2})\\
+            w &= \pm\frac{1}{t^2}\sqrt{228-2t^4}\\
+            \Aboxed{y(t) &= -\frac{1}{t}\sqrt{228-2t^4}}
+        \end{align*}
+        Note that we pick the negative in the final step to fit the initial condition.\par
+        The lifespan of $y(t)$ can be determined by calculating when $228-2t^4=0$. This occurs such that the lifespan is approximately
+        \begin{equation*}
+            \boxed{[0,3.27]}
+        \end{equation*}
+    \end{proof}
     \item Use the transformation $w=y^{1-\alpha}$ to convert Bernoulli's equation
     \begin{equation*}
         y'+p(t)y = q(t)y^\alpha
@@ -80,14 +346,90 @@
         y(0) = -2
     \end{equation*}
     Determine the lifespan (you can use a calculator for an approximate value).
+    \begin{proof}
+        If $w=y^{1-\alpha}$, then
+        \begin{align*}
+            y &= w^{1/(1-\alpha)}&
+            \dv{y}{t} &= \frac{w^{\alpha/(1-\alpha)}}{1-\alpha}\dv{w}{t}
+        \end{align*}
+        Thus, the ODE in terms of $w$ is
+        \begin{equation*}
+            \boxed{\frac{w^{\alpha/(1-\alpha)}}{1-\alpha}\dv{w}{t}+p(t)w^{1/(1-\alpha)} = q(t)w^{\alpha/(1-\alpha)}}
+        \end{equation*}
+        which is an exact differential equation.\par
+        We have that
+        \begin{equation*}
+            6y'-2y = ty^4
+            \quad\Longleftrightarrow\quad
+            y'+\left( -\frac{1}{3} \right)y = \left( \frac{t}{6} \right)y^4
+        \end{equation*}
+        Using the above transformation yields
+        \begin{equation*}
+            -\frac{w^{-4/3}}{3}\dv{w}{t}-\frac{w^{-1/3}}{3} = \frac{tw^{-4/3}}{6}
+        \end{equation*}
+        We can simplify and evaluate the above as follows.
+        \begin{align*}
+            \frac{1}{3}w^{-4/3}\dv{w}{t}+\frac{1}{3}w^{-1/3} &= -\frac{t}{6}w^{-4/3}\\
+            \dv{w}{t}+w &= -\frac{t}{2}\\
+            \e[t]\dv{w}{t}+\e[t]w &= -\frac{t}{2}\e[t]\\
+            \dv{t}(\e[t]w) &= -\frac{t}{2}\e[t]\\
+            \e[t]w &= -\frac{1}{2}\int t\e[t]\dd{t}\\
+            &= -\frac{1}{2}\e[t](t-1)+C\\
+            w &= -\frac{1}{2}(t-1)+C\e[-t]\\
+            y^{-3} &= -\frac{1}{2}(t-1)+C\e[-t]\\
+            y &= \left[ -\frac{1}{2}(t-1)+C\e[-t] \right]^{-1/3}
+        \end{align*}
+        We now apply the initial condition.
+        \begin{align*}
+            \left[ -\frac{1}{2}(0-1)+C\e[-0] \right]^{-1/3} &= y(0)\\
+            \left[ \frac{1}{2}+C \right]^{-1/3} &= -2\\
+            C &= -\frac{5}{8}
+        \end{align*}
+        Therefore, the solution to the ODE in question is
+        \begin{equation*}
+            \boxed{y(t) = \left[ -\frac{1}{2}(t-1)-\frac{5}{8}\e[-t] \right]^{-1/3}}
+        \end{equation*}
+        The equation \fbox{does not have finite lifespan}.
+    \end{proof}
     \item Show that
     \begin{equation*}
         (4bxy+3x+5)y'+3x^2+8ax+2by^2+3y = 0
     \end{equation*}
     is an exact equation, no matter what value $a,b$ take. Find the implicit relation satisfied by the solution $y(x)$ and $x$.
+    \begin{proof}
+        To show that an equation of the form $gy'+f=0$ is exact, it will suffice to confirm that
+        \begin{equation*}
+            \pdv{g}{x} = \pdv{f}{y}
+        \end{equation*}
+        Since the equation in question is of this form, we may evaluate directly:
+        \begin{align*}
+            \pdv{g}{x} &= 4by+3&
+            \pdv{f}{y} &= 4by+3
+        \end{align*}
+        By transitivity, we have the desired result.\par
+        We now want to find $F$ such that $\pdv*{F}{x}=f$ and $\pdv*{F}{y}=g$. Starting with the former constraint, we can determine that
+        \begin{align*}
+            F(x,y) &= \int(3x^2+8ax+2by^2+3y)\dd{x}\\
+            &= x^3+4ax^2+2bxy^2+3xy+h(y)
+        \end{align*}
+        where $h(y)$ is a functional "constant" of integration. We now differentiate with respect to $y$.
+        \begin{equation*}
+            \pdv{F}{y} = 4bxy+3x+\dv{h}{y}
+        \end{equation*}
+        Knowing that $\pdv*{F}{y}=g$, we can use the above equation to solve for $h$ as follows.
+        \begin{align*}
+            4bxy+3x+5 &= 4bxy+3x+\dv{h}{y}\\
+            \dv{h}{y} &= 5\\
+            h(y) &= 5y
+        \end{align*}
+        Therefore, we know that
+        \begin{equation*}
+            \boxed{F(x,y) = x^3+4ax^2+2bxy^2+3xy+5y}
+        \end{equation*}
+    \end{proof}
     \item Let $a,b$ be constants. For Euler's equation
     \begin{equation*}
-        t^2y''+aty'+bt = f(t)
+        t^2y''+aty'+by = f(t)
     \end{equation*}
     consider the transformation $w(\tau)=y(\e[\tau])$. What is the differential equation satisfied by $w(\tau)$? Use this transformation to solve
     \begin{equation*}
@@ -97,13 +439,81 @@
         ,\quad
         y'(1) = 1
     \end{equation*}
+    \begin{proof}
+        The differential equation satisfied by $w(\tau)$ is
+    \end{proof}
     \item Suppose there is a capacitor with capacitance $C$ being charged by a battery of fixed voltage $V_0$. Suppose there is a resistor $R$ connected to $C$. Then the charge $Q(t)$ of the capacitor satisfies the differential equation
     \begin{equation*}
         RQ'(t)+\frac{Q(t)}{C} = V_0
     \end{equation*}
     This is the equation for an RC charging circuit.\par
     Find the explicit solution of this equation with $Q(0)=0$. Explain why the product $RC$ is important in determining the charging time. For $R=\SI{e3}{\ohm}$, $V_0=\SI{1}{\volt}$, $C=\SI{1}{\micro\farad}$, how much time does it take for the capacitor to be charged to 98\%? (You may use a calculator.)
+    \begin{proof}
+        We can evaluate the ODE as follows.
+        \begin{align*}
+            \dv{Q}{t}+\frac{1}{RC}Q &= V_0\\
+            \e[t/RC]\dv{Q}{t}+\frac{1}{RC}\e[t/RC]Q &= \e[t/RC]V_0\\
+            \dv{t}(Q\e[t/RC]) &= \e[t/RC]V_0\\
+            Q\e[t/RC] &= RCV_0\e[t/RC]+C_1\\
+            Q(t) &= RCV_0+C_1\e[-t/RC]
+        \end{align*}
+        We now apply the initial condition.
+        \begin{align*}
+            0 &= Q(0)\\
+            &= RCV_0+C_1\\
+            C_1 &= -RCV_0
+        \end{align*}
+        Therefore, the solution to the ODE in question is
+        \begin{equation*}
+            \boxed{Q(t) = RCV_0\left( 1-\e[-t/RC] \right)}
+        \end{equation*}
+        The product $RC$ (technically referred to as the time constant) is important in determining charging time because it is directly proportional to the rate of exponential charging. Indeed, if $RC$ doubles, the capacitor will take twice as long to charge (and vice versa, for example, if $RC$ halves).\par
+        The amount of time it takes for the capacitor to charge to 98\% under the given conditions ($R=\SI{e3}{\ohm}$ and $C=\SI{e-6}{\farad}$) may be determined as follows.
+        \begin{align*}
+            0.98 &= 1-\e[-t/RC]\\
+            t &= -RC\ln(0.02)\\
+            \Aboxed{t &= \SI{3.9e-3}{\second}}
+        \end{align*}
+    \end{proof}
     \item A parachutist is falling from a plane. Suppose the parachute is opened at height $H$, when the falling velocity is $v_0$. Suppose that the air resistance exerted on the parachute is proportional to the square of the velocity with ratio $\eta$. Let the gravitational constant be $g$, and suppose that the total mass of the parachutist and the parachute is $m$. Write down the differential equation satisfied by the shift $x$, together with the initial conditions. Solve this IVP. What is the velocity as $t\to +\infty$? Can you derive the final velocity based on physical considerations?
+    \begin{proof}
+        For the sake of simplicity, we will write a one-dimensional differential equation corresponding to vertical displacement. Let's begin.\par
+        When the parachutist is falling freely, there is only one (idealized) force acting on them: gravity ($F_g$). As soon as the parachute is opened, another force is added to the mix: drag ($F_d$). By Newton's second law, the net force is equal to the parachutist/parachute's mass times their acceleration. Taking a convention of upwards displacement being positive, we can thus write that
+        \begin{equation*}
+            \sum F_z = F_d-F_g = ma
+        \end{equation*}
+        Since $a=x''$, $F_g=g$, and $F_d=\eta v^2=\eta(x')^2$, the differential equation satisfied by the shift $x$ is
+        \begin{equation*}
+            mx'' = \eta(x')^2-g
+        \end{equation*}
+        Let the time at which the parachute is opened be $t=0$. Then the initial conditions are
+        \begin{align*}
+            x(0) &= H&
+            x'(0) &= v_0
+        \end{align*}
+        To solve this IVP, we substitute $v=x'$ and evaluate the resulting first-order differential equation to start:
+        \begin{align*}
+            mv' &= \eta v^2-g\\
+            \frac{\dd{v}}{v^2-g/\eta} &= \frac{\eta}{m}\dd{t}\\
+            \int_{v_0}^v\frac{\dd{w}}{w^2-g/\eta} &= \int_0^t\frac{\eta}{m}\dd{\tau}\\
+            \coth^{-1}(v)-\coth^{-1}(v_0) &= \frac{\eta}{m}t\\
+            v &= \coth(\frac{\eta}{m}t+\coth^{-1}(v_0))
+            % -\frac{1}{2\sqrt{g/\eta}}\ln(\frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})}) &= \frac{\eta}{m}t\\
+            % \ln(\frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})}) &= -\frac{2t\sqrt{g\eta}}{m}\\
+            % \frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})} &= \e[-2t\sqrt{g\eta}/m]\\
+            % \frac{(v+\sqrt{g/\eta})}{(v-\sqrt{g/\eta})} &= \frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]\\
+            % v &= -\sqrt{g/\eta}\frac{1+\frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]}{1-\frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]}\\
+            % v &= -\sqrt{g/\eta}\frac{\frac{(v_0-\sqrt{g/\eta})}{(v_0+\sqrt{g/\eta})}+\e[-2t\sqrt{g\eta}/m]}{\frac{(v_0-\sqrt{g/\eta})}{(v_0+\sqrt{g/\eta})}-\e[-2t\sqrt{g\eta}/m]}
+        \end{align*}
+        Assuming the velocities are greater than one (a reasonable assumption; if not, change units), the hyperbolic cotangent is perfectly acceptable to use here. Returning the substitution $v=x'$, we can determine that
+        \begin{align*}
+            x' &= \coth(\frac{\eta}{m}t+\coth^{-1}(v_0))\\
+            \int_H^x\dd{z} &= \int_0^t\coth(\frac{\eta}{m}\tau+\coth^{-1}(v_0))\dd\tau\\
+            x-H &= \frac{m}{\eta}\ln(\sinh(\frac{\eta}{m}t+\coth^{-1}(v_0))\sqrt{v_0^2-1})\\
+            \Aboxed{x &= H+\frac{m}{\eta}\ln(\sinh(\frac{\eta}{m}t+\coth^{-1}(v_0))\sqrt{v_0^2-1})}
+        \end{align*}
+        The final velocity approaches $\boxed{1}$.
+    \end{proof}
 \end{enumerate}
 
 
