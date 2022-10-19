@@ -1,0 +1,312 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{3}
+
+\begin{document}
+
+
+
+
+\chapter{???}
+\section{Autonomous Linear Systems}
+\begin{itemize}
+    \item \marginnote{10/17:}Today: General theory for autonomous linear systems.
+    \item Review session Wednesday (no new material).
+    \item First midterm Friday.
+    \begin{itemize}
+        \item Test problems will be slight variations of homework problems or examples given in class.
+    \end{itemize}
+    \item \textbf{Linear autonomous system}: A system of $n$ linear equations written in the following form. \emph{Denoted by} $\bm{y'=Ay}$. \emph{Given by}
+    \begin{align*}
+        \begin{pmatrix}
+            y^1\\
+            \vdots\\
+            y^n\\
+        \end{pmatrix}'
+        &= 
+        \begin{pmatrix}
+            a_{11} & \cdots & a_{1n}\\
+            \vdots & \ddots & \vdots\\
+            a_{n1} & \cdots & a_{nn}\\
+        \end{pmatrix}
+        \begin{pmatrix}
+            y^1\\
+            \vdots\\
+            y^n\\
+        \end{pmatrix}&
+        y(0) &= 0
+    \end{align*}
+    \begin{itemize}
+        \item Note that the $a_{ij}$'s are complex or real.
+    \end{itemize}
+    \item The explicit solution is given by $y(t)=\e[tA]y_0$.
+    \begin{itemize}
+        \item Recall that $\dv*{t}(\e[tA])=A\e[tA]$, as we can show via the power series expansion.
+    \end{itemize}
+    \item \textbf{Picard iteration}: We take
+    \begingroup
+    \allowdisplaybreaks
+    \begin{align*}
+        y'(t) &= Ay(t)\\
+        \int_0^ty'(\tau)\dd{\tau} &= \int_0^tAy(\tau)\dd\tau\\
+        y(t) &= y_0+\int_0^tAy(\tau_1)\dd\tau_1\\
+        &= y_0+\int_0^tA\left[ y_0+\int_0^{\tau_1}Ay(\tau_2)\dd\tau_2 \right]\dd\tau_1\\
+        &= y_0+tAy_0+\int_0^t\int_0^{\tau_1}A^2y(\tau_2)\dd\tau_2\dd\tau_1\\
+        &= y_0+tAy_0+\int_0^t\int_0^{\tau_1}A^2\left[ y_0+\int_0^{\tau_2}Ay(\tau_3)\dd\tau_3 \right]\dd\tau_2\dd\tau_1\\
+        &= y_0+tAy_0+\frac{t^2A^2}{2}+\int_0^t\int_0^{\tau_1}\int_0^{\tau_2}A^3y(\tau_3)\dd\tau_3\dd\tau_2\dd\tau_1\\
+        &= \sum_{k=0}^m\frac{t^kA^k}{k!}y_0+A^{m+1}\underbrace{\int_0^t\cdots\int_0^{\tau_m}}_{m+1}y(\tau_{m+1})\dd\tau_{m+1}\cdots\dd\tau_1
+    \end{align*}
+    \endgroup
+    \begin{itemize}
+        \item We get from the second to the third line by substituting $y(t)$, as defined into the second line, into where it appears in the integral.
+    \end{itemize}
+    \item We want to show that the integral converges to zero.
+    \begin{itemize}
+        \item The magnitude of the remainder is less than or equal to
+        \begin{equation*}
+            \norm{A}^{m+1}\left( \sup_{\tau\in[0,t]}|y(\tau)| \right)\frac{t^{m+1}}{(m+1)!}
+        \end{equation*}
+        \begin{itemize}
+            \item Justification of this term: Look at the rightmost term in the last line of the Picard iteration above. Imagine taking the norm of it. Splitting the "scalar" integral from the matrix allows us to take a matrix norm, and the property $\norm{AB}\leq\norm{A}\norm{B}$ tells us that $\norm{A^{m+1}}\leq\norm{A}^{m+1}$. Then with respect to the integral, if we evaluate it, we will get the next polynomial term in the sequence --- $t^{m+1}/(m+1)!$ --- times at most the maximum value of $y$ at every infinitesimal.
+        \end{itemize}
+        \item We can visualize lower-dimensional integrals as the volume of the corresponding unit \textbf{simplex}.
+        \begin{itemize}
+            \item For example, in $\R^2$,
+            \begin{equation*}
+                \int_0^1\int_0^{\tau_1}1\dd\tau_2\dd{\tau_1}
+            \end{equation*}
+            can be visualized as the area of the unit triangle. This rationalizes why it evaluates to $1/2$, the area of said triangle.
+            \item In $\R^3$,
+            \begin{equation*}
+                \int_0^1\int_0^{\tau_1}\int_0^{\tau_2}1\dd\tau_3\dd\tau_2\dd{\tau_1}
+            \end{equation*}
+            can be visualized as the area of the unit simplex. This rationalizes why it evaluates to $1/3!=1/6$, the volume of said simplex.
+        \end{itemize}
+        \item Since $(m+1)!\to\infty$ faster than any other term, the whole thing goes to zero.
+        \item Thus, $y(t)=\e[tA]y_0$.
+    \end{itemize}
+    \item \textbf{Simplex}: A higher-dimensional generalization of a triangle.
+    \item We now consider the inhomogeneous equation. Before, we used an integrating factor. We will now do that again.
+    \begin{align*}
+        y' &= Ay+f(t)\\
+        y'-Ay &= f(t)\\
+        \e[-tA]y'-A\e[-tA]y &= \e[-tA]f(t)\\
+        \dv{t}(\e[-tA]y(t)) &= \e[-tA]f(t)\\
+        \e[-tA]y(t)-y_0 &= \int_0^t\e[-\tau A]f(\tau)\dd\tau\\
+        y(t) &= \e[tA]y_0+\int_0^t\e[(t-\tau)A]f(\tau)\dd\tau
+    \end{align*}
+    \begin{itemize}
+        \item We also call this the Duhamel formula.
+    \end{itemize}
+    \item Note that if your time scale starts from $t_0$, then
+    \begin{equation*}
+        y(t) = \e[(t-t_0)A]y(t_0)+\int_{t_0}^t\e[(t-\tau)A]f(\tau)\dd\tau
+    \end{equation*}
+    \item The utility of JNF: ??
+    \item Rewrite $A=QBQ^{-1}$, where $B$ is in JNF.
+    \begin{itemize}
+        \item Shao reviews some facts of JNF from previous lectures.
+    \end{itemize}
+    \item We have that
+    \begin{equation*}
+        \e[tA]y_0 = Q\e[tB]Q^{-1}y_0
+    \end{equation*}
+    \item Example: Let
+    \begin{equation*}
+        A =
+        \begin{pmatrix}
+            -2 & 2 & 1\\
+            -7 & 4 & 2\\
+            5 & 0 & 0\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item This is the same matrix from a previous lecture. As before, we have that
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                0 & 1 & 0\\
+                -1 & -1 & 3\\
+                2 & 5 & -5\\
+            \end{pmatrix}&
+            B &=
+            \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 1\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{align*}
+        \begin{itemize}
+            \item Recall that the left two vectors are normal eigenvectors (the leftmost one corresponds to $\lambda_1=0$ and the middle one corresponds to $\lambda_2=1$) and the rightmost one is a generalized eigenvector.
+        \end{itemize}
+        \item We can compute that
+        \begin{equation*}
+            \e[tB] =
+            \begin{pmatrix}
+                \e[0t] & 0 & 0\\
+                0 & \e[1t] & 1t\e[1t]\\
+                0 & 0 & \e[1t]\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & \e[t] & t\e[t]\\
+                0 & 0 & \e[t]\\
+            \end{pmatrix}
+        \end{equation*}
+        \item It follows that
+        \begin{align*}
+            \e[tA]y_0 &= Q
+            \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & \e[t] & t\e[t]\\
+                0 & 0 & \e[t]\\
+            \end{pmatrix}
+            Q^{-1}y_0\\
+            &=
+            \begin{pmatrix}
+                \e[t]-3t\e[t] & 2t\e[t] & t\e[t]\\
+                 & \vdots & \\
+                 & \vdots & \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                y_0^1\\
+                y_0^2\\
+                y_0^3\\
+            \end{pmatrix}
+        \end{align*}
+    \end{itemize}
+    \item \textbf{Stable} (eigenvalue): An eigenvalue $\lambda_j=\sigma_j+i\beta_j$ for which $\sigma_j<0$.
+    \item \textbf{Unstable} (eigenvalue): An eigenvalue $\lambda_j=\sigma_j+i\beta_j$ for which $\sigma_j>0$.
+    \item \textbf{Stable} (subspace of the system): The space of all (generalized) eigenvectors corresponding to the stable eigenvalues.
+    \item \textbf{Unstable} (subspace of the system): The space of all (generalized) eigenvectors corresponding to the unstable eigenvalues.
+    \item Recall that $B_j$ acts on $K_j$.
+    \begin{itemize}
+        \item ... in picture??
+        \item Recall that $\C^n=K_1\oplus\cdots\oplus K_m$.
+        \item $P_j$ is not an \emph{orthogonal} projection, but it is a projection of $y_0$ onto $K_j$. It's also a polynomial??
+        \item If $\sigma_j<0$, then $|\e[tA]P_jy_0|\to 0$ at an exponential rate.
+    \end{itemize}
+    \item Similarly, if you're working with an unstable eigenvalue, then $\sigma_j>0$ implies $|\e[tA]P_jy_0|\to+\infty$ at an exponential rate.
+    \begin{itemize}
+        \item The rate of growth depends on $\sigma_j$.
+    \end{itemize}
+    \item Along the stable subspaces, your points will be attracted to zero.
+    \item Along the unstable subspaces, your points will be repelled from zero.
+    \item The stable subspace of our example is
+    \begin{equation*}
+        \spn\left\{
+            \begin{pmatrix}
+                1\\
+                -1\\
+                5\\
+            \end{pmatrix},
+            \begin{pmatrix}
+                0\\
+                3\\
+                -5\\
+            \end{pmatrix}
+        \right\}
+    \end{equation*}
+    \item If $\sigma_h=0$, then we have rotation around a point, oscillation about zero, or oscillation whose magnitude grows to infinity. We do not talk about its stability.
+    \begin{itemize}
+        \item We do not include the eigenvector corresponding to $\lambda_1=0$ in the above basis of the stable subspace because the solution oscillates about $y_1$??
+    \end{itemize}
+    \item Let $x(t)$ be a higher order scalar ODE.
+    \begin{itemize}
+        \item Then we can make a system out of it:
+        \begin{equation*}
+            \begin{pmatrix}
+                y^1\\
+                \vdots\\
+                y^n\\
+            \end{pmatrix}'
+            = \underbrace{
+                \begin{pmatrix}
+                    0 & 1 &  & \\
+                     & \ddots & \ddots & \\
+                     &  & 0 & 1\\
+                    -a_0 & -a_1 & \cdots & -a_{n-1}\\
+                \end{pmatrix}
+            }_{F[p]}
+            \begin{pmatrix}
+                y^1\\
+                \vdots\\
+                y^n\\
+            \end{pmatrix}
+        \end{equation*}
+        \item $F[p]$ is the \textbf{Frobenius} matrix.
+        \item The transpose of this matrix is a very special matrix called the \textbf{companion} matrix $C[p]=F[p]^T$.
+        \item Let $p(z)=z^n+a_{n-1}z^{n-1}+\cdots+a_1z+a_0$. Then $\chi_{C[p]}=p(z)$.
+        \begin{proof}
+            We have that
+            \begin{align*}
+                \chi_{C[p]}(z) &= \det(zI-C[p])\\
+                &= z(z^{n-1}+a_{n-1}(z^{n-2}+a_{n-2}(z^{n-3}+\cdots)))\\
+                &= p(z)
+            \end{align*}
+            as desired.
+        \end{proof}
+        \item Roots of $p(z)$ are the eigenvalues of $F[p]$ and $C[p]$.
+        \item We have that $C[p]e_i=e_{i+1}$ for $i=1,\dots,n-1$ and
+        \begin{equation*}
+            C[p]e_n = -a_0e_1-\cdots-a_{n-1}e_n
+        \end{equation*}
+        which implies that if $r(z)/\deg r<n$ nullifies $C[p]$, then necessarily $r(z)=p(z)$ since $(z-\lambda_j)^{<\alpha_j}$??
+    \end{itemize}
+    \item Theorem: In the Jordan normal form $F[p]$, each $\lambda_j$ corresponds to only one Jordan block.
+    \begin{itemize}
+        \item Thus,
+        \begin{equation*}
+            F[p] \sim
+            \begin{pmatrix}
+                J_{\alpha_1}(\lambda_1) &  & \\
+                 & \ddots & \\
+                 &  & J_{\alpha_m}(\lambda_m)\\
+            \end{pmatrix}
+        \end{equation*}
+        The implication is that
+        \begin{equation*}
+            J_d(\lambda) \neq
+            \begin{pmatrix}
+                \lambda &  & \\
+                 & \lambda & 1\\
+                 &  & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        ever??
+    \end{itemize}
+    \item Corollary: The solution $y(t)$ is of the form
+    \begin{equation*}
+        (\cdots)+a_1\e[t\lambda_j]+\cdots+c_{\alpha_j-1}t^{\alpha_j-1}\e[t\lambda_j]+\cdots
+    \end{equation*}
+    \item Example: Solving a second-order ODE.
+    \begin{equation*}
+        x''+ax'+bx = 0
+        \quad\Longleftrightarrow\quad
+        \begin{pmatrix}
+            y^1\\
+            y^2\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            0 & 1\\
+            -b & -a\\
+        \end{pmatrix}
+        \begin{pmatrix}
+            y^1\\
+            y^2\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item The characteristic polynomial of the equation (and this matrix) is $z^2+az+b=0$.
+        \item If $\lambda_1\neq\lambda_2$, then $x(t)=A\e[t\lambda_1]+B\e[t\lambda_2]$. If $\lambda_1=\lambda_2=\lambda$, then $x(t)=A\e[t\lambda]+Bt\e[t\lambda]$.
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\end{document}
