@@ -1,0 +1,288 @@
+\documentclass[../psets.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\leftmark}{Problem Set \thesection}
+\stepcounter{section}
+\setenumerate[1]{label={\textbf{\arabic*.}}}
+\setenumerate[2]{label={(\arabic*)}}
+
+\begin{document}
+
+
+
+
+\section{Linear Algebra}
+\subsection*{Required Problems}
+\begin{enumerate}
+    \item \marginnote{10/19:}This question helps to complete the computations omitted in class. In deriving the Kepler orbits for the two-body problem, we have successfully reduced the differential equation satisfied by the curve $r=r(\varphi)$ to
+    \begin{equation*}
+        \left( \dv{r}{\varphi} \right)^2+r^2 = \frac{2GMr^3}{l_0^2}+\frac{2Er^4}{ml_0^2}
+    \end{equation*}
+    Show that the function $\mu=1/r$ satisfies the differential equation
+    \begin{equation*}
+        \left( \dv{\mu}{\varphi} \right)^2+\mu^2 = \frac{2GM\mu}{l_0^2}+\frac{2E}{ml_0^2}
+    \end{equation*}
+    By differentiating with respect to $\varphi$ again, this reduces to either $\dv*{\mu}{\varphi}=0$ or
+    \begin{equation*}
+        \dv[2]{\mu}{\varphi}+\mu-\frac{GM}{l_0^2} = 0
+    \end{equation*}
+    Find the general solution of the latter, hence conclude that $r=r(\varphi)$ represents a conic section. \emph{Hint}: There is a very obvious particular solution.
+    \item The general formula for the inverse of an $n\times n$ invertible matrix is very lengthy. However, for a $2\times 2$ matrix
+    \begin{equation*}
+        \begin{pmatrix}
+            a & b\\
+            c & d\\
+        \end{pmatrix}
+    \end{equation*}
+    satisfying $ad-bc\neq 0$, there is a very simple formula. Try to find it; this could be very helpful if you can remember it.
+    \item Compute the determinant of the following matrices. Determine whether they are invertible or not.
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            1 & 2 & 3\\
+            4 & 5 & 6\\
+            7 & 8 & 9\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            2 & 2 & 3 & 6\\
+            1 & 3 & 4 & 2\\
+            0 & 0 & -1 & 2\\
+            0 & 0 & 1 & 2\\
+        \end{pmatrix}&
+        C &=
+        \begin{pmatrix}
+            -1 & 2 & 1\\
+            3 & -1 & 2\\
+            2 & 1 & 3\\
+        \end{pmatrix}
+    \end{align*}
+    \item Determine whether the following linear systems admit solution(s); if they do, write down the solution (or the formula for the general solution).
+    \begin{enumerate}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                1 & 2\\
+                2 & -1\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                x^1\\
+                x^2\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                -1\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                -1 & 2 & 1\\
+                3 & -1 & 2\\
+                2 & 1 & 3\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                x^1\\
+                x^2\\
+                x^3\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1\\
+                2\\
+                3\\
+            \end{pmatrix}
+        \end{equation*}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                -1 & 2 & 1\\
+                3 & -1 & 2\\
+                2 & 1 & 3\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                x^1\\
+                x^2\\
+                x^3\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1\\
+                0\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{enumerate}
+    \item Find the connecting matrix from the basis $
+        \begin{pmatrix}
+            p_1 & p_2 & p_3\\
+        \end{pmatrix}
+    $ to the new basis $
+        \begin{pmatrix}
+            q_1 & q_2 & q_3\\
+        \end{pmatrix}
+    $, where
+    \begin{align*}
+        \begin{pmatrix}
+            p_1 & p_2 & p_3\\
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            1 & 0 & -1\\
+            1 & 2 & 0\\
+            0 & -1 & 2\\
+        \end{pmatrix}&
+        \begin{pmatrix}
+            q_1 & q_2 & q_3\\
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            0 & 1 & 0\\
+            1 & -1 & 1\\
+            0 & 0 & 1\\
+        \end{pmatrix}
+    \end{align*}
+    That is, represent $q_1,q_2,q_3$ as linear combinations of $p_1,p_2,p_3$.
+    \item Let $\theta\in[0,2\pi)$. The rotation through angle $\theta$ in the plane is represented by the matrix
+    \begin{equation*}
+        R(\theta) =
+        \begin{pmatrix}
+            \cos\theta & -\sin\theta\\
+            \sin\theta & \cos\theta\\
+        \end{pmatrix}
+    \end{equation*}
+    Compute its determinant, characteristic polynomial, and eigenvalues. Compute its eigenvectors in $\C^2$. You need to use the Euler formula $\e[i\theta]=\cos\theta+i\sin\theta$. For two angles $\theta,\varphi$, compute the product $R(\theta)R(\varphi)$ and represent it in terms of $\theta+\varphi$. What is the geometric meaning of this equality?
+    \stepcounter{enumi}
+    \item Find the algebraic and geometric multiplicities of the eigenvalues of the following matrices.
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            1 & 1 & 2\\
+            0 & 1 & 2\\
+            0 & 0 & 3\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            1 & 0 & 2\\
+            0 & 1 & 2\\
+            0 & 0 & 3\\
+        \end{pmatrix}
+    \end{align*}
+    \item Compute the Jordan normal form of the following $2\times 2$ matrices.
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            2 & 1\\
+            1 & 2\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            0 & -1\\
+            1 & -2\\
+        \end{pmatrix}
+    \end{align*}
+    Notice that you not only need to find all the Jordan blocks, but also need to find the Jordan basis matrix $Q$ such that $Q^{-1}AQ$ is in Jordan normal form.
+    \setcounter{enumi}{9}
+    \item Compute the Jordan normal form of the following $3\times 3$ matrices.
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            4 & -5 & 2\\
+            5 & -7 & 3\\
+            6 & -9 & 4\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            2 & -1 & -1\\
+            2 & -1 & -2\\
+            -1 & 1 & 2\\
+        \end{pmatrix}&
+        C &=
+        \begin{pmatrix}
+            2 & 1 & 3\\
+            0 & 2 & -1\\
+            0 & 0 & 2\\
+        \end{pmatrix}
+    \end{align*}
+    Notice that you not only need to find all the Jordan blocks, but also need to find the Jordan basis matrix $Q$ such that $Q^{-1}AQ$ is in Jordan normal form. \emph{Hint}: These three matrices represent three different possibilities of nondiagonalizable Jordan normal forms of a $3\times 3$ matrix: $A$ reduces to $(2\times 2)\oplus(1\times 1)$ Jordan blocks with different eigenvalues, $B$ reduces to $(2\times 2)\oplus(1\times 1)$ Jordan blocks with the same eigenvalue, and $C$ reduces to a $3\times 3$ Jordan block.
+\end{enumerate}
+
+
+\subsection*{Bonus Problems}
+\begin{enumerate}
+    \item You may find the characteristic root method for the second-order equation $y''+ay'+b=0$ quite abrupt. This problem helps you see where it comes from. The origin of this method is in fact a comparison with the linear recursive relation
+    \begin{equation*}
+        y_{n+2}+ay_{n+1}+by_n = 0
+    \end{equation*}
+    where $a,b$ are given complex numbers.
+    \begin{enumerate}
+        \item The linear recursive relation $y_{n+1}+ay_n=0$ gives rise to a geometric sequence
+        \begin{equation*}
+            y_0,y_0(-a),y_0(-a)^2,\dots
+        \end{equation*}
+        We now want to try to reduce the second-order recursive relation $y_{n+2}+ay_{n+1}+by_n=0$ to a first-order relation. Thus, we look for complex numbers $\lambda,\mu$ such that
+        \begin{equation*}
+            (y_{n+2}-\lambda y_{n+1})-\mu(y_{n+1}-\lambda y_n) = 0
+        \end{equation*}
+        Then $\lambda,\mu$ should be the roots of the characteristic polynomial
+        \begin{equation*}
+            X^2+aX+b
+        \end{equation*}
+        Taking $\lambda,\mu$ as known quantities, find the general formula for $y_n$, regarding $y_0,y_1$ as known quantities. \emph{Hint}: $y_{n+1}-\lambda y_n$ is a geometric sequence with ratio $\mu$. You should also discuss $\mu\neq\lambda$ and $\mu=\lambda$ separately.
+        \item Use the method of part (1) to find the general formula for the linear discursive relation
+        \begin{equation*}
+            y_{n+2}-2y_{n+1}+y_n = 0
+        \end{equation*}
+        Use the same method to find the general formula for the Fibonacci sequence
+        \begin{equation*}
+            F_{n+2} = F_{n+1}+F_n
+        \end{equation*}
+    \end{enumerate}
+    \item In this exercise, we aim to prove an important theorem in linear algebra:
+    \begin{equation*}
+        \textit{Complex Hermitian matrices are always diagonalizable.}
+    \end{equation*}
+    Here the term "Hermitian" means that the matrix equals its conjugate transpose. In terms of entries, this means that in general, $a_{ij}=\bar{a}_{ji}$. For example,
+    \begin{equation*}
+        \begin{pmatrix}
+            2 & 1 & -i\\
+            1 & 3 & -2i\\
+            i & 2i & 1\\
+        \end{pmatrix}
+    \end{equation*}
+    is Hermitian.
+    \begin{enumerate}
+        \item Let $\inp{\cdot}{\cdot}$ be the standard Hermitian inner product, that is, for $x,y\in\C^n$,
+        \begin{equation*}
+            \inp{x}{y} = \sum_{j=1}^nx^j\bar{y}^j
+        \end{equation*}
+        Show that for any $n\times n$ real matrix,
+        \begin{equation*}
+            \inp{Ax}{y} = \inp{x}{A^*y}
+        \end{equation*}
+        for any $x,y\in\C^n$, where $A^*$ denotes the conjugate transpose of $A$. For example,
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                1 & 1 & 2i\\
+                0 & 3+i & 3\\
+                2 & 0 & 1\\
+            \end{pmatrix}
+            \quad\Longleftrightarrow\quad
+            A^* =
+            \begin{pmatrix}
+                1 & 0 & 2\\
+                1 & 3-i & 0\\
+                -2i & 3 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Suppose now that $A$ is Hermitian. Use part (1) to show that any eigenvalue of $A$ must be a real number. Show further that if $x,y$ are eigenvectors corresponding to different eigenvalues, then $\inp{x}{y}=0$, that is, $x$ is orthogonal to $y$.
+        \item Prove that every Hermitian matrix $A$ is diagonalizable. \emph{Hint}: Take any eigenvector $v_1$ of $A$. Decompose $\C^n$ into the direct sum of $\spn(v_1)$ and its orthogonal complement. Show that the orthogonal complement is an invariant subspace for $A$.
+    \end{enumerate}
+\end{enumerate}
+
+
+
+
+\end{document}
