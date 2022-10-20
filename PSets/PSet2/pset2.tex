@@ -27,6 +27,30 @@
         \dv[2]{\mu}{\varphi}+\mu-\frac{GM}{l_0^2} = 0
     \end{equation*}
     Find the general solution of the latter, hence conclude that $r=r(\varphi)$ represents a conic section. \emph{Hint}: There is a very obvious particular solution.
+    \begin{proof}
+        We begin from the first differential equation and substitute $\mu=1/r$ in the last step to yield the desired result.
+        \begin{align*}
+            \left( \dv{r}{\varphi} \right)^2+r^2 &= \frac{2GMr^3}{l_0^2}+\frac{2Er^4}{ml_0^2}\\
+            \left( -\frac{1}{r^2}\dv{r}{\varphi} \right)^2+\frac{1}{r^2} &= \frac{2GM}{l_0^2}\frac{1}{r}+\frac{2E}{ml_0^2}\\
+            \left[ \dv{\varphi}(\frac{1}{r}) \right]^2+\left( \frac{1}{r} \right)^2 &= \frac{2GM}{l_0^2}\frac{1}{r}+\frac{2E}{ml_0^2}\\
+            \left( \dv{\mu}{\varphi} \right)^2+\mu^2 &= \frac{2GM\mu}{l_0^2}+\frac{2E}{ml_0^2}
+        \end{align*}
+        The homogeneous version of the final differential equation is entirely analogous to the harmonic oscillator problem and thus has general (real) solution
+        \begin{equation*}
+            \mu(\varphi) = \epsilon\cos(\varphi-\varphi_0)
+        \end{equation*}
+        for $\epsilon,\varphi_0\in\R$. By inspection, we can take as our particular solution to the inhomogeneous system
+        \begin{equation*}
+            \mu(\varphi) = \frac{GM}{l_0^2}
+        \end{equation*}
+        since it's second derivative (as a constant) is zero and it is the opposite of the inhomogeneous term. Thus, the general solution to the original inhomogeneous system is
+        \begin{align*}
+            \mu(\varphi) &= \frac{GM}{l_0^2}+\epsilon\cos(\varphi-\varphi_0)\\
+            r(\varphi) &= \frac{1}{GM/l_0^2+\epsilon\cos(\varphi-\varphi_0)}\\
+            &= \frac{\epsilon(l_0^2/GM\epsilon)}{1+\epsilon\cos(\varphi-\varphi_0)}
+        \end{align*}
+        which is exactly the polar form of the conic section with eccentricity $\epsilon$ and directrix $l_0^2/GM\epsilon$.
+    \end{proof}
     \item The general formula for the inverse of an $n\times n$ invertible matrix is very lengthy. However, for a $2\times 2$ matrix
     \begin{equation*}
         \begin{pmatrix}
@@ -35,6 +59,61 @@
         \end{pmatrix}
     \end{equation*}
     satisfying $ad-bc\neq 0$, there is a very simple formula. Try to find it; this could be very helpful if you can remember it.
+    \begin{proof}
+        Let $A$ be the matrix given in the problem statement. We can determine $A^{-1}$ by inspection as follows.\par
+        Let's focus on the right column of $A^{-1}$ first, which we can denote $(x,y)^T$. We want $ax+by=0$. One nice solution to this equation is $x=-b$ and $y=a$. Similarly, we can take the left column of $A^{-1}$ to be $(d,-c)^T$. This choice of entries for $A^{-1}$ yield the 0s in the right places, but the elements that should be 1 are instead $\det A=ad-bc$. Thus, we divide $A^{-1}$ by $\det A$. This yields the following final formula
+        \begin{equation*}
+            \boxed{
+                A^{-1} = \frac{1}{ad-bc}
+                \begin{pmatrix}
+                    d & -b\\
+                    -c & a\\
+                \end{pmatrix}
+            }
+        \end{equation*}
+        As a quick check, we have that
+        \begin{align*}
+            AA^{-1} &= \frac{1}{ad-bc}
+            \begin{pmatrix}
+                a & b\\
+                c & d\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                d & -b\\
+                -c & a\\
+            \end{pmatrix}&
+                A^{-1}A &= \frac{1}{ad-bc}
+                \begin{pmatrix}
+                    d & -b\\
+                    -c & a\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    a & b\\
+                    c & d\\
+                \end{pmatrix}\\
+            &= \frac{1}{ad-bc}
+            \begin{pmatrix}
+                ad-bc & 0\\
+                0 & ad-bc\\
+            \end{pmatrix}&
+                &= \frac{1}{ad-bc}
+                \begin{pmatrix}
+                    ad-bc & 0\\
+                    0 & ad-bc\\
+                \end{pmatrix}\\
+            &=
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{pmatrix}&
+                &=
+                \begin{pmatrix}
+                    1 & 0\\
+                    0 & 1\\
+                \end{pmatrix}
+        \end{align*}
+        as expected.
+    \end{proof}
     \item Compute the determinant of the following matrices. Determine whether they are invertible or not.
     \begin{align*}
         A &=
@@ -57,6 +136,27 @@
             2 & 1 & 3\\
         \end{pmatrix}
     \end{align*}
+    \begin{proof}
+        We have that
+        \begin{align*}
+            \det A &= 1[5\cdot 9-6\cdot 8]-2[4\cdot 9-6\cdot 7]+3[4\cdot 8-5\cdot 7]\\
+            \Aboxed{\det A &= 0}
+        \end{align*}
+        so \fbox{$A$ is not invertible.}\par
+        Since $B$ is block upper triangular, we know that
+        \begin{align*}
+            \det B &= \det B_1\cdot\det B_2\\
+            &= [2\cdot 3-2\cdot 1]\cdot[-1\cdot 2-2\cdot 1]\\
+            \Aboxed{\det B &= -16}
+        \end{align*}
+        so \fbox{$B$ is invertible.}\par
+        We have that
+        \begin{align*}
+            \det C &= -1[(-1)(3)-(2)(1)]-2[(3)(3)-(2)(2)]+1[(3)(1)-(-1)(2)]\\
+            \Aboxed{\det C &= 0}
+        \end{align*}
+        so \fbox{$C$ is not invertible.}
+    \end{proof}
     \item Determine whether the following linear systems admit solution(s); if they do, write down the solution (or the formula for the general solution).
     \begin{enumerate}
         \item 
@@ -75,6 +175,30 @@
                 1\\
             \end{pmatrix}
         \end{equation*}
+        \begin{proof}
+            By inspection, $A$ is a dimension 2 matrix of rank 2, so it \fbox{admits a unique solution.} We now row-reducing the augmented matrix.
+            \begin{equation*}
+                \begin{pNiceArray}{cc|c}
+                    1 & 2 & -1\\
+                    2 & -1 & 1\\
+                \end{pNiceArray}
+                \cong
+                \begin{pNiceArray}{cc|c}
+                    1 & 0 & \frac{1}{5}\\
+                    0 & 1 & -\frac{3}{5}\\
+                \end{pNiceArray}
+            \end{equation*}
+            Therefore, the solution is
+            \begin{equation*}
+                \boxed{
+                    x =
+                    \begin{pNiceMatrix}
+                        \frac{1}{5}\\
+                        -\frac{3}{5}\\
+                    \end{pNiceMatrix}
+                }
+            \end{equation*}
+        \end{proof}
         \item 
         \begin{equation*}
             \begin{pmatrix}
@@ -94,6 +218,34 @@
                 3\\
             \end{pmatrix}
         \end{equation*}
+        \begin{proof}
+            By inspection, $A$ is a dimension 3 matrix of rank 2 and the $b$ vector is in the column space of $A$, so it \fbox{admits a family of solutions.} We now row-reducing the augmented matrix.
+            \begin{equation*}
+                \begin{pNiceArray}{ccc|c}
+                    -1 & 2 & 1 & 1\\
+                    3 & -1 & 2 & 2\\
+                    2 & 1 & 3 & 3\\
+                \end{pNiceArray}
+                \cong
+                \begin{pNiceArray}{ccc|c}
+                    1 & 0 & 1 & 1\\
+                    0 & 1 & 1 & 1\\
+                    0 & 0 & 0 & 0
+                \end{pNiceArray}
+            \end{equation*}
+            Therefore, the family of solutions is given by
+            \begin{equation*}
+                \boxed{
+                    x =
+                    \begin{pmatrix}
+                        1-x^3\\
+                        1-x^3\\
+                        x^3\\
+                    \end{pmatrix}
+                }
+            \end{equation*}
+            for $x^3\in\R$.
+        \end{proof}
         \item 
         \begin{equation*}
             \begin{pmatrix}
@@ -113,6 +265,34 @@
                 1\\
             \end{pmatrix}
         \end{equation*}
+        \begin{proof}
+            No promising solution immediately appears by inspection, so we row reduce and evaluate the results.
+            \begin{equation*}
+                \begin{pNiceArray}{ccc|c}
+                    -1 & 2 & 1 & 1\\
+                    3 & -1 & 2 & 0\\
+                    2 & 1 & 3 & 1\\
+                \end{pNiceArray}
+                \cong
+                \begin{pNiceArray}{ccc|c}
+                    1 & 0 & 1 & \frac{1}{5}\\
+                    0 & 1 & 1 & \frac{3}{5}\\
+                    0 & 0 & 0 & 0
+                \end{pNiceArray}
+            \end{equation*}
+            It follows that $A$ \fbox{admits a family of solutions.} In particular, these are given by
+            \begin{equation*}
+                \boxed{
+                    x =
+                    \begin{pNiceMatrix}
+                        \frac{1}{5}-x^3\\
+                        \frac{3}{5}-x^3\\
+                        x^3\\
+                    \end{pNiceMatrix}
+                }
+            \end{equation*}
+            for $x^3\in\R$.
+        \end{proof}
     \end{enumerate}
     \item Find the connecting matrix from the basis $
         \begin{pmatrix}
@@ -144,6 +324,31 @@
         \end{pmatrix}
     \end{align*}
     That is, represent $q_1,q_2,q_3$ as linear combinations of $p_1,p_2,p_3$.
+    \begin{proof}
+        % Let's denote the connecting matrix by $R$. If $R$ is the described connecting matrix, then $Rp_1=q_1$, $Rp_2=q_2$, and $Rp_3=q_3$ (note that we can shuffle which vector gets sent to which other vector; it will just be easiest notationally ).
+
+        % Suppose we know $Px_1=q_1$, \dots. Then $PX=Q$. If $QX=P$.
+
+        $P$ is the connecting matrix from the standard basis $(e_1,e_2,e_3)$ to $(p_1,p_2,p_3)$. Likewise, $Q$ is the connecting matrix from $(e_1,e_2,e_3)$ to $(q_1,q_2,q_3)$. It follows that if we want $A$ to be the connecting matrix from $(p_1,p_2,p_3)$ to $(q_1,q_2,q_3)$, then we can do the transformation stepwise, i.e., take a vector represented in $(p_1,p_2,p_3)$ to its representation in $(e_1,e_2,e_3)$ using $P^{-1}$ and then to its representation in $(q_1,q_2,q_3)$ using $Q$. Indeed, the desired connecting matrix is
+        \begin{align*}
+            A &= QP^{-1}\\
+            \Aboxed{A &= \frac{1}{5} {
+                \begin{pmatrix}
+                    -2 & 2 & -1\\
+                    5 & 0 & 5\\
+                    -1 & 1 & 2\\
+                \end{pmatrix}
+            }}
+        \end{align*}
+        Direct computation can confirm that $Ap_i=q_i$ for $i=1,2,3$.\par
+        With respect to representing $q_1,q_2,q_3$ as linear combinations of $p_1,p_2,p_3$, we can solve the equations $q_i=Px_i$ for $i=1,2,3$ via row reduction, as in previous responses. The final expressions obtained are
+        \begin{empheq}[box=\fbox]{align*}
+            q_1 &= \frac{1}{5}(p_1+2p_2+p_3)&
+            q_2 &= \frac{1}{5}(3p_1-4p_2-2p_3)&
+            q_3 &= \frac{1}{5}(3p_1+p_2+3p_3)
+        \end{empheq}
+        Note that if we combine the coefficients above into a matrix $X$ such that $PX=Q$, then $A=PXP^{-1}=QXQ^{-1}$.
+    \end{proof}
     \item Let $\theta\in[0,2\pi)$. The rotation through angle $\theta$ in the plane is represented by the matrix
     \begin{equation*}
         R(\theta) =
@@ -153,6 +358,73 @@
         \end{pmatrix}
     \end{equation*}
     Compute its determinant, characteristic polynomial, and eigenvalues. Compute its eigenvectors in $\C^2$. You need to use the Euler formula $\e[i\theta]=\cos\theta+i\sin\theta$. For two angles $\theta,\varphi$, compute the product $R(\theta)R(\varphi)$ and represent it in terms of $\theta+\varphi$. What is the geometric meaning of this equality?
+    \begin{proof}
+        The determinant of $R$ is
+        \begin{align*}
+            \det R &= \cos^2\theta+\sin^2\theta\\
+            \Aboxed{\det R &= 1}
+        \end{align*}
+        The characteristic polynomial of $R$ is
+        \begin{align*}
+            \chi_R(z) &= \det(R-zI)\\
+            &= (\cos\theta-z)^2+\sin^2\theta\\
+            &= z^2-2z\cos\theta+\cos\theta^2+\sin\theta^2\\
+            \Aboxed{\chi_R(z) &= z^2-2z\cos\theta+1}
+        \end{align*}
+        The eigenvalues of $R$ are
+        \begin{align*}
+            0 &= \chi_R(\lambda)\\
+            &= (\cos\theta-\lambda)^2+\sin^2\theta\\
+            -\sin^2\theta &= (\cos\theta-\lambda)^2\\
+            \pm i\sin\theta &= \pm(\cos\theta-\lambda)\\
+            \lambda &= \cos\theta\pm i\sin\theta\\
+            \Aboxed{\lambda &= \e[\pm i\theta]}
+        \end{align*}
+        It follows by solving the systems of equations
+        \begin{align*}
+            x^1\cos\theta-x^2\sin\theta &= \e[i\theta]x^1&
+                y^1\cos\theta-y^2\sin\theta &= \e[-i\theta]y^1\\
+            x^1\sin\theta+x^2\cos\theta &= \e[i\theta]x^2&
+                y^1\sin\theta+y^2\cos\theta &= \e[-i\theta]y^2
+        \end{align*}
+        that the eigenvectors are
+        \begin{empheq}[box=\fbox]{align*}
+            x &=
+            \begin{pmatrix}
+                1\\
+                -i\\
+            \end{pmatrix}&
+            y &=
+            \begin{pmatrix}
+                1\\
+                i\\
+            \end{pmatrix}
+        \end{empheq}
+        The product $R(\theta)R(\varphi)$ may be computed as follows.
+        \begin{align*}
+            R(\theta)R(\phi) &=
+            \begin{pmatrix}
+                \cos\theta & -\sin\theta\\
+                \sin\theta & \cos\theta\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \cos\varphi & -\sin\varphi\\
+                \sin\varphi & \cos\varphi\\
+            \end{pmatrix}\\
+            &=
+            \begin{pmatrix}
+                \cos\theta\cos\varphi-\sin\theta\sin\varphi & -\cos\theta\sin\varphi-\sin\theta\cos\varphi\\
+                \sin\theta\cos\varphi+\cos\theta\sin\varphi & -\sin\theta\sin\varphi+\cos\theta\cos\varphi\\
+            \end{pmatrix}\\
+            &=
+            \begin{pmatrix}
+                \cos(\theta+\varphi) & -\sin(\theta+\varphi)\\
+                \sin(\theta+\varphi) & \cos(\theta+\varphi)\\
+            \end{pmatrix}\\
+            \Aboxed{R(\theta)R(\varphi) &= R(\theta+\phi)}
+        \end{align*}
+        The geometric meaning is that rotating through an angle $\theta$ and then through an additional angle $\varphi$ is the same as rotating through an angle $\theta+\varphi$ all at once.
+    \end{proof}
     \stepcounter{enumi}
     \item Find the algebraic and geometric multiplicities of the eigenvalues of the following matrices.
     \begin{align*}
@@ -169,6 +441,43 @@
             0 & 0 & 3\\
         \end{pmatrix}
     \end{align*}
+    \begin{proof}
+        We tackle $A$ first. $A$ is an upper triangular matrix. Thus, $\chi_A(\lambda)=\det(A-\lambda I)$ can be read directly off of the diagonal:
+        \begin{equation*}
+            \chi_A(\lambda) = (1-\lambda)^2(3-\lambda)
+        \end{equation*}
+        Thus, the eigenvalues are $\lambda=1,3$ with respective algebraic multiplicities
+        \begin{empheq}[box=\fbox]{align*}
+            \alpha_1 &= 2&
+            \alpha_3 &= 1
+        \end{empheq}
+        It follows immediately that
+        \begin{equation*}
+            \boxed{\gamma_3 = 1}
+        \end{equation*}
+        and from the observation that $A-1I$ has 2 linearly independent columns that this $3\times 3$ matrix has a $3-2=1$ dimensional null space, i.e.,
+        \begin{equation*}
+            \boxed{\gamma_1 = 1}
+        \end{equation*}
+        The procedure for $B$ is almost entirely symmetric. Once again, $B$ is upper triangular, so
+        \begin{equation*}
+            \chi_B(\lambda) = (1-\lambda)^2(3-\lambda)
+        \end{equation*}
+        implying that
+        \begin{empheq}[box=\fbox]{align*}
+            \alpha_1 &= 2&
+            \alpha_3 &= 1
+        \end{empheq}
+        There is a difference with respect to the geometric multiplicities, however. We still have
+        \begin{equation*}
+            \boxed{\gamma_3 = 1}
+        \end{equation*}
+        but since $A-I$ now has only 1 linearly independent column, we have
+        \begin{equation*}
+            \boxed{\gamma_1 = 2}
+        \end{equation*}
+        this time.
+    \end{proof}
     \item Compute the Jordan normal form of the following $2\times 2$ matrices.
     \begin{align*}
         A &=
@@ -183,7 +492,86 @@
         \end{pmatrix}
     \end{align*}
     Notice that you not only need to find all the Jordan blocks, but also need to find the Jordan basis matrix $Q$ such that $Q^{-1}AQ$ is in Jordan normal form.
-    \setcounter{enumi}{9}
+    \begin{proof}
+        We tackle $A$ first.\par
+        Calculate the characteristic polynomial to begin.
+        \begin{align*}
+            \chi_A(z) &= \det(A-zI)\\
+            &= z^2-4z+3\\
+            &= (1-z)(3-z)
+        \end{align*}
+        It follows that the eigenvalues are
+        \begin{align*}
+            \lambda_1 &= 1&
+            \lambda_2 &= 3
+        \end{align*}
+        Since these eigenvalues are distinct, we can fully diagonalize this matrix. Indeed, we can determine by inspection that suitable corresponding eigenvectors are
+        \begin{align*}
+            v_1 &=
+            \begin{pmatrix}
+                -1\\
+                1\\
+            \end{pmatrix}&
+            v_2 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{align*}
+        Therefore,
+        \begin{empheq}[box=\fbox]{align*}
+            Q &=
+            \begin{pmatrix}
+                -1 & 1\\
+                1 & 1\\
+            \end{pmatrix}&
+            Q^{-1}AQ &=
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 3\\
+            \end{pmatrix}
+        \end{empheq}
+        The procedure for $B$ is very much analogous to the procedure for $A$.\par
+        Characteristic polynomial:
+        \begin{align*}
+            \chi_B(z) &= \det(B-zI)\\
+            &= z^2+2z+1\\
+            &= (1+z)^2
+        \end{align*}
+        Eigenvalue:
+        \begin{equation*}
+            \lambda = -1
+        \end{equation*}
+        By inspection of $B+I$, we can pick one eigenvector of $B$:
+        \begin{equation*}
+            v =
+            \begin{pmatrix}
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        We now solve $(B+I)u=v$. By inspection, this yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{empheq}[box=\fbox]{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 1\\
+                1 & 0\\
+            \end{pmatrix}&
+            Q^{-1}BQ &=
+            \begin{pmatrix}
+                -1 & 1\\
+                0 & -1\\
+            \end{pmatrix}
+        \end{empheq}
+    \end{proof}
     \item Compute the Jordan normal form of the following $3\times 3$ matrices.
     \begin{align*}
         A &=
@@ -206,81 +594,293 @@
         \end{pmatrix}
     \end{align*}
     Notice that you not only need to find all the Jordan blocks, but also need to find the Jordan basis matrix $Q$ such that $Q^{-1}AQ$ is in Jordan normal form. \emph{Hint}: These three matrices represent three different possibilities of nondiagonalizable Jordan normal forms of a $3\times 3$ matrix: $A$ reduces to $(2\times 2)\oplus(1\times 1)$ Jordan blocks with different eigenvalues, $B$ reduces to $(2\times 2)\oplus(1\times 1)$ Jordan blocks with the same eigenvalue, and $C$ reduces to a $3\times 3$ Jordan block.
-\end{enumerate}
-
-
-\subsection*{Bonus Problems}
-\begin{enumerate}
-    \item You may find the characteristic root method for the second-order equation $y''+ay'+b=0$ quite abrupt. This problem helps you see where it comes from. The origin of this method is in fact a comparison with the linear recursive relation
-    \begin{equation*}
-        y_{n+2}+ay_{n+1}+by_n = 0
-    \end{equation*}
-    where $a,b$ are given complex numbers.
-    \begin{enumerate}
-        \item The linear recursive relation $y_{n+1}+ay_n=0$ gives rise to a geometric sequence
+    \begin{proof}
+        We tackle $A$ first.\par
+        Calculate the characteristic polynomial to begin.
+        \begin{align*}
+            \chi_A(z) ={}& \det(A-z I)\\
+            % \begin{split}
+            %     ={}& (4-z)[(-7-z)(4-z)-(3)(-9)]\\
+            %     &-(-5)[(5)(4-z)-(3)(6)]\\
+            %     &+(2)[(5)(-9)-(-7-z)(6)]
+            % \end{split}\\
+            ={}& -z^3+z^2\\
+            ={}& z^2(1-z)
+        \end{align*}
+        It follows that the eigenvalues are
+        \begin{align*}
+            \lambda_1 &= \lambda_2 = 0&
+            \lambda_3 &= 1
+        \end{align*}
+        We can solve for an eigenvector $v_1$ corresponding to $\lambda_1=\lambda_2=0$ using the augmented matrix and row reduction as follows.
         \begin{equation*}
-            y_0,y_0(-a),y_0(-a)^2,\dots
+            \begin{pNiceArray}{ccc|c}
+                4 & -5 & 2 & 0\\
+                5 & -7 & 3 & 0\\
+                6 & -9 & 4 & 0\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -\frac{1}{3} & 0\\
+                0 & 1 & -\frac{2}{3} & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
         \end{equation*}
-        We now want to try to reduce the second-order recursive relation $y_{n+2}+ay_{n+1}+by_n=0$ to a first-order relation. Thus, we look for complex numbers $\lambda,\mu$ such that
+        Thus, if we choose $v_1^3=3$, then the desired eigenvector is
         \begin{equation*}
-            (y_{n+2}-\lambda y_{n+1})-\mu(y_{n+1}-\lambda y_n) = 0
-        \end{equation*}
-        Then $\lambda,\mu$ should be the roots of the characteristic polynomial
-        \begin{equation*}
-            X^2+aX+b
-        \end{equation*}
-        Taking $\lambda,\mu$ as known quantities, find the general formula for $y_n$, regarding $y_0,y_1$ as known quantities. \emph{Hint}: $y_{n+1}-\lambda y_n$ is a geometric sequence with ratio $\mu$. You should also discuss $\mu\neq\lambda$ and $\mu=\lambda$ separately.
-        \item Use the method of part (1) to find the general formula for the linear discursive relation
-        \begin{equation*}
-            y_{n+2}-2y_{n+1}+y_n = 0
-        \end{equation*}
-        Use the same method to find the general formula for the Fibonacci sequence
-        \begin{equation*}
-            F_{n+2} = F_{n+1}+F_n
-        \end{equation*}
-    \end{enumerate}
-    \item In this exercise, we aim to prove an important theorem in linear algebra:
-    \begin{equation*}
-        \textit{Complex Hermitian matrices are always diagonalizable.}
-    \end{equation*}
-    Here the term "Hermitian" means that the matrix equals its conjugate transpose. In terms of entries, this means that in general, $a_{ij}=\bar{a}_{ji}$. For example,
-    \begin{equation*}
-        \begin{pmatrix}
-            2 & 1 & -i\\
-            1 & 3 & -2i\\
-            i & 2i & 1\\
-        \end{pmatrix}
-    \end{equation*}
-    is Hermitian.
-    \begin{enumerate}
-        \item Let $\inp{\cdot}{\cdot}$ be the standard Hermitian inner product, that is, for $x,y\in\C^n$,
-        \begin{equation*}
-            \inp{x}{y} = \sum_{j=1}^nx^j\bar{y}^j
-        \end{equation*}
-        Show that for any $n\times n$ real matrix,
-        \begin{equation*}
-            \inp{Ax}{y} = \inp{x}{A^*y}
-        \end{equation*}
-        for any $x,y\in\C^n$, where $A^*$ denotes the conjugate transpose of $A$. For example,
-        \begin{equation*}
-            A =
+            v_1 =
             \begin{pmatrix}
-                1 & 1 & 2i\\
-                0 & 3+i & 3\\
+                1\\
+                2\\
+                3\\
+            \end{pmatrix}
+        \end{equation*}
+        Similarly, we can solve for an eigenvector $v_3$ corresponding to $\lambda_3=1$ using the following. Note that to solve $Ax=1x$, we row-reduce $(A-I)x=0$.
+        \begin{equation*}
+            \begin{pNiceArray}{ccc|c}
+                3 & -5 & 2 & 0\\
+                5 & -8 & 3 & 0\\
+                6 & -9 & 3 & 0\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -1 & 0\\
+                0 & 1 & -1 & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
+        \end{equation*}
+        This yields
+        \begin{equation*}
+            v_3 =
+            \begin{pmatrix}
+                1\\
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        We now solve the equation $(A-0I)u=v_1$ to find a generalized eigenvector $u$ corresponding to $\lambda_1=\lambda_2=0$. This can also be done with an augmented matrix.
+        \begin{equation*}
+            \begin{pNiceArray}{ccc|c}
+                4 & -5 & 2 & 1\\
+                5 & -7 & 3 & 2\\
+                6 & -9 & 4 & 3\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -\frac{1}{3} & 0\\
+                0 & 1 & -\frac{2}{3} & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
+        \end{equation*}
+        This yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                0\\
+                1\\
+                3\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{empheq}[box=\fbox]{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 0 & 1\\
+                2 & 1 & 1\\
+                3 & 3 & 1\\
+            \end{pmatrix}&
+            Q^{-1}AQ &=
+            \begin{pmatrix}
+                0 & 1 & 0\\
+                0 & 0 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{empheq}
+        The procedure for $B$ is very much analogous to the procedure for $A$.\par
+        Characteristic polynomial:
+        \begin{align*}
+            \chi_B(z) &= \det(B-zI)\\
+            &= -z^3+3z^2-3z+1\\
+            &= (1-z)^3
+        \end{align*}
+        Eigenvalue:
+        \begin{equation*}
+            \lambda = 1
+        \end{equation*}
+        By inspection of
+        \begin{equation*}
+            B-I =
+            \begin{pmatrix}
+                1 & -1 & -1\\
+                2 & -2 & -2\\
+                -1 & 1 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        we can pick two eigenvectors of $B$ corresponding to $\lambda$, i.e., two elements of the null space of the above matrix. In this subcase of the $3\times 3$ case, we always pick the first of these to be an element of the column space of $B-I$, as well. Thus, choose
+        \begin{align*}
+            v_1 &=
+            \begin{pmatrix}
+                1\\
+                2\\
+                -1\\
+            \end{pmatrix}&
+            v_2 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{align*}
+        We now solve $(B-\lambda I)u=v_1$. By inspection, this yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                1\\
+                0\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{empheq}[box=\fbox]{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 1 & 1\\
                 2 & 0 & 1\\
-            \end{pmatrix}
-            \quad\Longleftrightarrow\quad
-            A^* =
+                -1 & 0 & 0\\
+            \end{pmatrix}&
+            Q^{-1}BQ &=
             \begin{pmatrix}
-                1 & 0 & 2\\
-                1 & 3-i & 0\\
-                -2i & 3 & 1\\
+                1 & 1 & 0\\
+                0 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{empheq}
+        The procedure for $C$ is likewise quite analogous.\par
+        The matrix is upper triangular, so the eigenvalues are on the diagonal. It follows that
+        \begin{equation*}
+            \lambda = 2
+        \end{equation*}
+        is the sole eigenvalue. We can solve $(C-2I)v=0$ for one eigenvector $v$ by inspection, yielding
+        \begin{equation*}
+            v =
+            \begin{pmatrix}
+                1\\
+                0\\
+                0\\
             \end{pmatrix}
         \end{equation*}
-        \item Suppose now that $A$ is Hermitian. Use part (1) to show that any eigenvalue of $A$ must be a real number. Show further that if $x,y$ are eigenvectors corresponding to different eigenvalues, then $\inp{x}{y}=0$, that is, $x$ is orthogonal to $y$.
-        \item Prove that every Hermitian matrix $A$ is diagonalizable. \emph{Hint}: Take any eigenvector $v_1$ of $A$. Decompose $\C^n$ into the direct sum of $\spn(v_1)$ and its orthogonal complement. Show that the orthogonal complement is an invariant subspace for $A$.
-    \end{enumerate}
+        We can also solve $(C-2I)u_1=v$ by inspection to get
+        \begin{equation*}
+            u_1 =
+            \begin{pmatrix}
+                0\\
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        One more time, we can solve $(C-2I)u_2=u_1$ by inspection to get
+        \begin{equation*}
+            u_2 =
+            \begin{pmatrix}
+                0\\
+                3\\
+                -1\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{empheq}[box=\fbox]{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 3\\
+                0 & 0 & -1\\
+            \end{pmatrix}&
+            Q^{-1}CQ &=
+            \begin{pmatrix}
+                2 & 1 & 0\\
+                0 & 2 & 1\\
+                0 & 0 & 2\\
+            \end{pmatrix}
+        \end{empheq}
+    \end{proof}
 \end{enumerate}
+
+
+% \subsection*{Bonus Problems}
+% \begin{enumerate}
+%     \item You may find the characteristic root method for the second-order equation $y''+ay'+b=0$ quite abrupt. This problem helps you see where it comes from. The origin of this method is in fact a comparison with the linear recursive relation
+%     \begin{equation*}
+%         y_{n+2}+ay_{n+1}+by_n = 0
+%     \end{equation*}
+%     where $a,b$ are given complex numbers.
+%     \begin{enumerate}
+%         \item The linear recursive relation $y_{n+1}+ay_n=0$ gives rise to a geometric sequence
+%         \begin{equation*}
+%             y_0,y_0(-a),y_0(-a)^2,\dots
+%         \end{equation*}
+%         We now want to try to reduce the second-order recursive relation $y_{n+2}+ay_{n+1}+by_n=0$ to a first-order relation. Thus, we look for complex numbers $\lambda,\mu$ such that
+%         \begin{equation*}
+%             (y_{n+2}-\lambda y_{n+1})-\mu(y_{n+1}-\lambda y_n) = 0
+%         \end{equation*}
+%         Then $\lambda,\mu$ should be the roots of the characteristic polynomial
+%         \begin{equation*}
+%             X^2+aX+b
+%         \end{equation*}
+%         Taking $\lambda,\mu$ as known quantities, find the general formula for $y_n$, regarding $y_0,y_1$ as known quantities. \emph{Hint}: $y_{n+1}-\lambda y_n$ is a geometric sequence with ratio $\mu$. You should also discuss $\mu\neq\lambda$ and $\mu=\lambda$ separately.
+%         \begin{proof}
+            
+%         \end{proof}
+%         % \item Use the method of part (1) to find the general formula for the linear discursive relation
+%         % \begin{equation*}
+%         %     y_{n+2}-2y_{n+1}+y_n = 0
+%         % \end{equation*}
+%         % Use the same method to find the general formula for the Fibonacci sequence
+%         % \begin{equation*}
+%         %     F_{n+2} = F_{n+1}+F_n
+%         % \end{equation*}
+%     \end{enumerate}
+%     % \item In this exercise, we aim to prove an important theorem in linear algebra:
+%     % \begin{equation*}
+%     %     \textit{Complex Hermitian matrices are always diagonalizable.}
+%     % \end{equation*}
+%     % Here the term "Hermitian" means that the matrix equals its conjugate transpose. In terms of entries, this means that in general, $a_{ij}=\bar{a}_{ji}$. For example,
+%     % \begin{equation*}
+%     %     \begin{pmatrix}
+%     %         2 & 1 & -i\\
+%     %         1 & 3 & -2i\\
+%     %         i & 2i & 1\\
+%     %     \end{pmatrix}
+%     % \end{equation*}
+%     % is Hermitian.
+%     % \begin{enumerate}
+%     %     \item Let $\inp{\cdot}{\cdot}$ be the standard Hermitian inner product, that is, for $x,y\in\C^n$,
+%     %     \begin{equation*}
+%     %         \inp{x}{y} = \sum_{j=1}^nx^j\bar{y}^j
+%     %     \end{equation*}
+%     %     Show that for any $n\times n$ real matrix,
+%     %     \begin{equation*}
+%     %         \inp{Ax}{y} = \inp{x}{A^*y}
+%     %     \end{equation*}
+%     %     for any $x,y\in\C^n$, where $A^*$ denotes the conjugate transpose of $A$. For example,
+%     %     \begin{equation*}
+%     %         A =
+%     %         \begin{pmatrix}
+%     %             1 & 1 & 2i\\
+%     %             0 & 3+i & 3\\
+%     %             2 & 0 & 1\\
+%     %         \end{pmatrix}
+%     %         \quad\Longleftrightarrow\quad
+%     %         A^* =
+%     %         \begin{pmatrix}
+%     %             1 & 0 & 2\\
+%     %             1 & 3-i & 0\\
+%     %             -2i & 3 & 1\\
+%     %         \end{pmatrix}
+%     %     \end{equation*}
+%     %     \item Suppose now that $A$ is Hermitian. Use part (1) to show that any eigenvalue of $A$ must be a real number. Show further that if $x,y$ are eigenvectors corresponding to different eigenvalues, then $\inp{x}{y}=0$, that is, $x$ is orthogonal to $y$.
+%     %     \item Prove that every Hermitian matrix $A$ is diagonalizable. \emph{Hint}: Take any eigenvector $v_1$ of $A$. Decompose $\C^n$ into the direct sum of $\spn(v_1)$ and its orthogonal complement. Show that the orthogonal complement is an invariant subspace for $A$.
+%     % \end{enumerate}
+% \end{enumerate}
 
 
 
