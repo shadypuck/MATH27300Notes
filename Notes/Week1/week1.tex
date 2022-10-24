@@ -28,43 +28,43 @@
         \item Bonus problems (15 pts).
     \end{itemize}
     \item Total points for the quarter is 115. The bonus problems usually arise from advanced math and incorporate more advanced knowledge, and we are encouraged to seek out all relevant resources as long as we write up our own solutions.
-    \item \textbf{Ordinary differential equation}: Any equation that takes the form $F(t,y,y',\dots,y^{(n)})=0$. \emph{Also known as} \textbf{ODE}.
+    \item \textbf{Ordinary differential equation}: An equation that involves an unknown function of a single variable; an equation that takes the form $F(t,y,y',\dots,y^{(n)})=0$. \emph{Also known as} \textbf{ODE}.
     \begin{itemize}
         \item $F$ is a known function.
         \item $t$ is an argument (time). $x$ is also used (when space is involved).
         \item $y=y(t)$ is an unknown function.
     \end{itemize}
     \item \textbf{Order $\bm{n}$} (ODE): An ODE for which the $n^\text{th}$ derivative of $y$ is the highest-order derivative involved (and is involved).
-    \item $y'=f(t,y)$ or $Y^{(n)}=F(t,Y,Y',\dots,Y^{(n-1)})$.
+    \item ODEs are of the form $y'=f(t,y)$ or, more generally, $y^{(n)}=F(t,y,y',\dots,y^{(n-1)})$.
     \begin{itemize}
         \item We can transform this second form into the first form via
         \begin{align*}
-            y &=
+            Y &=
             \begin{pmatrix}
-                Y\\
-                Y'\\
+                y\\
+                y'\\
                 \vdots\\
-                Y^{(n-1)}\\
+                y^{(n-1)}\\
             \end{pmatrix}&
             f(t,y) &=
             \begin{pmatrix}
-                y_2\\
-                y_3\\
+                Y^2\\
+                Y^3\\
                 \vdots\\
-                F(t,y_1,y_2,\dots,y_{(n-1)})\\
+                F(t,Y^1,Y^2,\dots,Y^{n-1})\\
             \end{pmatrix}
         \end{align*}
-        making $y'=f(t,y)$ equal to the system of equations
+        This makes $Y'=f(t,Y)$ equal to the system of equations
         \begin{align*}
-            y_1' &= y_2\\
-            y_2' &= y_3\\
+            (Y^1)' &= Y^2\\
+            (Y^2)' &= Y^3\\
             &\vdots\\
-            y_{n-1}' &= F(t,y_1,\dots,y_{n-1})
+            (Y^{n-1})' &= F(t,Y^1,Y^2,\dots,Y^{n-1})
         \end{align*}
         \begin{itemize}
             \item Think about this conversion more.
         \end{itemize}
-        \item Thus, we mainly focus on equations of the form $y'=f(t,y)$, because that's general enough.
+        \item Thus, we mainly focus on equations of the form $y'=f(t,y)$ (where $y$ may be a scalar or vector function), because that's general enough.
     \end{itemize}
     \item \textbf{Linear} (ODE): Any ODE that can be written in the form
     \begin{equation*}
@@ -74,19 +74,101 @@
     \begin{equation*}
         y^{(n)}+a_{n-1}(t)y^{(n-1)}+\cdots+a_0(t)y = b(t)
     \end{equation*}
+    \begin{itemize}
+        \item Indeed, if we define $Y=(y,y',\dots,y^{n-1})$, then we may express this equation in the form
+        \begin{align*}
+            \underbrace{
+                \begin{pmatrix}
+                    Y^1\\
+                    Y^2\\
+                    \vdots\\
+                    Y^n\\
+                \end{pmatrix}'
+            }_{Y'}
+            &= \underbrace{
+                \begin{pmatrix}
+                    Y^2\\
+                    Y^3\\
+                    \vdots\\
+                    b(t)-a_0(t)Y^1-\cdots-a_{n-1}(t)Y^{n-1}\\
+                \end{pmatrix}
+            }_{g(t,y)}\\
+            &=
+            \begin{pmatrix}
+                Y^2\\
+                Y^3\\
+                \vdots\\
+                -a_0(t)Y^1-\cdots-a_{n-1}(t)Y^{n-1}\\
+            \end{pmatrix}
+            +\underbrace{
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                    \vdots\\
+                    b(t)\\
+                \end{pmatrix}
+            }_{f(t)}\\
+            &= \underbrace{
+                \begin{pmatrix}
+                    0 & 1 & 0 & \cdots & 0\\
+                    0 & 0 & 1 & \cdots & 0\\
+                    \vdots & \vdots & \vdots & \ddots & \vdots\\
+                    0 & 0 & 0 & \cdots & 1\\
+                    -a_0(t) & -a_1(t) & -a_2(t) & \cdots & -a_{n-1}(t)\\
+                \end{pmatrix}
+            }_{A(t)}\underbrace{
+                \vphantom{
+                    \begin{pmatrix}
+                        0 & 1 & 0 & \cdots & 0\\
+                        0 & 0 & 1 & \cdots & 0\\
+                        \vdots & \vdots & \vdots & \ddots & \vdots\\
+                        0 & 0 & 0 & \cdots & 1\\
+                        -a_0(t) & -a_1(t) & -a_2(t) & \cdots & -a_{n-1}(t)\\
+                    \end{pmatrix}
+                }
+                \begin{pmatrix}
+                    Y^1\\
+                    Y^2\\
+                    \vdots\\
+                    Y^n\\
+                \end{pmatrix}
+            }_Y+\underbrace{
+                \vphantom{
+                    \begin{pmatrix}
+                        0 & 1 & 0 & \cdots & 0\\
+                        0 & 0 & 1 & \cdots & 0\\
+                        \vdots & \vdots & \vdots & \ddots & \vdots\\
+                        0 & 0 & 0 & \cdots & 1\\
+                        -a_0(t) & -a_1(t) & -a_2(t) & \cdots & -a_{n-1}(t)\\
+                    \end{pmatrix}
+                }
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                    \vdots\\
+                    b(t)\\
+                \end{pmatrix}
+            }_{f(t)}
+        \end{align*}
+        \item This conversion and its implications is covered in more depth in Lecture 4.1.
+    \end{itemize}
     \item \textbf{Nonlinear} (ODE): An ODE that is not linear.
     \item \textbf{Autonomous} (ODE): An ODE that can be written in the form
     \begin{equation*}
         y' = f(y)
     \end{equation*}
     \begin{itemize}
-        \item More equivalence w/ vector-valued functions?
+        \item Remember that $y$ can be a scalar or a vector function.
+        \item Solutions to autonomous ODEs can start at \emph{any} time $t$ and still be valid.
+        \begin{itemize}
+            \item For example, take the scalar ODE $y'=y$. It's general solution is $y(t)=a\e[t-t_0]$ for some $a\in\R$ and $t_0$ being the start time. Importantly, notice that we can make $t_0$ take any value we want and $y(t)$ will still solve $y'=y$.
+        \end{itemize}
     \end{itemize}
     \item \textbf{Nonautonomous} (ODE): An ODE that is not autonomous.
     \begin{itemize}
         \item We will not investigate these in this course.
     \end{itemize}
-    \item \textbf{Initial value problem}: A problem of the form: Find $y(t)$ such that
+    \item \textbf{Initial value problem}: A problem of the form, "find $y(t)$ such that the following holds."
     \begin{equation*}
         \begin{cases}
             y' = f(t,y)\\
@@ -105,7 +187,7 @@
         \item $y'=\sqrt{y}$, $y(0)=0$ has solutions $y_1(t)=0$ ($t\geq 0$) and $y_2(t)=t^2/4$ ($t\geq 0$).
         \item We will investigate the reason later.
     \end{itemize}
-    \item Preview of the reason: \textbf{Cauchy-Lipschitz Theorem} or \textbf{Picard-Lindelof Theorem}.
+    \item Preview of the reason: \textbf{Cauchy-Lipschitz Theorem} or \textbf{Picard-Lindel\"{o}f Theorem}.
     \begin{itemize}
         \item As long as the ODE is \textbf{Lipschitz continuous}, it's locally stable.
     \end{itemize}
@@ -116,21 +198,35 @@
     \begin{itemize}
         \item But in the counterexample above, the slope of the chord from 0 to $y(t)$ approaches infinity as $t\to 0$.
     \end{itemize}
-    \item \textbf{Peano Existence Theorem}: ...
-    \item \textbf{Dynamical system}: A law under which a particle evolves over time. $y'=f(t,y)$, IVP is LWP
-    \item Consider $\Phi(t,x)$ such that
+    \item \textbf{Peano Existence Theorem}: Under certain conditions, there exists a solution to a given IVP.
+    \item \textbf{Dynamical system}: A law under which a particle evolves over time. $y'=f(t,y)$, IVP is LWP.
+    \item If the IVP $y'=f(t,y)$, $y(t_0)=y_0$ is locally well-posed, then the map $\Phi(t,x)$ which solves
     \begin{equation*}
         \begin{cases}
             \dv{t}\Phi(t,x) = f(t,\Phi(t,x))\\
             \Phi(0,x) = x
         \end{cases}
     \end{equation*}
-    \item \textbf{Steady flow}: A vector field on a manifold contained in $\R^2$ or $\R^3$ that does not vary with time.
+    is well-defined and satisfies the property
+    \begin{equation*}
+        \Phi(t_2,\Phi(t_1,x)) = \Phi(t_1+t_2,x)
+    \end{equation*}
     \begin{itemize}
-        \item A velocity field.
+        \item $\Phi$ is very related to $y$, though how exactly is still a bit of a mystery?? Perhaps it's
+        \begin{equation*}
+            \Phi(t,x) = y(t)
+        \end{equation*}
+        where $y$ is the solution to the IVP $y'=f(t,y)$, $y(0)=x$.
+        \item It appears that $\Phi(t,x)$ is related to $f_t(x)$ from \emph{Differential Forms}, i.e., we are picking a point $x$ and traveling along its integral curve for time $t$.
+        \item Think about $y(t)=a\e[t-t_0]$ as an integral curve of the one-dimensional vector field $X(x)=x$.
+        \item The final property appears to express the notion that if you have a system and evolve it by time $t_1$ and then time $t_2$, that's equivalent to evolving it by time $t_1+t_2$.
+    \end{itemize}
+    \item \textbf{Steady flow}: A vector field on a manifold contained in $\R^2$ or $\R^3$ that does not vary with time.
+    \item Let $X$ be a vector field.
+    \begin{itemize}
         \item Trajectory of a particle: At $x\in\Omega$, the velocity of the particle should coincide with $X(x)$.
         \item The differential equation $\dot{x}=X(x)$ is what we're interested in.
-        \item A solid shape gets shifted and deformed (imagine a chunk of water falling out of the end of a pipe).
+        \item A solid shape gets shifted and deformed (imagine a chunk of water falling out of the end of a pipe). This is the \textbf{local group of transformation}.
         \item Differential geometry is the purview of such things.
     \end{itemize}
     \item Newton's law of motion $F=m\cdot a$ applied to $n$ particles is nothing but the system of equations
@@ -202,47 +298,109 @@
 \section{Origin of ODEs: Boundary Value Problems}
 \begin{itemize}
     \item \marginnote{9/30:}Textbook PDFs will be posted today.
+    \item Note: Equations of order $n$ generally require $n$ parameters to solve.
     \item Today, we will consider boundary value problems, which are separate from dynamical systems but not entirely unrelated.
     \item \textbf{Boundary Value Problem}: A problem in which we are solving for a $y$ that has fixed values at the boundaries $x=a,b$. \emph{Also known as} \textbf{BVP}.
     \item The \textbf{Brachistochrone problem} is an example of a BVP.
-    \item \textbf{Brachistochrone problem}: Suppose you have a frictionless track from $(0,0)$ to $(a,y_0)$ and release a particle from $(0,0)$. Which path allows the particle to get to $(a,y_0)$ in the shortest amount of time? \emph{Etymology} brachisto "shortest" + chrone "time."
+    \item \textbf{Brachistochrone problem}: Suppose you have a frictionless track from $(0,0)$ to $(a,y_0)$ and release a particle from $(0,0)$. Which path allows the particle to get to $(a,y_0)$ in the shortest amount of time? \emph{Etymology} br\'{a}khistos "shortest" + khr\'{o}nos "time."
+    \begin{figure}[h!]
+        \centering
+        \begin{tikzpicture}[
+            every node/.style={black}
+        ]
+            \footnotesize
+            \draw (-0.5,0) -- (5,0) node[right]{$x$};
+            \draw (0,0.5) node[above]{$y$} -- (0,-3);
+    
+            \draw [rex,thick] plot[domain=0:pi] ({4/pi*(\x-sin(\x r))},{-(1-cos(\x r))});
+            \node at (1,-1) {$\ell$};
+            \fill circle (2pt) node[above left]{$(0,0)$};
+            \fill (4,-2) circle (2pt) node[below right]{$(a,y_0)$};
+            \fill (2,-1.674) circle (2pt) node[below left,xshift=-3pt]{$(x,y(x))$};
+            \draw [semithick,-latex] (2,-1.674) -- ++(1,-0.38) node[below]{$v$};
+    
+            \def\s{0.2}
+            \draw
+                ({2-\s},{-1.674-0.9*\s}) rectangle ({2+\s},{-1.674+0.9*\s})
+                (2,-1.494) -- (2,-1) -- (6,-1)
+                (6,-2.35) rectangle (9,0.35)
+            ;
+            \draw [rex,very thick] plot[domain=2.214:2.402] ({30/pi*(\x-sin(\x r))-7.5},{-7.5*(1-cos(\x r))+11.555});
+            \draw [grx,ultra thick] plot[domain=2.25:2.36] ({30/pi*(\x-sin(\x r))-7.5},{-7.5*(1-cos(\x r))+11.555});
+            \node [label={above:$\dd{\ell}$}] at (7.5,-1) {};
+            \coordinate (L) at ({30/pi*(2.25-sin(2.25 r))-7.5},{-7.5*(1-cos(2.25 r))+11.555});
+            \coordinate (R) at ({30/pi*(2.36-sin(2.36 r))-7.5},{-7.5*(1-cos(2.36 r))+11.555});
+            \draw [grx,densely dashed] (L) -- node[left]{$\dd{y}$} (L |- R) -- node[below]{$\dd{x}$} (R);
+        \end{tikzpicture}
+        \caption{Brachistochrone problem.}
+        \label{fig:brachistochroneSetup}
+    \end{figure}
     \begin{itemize}
+        \item Throughout this derivation, we will make several assumptions. We will do our best to note these assumptions as we go in footnotes. Note that while all of these assumptions are justified in the case of solving this problem, they may not be justified in every related variational problem. Let's begin.
         \item Since the track is frictionless, the mechanical energy should be conserved.
         \item At a given point along the curve, the particle has a velocity $v$ and is vertical distance $y$ from where it started. We know from physics that
         \begin{align*}
             \frac{1}{2}mv^2 &= mgy\\
             v &= \sqrt{2gy}
         \end{align*}
-        \item The time it takes for the particle to traverse an infinitesimal section of track of arc length $\ell$ is $\ell/v$.
-        \item The track should be given by $y=y(x)$.
-        \item Arc length
+        \item Since $v=\dv*{\ell}{t}$, the time $\dd{t}$ it takes for the particle to traverse an infinitesimal section of track of arc length $\dd\ell$ is $\dd{t}=\dd\ell/v$.
+        \item The track should be given by $y=y(x)$\footnote{There are paths that connect $(0,0)$ and $(a,y_0)$ that are not functions of $x$. We are taking those out of consideration.}.
+        \item Let $\ell$ denote the arc length of the whole track. Then
         \begin{equation*}
-            \ell = \sqrt{1+(y'(x))^2}\dd{x}
+            \dd\ell = \sqrt{1+(y'(x))^2}\dd{x}
         \end{equation*}
         \item Thus, the total time for the particle to traverse the curve is
         \begin{equation*}
-            \int_0^a\frac{\sqrt{1+(y'(x))^2}\dd{x}}{\sqrt[]{2gy(x)}}
+            t(y) = \int_0^t\dd{\tau}
+            = \int_0^a\frac{\dd\ell}{v}
+            = \int_0^a\frac{\sqrt{1+(y'(x))^2}\dd{x}}{\sqrt{2gy(x)}}
         \end{equation*}
         \item We also have $y(0)=0$ and $y(a)=y_0$.
-        \item Functionals: Mapping from a function space to numbers; we want to find $y$ such that the above integral is minimized.
+        \item We want to find $y$ such that the above integral is minimized. Thus, we define the following \textbf{functional}, which is used to solve general fixed-endpoint variational problems (the Brachistochrone problem is a problem of this type).
         \item Let $J[y]=\int_a^bF(x,y(x),y'(x))\dd{x}$.
-        \item The space of functions we're considering is $C^1$.
+        \item The space of functions we're considering is $C^1$ (the set of all continuously differentiable functions)\footnote{This also eliminates some possible paths from consideration.}.
         \item Take a function $h$, vanishing at $a,b$.
         \item Let $f(t)=J[y+th]$. Then
         \begin{equation*}
-            f(t) = \int_a^bF(x,\underbrace{y(x)+th(x)}_z,\underbrace{y'(x)+th'(x)}_w)\dd{x}
+            f(t) = \int_a^bF(x,\underbrace{y(x)+th(x)}_{z(x,t)},\underbrace{y'(x)+th'(x)}_{w(x,t)})\dd{x}
         \end{equation*}
-        and hence
+        \item We know that\footnote{We must assume sufficient regularity of $F$ here. In particular, we must assume that the derivative of the integral of $F$ is equal to the integral of the derivative of $F$.}
         \begin{align*}
-            f'(t) &= \int_a^b\left( {\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)+{\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x))h'(x) \right)\dd{x}\\
-            &= \int_a^b{\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)\dd{x}-\dv{x}\left[ {\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x)) \right]h(x)\dd{x}
+            \dv{t}\int_a^bF\dd{x} &= \int_a^b\dv{F}{t}\dd{x}\\
+            &= \int_a^b\left( \pdv{F}{x}\dv{x}{t}+\pdv{F}{z}\dv{z}{t}+\pdv{F}{w}\dv{w}{t} \right)\dd{x}\\
+            &= \int_a^b\left( \pdv{F}{x}\cdot 0+\pdv{F}{z}\cdot h(x)+\pdv{F}{w}\cdot h'(x) \right)\dd{x}\\
+            &= \int_a^b\left( \pdv{F}{z}\cdot h(x)+\pdv{F}{w}\cdot h'(x) \right)\dd{x}
+            % \\
+            % &= \int_a^b\left( {\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)+{\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x))h'(x) \right)\dd{x}\\
+            % &= \int_a^b{\pdv{F}{z}}(x,y(x)+th(x),y'(x)+th'(x))h(x)\dd{x}-\dv{x}\left[ {\pdv{F}{w}}(x,y(x)+th(x),y'(x)+th'(x)) \right]h(x)\dd{x}
         \end{align*}
+        \begin{itemize}
+            \item The last term in the above equation may be integrated by parts as follows. Note that we make use of the hypothesis $h(a)=h(b)=0$ in eliminating the $[uv]_a^b$ term.
+            \begin{align*}
+                \int_a^b\pdv{F}{w}h'(x)\dd{x} &= \left[ \pdv{F}{w}h(x) \right]_{x=a}^b-\int_a^bh(x)\dv{x}(\pdv{F}{w})\dd{x}\\
+                &= \left[ \eval{\pdv{F}{w}}_b\cdot 0-\eval{\pdv{F}{w}}_a\cdot 0 \right]-\int_a^b\dv{x}(\pdv{F}{w})h(x)\dd{x}\\
+                &= -\int_a^b\dv{x}(\pdv{F}{w})h(x)\dd{x}
+            \end{align*}
+            \item Substituting back into the original equation, we obtain
+            \begin{align*}
+                \dv{t}\int_a^bF\dd{x} &= \int_a^b\left[ \pdv{F}{z}\cdot h(x)-\dv{x}(\pdv{F}{w})h(x) \right]\dd{x}\\
+                &= \int_a^b\left[ \pdv{F}{z}-\dv{x}(\pdv{F}{w}) \right]h(x)\dd{x}
+            \end{align*}
+            \item Therefore,
+            \begin{equation*}
+                f'(t) = \dv{t}\int_a^bF\dd{x}
+                = \int_a^b\left\{ \pdv{F}{z}(x,y(x)+th(x),y'(x)+th'(x))-\dv{x}\left[ \pdv{F}{w}(x,y(x)+th(x),y'(x)+th'(x)) \right] \right\}h(x)\dd{x}
+            \end{equation*}
+        \end{itemize}
         \item Thus,
         \begin{equation*}
             f'(0) = \int_a^b\left\{ {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] \right\}h(x)\dd{x}
             = 0
         \end{equation*}
         for all $h$.
+        \begin{itemize}
+            \item Now suppose $y$ is the solution. Then $y$ minimizes $J[y]$. But if this is true, then any variation $th$ will cause $J[y+th]>J[y]$. It follows that for every $h$, $f(t)$ has a minium at $t=0$. But if $f$ has a minimum at 0 for all $h$, then $f'(0)=0$ for all $h$.
+        \end{itemize}
         \item Lemma: Let $\phi$ be continuous on $(a,b)$. If for every $h\in C^1([a,b])$ vanishing on $a,b$ we have that
         \begin{equation*}
             \int_a^b\phi(x)h(x)\dd{x} = 0
@@ -262,39 +420,53 @@
         \end{itemize}
         \item In our example,
         \begin{equation*}
-            F(x,y,z) = \sqrt{\frac{1+w^2}{2gz}}
+            F(x,z,w) = \sqrt{\frac{1+w^2}{2gz}}
         \end{equation*}
-        \item This gives us
+        \begin{itemize}
+            \item What's nice here is that $F(x,z,w)=F(z,w)$, i.e., there is no dependence on $x$. This is crucial.
+        \end{itemize}
+        \item With this observation in mind, notice that
         \begin{align*}
-            \dv{x}\left[ F(y,y') \right] &= {\pdv{F}{z}}(y,y')\cdot y'+{\pdv{F}{w}}(y,y')\cdot y''\\
-            {\pdv{F}{z}}(y,y')y &= \dv{x}\left[ {\pdv{F}{w}}(y,y') \right]y'\\
-            \dv{x}\left[ F(y,y') \right] &= \underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}{\pdv{F}{w}}(y,y')}_U\cdot\underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}y''}_{V'}+\underbrace{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}_{U'}\cdot\underbrace{\vphantom{\dv{x}\left[ {\pdv{F}{w}}(y,y') \right]}y'}_V\\
-            &= \dv{x}\left[ {\pdv{F}{w}}(y,y')\cdot y' \right]
+            \dv{F}{x} &= \pdv{F}{z}\dv{z}{x}+\pdv{F}{w}\dv{w}{x}\\
+            &= \pdv{F}{z}\dv{y}{x}+\pdv{F}{w}\dv{y'}{x}\\
+            &= \pdv{F}{z}\dv{y}{x}+\pdv{F}{w}\dv[2]{y}{x}
         \end{align*}
-        \item This reduces to the first-order equation
-        \begin{equation*}
-            F(y,y')-{\pdv{F}{w}}(y,y')\cdot y' = A
-        \end{equation*}
-        \item Since $F(x,z,w)$ is known, we have that
-        \begin{equation*}
-            {\pdv{F}{w}}(z,w) = \frac{w}{\sqrt{1+w^2}}\cdot\frac{1}{\sqrt{2gz}}
-        \end{equation*}
-        \item Plugging into the E-L equation gives us
+        \item We now rearrange the E-L equation and multiply through by $\dv*{y}{x}$.
         \begin{align*}
+            \pdv{F}{z}-\dv{x}(\pdv{F}{w}) &= 0\\
+            \dv{x}(\pdv{F}{w})\dv{y}{x} &= \pdv{F}{z}\dv{y}{x}
+        \end{align*}
+        \item Subtracting the last two results yields
+        \begin{align*}
+            \dv{F}{x}-\dv{x}(\dv{F}{w})\dv{y}{x} &= \pdv{F}{w}\dv[2]{y}{x}\\
+            \dv{F}{x} &= \dv{x}(\dv{F}{w})\dv{y}{x}+\pdv{F}{w}\dv[2]{y}{x}\\
+            &= \dv{x}(\dv{F}{w}\dv{y}{x})\\
+            \dv{x}(F-\dv{F}{w}\dv{y}{x}) &= 0\\
+            F-\dv{F}{w}\dv{y}{x} &= A
+        \end{align*}
+        where $A\in\R$ depends on the initial conditions.
+        \item From the definition of $F$, we can calculate
+        \begin{equation*}
+            \pdv{F}{w} = \frac{w}{\sqrt{1+w^2}}\cdot\frac{1}{\sqrt{2gz}}
+            = \frac{y'}{\sqrt{1+(y')^2}}\cdot\frac{1}{\sqrt{2gy}}
+        \end{equation*}
+        \item It follows that our solution function $y$ satisfies the separable differential equation
+        \begin{align*}
+            \sqrt{\frac{1+(y')^2}{2gy}}-\frac{y'}{\sqrt{1+(y')^2}}\cdot\frac{1}{\sqrt{2gy}}\cdot y' &= A\\
             \frac{1+(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}}-\frac{(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}} &= A\\
             \frac{1}{\sqrt{2gy(1+(y')^2)}} &= A\\
-            (y')^2 &= \frac{2A^2g-y}{y}
+            (y')^2 &= \frac{1/2A^2g-y}{y}
         \end{align*}
-        where the second line above is a separable differential equation.
-        \item The solution is the \textbf{cycloid}
+        \item The solution, as we can determine using methods from Calculus I-II, is the \textbf{cycloid}
         \begin{equation*}
             \begin{cases}
-                x = -a\sin\theta+a\theta\\
+                x = a(\theta-\sin\theta)\\
                 y = a(1-\cos\theta)
             \end{cases}
         \end{equation*}
         where the specific parameters come from the boundary values.
     \end{itemize}
+    \item \textbf{Functional}: A map from a function space to a set of numbers.
     \item \textbf{Sturm-Liouville problems}: Boundary value problems concerning the integral
     \begin{equation*}
         \int_a^b\left[ p(x)(y'(x))^2+q(x)(y(x))^2 \right]\dd{x}

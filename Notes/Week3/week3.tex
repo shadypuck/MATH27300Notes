@@ -40,7 +40,7 @@
     \begin{itemize}
         \item If $y_1,y_2$ are solutions, any linear combination of them is a solution. This is called the \textbf{solution space} of the equation.
     \end{itemize}
-    \item \textbf{Linearly independent} (set of vectors): A set of vectors $x_1,\dots,x_m\in V$ such that the only coefficients $\lambda_1,\dots,\lambda_m$ such that
+    \item \textbf{Linearly independent} (set of vectors): A set of vectors $x_1,\dots,x_m\in V$ for which the only coefficients $\lambda_1,\dots,\lambda_m$ such that
     \begin{equation*}
         \lambda_1x_1+\cdots+\lambda_mx_m = 0
     \end{equation*}
@@ -55,7 +55,7 @@
     \item Theorem: Any basis in $V$ has the same cardinality.
     \item \textbf{Dimension} (of $V$): The cardinality given by the above theorem. \emph{Denoted by} $\bm{\dim V}$.
     \item We usually denoted a basis as an ordered $n$-tuple since the order often matters (for orientation?).
-    \item Notational onventions.
+    \item Notational conventions.
     \begin{itemize}
         \item For $\R^n,\C^n$, we will always use column vectors.
         \item $x_1,x_2,\dots$ denotes vectors.
@@ -110,7 +110,7 @@
     \end{equation*}
     \item Matrix multiplication is not commutative in general. Shao gives a counterexample.
     \item $A$ is invertible iff the columns of $A$ are a basis for $\R^n$ (resp. $\C^n$).
-    \item \textbf{Determinant} (of $A$): Not defined.
+    \item \textbf{Determinant} (of $A$): Not explicitly defined.
     \item Properties of the determinant.
     \begin{itemize}
         \item Multilinear.
@@ -140,7 +140,7 @@
             \end{pmatrix}
         \end{equation*}
     \end{itemize}
-    \item Theorem: The determinant is uniquely characterized by these three (??) axioms.
+    \item Theorem: The determinant is uniquely characterized by these two axioms.
     \item $\det I_n=1$.
     \item Shao goes over computing the determinant via minors.
     \item Special cases:
@@ -195,6 +195,7 @@
             = \det(A)
         \end{equation*}
     \end{itemize}
+    \item There is an extra example in Shao's notes (of a linear transformation in two bases).
 \end{itemize}
 
 
@@ -253,64 +254,65 @@
     \item \textbf{Superdiagonal}: The set of entries in a matrix which are directly above a diagonal entry.
     \item \textbf{Jordan block}: A $d\times d$ matrix corresponding to an eigenvalue $\lambda$ that has $\lambda$ as every diagonal entry, 1 as every superdiagonal entry, and zeroes everywhere else. \emph{Denoted by} $\bm{J_d(\lambda)}$.
     \begin{itemize}
+        \item A Jordan block is an example of a matrix with algebraic multiplicity $d$ and geometric multiplicity 1.
         \item The geometric multiplicity $\gamma_j$ is the number of Jordan blocks with eigenvalue $\lambda_j$. Of course, when $\gamma_j=\alpha_j$ (in particular, if $\alpha_j=1$), there is no Jordan block corresponding to $\lambda_j$ at all.
     \end{itemize}
-    \item We have that
-    \begin{align*}
-        J_d(\lambda)
-        \begin{pmatrix}
-            1\\
-            0\\
-            \vdots\\
-            0\\
-        \end{pmatrix}
-        &=
-        \begin{pmatrix}
-            \lambda\\
-            0\\
-            \vdots\\
-            0\\
-        \end{pmatrix}
-        = \lambda
-        \begin{pmatrix}
-            1\\
-            0\\
-            \vdots\\
-            0\\
-        \end{pmatrix}
-        = \lambda e_1\\
-        J_d(\lambda)
-        \begin{pmatrix}
-            0\\
-            1\\
-            0\\
-            \vdots\\
-            0\\
-        \end{pmatrix}
-        &=
-        \begin{pmatrix}
-            1\\
-            \lambda\\
-            0\\
-            \vdots\\
-            0\\
-        \end{pmatrix}
-        = e_1+\lambda e_2\\
-        &\vdots\\
-        J_d(\lambda)e_{d-1} &= e_{d-2}+\lambda e_{d-1}
-    \end{align*}
+    % \item We have that
+    % \begin{align*}
+    %     J_d(\lambda)
+    %     \begin{pmatrix}
+    %         1\\
+    %         0\\
+    %         \vdots\\
+    %         0\\
+    %     \end{pmatrix}
+    %     &=
+    %     \begin{pmatrix}
+    %         \lambda\\
+    %         0\\
+    %         \vdots\\
+    %         0\\
+    %     \end{pmatrix}
+    %     = \lambda
+    %     \begin{pmatrix}
+    %         1\\
+    %         0\\
+    %         \vdots\\
+    %         0\\
+    %     \end{pmatrix}
+    %     = \lambda e_1\\
+    %     J_d(\lambda)
+    %     \begin{pmatrix}
+    %         0\\
+    %         1\\
+    %         0\\
+    %         \vdots\\
+    %         0\\
+    %     \end{pmatrix}
+    %     &=
+    %     \begin{pmatrix}
+    %         1\\
+    %         \lambda\\
+    %         0\\
+    %         \vdots\\
+    %         0\\
+    %     \end{pmatrix}
+    %     = e_1+\lambda e_2\\
+    %     &\vdots\\
+    %     J_d(\lambda)e_{d-1} &= e_{d-2}+\lambda e_{d-1}
+    % \end{align*}
     \item For any linear transformation, we can find a basis such that the matrix is the diagonalized Jordon blocks.
     \item Theorem: Let $A$ be an $n\times n$ complex matrix. Then there is a \textbf{Jordan basis} $Q$ under which
     \begin{equation*}
         Q^{-1}AQ =
         \begin{pmatrix}
-            J_{h_1}(\lambda_1) &  & \\
-             & J_{h_{d_1}}(\lambda_1) & \\
-             &  & \ddots\\
+            J_1 &  & \\
+             & \ddots & \\
+             &  & J_k\\
         \end{pmatrix}
     \end{equation*}
+    i.e., under which the matrix of $Q^{-1}AQ$ is block-diagonalized Jordan blocks.
     \begin{itemize}
-        \item We have that $h_1+\cdots+h_{d_1}=\alpha_1$??
         \item The proof will not be tested --- it is very hard. Shao will sketch it, though.
         \item The proof is constructive: It will tell you how to convert a matrix into the Jordan normal form.
     \end{itemize}
@@ -328,7 +330,7 @@
             \item For each $\lambda_i$, compute the $\ker(A-\lambda_iI)\subset\ker(A-\lambda_iI)^2\subset\ker(A-\lambda_iI)^3\subset\cdots$.
             \item The sequence will stop at some $d_i\in\N$. In particular, it will stop when $\dim\ker(A-\lambda I)^{d_j}=\alpha_i$.
             \begin{itemize}
-                \item Claim: $K_i\cap K_j=\{0\}$. Let $j_i=\dim K_i$. Take the direct sum of all $K_i$. Then $j_1+\cdots+j_m=n$.
+                \item Claim: $\C^n=K_1\oplus\cdots\oplus K_m$.
             \end{itemize}
             \item Since each $K_i$ is an invariant subspace of $A$, we know that there is a matrix of the linear transformation corresponding to $A$ of the form
             \begin{equation*}
@@ -427,16 +429,34 @@
                     \vdots\\
                     0\\
                 \end{pmatrix}\\
-                Av_{i,j,2} &= v_{i,j,1}+\lambda_iv_{i,j,2}\\
-                (A-\lambda I)v_{i,j,2} &= v_{i,j,1}
+                Jv_{i,j,2} &= v_{i,j,1}+\lambda_iv_{i,j,2}\\
+                (J-\lambda_iI)v_{i,j,2} &= v_{i,j,1}
             \end{align*}
-            Naturally, this process will generalize to show that $(A-\lambda_iI)v_{i,j,k}=v_{i,j,k-1}$, i.e., we can recursively determine the $v_{i,j,1},\dots,v_{i,j,k_{i,j}}$.
-            \item Thus, using the above process, we will find $k_{i,j}$ elements of the Jordan basis for each $v_{i,j}$. The full, ordered set of these vectors constitutes the Jordan basis.
+            Naturally, this process will generalize to show that $(J-\lambda_iI)v_{i,j,k}=v_{i,j,k-1}$, i.e., we can recursively determine the $v_{i,j,1},\dots,v_{i,j,k_{i,j}}$.
+            \item However, there is slightly more subtlety than we might guess at first glance. Indeed, of our $\gamma$ eigenvectors corresponding to $\lambda_i$, pick the first $\gamma'$ to be elements of $\ker(A-\lambda_iI)\cap\im(A-\lambda_iI)$. This is a necessary condition for the existence of $v_{i,j,2}$ such that $(A-\lambda_iI)v_{i,j,2}=v_{i,j,1}$ for $j=1,\dots,\gamma'$.
+            \item Thus, using the above process, we will find $k_{i,j}$ elements of the Jordan basis for each $v_{i,j}$. The full, ordered set of these vectors, listed as follows, constitutes the Jordan basis.
+            \begin{alignat*}{4}
+                &v_{i,1,1},\quad &&v_{i,1,2},\quad &&\cdots,\quad &&v_{i,1,k_{i,1}}\\
+                &v_{i,2,1}, &&v_{i,2,2}, &&\cdots, &&v_{i,2,k_{i,2}}\\
+                &\cdots\\
+                &v_{i,\gamma',1}, &&v_{i,\gamma',2}, &&\cdots, &&v_{i,\gamma',k_{i,\gamma'}}\\
+                &v_{i,\gamma'+1}, &&v_{i,\gamma'+2}, &&\cdots, &&v_\gamma
+            \end{alignat*}
             \item Note that each of these vectors is naturally an element of the generalized eigenspace $K_i$ since for each $k=1,\dots,k_{i,j}$, the formula $(A-\lambda_iI)v_{i,j,k}=v_{i,j,k-1}$ implies that
             \begin{equation*}
                 (A-\lambda_iI)^kv_{i,j,k} = 0
             \end{equation*}
-            Also note that each $k_{i,j}\leq d_i$ and $k_{i,1}+\cdots+k_{i,\gamma}=d_i$.
+            Also note that each $k_{i,j}\leq d_i$ and $k_{i,1}+\cdots+k_{i,\gamma'}+\gamma-\gamma'=\alpha_i$.
+            \item Under this basis, the Jordan normal form of $A$ on the generalized eigenspace $K_i$ will be
+            \begin{equation*}
+                \begin{pmatrix}
+                    J_{k_{i,1}}(\lambda) &  &  &  & \\
+                     & J_{k_{i,2}}(\lambda) &  &  & \\
+                     &  & \ddots &  & \\
+                     &  &  & J_{k_{i,\gamma'}}(\lambda) & \\
+                     &  &  &  & \lambda I_{\gamma-\gamma'}\\
+                \end{pmatrix}
+            \end{equation*}
         \end{enumerate}
     \end{enumerate}
     \item \textbf{Generalized eigenspace} (of $\lambda$): The kernel of $(A-\lambda I)^{d_\lambda}$. \emph{Denoted by} $\bm{K_\lambda}$. \emph{Given by}
@@ -444,12 +464,8 @@
         K_\lambda = \ker(A-\lambda I)^{d_\lambda}
     \end{equation*}
     \item $\bm{d_\lambda}$: The power of $A-\lambda I$ for which the kernel stabilizes.
-    \item $\bm{j_\lambda}$: The dimension of the generalized eigenspace of $\lambda$. \emph{Given by}
-    \begin{equation*}
-        j_\lambda = \dim K_\lambda
-    \end{equation*}
     \item The JNF computation can be really heavy; we'll only ever compute $2\times 2$ or $3\times 3$ versions.
-    \item Example:
+    \item Example\footnote{Largely ignore this misguided relic of class that day.}:
     \begin{itemize}
         \item Consider
         \begin{equation*}
@@ -590,7 +606,7 @@
     \item The $3\times 3$ case.
     \begin{itemize}
         \item We divide into three nontrivial cases: $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=2$, $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=1$, and $\chi_A(z)=(z-\lambda)^2(z-\mu)$ with $\gamma_\lambda=1$.
-        \item In the first case, we have two eigenvectors $v_1,v_2$. We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_1$ and $(A-\lambda I)u=v_2$ (only one of these will have a solution). WLOG let the first equation have a solution. Then $Q=(v_1|u|v_2)$ and the JNF is
+        \item In the first case, we have two eigenvectors $v_1,v_2$ (make sure to pick $v_1$ such that it is also in the column space of $A-\lambda I$!). We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_1$. Then $Q=(v_1|u|v_2)$ and the JNF is
         \begin{equation*}
             Q^{-1}AQ =
             \begin{pmatrix}
@@ -702,10 +718,10 @@
         \item Notice that $A'(t)A(t)\neq A(t)A'(t)$.
     \end{itemize}
     \item Suppose we have a matrix $A$ and we want to compute $A^{100}$.
-    \item If $A$ is diagonalizable, then $A^n=Q^{-1}\Lambda^nQ$.
+    \item If $A$ is diagonalizable, then $A^n=Q\Lambda^nQ^{-1}$.
     \item What if $A$ is not diagonalizable?
     \begin{itemize}
-        \item Then we convert to $A$ to Jordan normal form $A=Q^{-1}BQ$. Thus, we just need to compute the powers of the Jordan blocks.
+        \item Then we convert to $A$ to Jordan normal form $A=QBQ^{-1}$. Thus, we just need to compute the powers of the Jordan blocks.
         \item Suppose
         \begin{equation*}
             J_d(\lambda) =
@@ -724,9 +740,9 @@
             J_d(\lambda) = \lambda I_d+N_d
         \end{equation*}
         \item Note that $N_d$ is nilpotent --- every successive power to which you raise it shifts the 1s up one row until it becomes the zero matrix.
-        \item In computing $[J_d(\lambda)]^m$, invoke the binomial expansion. When $m<d$ invoke the full expansion. When $m\geq d$, neglect all zero terms (terms with $N_d^i$ for $i\geq m$).
+        \item In computing $[J_d(\lambda)]^m$, invoke the binomial expansion. When $m<d$ invoke the full expansion. When $m\geq d$, neglect all zero terms (terms with $N_d^i$ for $i\geq m$):
         \begin{equation*}
-            [J_d(\lambda)]^m = \binom{m}{0}\lambda^mI_d+\binom{m}{1}\lambda^{m-1}N_d+\cdots+\binom{m}{m}N_d^m
+            [J_d(\lambda)]^m = \binom{m}{0}\lambda^mI_d+\binom{m}{1}\lambda^{m-1}N_d+\cdots+\binom{m}{d-1}\lambda^{m-d+1}N_d^{d-1}
         \end{equation*}
         \item Example: When $d=3$, then
         \begin{equation*}
@@ -734,7 +750,7 @@
                 \lambda & 1 & 0\\
                  & \lambda & 1\\
                  &  & \lambda\\
-            \end{pmatrix}^3
+            \end{pmatrix}^m
             =
             \begin{pmatrix}
                 \lambda^m & m\lambda^{m-1} & m(m-1)\lambda^{m-2}\\
@@ -755,19 +771,22 @@
     \item \textbf{Analytic} (function): A function whose Taylor series (locally) converges and converges to the function in question.
     \item We can consider an analytic function of matrices:
     \begin{equation*}
-        f(z) = c_0I+c_1A+c_2A^2+\cdots
+        f(A) = c_0I+c_1A+c_2A^2+\cdots
     \end{equation*}
-    \item \textbf{Radius of convergence}: The number $R$ such that the series converges for $\norm{A}<R$.
+    \item \textbf{Radius of convergence}: The number $R$ such that the series converges absolutely for $\norm{A}<R$.
+    \begin{itemize}
+        \item We do not talk about the radius of convergence any more in this course.
+    \end{itemize}
     \item \textbf{von Neumann series}: The series $I+A+A^2+\cdots$ converging to $(I_n-A)^{-1}$ for any $\norm{A}<1$.
     \begin{itemize}
         \item Example: We can check that the von Neumann series for $N_d$ converges.
     \end{itemize}
-    \item Suppose $A=Q^{-1}BQ$. Then
+    \item Suppose $A=QBQ^{-1}$. Then
     \begin{align*}
-        f(A) &= f(Q^{-1}BQ)\\
-        &= c_0I+c_1(Q^{-1}BQ)+c_2(Q^{-1}BQ)^2+\cdots\\
-        &= Q^{-1}(c_0I+c_1B+c_2B^2+\cdots)Q\\
-        &= Q^{-1}f(B)Q
+        f(A) &= f(QBQ^{-1})\\
+        &= c_0I+c_1(QBQ^{-1})+c_2(QBQ^{-1})^2+\cdots\\
+        &= Q(c_0I+c_1B+c_2B^2+\cdots)Q^{-1}\\
+        &= Qf(B)Q^{-1}
     \end{align*}
     \begin{itemize}
         \item Going even further,
@@ -786,13 +805,13 @@
         \end{equation*}
         \item In particular, if $A$ is diagonalizable, then
         \begin{equation*}
-            f(A) = Q^{-1}
+            f(A) = Q
             \begin{pmatrix}
                 f(\lambda_1) &  & \\
                  & \ddots & \\
                  &  & f(\lambda_n)\\
             \end{pmatrix}
-            Q
+            Q^{-1}
         \end{equation*}
     \end{itemize}
     \item Suppose $A$ is not diagonalizable, and $f$ is some analytic function.
@@ -839,6 +858,10 @@
                  & \e[t\lambda] & t\e[t\lambda]\\
                  &  & \e[t\lambda]\\
             \end{pNiceMatrix}
+        \end{equation*}
+        \item Thus,
+        \begin{equation*}
+            \e[tA] = Q\e[tB]Q^{-1}
         \end{equation*}
     \end{itemize}
     \item Next time: First order linear systems with constant coefficients; will make use of $\e[tA]$.

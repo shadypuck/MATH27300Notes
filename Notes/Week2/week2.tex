@@ -102,7 +102,7 @@
                 \frac{x'}{y'} &= \frac{Ax-Bxy}{-Cy+Dxy}\\
                 \frac{By-A}{y}y'+\frac{Dx-C}{x}x' &= 0
             \end{align*}
-            \item Use the fact that $x,y$ are independent variables, so both terms in the above equation are equal to zero?
+            \item Use the fact that $x,y$ are independent variables, so both terms in the above equation are equal to zero??
             \item Invoke the law of composite differentiation twice and, from the above, know that $0+0=0$, so we can add the two solutions:
             \begin{align*}
                 \dv{t}(By(t)-A\log y(t))+\dv{t}(Dx(t)-C\log x(t)) &= 0\\
@@ -122,14 +122,14 @@
         \end{itemize}
     \end{enumerate}
     \item \textbf{Finite lifespan}: Even if the RHS of $\dv*{y}{t}=f(t,y)$ is very regular, the solution can still blow up at some finite time.
-    \item Consider the following variation on the E-L equation from the Brachistochrone problem.
+    \item Consider the final ODE from the Brachistochrone problem.
     \begin{equation*}
         \dv{y}{x} = \sqrt{\frac{B-y}{y}}
     \end{equation*}
     \begin{itemize}
         \item Finding the \textbf{primitives}.
         \begin{itemize}
-            \item What are these "primitives" Shao keeps talking about?
+            \item What are these "primitives" Shao keeps talking about??
         \end{itemize}
         \item We should have
         \begin{equation*}
@@ -233,7 +233,7 @@
         \mu g\dv{y}{x}+\mu f &= 0&
         \pdv{x}(\mu g) &= \pdv{y}(\mu f)
     \end{align*}
-    \item For linear homogeneous equations $\dv*{y}{t}=p(t)y$, we have
+    \item The solution to linear homogeneous equations of the form $\dv*{y}{t}=p(t)y$ is
     \begin{equation*}
         y(t) = y_0\exp[\int_{t_0}^tp(\tau)\dd\tau]
     \end{equation*}
@@ -311,6 +311,10 @@
         \begin{equation*}
             x'' = -\frac{k}{m}x
         \end{equation*}
+        \item However, if there is damping (which will be proportional to the velocity), then the ODE is of the form
+        \begin{equation*}
+            x''+\frac{b}{m}x'+\frac{k}{m}x = 0
+        \end{equation*}
     \end{itemize}
     \item Consider an ODE of the form
     \begin{equation*}
@@ -328,14 +332,16 @@
         \end{equation*}
         \item Comparing with the original form, we have that $a=-(\mu+\lambda)$ and $b=\mu\lambda$.
         \item It follows that $\mu,\lambda$ are the roots of $x^2+ax+b=0$, which we will call the \textbf{characteristic polynomial} of the ODE.
-    \end{itemize}
-    \item Example:
-    \begin{itemize}
-        \item Consider
+        \item Substitute $x=y'-\mu y$. Then we can solve
+        \begin{equation*}
+            x'-\lambda x = 0
+        \end{equation*}
+        to determine that $x=A\e[\lambda t]$.
+        \item Returning the substitution, we have that
         \begin{equation*}
             y'-\mu y = A\e[\lambda t]
         \end{equation*}
-        \item By the Duhamel equation, we have that a particular solution is of the form
+        \item Since the above is of the form $y'=ay+f$, we can apply the Duhamel formula. It follows that a particular solution is
         \begin{equation*}
             A\int_0^t\e[\mu(t-\tau)]\e[\lambda\tau]\dd\tau
         \end{equation*}
@@ -356,6 +362,7 @@
             y(t) = A_1\e[\mu t]+B_1t\e[\mu t]
         \end{equation*}
         for $\mu=\lambda$.
+        \item These linearly independent solutions form a basis of the space of solutions; all solutions can be expressed as a linear combination of these two functions.
     \end{itemize}
     \item If our equation is of the form $y''+ay'+by=f(t)$, then we just need to apply the Duhamel formula twice.
     \item Returning to the simple harmonic oscillator problem, we substitute $\omega=\sqrt{k/m}$ to get
@@ -429,38 +436,48 @@
         \dv{t}\cnc{ES} &= k_1\cnc{E}\cnc{S}-(k_{-1}+k_2)\cnc{ES}\tag{3}\\
         \dv{t}\cnc{P} &= k_2\cnc{ES}\tag{4}
     \end{align*}
+    \item The initial conditions are $\cnc{S}=\cnc[0]{S}$ and $\cnc{E}=\cnc[0]{E}$.
     \item We can reduce these rate laws to the 2D system
     \begin{align*}
         \dv{t}\cnc{S} &= -k_1(\cnc[0]{E}-\cnc{ES})\cnc{S}+k_{-1}\cnc{ES}\tag{5}\\
         \dv{t}\cnc{ES} &= k_1(\cnc[0]{E}-\cnc{ES})\cnc{S}-(k_{-1}+k_2)\cnc{ES}\tag{6}
     \end{align*}
+    \begin{itemize}
+        \item Note that to do so, we have used two conservation laws: The conservation of the enzyme plus enzyme-substrate complex, and the conservation of the substrate plus enzyme-substrate complex plus products.
+    \end{itemize}
     \item QSSA: Quasi steady-state assumption.
     \begin{itemize}
         \item Assume that $\cnc[0]{E}/\cnc[0]{S}\lll 1$.
-        \item Also assume that $\dv*{\cnc{ES}}{t}\approx 0$.
+        \item It follows that $\dv*{\cnc{ES}}{t}\approx 0$ due to saturation of the enzyme and $\cnc{S}\approx\cnc[0]{S}$ due to ever-more substrate being available.
     \end{itemize}
     \item Then
     \begin{equation*}
         \cnc{ES} = \frac{\cnc[0]{E}\cnc{S}}{K_M+\cnc{S}}
     \end{equation*}
-    where $k_M=(k_{-1}+k_2)/k_1$.
-    \item Sub in the above to Equation 5:
+    where $k_M=(k_{-1}+k_2)/k_1$ is the \textbf{Michaelis-Menten constant}, a usual indication of enzyme activity.
+    \item Substitute the above into Equation 5:
     \begin{equation*}
-        \dv{t}\cnc{S} = -\frac{k_2\cnc[0]{E}\cnc{S}}{k_M+\cnc{S}}
+        \dv{t}\cnc{S} = -\frac{v_\text{max}\cnc{S}}{k_M+\cnc{S}}
     \end{equation*}
     \begin{itemize}
         \item Note that $v_\text{max}=k_2\cnc[0]{E}$.
     \end{itemize}
     \item The above is now a differential equation of separable form; it's solution is
+    \begingroup
+    \allowdisplaybreaks
     \begin{align*}
         \int_{\cnc[0]{S}}^{\cnc{S}}-\frac{(k_M+z)\dd{z}}{zv_\text{max}} &= \int_0^t\dd{t}\\
         -\frac{k_M}{v_\text{max}}\log\frac{\cnc{S}}{\cnc[0]{S}}-\frac{1}{v_\text{max}}(\cnc{S}-\cnc[0]{S}) &= t\\
-        -\frac{k_M}{v_\text{max}}\frac{\cnc{S}}{\cnc[0]{S}}\e[{-v_\text{max}^{-1}(\cnc{S}-\cnc[0]{S})}] &= \e[t]
+        \log\frac{\cnc{S}}{\cnc[0]{S}}+\frac{\cnc{S}}{k_M} &= \frac{\cnc[0]{S}-v_\text{max}t}{k_M}\\
+        \frac{\cnc{S}}{\cnc[0]{S}}\e[\cnc{S}/k_M] &= \exp(\frac{\cnc[0]{S}-v_\text{max}t}{k_M})\\
+        \frac{\cnc{S}}{k_M}\e[\cnc{S}/k_M] &= \frac{\cnc[0]{S}}{k_M}\exp(\frac{\cnc[0]{S}-v_\text{max}t}{k_M})\\
+        \frac{\cnc{S}}{k_M} &= W\left[ \frac{\cnc[0]{S}}{k_M}\exp(\frac{\cnc[0]{S}-v_\text{max}t}{k_M}) \right]\\
+        \cnc{S} &= k_MW\left[ \frac{\cnc[0]{S}}{k_M}\exp(\frac{\cnc[0]{S}-v_\text{max}t}{k_M}) \right]
     \end{align*}
-    \item The above equation is of the following form, for $x>0$, $w(x)\sim s$, $x\sim 0$, and $w(x)\sim\log x$??
-    \begin{equation*}
-        w(x)\e[w(x)] = x
-    \end{equation*}
+    \endgroup
+    \begin{itemize}
+        \item Getting from line 5-6 (i.e., the introduction of $W$): Suppose we have an equation of the form $y\e[y]=x$. We cannot express $x$ in terms of $y$ using elementary functions, so we must define $W$ such that $y=W(x)$. Explicitly, $W$ is the unique function of $x$ that satisfies $W(x)\e[W(x)]=x$.
+    \end{itemize}
     \item Harmonic oscillator.
     \item Recall that
     \begin{equation*}
@@ -504,9 +521,14 @@
     \item Mathematical pendulum.
     \item Equation of motion:
     \begin{align*}
-        0 &= l\theta'+g\sin\theta\\
+        0 &= l\theta''+g\sin\theta\\
         &= \ell\theta''\theta'+g\sin\theta\cdot\theta'\\
         &= \dv{t}\bigg( \underbrace{\frac{\ell}{2}|\theta'|^2-g\cos\theta}_E \bigg)
+    \end{align*}
+    \item Initial values:
+    \begin{align*}
+        \theta(0) &= \theta_0&
+        \theta'(0) &= 0
     \end{align*}
     \item It follows from the above that
     \begin{align*}
@@ -527,72 +549,82 @@
     \end{itemize}
     \item Kepler problem.
     \item Two bodies of mass $m_1,m_2$ are located at positions $x_1,x_2$ pulling on each other gravitationally.
+    \begin{itemize}
+        \item The force of attraction is a conservative central force.
+        \item The potential between the two masses is a function of their distance, i.e, $U(|x_1-x_2|)$.
+    \end{itemize}
     \item From Newton's second and third law, we get
     \begin{align*}
-        m_1x_1'' &= \frac{U'(|x_1-x_2|)^{x_1-x_2}}{|x_1-x_2|}&
-        m_2x_2'' &= \frac{U'(|x_1-x_2|)^{x_1-x_2}}{|x_1-x_2|}
+        m_1x_1'' &= U'(|x_1-x_2|)\frac{x_2-x_1}{|x_2-x_1|}&
+        m_2x_2'' &= U'(|x_1-x_2|)\frac{x_1-x_2}{|x_1-x_2|}
     \end{align*}
+    \begin{itemize}
+        \item The derivative of potential is force.
+        \item The vector term provides direction.
+    \end{itemize}
     \item Conservation of momentum:
     \begin{align*}
         (m_1x_1+m_2x_2)'' &= 0\\
         m_1x_1'+m_2x_2' &= C
     \end{align*}
     \begin{itemize}
-        \item Let $M=m_1+m_2$. Then
+        \item Let $M=m_1+m_2$. Then the center of mass
         \begin{equation*}
             \frac{m_1}{M}x_1+\frac{m_2}{M}x_2
         \end{equation*}
-        moves inertially.
-        \item Define the center of mass to be the origin.
+        moves inertially (i.e., does not accelerate or decelerate; is a stable reference frame) --- we'll define it to be the origin.
     \end{itemize}
     \item Conservation of angular momentum:
     \begin{equation*}
-        [\mu(x_1-x_2)'\times(x_1-x_2)]' = 0
+        [m(x_1-x_2)'\times(x_1-x_2)]' = 0
     \end{equation*}
     \begin{itemize}
-        \item $\mu=m_1m_2/(m_1+m_2)$.
+        \item $m=m_1m_2/(m_1+m_2)$.
         \item $\times$ indicates the cross product.
-        \item $L=\mu(x_1-x_2)\times(x_1-x_2)$.
+        \item $L=m(x_1-x_2)'\times(x_1-x_2)$.
     \end{itemize}
+    \item It follows that $x_1-x_2$ is always in a fixed plane, which we may call the \textbf{horizon plane}.
     \item Conservation of mechanical energy:
     \begin{align*}
-        \mu q''+U'(|q|)\frac{q}{|q|} &= 0\\
-        \frac{\mu}{2}|q'|^2+U(|q|) &= E
+        mq''+U'(|q|)\frac{q}{|q|} &= 0\\
+        \frac{m}{2}|q'|^2+U(|q|) &= E
     \end{align*}
     \begin{itemize}
         \item $q=x_1-x_2$.
     \end{itemize}
     \item Introduce polar coordinates $(r,\phi)$.
     \begin{itemize}
-        \item Then $r^2\phi'/2=\ell_0$, $r=r(\phi)$, and $\dv*{r}{\phi}=r'(t)/\phi'(t)$.
+        \item Then $r^2\phi'=\ell_0$, $r=r(\phi)$, and $\dv*{r}{\phi}=r'(t)/\phi'(t)$.
         \item It follows that
         \begin{equation*}
-            \frac{\mu}{2}(|r'|^2+|\phi'|^2)+U(r) = E
+            \frac{m}{2}(|r'|^2+|\phi'|^2)+U(r) = E
         \end{equation*}
-        \item Then
+        \item Since $U(r)=-Gm_1m_2/r$ for Newtonian gravity,
         \begin{equation*}
-            \left( \dv{r}{\phi} \right)^2+r^2 = \frac{2G\mu r^3}{\ell_0^2}+\frac{2Er^4}{\mu\ell_0^2}
+            \left( \dv{r}{\phi} \right)^2+r^2 = \frac{2GMr^3}{\ell_0^2}+\frac{2Er^4}{m\ell_0^2}
         \end{equation*}
         \item The substitution $\mu=1/r$ yields
         \begin{equation*}
-            \left( \dv{\mu}{\phi} \right)^2+\mu^2 = \frac{2G\mu}{\ell_0^2}\mu+\frac{2E}{\mu\ell_0^2}
+            \left( \dv{\mu}{\phi} \right)^2+\mu^2 = \frac{2GM}{\ell_0^2}\mu+\frac{2E}{m\ell_0^2}
         \end{equation*}
         \item Differentiating again gives
         \begin{equation*}
-            2\dv{\mu}{\phi}\dv[2]{\mu}{\phi}+2\dv{\mu}{\phi}\mu = \frac{2G\mu}{\ell_0^2}\dv{\mu}{\phi}
+            2\dv{\mu}{\phi}\dv[2]{\mu}{\phi}+2\mu\dv{\mu}{\phi} = \frac{2GM}{\ell_0^2}\dv{\mu}{\phi}
         \end{equation*}
         \item Substituting $\mu=\cos(t)$ gives
         \begin{equation*}
-            \dv[2]{\mu}{\phi}+2\mu = \frac{2G\mu}{\ell_0^2}
+            \dv[2]{\mu}{\phi}+\mu-\frac{GM}{\ell_0^2} = 0
         \end{equation*}
         or
         \begin{equation*}
-            r = \frac{1}{G\mu/\ell_0^2+\varepsilon\cos(\phi-\phi_0)}
+            r = \frac{1}{GM/\ell_0^2+\varepsilon\cos(\phi-\phi_0)}
         \end{equation*}
         \begin{itemize}
             \item This is a conic section!
         \end{itemize}
     \end{itemize}
+    \item Thus, for example, we can calculate the precession of Mercury.
+    \item Note that while we have determined the trajectory of our 2 bodies in terms of elementary functions, the $n$-body problem cannot be solved analytically.
 \end{itemize}
 
 
