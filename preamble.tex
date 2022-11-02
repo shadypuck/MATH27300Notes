@@ -6,7 +6,7 @@
 \usepackage{scrextend}
 \usepackage[bottom]{footmisc}
 \usepackage{siunitx}
-\usepackage{graphicx,tikz}
+\usepackage{graphicx,tikz,circuitikz}
 \usepackage{subcaption}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm,physics,empheq,nicematrix,mathtools}
@@ -33,6 +33,7 @@
 \deffootnotemark{\textsuperscript{\textup{[}\thefootnotemark\textup{]}}}
 \deffootnote[1.8em]{0em}{0em}{\textsuperscript{\thefootnote}}
 
+\usetikzlibrary{decorations.pathmorphing}
 \colorlet{rex}{red!80!black!90!orange!80}
 \colorlet{grx}{green!50!black!90!yellow!80}
 
@@ -41,6 +42,8 @@
 \DeclareMathOperator{\trc}{trace}
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Imm}{Im}
+
+\ctikzset{bipoles/length=0.8cm}
 
 \NiceMatrixOptions{cell-space-limits=1pt}
 
