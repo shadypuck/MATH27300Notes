@@ -9,7 +9,7 @@
 
 
 
-\chapter{???}
+\chapter{End Quantitative and Intro to Qualitative}
 \section{Planar Autonomous Linear Systems}
 \begin{itemize}
     \item \marginnote{10/24:}Review of vector fields.
@@ -455,6 +455,181 @@
     \item Next week: Continuous dependence on initial values and differentiation with respect to the parameter of this equation.
     \item After this, we will be able to compute classical examples in the theory of perturbations.
     \item We will be able to solve the procession of Mercury problem (which was the first experimental verification of general relativity).
+\end{itemize}
+
+
+
+\section{Qualitative Theory of ODEs}
+\begin{itemize}
+    \item \marginnote{10/28:}First issue: Uniqueness --- we want to be able to talk about \emph{the} solution to the IVP.
+    \item We will be considering the IVP $y'(t)=f(t,y)$, $y(t_0)=y_0$ for $y(t)$ an $\R^n$-valued function.
+    \item To embed our rough outline of the Cauchy-Lipschitz theorem into analysis, we start with metric spaces.
+    \item \textbf{Metric space}: A set and a metric. \emph{Denoted by} $\bm{(X,d)}$.
+    \item \textbf{Metric}: A function from $X\times X\to[0,+\infty)$ that satisfies the following three axioms. \emph{Denoted by} $\bm{d}$.
+    \begin{enumerate}
+        \item $d(x,y)=d(y,x)$.
+        \item $d(x,y)\geq 0$ and $d(x,y)=0$ iff $x=y$.
+        \item Triangle inequality: $d(x,z)\leq d(x,y)+d(y,z)$.
+    \end{enumerate}
+    \item Examples:
+    \begin{enumerate}
+        \item $\R^n$ with $d(x,y)=\norm{x-y}=\sqrt{\sum_{j=1}^n|x^j-y^j|^2}$.
+        \item Continuous functions $y:[a,b]\to\R^n$ with $d(y_1,y_2)=\norm{y_1-y_2}=\sup_{t\in[a,b]}|y_1(t)-y_2(t)|$.
+    \end{enumerate}
+    \item In Euclidean spaces, we have \textbf{completeness}.
+    \item \textbf{Cauchy} (sequence): A sequence $\{x_n\}\subset X$ such that for all $\varepsilon>0$, there exists $N\geq 0$ such that $d(x_m,x_n)<\varepsilon$ for all $m,n>N$.
+    \item \textbf{Convergent} (sequence): A sequence $\{x_n\}\subset X$ for which there exists $x\in X$ such that
+    \begin{equation*}
+        \lim_{n\to\infty}d(x,x_n)=0
+    \end{equation*}
+    \item \textbf{Complete} (metric space): A metric space $(X,d)$ such that every Cauchy sequence is convergent.
+    \item Theorem (Banach fixed point theorem): Let $(X,d)$ be a complete metric space and let $\Phi:X\to X$ be a function for which there exists $q\in(0,1)$ such that for all $x,y\in X$,
+    \begin{equation*}
+        d(\Phi(x),\Phi(y)) \leq q\cdot d(x,y)
+    \end{equation*}
+    Then there exists a unique $x\in X$ such that $x=\Phi(x)$.
+    \begin{proof}
+        We first construct the desired fixed point $x$.\par
+        Pick any $x_0\in X$. Inductively define $\{x_n\}$ by $x_{n+1}=\Phi(x_n)$, starting from $n=0$. We will now show that $\{x_n\}$ is a Cauchy sequence. As a lemma, we will prove by induction that
+        \begin{equation*}
+            d(x_j,x_{j+1}) \leq q^j\cdot d(x_0,x_1)
+        \end{equation*}
+        for all $j\in\N_0$. For the base case $j=0$, equality evidently holds. Now suppose inductively that we have proven that $d(x_j,x_{j+1})\leq q^j\cdot d(x_0,x_1)$; we want to prove the claim for $j+1$. But we have that
+        \begin{align*}
+            d(x_{j+1},x_{j+2}) &= d(\Phi(x_j),\Phi(x_{j+1}))\\
+            &\leq q\cdot d(x_j,x_{j+1})\\
+            &\leq q\cdot q^j\cdot d(x_0,x_1)\\
+            &= q^{j+1}\cdot d(x_0,x_1)
+        \end{align*}
+        as desired.\par
+        It follows that
+        \begin{align*}
+            d(x_n,x_{n+m}) &\leq \sum_{k=0}^{m-1}d(x_{n+k},x_{n+k+1})\tag*{Triangle inequality}\\
+            &\leq \sum_{k=0}^{m-1}q^{n+k}\cdot d(x_0,x_1)\tag*{Lemma}\\
+            &= q^n(1+q+\cdots+q^{m-1})\cdot d(x_0,x_1)\\
+            &< q^n(1+q+\cdots+q^{m-1}+\cdots)\cdot d(x_0,x_1)\\
+            &= \frac{q^n}{1-q}\cdot d(x_0,x_1)
+        \end{align*}
+        It follows that the above term will converge to zero as $n\to\infty$, so $\{x_n\}$ is a Cauchy sequence and there exists an $x$ such that $x_n\xrightarrow{d}x$.\par\smallskip
+        We now prove that $x$ is a fixed point of $\Phi$, i.e., that $\Phi(x)=x$. We have that
+        \begin{align*}
+            d(x,\Phi(x)) &\leq d(x,x_n)+d(x_n,\Phi(x_n))+d(\Phi(x_n),\Phi(x))\\
+            &\leq d(x,x_n)+d(x_n,x_{n+1})+q\cdot d(x_n,x)\\
+            &= (1+q)\cdot d(x,x_n)+d(x_n,x_{n+1})
+        \end{align*}
+        where the first term converges since $\{x_n\}$ is convergent and the second term converges since $\{x_n\}$ is Cauchy. Thus, $d(x,\Phi(x))\to 0$ as $n\to\infty$, so $x=\Phi(x)$, as desired.\par
+        Lastly, we prove that $x$ is unique. Suppose that there exists $y\in X$ such that $y=\Phi(y)$. Then
+        \begin{equation*}
+            d(x,y) = d(\Phi(x),\Phi(y))
+            \leq q\cdot d(x,y)
+        \end{equation*}
+        It follows that $d(x,y)\leq q^n\cdot d(x,y)$, i.e., that $d(x,y)\to 0$ as $n\to\infty$. Therefore, we must have that $d(x,y)=0$, from which it follows that $x=y$, as desired.
+    \end{proof}
+    \item Notes on the Banach fixed point theorem.
+    \begin{itemize}
+        \item $\Phi$ is a \textbf{contraction}.
+        \item Zhao gives the example of crumpling a sheet of paper (more specifically, dropping a map of a park in that park; a point coincides).
+    \end{itemize}
+    \item Example: Fixed point of the cosine function.
+    \begin{itemize}
+        \item Define $\{x_n\}$ by $x_{n+1}=\cos x_n$. If $x_0\in\R$, then $x_1\in[-1,1]$ and $x_2\in[\cos 1,1]$.
+        \item Thus, while cosine is not a contraction on the real numbers ($\cos'(-\pi/2)=1$, for example), we can show that $\cos:[\cos 1,1]\to[\cos 1,1]$ is a contraction: If $x,y\in[\cos 1,1]$, then
+        \begin{align*}
+            |\cos x-\cos y| &= \left| \int_y^x-\sin t\dd{t} \right|\\
+            &\leq |x-y|\sup_{t\in[\cos 1,1]}|\sin t|\\
+            &\leq (\sin 1)|x-y|
+        \end{align*}
+        \item Thus, cosine has a fixed point at the intersection of $y=\cos x$ and $y=x$ of approximate value 0.739\dots
+        \item Overall, this is a pretty bad example, though.
+    \end{itemize}
+    \item Theorem: Let $y_k:[a,b]\to\R^n$ be a Cauchy sequence of continuous functions under the sup norm. Then the limit exists and is continuous.
+    \begin{itemize}
+        \item The proof is based on uniform convergence, which we've encountered before in analysis.
+        \item It follows that $C[a,b]$ (the metric space of all continuous functions on $[a,b]$) is complete.
+        \item If $\{y_k\}\subset\bar{B}(0,M)$\footnote{$\bar{B}(0,M)$ denotes the set of all functions $y:[a,b]\to\R^n$ with sup norm at most $M$; topologically, it is the closed ball of radius $M$ centered at the origin in $C[a,b]$.}, then the limit $y$ is in $\bar{B}(0,M)$.
+    \end{itemize}
+    \item Let's return to our ODE $y'(t)=f(t,y(t))$, $y(t_0)=y_0\in\R^n$.
+    \item We now have the tools to prove the Cauchy-Lipschitz theorem, and we will presently build up to that.
+    \item Although we do not typically think of it this way, $f$ is still a function with a domain and range. In particular, it's domain is the set of ordered pairs where the first entry is a real number and the second entry is an element of the range of $y$, i.e., an element of $\R^n$. Thus, to begin, we are allowed to impose the following conditions on $f$.
+    \begin{itemize}
+        \item Let $f(t,z)$ be defined on $[t_0,t_0+a]\times\bar{B}(y_0,b)$ for some $a,b\in\R_+$ (we will put further constraints on the values of $a,b$ later).
+        \item On this domain, suppose $|f|$ is bounded by some $M\in\R$, i.e., $|f(t,z)|\leq M$ for all $t,z$ in the above set.
+        \item Let $f$ be Lipschitz continuous in the second argument. In particular, there exists $L>0$ such that $|f(t,z_1)-f(t,z_2)|\leq L|z_1-z_2|$ for any $z_1,z_2\in\R^n$.
+    \end{itemize}
+    \item We usually consider a given ODE in differential form. However, there's no reason we can't consider the equivalent integral equation
+    \begin{equation*}
+        y(t) = y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau
+    \end{equation*}
+    \begin{itemize}
+        \item The reason for this change of perspective will become apparent shortly.
+    \end{itemize}
+    \item Let $\Phi:C[t_0,t_0+a]\to C[t_0,t_0+a]$ map functions to functions. Specifically, let it send
+    \begin{equation*}
+        y(t) \mapsto y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau
+    \end{equation*}
+    \begin{itemize}
+        \item We denote this by writing $\Phi[y](t)=y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau$.
+        \item Notice that the solution of our IVP is exactly the point of $C[t_0,t_0+a]$ fixed by $\Phi$ because
+        \begin{equation*}
+            y(t) = y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau
+            \quad\Longleftrightarrow\quad
+            y = \Phi[y]
+        \end{equation*}
+        \item \emph{This} motivates all steps taken thus far.
+    \end{itemize}
+    \item All that remains is to show that $\Phi$ is a contraction on some subset of $C[t_0,t_0+a]$. Then we can apply the Banach fixed point theorem.
+    \item We first identify this subset. Let
+    \begin{equation*}
+        X_b = \{y:[t_0,t_0+a]\to\bar{B}(y_0,b)\}
+    \end{equation*}
+    \begin{itemize}
+        \item By the previous theorem, this is a complete metric space.
+        \item We now want to relate $a$ and $b$ so that $\Phi(X_b)\subset X_b$ and $\Phi$ is a contraction.
+        \item For $\Phi(X_b)\subset X_b$, we need
+        \begin{equation*}
+            \norm{\Phi[y]-y_0} \leq \int_{t_0}^{t_0+a}|f(\tau,y(\tau))|\dd\tau
+            \leq a\cdot M
+            \leq b
+        \end{equation*}
+        so we want $a<b/M$.
+        \item Moreover, if $\Phi$ is to be a contraction, then since
+        \begin{align*}
+            \norm{\Phi[y_1]-\Phi[y_2]} &\leq \int_{t_0}^{t+a}|f(\tau,y_1(\tau))-f(\tau,y_2(\tau))|\dd\tau\\
+            &\leq La\cdot\norm{y_1-y_2}
+        \end{align*}
+        we want $La\in(0,1)$. We can achieve this by requiring $a<1/2L$.
+        \item Thus, choosing
+        \begin{equation*}
+            a < \min\left( \frac{1}{2L},\frac{b}{M} \right)
+        \end{equation*}
+        accomplishes all of our goals.
+    \end{itemize}
+    \item Therefore, by the Banach fixed point theorem, there exists a unique $y$ such that $y=\Phi[y]$.
+    \begin{itemize}
+        \item As we have already remarked, this fixed point is exactly the aforementioned solution to the IVP.
+    \end{itemize}
+    \item Conclusion:
+    \item Theorem (Cauchy-Lipschitz theorem): Let $f(t,z)$ be defined on an open subset $\Omega\subset\R_t\times\R_z^n$, $(t_0,y_0)\in\Omega$, such that $f$ is Lipschitz continuous wrt. $t,z$ in some neighborhood of $(t_0,y_0)$. Then the IVP $y'(t)=f(t,y(t))$, $y(t_0)=y_0$ has a unique solution for some $T>0$ on $[t_0,t_0+T]$ such that $y(t)$ does not escape that neighborhood.
+    \item If $f\in C_1$, then
+    \begin{equation*}
+        |f(t,z_1)-f(t,z_2)| \leq \sup_{z\in\bar{B}(y_0,r)}\norm{{\pdv{f}{z}}(t,z)}\cdot|z_1-z_2|
+    \end{equation*}
+    \item We use the finite increment theorem of differential calculus to prove that $f$ is Lipschitz continuous if it's continuously differentiable.
+    \item The norm on the RHS above is the matrix norm.
+    \item We have $y(t)=\int_{t_0}^tf(\tau,y(\tau))\dd\tau+y_0$ and we use the Banach fixed point theorem (which is proved constructively).
+    \item We have $y_{n+1}(t)=y_0+\int_{t_0}^tf(\tau,y_n(\tau))\dd\tau$.
+    \begin{itemize}
+        \item Thus, the Picard iteration is justified by the Banach fixed point theorem.
+    \end{itemize}
+    \item We do not use the algorithm from the proof (the Picard iteration) computationally; we use the polygon algorithm. This algorithm is only of theoretical significance.
+    \item \textbf{Interval of existence}: The union of intervals containing the interval $[t_0,t_0+T]$ on which the IVP has a solution.
+    \begin{itemize}
+        \item The interval of existence is always open. If $t_0\in I$ such that $y(t_0)=y$, then $y'(t)=f(t,y(t))$, $y(t_0)=y$.
+        \item Note that the theorem does not predict when singularity can occur.
+        \item Example: The interval of existence will always be $x'=1+x^2$, $x(t_0)=x_0$. Then $x(t)=\tan(t-t_0+\arctan(x_0))$. The length of existence is always $\pi$.
+    \end{itemize}
+    \item Interval of existence: If you consider the IVP $y'(t)=f(t,y(t))$, $y(t_0)=y_0$, then $[t_0,t_0+T_1],[t_0+T_1,t_0+T_2]$. The first is of length $T_1$, and the second of length $T_2-T_1$. Continuing on, we get $T_n-T_1$ so that $T_n\to\infty$ or $T_n$ is bounded. This gives us the maximal solution/interval of existence.
+    \item The motherfucker (Shao) made us stay 10 minutes late.
 \end{itemize}
 
 
