@@ -1,0 +1,184 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{5}
+
+\begin{document}
+
+
+
+
+\chapter{???}
+\section{More Cauchy-Lipschitz and Intro to Continuous Dependence}
+\begin{itemize}
+    \item \marginnote{10/31:}Last time, we built up a proof to the Cauchy-Lipschitz theorem intuitively.
+    \begin{itemize}
+        \item We begin today with a direct proof that is very similar, but slightly different.
+    \end{itemize}
+    \item Theorem (Cauchy-Lipschitz theorem): Let $f(t,z)$ be defined on an open subset $\Omega\subset\R\times\R^n$, let $(t_0,y_0)\in\Omega$, let $|f|$ be bounded on $\Omega$, and let $f$ be Lipschitz continuous in $z$ and continuous wrt. $t$ in some neighborhood of $(t_0,y_0)$. Then the IVP $y'(t)=f(t,y(t))$, $y(t_0)=y_0$ has a unique solution on $[t_0,t_0+T]$ for some $T>0$ such that $y(t)$ does not escape $\Omega$.
+    \begin{proof}
+        Let $f(t,z)$ be defined for $(t,z)\in[t_0,t_0+a]\times\bar{B}(y_0,b)\subset\Omega$. Let $|f(t,z)|\leq M$. Let $|f(t,z_1)-f(t,z_2)|\leq L|z_1-z_2|$ for all $z_1,z_2\in\bar{B}(y_0,b)$.\par
+        Define $\{y_n\}$ recursively, starting from $y_0(t)=y_0$, by
+        \begin{equation*}
+            y_{k+1}(t) = y_0+\int_{t_0}^tf(\tau,y_k(\tau))\dd\tau
+        \end{equation*}
+        Since $f$ is continuous with respect to $t$, it is integrable with respect to $t$, so the above sequence is well-defined on $[t_0,t_0+T]$. Choose $T=\min(a,b/M,1/2L)$. Then
+        \begin{equation*}
+            \norm{y_k-y_0} \leq T\cdot M
+            \leq \frac{b}{M}\cdot M
+            = b
+        \end{equation*}
+        so no $y_k$ escapes $\bar{B}(y_0,b)$. Additionally,
+        \begin{align*}
+            \norm{y_{k+1}-y_k} &\leq \int_{t_0}^t\norm{f(\tau,y_k(\tau))-f(\tau,y_{k-1}(\tau))}\dd\tau\\
+            &\leq TL\norm{y_k-y_{k-1}}\\
+            &\leq \frac{1}{2}\norm{y_k-y_{k-1}}\\
+            &\leq \left( \frac{1}{2} \right)^k\norm{y_1-y_0}
+        \end{align*}
+        Thus, the difference between successive terms in the sequence is controlled by a geometric progression, so $\{y_n\}$ is a Cauchy sequence in the function space. It follows that $\{y_k\}$ is uniformly convergent to some continuous $y:[t_0,t_0+T]\to\R^n$.
+    \end{proof}
+    % \item Consider the IVP $y'=f(t,y)$, $y(t_0)=y_0$. Let $f(t,z)$ be defined for $(t,z)\in[t_0,t_0+a]\times\bar{B}(y_0,b)$, let $|f(t,z)|\leq M$, and let $f$ be $L$ - Lipschitz wrt. $z$, i.e., $|f(t,z_1)-f(t,z_2)|\leq L|z_1-z_2|$ for all $z_1,z_2\in\bar{B}(y_0,b)$.
+    % \item Form an iterative sequence $\{y_n\}$ starting from $y_0(t)=y_0$, recursively defined by
+    % \begin{equation*}
+    %     y_{k+1}(t) = y_0+\int_{t_0}^tf(\tau,y_k(\tau))\dd\tau
+    % \end{equation*}
+    % \begin{itemize}
+    %     \item This sequence is well defined on $[t_0,t_0+T]$.
+    %     \item Choose $T=\min(a,b/M,1/2L)$.
+    % \end{itemize}
+    % \item We have that
+    % \begin{equation*}
+    %     \norm{y_{k+1}-y_0} \leq T\cdot M \leq b
+    % \end{equation*}
+    % \begin{itemize}
+    %     \item This implies that $\{y_k(t)\}$ does not escape $\bar{B}(y_0,b)$.
+    % \end{itemize}
+    % \item We have
+    % \begin{equation*}
+    %     y_{k+1}(t)-y_k(t) = \int_{t_0}^t[f(\tau,y_k(\tau))-f(\tau,y_{k-1}(\tau))]\dd\tau
+    % \end{equation*}
+    % \begin{itemize}
+    %     \item Here we can apply the Lipschitz condition.
+    % \end{itemize}
+    % \item Taking $\sup_{t\in[t_0,t_0+T]}$, we get
+    % \begin{equation*}
+    %     \norm{y_{k+1}-y_k} \leq T\sup_{\tau\in[t_0,t_0+T]}|f(\tau,y_k(\tau))-f(\tau,y_{k-1}(\tau))| \leq TL\norm{y_k-y_{k-1}}
+    % \end{equation*}
+    % where we have applied the Lipschitz condition in the second step.
+    % \item By our choice of $T$, $TL\leq 1/2$.
+    % \begin{itemize}
+    %     \item Thus, the difference between successive terms in the sequence is controlled by a geometric progression.
+    %     \item As a result, $\{y_k\}$ is a Cauchy sequence in the function space. In other words, $y_k$ is uniformly convergent to some continuous $y(t)$.
+    %     \item For uniformly convergent functions, we can always exchange the limit and the integral.
+    % \end{itemize}
+    \item This completes the proof. Although it's more concrete than the contraction mapping one, they are virtually the same: In both cases, we obtain an approximate sequence controlled by a geometric progression.
+    \item Examples of the Picard iteration:
+    \begin{enumerate}
+        \item Consider an linear autonomous systems $y'=Ay$, $A$ an $n\times n$ matrix, and $y(0)=y_0$.
+        \begin{itemize}
+            \item We know that the solution is $y(t)=\e[tA]y_0$. However, we can derive this using the Picard iteration.
+            \item Indeed, via this procedure, let's determine the first couple of Picard iterates.
+            \begin{align*}
+                y_0(t) &= y_0&
+                    y_1(t) &= y_0+\int_0^tAy_0(\tau)\dd\tau&
+                        y_2(t) &= y_0+\int_0^tAy_1(\tau)\dd\tau\\
+                &&
+                    &= y_0+tAy_0&
+                        &= y_0+tAy_0+\frac{1}{2}t^2A^2y_0
+            \end{align*}
+            \item It follows inductively that
+            \begin{equation*}
+                y_k(t) = \sum_{j=0}^k\frac{t^jA^j}{j!}y_0
+            \end{equation*}
+            \item Since the term above is exactly the power series definition of $\e[tA]$, we have that $y_k(t)\to\e[tA]y_0$ with local uniformity in $t$, as desired.
+        \end{itemize}
+        \item Consider the ODE $y'=y^2$, $y(0)=1$.
+        \begin{itemize}
+            \item We know that the solution is $y(t)=1/(1-t)$. We will now also derive this via the Picard iteration.
+            \item Choose $b=1$, so that
+            \begin{equation*}
+                \bar{B}(y_0,b) = \{y\mid |y-y(0)|\leq 1\}
+                = \{y\mid |y-1|\leq 1\}
+                = [0,2]
+            \end{equation*}
+            \item On this interval, $f(t,y)=y^2$ has maximum slope $L=4$. Thus, we should take $T\leq 1/2L=1/8$.
+            \item It follows that $|y_1^2-y_2^2|\leq 4|y_1-y_2|$ for all $y_1,y_2\in\bar{B}(y_0,b)$.
+            \item Calculate the first few Picard iterates.
+            \begin{gather*}
+                y_1(t) = 1+\int_0^t(y_0(\tau))^2\dd\tau
+                    = 1+t\\
+                y_2(t) = 1+\int_0^t(1+\tau)^2\dd\tau
+                    = 1+t+t^2+\frac{t^3}{3}\\
+                y_3(t) = 1+\int_0^t\left( 1+\tau+\tau^2+\frac{\tau^3}{3} \right)^2\dd\tau
+                    = 1+t+t^2+t^3+\frac{2t^4}{3}+\frac{t^5}{3}+\frac{t^6}{9}+\frac{t^7}{63}
+            \end{gather*}
+            \item It follows by induction that
+            \begin{align*}
+                |y_k(t)-(1+t+\cdots+t^k)| &\leq t^{k+1}\\
+                \left| y_k(t)-\frac{1-t^{k+1}}{1-t} \right| &\leq t^{k+1}
+            \end{align*}
+            It follows that $|t|<1/8$.
+            \item For $|t|<1/8$, $y(t)=1/(1-t)$. Blows up as $t\to 1$.
+            \item Some more details on the bounding of the error term are presented in the lecture notes document.
+        \end{itemize}
+    \end{enumerate}
+    \item Lemma (Gr\"{o}nwall's inequality): Let $\varphi(t)$ be a real function defined for $t\in[t_0,t_0+T]$ such that
+    \begin{equation*}
+        \varphi(t) \leq f(t)+a\int_{t_0}^t\varphi(\tau)\dd\tau
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \varphi(t) \leq f(t)+a\int_{t_0}^t\e[a(t-\tau)]f(\tau)\dd\tau
+    \end{equation*}
+    \begin{proof}
+        Multiply both sides by $\e[-at]$:
+        \begin{align*}
+            \e[-at]\varphi(t)-a\e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau &\leq \e[-at]f(t)\\
+            \dv{t}(\e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau) &\leq \e[-at]f(t)\\
+            \e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau &\leq \int_{t_0}^t\e[-a\tau]f(\tau)\dd\tau\\
+            \int_{t_0}^t\varphi(\tau)\dd\tau &\leq \int_{t_0}^t\e[a(t-\tau)]f(\tau)\dd\tau
+        \end{align*}
+        Substituting back into the original equality yields the result at this point.
+    \end{proof}
+    \item Note that there is no sign condition on $f(t)$ or $a$.
+    \item Gr\"{o}nwall's inequality is very important and we should remember it.
+    \item It is also exactly what we need to prove continuous dependence.
+    \item Theorem: Let $f(t,z),g(t,z)$ be defined on $\Omega\subset\R_t^1\times\R_z^n$, an open and bounded a region containing $(t_0,y_0)$ and $(t_0,w_0)$. Let the functions be $L$ - Lipschitz wrt. $z$. Consider two initial value problems $y'=f(t,y)$, $y(t_0)=y_0$ and $w'=g(t,w)$, $w(t_0)=w_0$. If $|f(t,z)-g(t,z)|<M$, then for $t\in[t_0,t_0+T]$,
+    \begin{equation*}
+        |g(t)-w(t)| \leq \e[LT]|y_0-w_0|+\frac{M}{L}(\e[LT]-1)
+    \end{equation*}
+    \begin{proof}
+        We have that
+        \begin{align*}
+            |y(t)-w(t)| &= \left| \left[ y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau \right]-\left[ w_0+\int_{t_0}^tg(\tau,y(\tau))\dd\tau \right] \right|\\
+            &= \left| [y_0-w_0]+\int_{t_0}^t[f(\tau,y(\tau))-g(\tau,y(\tau))]\dd\tau \right|\\
+            &\leq |y_0-w_0|+\left| \int_{t_0}^t[f(\tau,y(\tau))-g(\tau,w(\tau))]\dd\tau \right|\\
+            &\leq |y_0-w_0|+\int_{t_0}^t|f(\tau,y(\tau))-g(\tau,w(\tau))|\dd\tau
+        \end{align*}
+        where we get from the second to the third line using the triangle inequality, and the third to the fourth line using Theorem 13.26 of Honors Calculus IBL. We also know that
+        \begin{align*}
+            |f(\tau,y(\tau))-g(\tau,w(\tau))| &\leq |f(\tau,y(\tau))-f(\tau,w(\tau))|+|f(\tau,w(\tau))-g(\tau,w(\tau))|\\
+            &\leq L|y(\tau)-w(\tau)|+M
+        \end{align*}
+        Combining what we've obtained, we have
+        \begin{align*}
+            \underbrace{|y(t)-w(t)|}_{\psi(t)} &\leq \underbrace{|y_0-w_0|+M(t-t_0)}_{f(t)}+\underbrace{\vphantom{|}L}_a\int_{t_0}^t\underbrace{|y(\tau)-w(\tau)|}_{\psi(t)}\dd\tau\\
+            &\leq MT+|y_0-w_0|+L\int_{t_0}^t\e[L(t-\tau)][|y_0-w_0|+M(t-\tau)]\dd\tau\tag*{Gr\"{o}nwall}\\
+            &\leq \e[LT]|y_0-w_0|+\frac{M}{L}(\e[TL]-1)
+        \end{align*}
+        as desired.
+    \end{proof}
+    \item Note: Getting from directly from Gr\"{o}nwall's inequality in the second line above to the last line above is quite messy. A consequence of Gr\"{o}nwall's inequality explored in the book makes this much easier. \emph{Prove Equation 2.38 via Problem 2.12.}
+    \item Implication: The IVP is not just solvable itself, but is solvable wrt. perturbation of the initial conditions and RHS within a small, finite interval in time.
+    \item Suppose $y'=0$, $y(0)=1$ and $w'=\varepsilon w$, $w(0)=1$. Then $y(t)=1$ and $w(t)=\e[\varepsilon t]$ and solutions are only close when $t$ is small.
+    \begin{itemize}
+        \item $t\leq 1/\varepsilon$??
+    \end{itemize}
+    \item This is important in physics. In most physical scenarios, the RHS is $C^1$. This is called determinism.
+\end{itemize}
+
+
+
+
+\end{document}
