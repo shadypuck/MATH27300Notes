@@ -146,7 +146,7 @@
     \item It is also exactly what we need to prove continuous dependence.
     \item Theorem: Let $f(t,z),g(t,z)$ be defined on $\Omega\subset\R_t^1\times\R_z^n$, an open and bounded a region containing $(t_0,y_0)$ and $(t_0,w_0)$. Let the functions be $L$ - Lipschitz wrt. $z$. Consider two initial value problems $y'=f(t,y)$, $y(t_0)=y_0$ and $w'=g(t,w)$, $w(t_0)=w_0$. If $|f(t,z)-g(t,z)|<M$, then for $t\in[t_0,t_0+T]$,
     \begin{equation*}
-        |g(t)-w(t)| \leq \e[LT]|y_0-w_0|+\frac{M}{L}(\e[LT]-1)
+        |y(t)-w(t)| \leq \e[LT]|y_0-w_0|+\frac{M}{L}(\e[LT]-1)
     \end{equation*}
     \begin{proof}
         We have that
@@ -176,6 +176,170 @@
         \item $t\leq 1/\varepsilon$??
     \end{itemize}
     \item This is important in physics. In most physical scenarios, the RHS is $C^1$. This is called determinism.
+\end{itemize}
+
+
+
+\section{Differentiability With Respect To Parameters}
+\begin{itemize}
+    \item \marginnote{11/2:}Review: Implicit Function Theorem.
+    \begin{itemize}
+        \item Gives you a sufficient condition for which an implicit relation defines a function.
+        \item Does not give you the function, but tells you that it must exist and that it is unique.
+    \end{itemize}
+    \item Theorem (Implicit Function Theorem): Let $F:\R^n\times\R^m\to\R^m$ be $C^k$ in some neighborhood of $(x_0,y_0)\in\R^n\times\R^m$ a point satisfying $F(x_0,y_0)=0$. If the truncated Jacobian matrix ${\pdv{F}{y}}(x_0,y_0)$, which is $m\times m$, is invertible, then there is a neighborhood $U$ of $x_0$ such that there is a unique function $f:U\to\R^m$ with $y_0=f(x_0)$ and $F(x,f(x))=0$ and
+    \begin{equation*}
+        f'(x) = -\left( {\pdv{F}{y}}(x,y) \right)^{-1}\cdot{\pdv{F}{x}}(x,f(x))
+    \end{equation*}
+    \begin{itemize}
+        \item The proof is based on the Banach fixed point theorem (this may be false?? I think Zhao is confusing the proof of this theorem with the proof of the Inverse Function Theorem).
+        \item The motivation for the last equality (the line above) is that if $F(x,f(x))=0$, then by the chain rule for partial derivatives,
+        \begin{align*}
+            0 &= \dv{x}(F(x,f(x)))\\
+            &= {\pdv{F}{x}}(x,f(x))\cdot\dv{x}{x}+\left[ {\pdv{F}{y}}(x,y) \right]\cdot\dv{f}{x}\\
+            &= {\pdv{F}{x}}(x,f(x))+\left[ {\pdv{F}{y}}(x,y) \right]\cdot f'(x)\\
+            f'(x) &= -\left( {\pdv{F}{y}}(x,y) \right)^{-1}\cdot{\pdv{F}{x}}(x,f(x))
+        \end{align*}
+        \item Recall that we know that the matrix bracketed in line 2 is invertible by hypothesis.
+        \item Additionally, since $\pdv*{F}{x}=A$ is $n\times m$ and $\pdv*{F}{y}=B$ is $m\times m$, $f'=-A^{-1}B$ is $n\times m$, as it should be for a function $f:\R^n\to\R^m$.
+    \end{itemize}
+    \item Consider the IVP
+    \begin{equation*}
+        y' = f(t,y;\mu)
+        ,\quad
+        y(t_0) = x(\mu)
+    \end{equation*}
+    \begin{itemize}
+        \item This ODE and its initial condition both depend on a parameter $\mu\in B(0,r)\subset\R^m$ (usually we take $m=1$ so $\mu$ is just real).
+        \item We denote the solution by $y(t;\mu)$.
+        \item Suppose $|x(\mu)|<C$ for $\mu\in B(0,r)$ and $x(\mu)\in C^1$. Suppose the RHS $f(t,z;\mu)$ of the ODE is defined on $[t_0,t_0+a]\times\bar{B}(x(0),b+C)\times B(0,r)$, is $C^1$ in all variables, is bounded by $M$ on its domain, and is $L$-Lipschitz in $z$.
+    \end{itemize}
+    \item By Cauchy-Lipschitz, for small
+    \begin{equation*}
+        T \leq \min\left( a,\frac{b}{M},\frac{1}{2L} \right)
+    \end{equation*}
+    and $\mu\in B(0,r)$ ($r$ small), the solution \emph{exists} on $[t_0,t_0+T]$ and its value does not escape $\bar{B}(x(0),b+C)$.
+    \begin{itemize}
+        \item We now aim to show that the solution is \emph{differentiable} wrt. $\mu$ on this interval.
+    \end{itemize}
+    \item If $y(t;\mu)$ satisfies $y'(t;\mu)=f(t,y(t;\mu);\mu)$ and if the Jacobian matrix $J=\pdv*{y}{\mu}$ exists, then $J$ satisfies the \textbf{first variation equation}.
+    \item \textbf{First variation equation}: The following linear differential equation. \emph{Given by}
+    \begin{equation*}
+        \dv{t}~\underbrace{{\pdv{y}{\mu}}(t;\mu)}_{J(t;\mu)} = \underbrace{{\pdv{f}{z}}(t,y(t;\mu);\mu)}_{A(t;\mu)}\cdot\underbrace{{\pdv{y}{\mu}}(t;\mu)}_{J(t;\mu)}+\pdv{f}{\mu}~(t,y(t;\mu);\mu)
+        ,\quad
+        \pdv{y}{\mu}~(t_0,\mu) = \pdv{x}{\mu}~(\mu)
+    \end{equation*}
+    \item The first variation equation has a unique solution, but we do not yet know that $y(t;\mu)$ is even differentiable with respect to $\mu$. We presently verify this claim.
+    \item Theorem\footnote{See the proof from the book, transcribed below.}: $y(t;\mu)$ is $C^1$ in $\mu$ and ${\pdv*{y}{\mu}}(t;\mu)$ satisfies the first variation equation.
+    \begin{proof}
+        Let $\Theta(t;\mu)=y(t;\mu+h)-y(t;\mu)-J(t;\mu)h$ for $h$ small. Aim, show that $\Theta(t;\mu)=o(h)$ as $h\to 0$.\par
+        We compute
+        \begin{align*}
+            \dv{t}\Theta(t;\mu) &= y'(t;\mu+h)-y'(t;\mu)-J'(t;\mu)h\\
+            &= \underbrace{f(t,y(t;\mu+h);\mu+h)-f(t,y(t;\mu);\mu)}_I-\underbrace{{\pdv{f}{z}}(t,y(t;\mu);\mu)J(t;\mu)+{\pdv{f}{\mu}}(t,y(t;\mu);\mu)}_{II}
+        \end{align*}
+        $I$ denotes the first term; $II$ denotes the second term.\par
+        We have that
+        \begin{align*}
+            I &= {\pdv{f}{z}}(t,y(t;\mu);\mu)[y(t;\mu+h)-y(t;\mu)]+{\pdv{f}{\mu}}(t,y(t;\mu);\mu)h+\underbrace{R(t;\mu,h)}_{o(h)}
+        \end{align*}
+        \emph{color coding}
+        \begin{align*}
+            I-II &= \underbrace{\text{green}-\text{blue}}_{\Theta(t;\mu)}+R(t;\mu,h)\\
+            &= \dv{t}\Theta(t;\mu) = \Theta(t;\mu)+\underbrace{R(t;\mu,h)}_{o(h)}\\
+            \Theta(t_0;\mu) &= o(h)\\
+            |\Theta(t;\mu)| &\leq C\int_{t_0}^t|R(\tau;\mu,h)|\dd\tau\tag*{Gr\"{o}nwall}\\
+            &= o(h)
+        \end{align*}
+        circle terms cancel.
+    \end{proof}
+    \item Example: First order derivatives must satisfy the first variational equation
+    \begin{equation*}
+        \dv{t}~{\pdv{y}{\mu}}(t;\mu) = {\pdv{f}{z}}(t,y(t;\mu);\mu)\cdot{\pdv{y}{\mu}}(t;\mu)
+    \end{equation*}
+    and the second order derivative must satisfy the second variational equation
+    \begin{equation*}
+        \dv{t}~\pdv[2]{y}{\mu} = {\pdv[2]{f}{z}}\left( \pdv{y}{\mu}\pdv[2]{y}{\mu} \right)+\pdv{f}{z}{\mu}\pdv{y}{\mu}+{\pdv{f}{\mu}{z}}(-)\pdv{y}{\mu}+{\pdv[2]{f}{\mu}}(-)
+    \end{equation*}
+    \item Corollary: If $f(t,z;\mu)$ is $C^k$ in $(t,z,\mu)$, $y(t_0)=x(\mu)$ is $C^k$, then $y(t;\mu)$ is $C^k$ in $\mu$.
+    \item The Taylor expansion
+    \begin{equation*}
+        y(t;\mu) = y(t;0)+y_1\mu+y_2\mu^2+\cdots+y_k\mu^k+O(\mu^{k+1})
+    \end{equation*}
+    of $y(t;\mu)$ about 0 gives an approximation of said function up to order $k$ in $\mu$.
+    \begin{itemize}
+        \item Misc notes: but you can cut off the expansion at $k$?? $y(t;0)$ being solvable implies inductively that the rest are solvable??
+        \item We can take this Taylor expansion because we assume that $y$ is continuously differentiable $k$ times with respect to $\mu$.
+        \item The coefficients $y_j$ are given as follows.
+        \begin{equation*}
+            y_j = \frac{1}{j!}\pdv[j]{y}{\mu}~(t;0)
+        \end{equation*}
+    \end{itemize}
+    \item Application of the Taylor expansion: It can be substituted into the ODE as follows.
+    \begin{align*}
+        \dot{y} &= f(t,y;\mu)\\
+        \dv{t}(y(t;\mu)) &= f(t,y(t;\mu);\mu)\\
+        \dv{t}(y(t;0))+\dv{y_1}{t}\mu+\cdots+\dv{y_k}{t}\mu^k+O(\mu^{k+1}) &= f(t,y(t;0)+y_1\mu+\cdots+y_k\mu^k+O(\mu^{k+1});\mu)
+    \end{align*}
+    \begin{itemize}
+        \item Then you can match coefficients of the various $\mu$ terms on the LHS and RHS and solve for $y_0,\dots,y_k$.
+        \item When to use this method: Sometimes, you can view equations that aren't explicitly solvable as perturbations of an easily solvable system.
+    \end{itemize}
+    \item Simple example (more complex ones next lecture):
+    \begin{equation*}
+        \dv{y}{t} = \mu y
+        ,\quad
+        y(0) = 1
+    \end{equation*}
+    \begin{itemize}
+        % \item We have $\dv*{y_0}{t}=0$ and $y_0(0)=1$ so $y_0(t)=1$.
+        % \item First:
+        % \begin{equation*}
+        %     y_0'(t)+\mu y_1'(t)+O(\mu^2) = \mu(y_0(t)+\mu y_1(t)+O(\mu^2))
+        % \end{equation*}
+        % so $y_1'(t)=\mu y_0(t)$, $y_1(0)=0$. Implies that $y_1(t)=t\mu$.
+        % \item Second:
+        % \begin{equation*}
+        %     y_0'+\mu y_1'+\mu^2y_2'+O(\mu^3) = \mu(y_0+\mu y_1+\mu^2y_2+O(\mu^3))
+        % \end{equation*}
+        % so $y_2'(t)=y_1$, $y_2(0)=0$. Implies that $y_2(t)=\frac{1}{2}t^2$.
+        % \item Note that $y(t)=1+t\mu+\frac{1}{2}t^2\mu^2+O(\mu^3)$ does indeed give the first three terms in the Taylor series of $\e[\mu t]$.
+        \item First off, we know that there is an explicit solution ($y(t)=\e[\mu t]$). Thus, we will be able to check our final answer.
+        \item Suppose $y\in C^2$ with respect to $\mu$. Then
+        \begin{equation*}
+            y(t;\mu) = y_0+y_1\mu+y_2\mu^2+O(\mu^3)
+        \end{equation*}
+        \item It follows by substituting into the above differential equation that
+        \begin{align*}
+            \dv{y}{t} &= \mu y\\
+            \dv{t}(y_0+y_1\mu+y_2\mu^2) &= \mu(y_0+y_1\mu+y_2\mu^2)\\
+            \dv{y_0}{t}+\dv{y_1}{t}\mu+\dv{y_2}{t}\mu^2 &= 0+y_0\mu+y_1\mu^2+y_2\mu^3
+        \end{align*}
+        \item By comparing coefficients, this yields the sequentially solvable differential equations
+        \begin{align*}
+            \dv{y_0}{t} &= 0&
+            \dv{y_1}{t} &= y_0&
+            \dv{y_2}{t} &= y_1
+        \end{align*}
+        where we apply the initial condition $y_0(0)=1$ to solve the left ODE above.
+        \item Solving, we get
+        \begin{align*}
+            y_0(t) &= 1&
+            y_1(t) &= t&
+            y_2(t) &= \frac{t^2}{2}
+        \end{align*}
+        \begin{itemize}
+            \item Where do the other initial conditions (all zero) come from??
+        \end{itemize}
+        \item Therefore, our approximate solution is
+        \begin{equation*}
+            y(t) = 1+t\mu+\frac{1}{2}t^2\mu^2+O(\mu^3)
+        \end{equation*}
+        which does indeed give the first three terms in the Taylor series expansion of the solution $\e[\mu t]$.
+    \end{itemize}
+    \item The perturbative solution fails in large time intervals --- polynomials inevitably grow slower than exponential functions.
+    \item Next time: Several examples applying what we've learned today.
+    \item This week's homework: Some basic Lipschitz definitions and also computations with the perturbative series.
 \end{itemize}
 
 
