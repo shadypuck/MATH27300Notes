@@ -9,7 +9,7 @@
 
 
 
-\chapter{???}
+\chapter{Qualitative Theory of ODEs}
 \section{More Cauchy-Lipschitz and Intro to Continuous Dependence}
 \begin{itemize}
     \item \marginnote{10/31:}Last time, we built up a proof to the Cauchy-Lipschitz theorem intuitively.
@@ -192,7 +192,7 @@
         f'(x) = -\left( {\pdv{F}{y}}(x,y) \right)^{-1}\cdot{\pdv{F}{x}}(x,f(x))
     \end{equation*}
     \begin{itemize}
-        \item The proof is based on the Banach fixed point theorem (this may be false?? I think Zhao is confusing the proof of this theorem with the proof of the Inverse Function Theorem).
+        \item The proof is based on the Banach fixed point theorem (this may be false?? I think Shao is confusing the proof of this theorem with the proof of the Inverse Function Theorem).
         \item The motivation for the last equality (the line above) is that if $F(x,f(x))=0$, then by the chain rule for partial derivatives,
         \begin{align*}
             0 &= \dv{x}(F(x,f(x)))\\
@@ -340,6 +340,216 @@
     \item The perturbative solution fails in large time intervals --- polynomials inevitably grow slower than exponential functions.
     \item Next time: Several examples applying what we've learned today.
     \item This week's homework: Some basic Lipschitz definitions and also computations with the perturbative series.
+\end{itemize}
+
+
+
+\section{Variational Examples}
+\begin{itemize}
+    \item \marginnote{11/4:}We begin today with a more direct and less involved proof of the variation of parameters theorem.
+    \begin{proof}
+        Let $y'(t;\mu)=f(t,y(t;\mu);\mu)$ with $y(t_0;\mu)=x(\mu)$. Assume Lipschitz continuity and $C^1$-ness of the ODE and the initial condition on $\mu$. Then differentiation with respect to $\mu$ must satisfy the first variational equation. In particular, let $J(t;\mu)$ be the solution of
+        \begin{equation*}
+            J'(t;\mu) = \underbrace{{\pdv{f}{z}}(t,y(t;\mu);\mu)}_{A(t;\mu)}J(t,\mu)+\underbrace{{\pdv{f}{\mu}}(t,y(t;\mu);\mu)}_{F(t;\mu)}
+            ,\quad
+            J(t_0;\mu) = \pdv{x}{\mu}
+        \end{equation*}
+        Consider the Picard iteration sequence defined by
+        \begin{align*}
+            y_{n+1}(t;\mu) = \underbrace{f(t;y_n(t;\mu);\mu)}_{A_n(t;\mu)}
+            ,\quad
+            y_n(t_0,\mu) = x(\mu)
+        \end{align*}
+        Differentiating we get
+        \begin{equation*}
+            {\pdv{y_n}{\mu}}(t;\mu)
+        \end{equation*}
+        which we may call $J_n(t;\mu)$. We want to prove that the sequence of functions $J_n$ converges uniformly to $J$. This makes sense since $A$ and $F$ uniformly converge. Moreover, under this definition of $J_n$, we have that
+        \begin{equation*}
+            J_{n+1}'(t;\mu) = \underbrace{{\pdv{f}{z}}(t,y_n(t;\mu);\mu)}_{A_n(t;\mu)}J_n(t;\mu)+\underbrace{{\pdv{f}{\mu}}(t,y_n(t;\mu);\mu)}_{F_n(t;\mu)}
+            ,\quad
+            J_n(t_0;\mu) = {\pdv{x}{\mu}}(\mu)
+        \end{equation*}
+        Thus, Step 1 is to show that $\{\norm{J_n}\}$ is bounded on $[t_0,t_0+T]$. To do so, we note that
+        \begin{equation*}
+            \norm{J_{n+1}} \leq \frac{1}{2}\norm{J_n}+\sup\left| \pdv{f}{\mu} \right|
+        \end{equation*}
+        so that $\norm{J_n}$ forms a bounded sequence. By induction,
+        \begin{equation*}
+            \norm{J_n} \leq 2C
+        \end{equation*}
+        We now embark on Step 2: Proving $J_n\to J$ uniformly. First off, we have that
+        \begin{align*}
+            (J-J_{n+1})'(t;\mu) ={}& \dv{t}(J(t;\mu)-J_{n+1}(t;\mu))\\
+            ={}& A(t;\mu)J(t;\mu)+F(t;\mu)-A_n(t;\mu)J_n(t;\mu)-F_n(t;\mu)\\
+            \begin{split}
+                ={}& A(t;\mu)J(t;\mu)+A_n(t;\mu)J(t;\mu)-A_n(t;\mu)J(t;\mu)\\
+                &-A_n(t;\mu)J_n(t;\mu)+F(t;\mu)-F_n(t;\mu)
+            \end{split}\\
+            ={}& A_n(t;\mu)(J-J_n)(t;\mu)+(A-A_n)(t;\mu)J(t;\mu)+(F-F_n)(t;\mu)
+        \end{align*}
+        and
+        \begin{equation*}
+            J(t_0;\mu)-J_{n+1}(t_0;\mu) = 0
+        \end{equation*}
+        Integrating once again on $[t_0,t_0+T]$, we get
+        \begin{equation*}
+            \norm{J-J_{n+1}} \leq \frac{1}{2}\norm{J-J_n}+\delta_n
+        \end{equation*}
+        where $\delta_n\to 0$ since we "obviously" have that $A_n\to A$ and $F_n\to F$ uniformly.\par
+        We now proceed via a standard analysis argument. Fix $\delta>0$, choose $N$ such that $\delta_n<\delta$ for $n\geq N$. Then we can control it by $\frac{1}{2}\norm{J-J_n}+\delta$ for $n\geq N$. Then
+        \begin{equation*}
+            \norm{J-J_{n+1}}-2\delta \leq \frac{1}{2}\norm{J-J_n}-2\delta
+        \end{equation*}
+        for all $n\geq N$, so we have by iteration that $\norm{J-J_{n+1}}\leq 2\delta+\frac{1}{2^{n-N}}\norm{J-J_N}$, so $\lim_{n\to\infty}\norm{J-J_n}<2\delta$ for arbitrary $\delta>0$. Therefore, $\norm{J-J_n}\to 0$, so $J_n\to J$ uniformly.\par
+        So in conclusion, $J_n\to J$ uniformly and we recall that $J_n=\pdv*{y_n}{\mu}$ where $y_n\to y$ uniformly.
+    \end{proof}
+    \item We now look at examples. The ones in the HW will be no more difficult than these.
+    \item Example (same one as last time):
+    \begin{itemize}
+        \item Consider $y'=\mu y$ with $y(0)=1$.
+        \item In order to find asymptotic expansion wrt. $\mu$, we use the \textbf{ansatz} $y(t;\mu)=y_0+y_1\mu+y_2\mu^2+\cdots+y_n\mu^n+O(\mu^{n+1})$.
+        \begin{itemize}
+            \item The differentiation theorem asserts that $y(t;\mu)$ can be differentiated wrt. $\mu$ so many times.
+        \end{itemize}
+        \item We can compute
+        \begin{equation*}
+            \mu y(t;\mu) = 0+y_0\mu+y_1\mu^2+\cdots+y_{n-1}\mu^n+O(\mu^{n+1})
+        \end{equation*}
+        and
+        \begin{equation*}
+            y'(t;\mu) = y_0'+y_1'\mu+y_2'\mu^2+\cdots+y_n'\mu^n+O(\mu^{n+1})
+        \end{equation*}
+        and set them equal to yield a system of differential equations.
+        \item The initial conditions are $y_0(0)=1$ and then $y_1(0)=\cdots=y_n(0)=0$.
+        \item $y_0'=0$ with $y_0(0)=1$ implies that $y_0(t)=1$.
+        \item Then the first order approximation is $y_1'=y_0=1$, so solving and applying the initial conditions, we get $y_1(t)=t$.
+        \item Continuing on, the second order approximation is $y_2(t)=t^2/2$.
+        \item Inductively, $y_m(t)=t^m/m!$.
+        \item In conclusion, we obtain the desired approximate solution.
+    \end{itemize}
+    \item \textbf{Ansatz}: The form of the solution that you guess.
+    \item In general, this shows the technique well: Use a polynomial ansatz and compare terms to yield an inductive sequence of explicitly solvable equations up to a certain point.
+    \item Example: Mathematical pendulum.
+    \begin{itemize}
+        \item Suppose that the length of the rope is $\ell$ and the gravitational acceleration is $g$. Then
+        \begin{equation*}
+            \theta''(t;\mu) = -\frac{g}{\ell}\sin[\theta(t;\mu)]
+        \end{equation*}
+        \item Assume a small angle, $\theta(0)=\mu$ and $\theta'(0)=0$.
+        \item Substitute $\omega_0^2=g/\ell$.
+        \item In HS, we learned that the harmonic oscillator approximation of the mathematical pendulum is justified for small $\theta$. We now justify this.
+        \item Ansatz: $\theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3+O(\mu^4)$.
+        \item Recall that
+        \begin{equation*}
+            \sin\theta = \theta-\frac{\theta^3}{6}+O(\theta^5)
+        \end{equation*}
+        \item First step, solve to determine $\theta_0=0$.
+        \item Then we only have a term of order $O(\mu)$ and $O(\mu^3)$ to worry about.
+        \item Substitute the expansion in:
+        \begin{align*}
+            \sin\theta &= \theta-\frac{\theta^3}{6}+O(\theta^5)\\
+            &= \left( \theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3 \right)-\frac{1}{6}\left( \theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3 \right)^3\\
+            &= 0+\theta_1\mu+\theta_2\mu^2+\left( \theta_3-\frac{\theta_1^3}{6} \right)\mu^3+O(\mu^4)
+        \end{align*}
+        \item We also have that
+        \begin{equation*}
+            \theta''(t;\mu) = \theta_1''\mu+\theta_2''\mu^2+\theta_3''\mu^3+O(\theta^4)
+        \end{equation*}
+        and
+        \begin{equation*}
+            -\omega_0^2\sin(\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3+O(\mu^4)) = -\omega_0^2\theta_1\mu-\omega_0^2\theta_2\mu^2-\omega_0^2\left( \theta_3-\frac{\theta_1^3}{6} \right)\mu^3+O(\mu^4)
+        \end{equation*}
+        \item Initial conditions: $\theta_0=0$, $\theta_1(0)=1$, and $\theta_2(0) = \theta_3(0) = \theta_1'(0) = \cdots = \theta_3'(0) = 0$.
+        \item First order: $\theta_1''=-\omega_0^2\theta_1$, $\theta_1(0)=1$, $\theta_1'(0)=0$. Implies $\theta_1(t)=\cos\omega_0t$. This is why we can use the harmonic oscillator approximation.
+        \item Second order: $\theta_2=-\omega_0^2\theta_2$. Initial conditions imply $\theta_2(t)=0$.
+        \item Third order: $\theta_3''=-\omega_0^2\theta_3+\frac{\omega_0^2\theta_1^3}{6}$. Implies that
+        \begin{equation*}
+            \theta_3(t) = \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t)
+        \end{equation*}
+        \begin{itemize}
+            \item We have to apply some trigonometric identities to verify this??
+        \end{itemize}
+        \item In conclusion, we have the approximation of our solution up to order $O(\mu^3)$ as
+        \begin{equation*}
+            \theta(t;\mu) = \mu\cos\omega_0t+\mu^3\left[ \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t) \right]+O(\mu^4)
+        \end{equation*}
+        \begin{itemize}
+            \item This approximation is only good for $T$ in a fixed, small time interval because the second term is not periodic.
+        \end{itemize}
+    \end{itemize}
+    \item We now investigate the period of the mathematical pendulum.
+    \begin{itemize}
+        % \item Expectation: $T(\mu)=4$ (first positive zero of $\theta(t;\mu)$).
+        % \begin{equation*}
+        %     \frac{\theta(t;\mu)}{\mu} = \cos\omega t+\mu^2\left[ \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t) \right]+O(\mu^4)
+        % \end{equation*}
+        % \item $F(t;\mu) = \cos\omega t+\mu^2\left[ \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t) \right]+O(\mu^4)=0$. Want $F(f(\mu);\mu)=0$. Apply the implicit function theorem at $(t_0,\mu_0)=(\pi/2\omega_0,0)$.
+        % \item Take ${\pdv{F}{t}}(t_0,\mu_0)=-\omega_0^2\sin\omega_0t_0+\mu_0^2\left( \omega_0/16*\sin\omega_0t_0+\frac{\omega_0^2}{16}t_0\cos\omega_0t_0+\frac{1}{192}(\dots) \right)$. The second term cancels. Thus, this derivative equals $-\omega_0^2\neq 0$. It follows that ?? is indeed uniquely determined by ??.
+        % \item Using the law of implicit differentiation, we get
+        % \begin{equation*}
+        %     f(\mu) = \frac{\pi}{2\omega_0}+b_1\mu+b_2\mu^2+O(\mu^3)
+        % \end{equation*}
+        % \item Take
+        % \begin{align*}
+        %     F(f(\mu);\mu) &= \cos(\frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3))+\mu^2(\frac{1}{16}(\frac{\pi}{2}++\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3)+...))\\
+        %     &= -\omega_0b_1\mu+(\frac{\pi}{32}-\omega_0b_2)\mu^2+O(\mu^3)
+        % \end{align*}
+        % \item Implicit relation implies that the above equals zero. Thus, we must have $b_1=0$ and $b_2=\pi/32\omega_0$.
+        % \item In conclusion, the period is $T(\mu)=2\pi\sqrt{\ell/g}(1+\frac{\pi^2}{16}\mu^2+O(\mu^3))$.
+        % \item In conclusion, the ODE induces a second order correction, which will be very small.
+        \item The first order approximation (harmonic oscillator) gives the period as $T\approx 2\pi/\omega_0=2\pi\sqrt{\ell/g}$.
+        \item Let $T(\mu)$ denote the period of the mathematical pendulum as a function of the starting angle $\mu$.
+        \item $T(\mu)$ should be approximately equal to the period of $\theta(t;\mu)$. Additionally, thinking about the mathematical pendulum intuitively, the period $T(\mu)$ should be about four times the first positive zero of $\theta(t;\mu)$.
+        \begin{itemize}
+            \item Indeed, in a full cycle, the pendulum must go from the positive extreme, to zero, to the negative extreme, back to zero, and back to the original position, so there are our four parts.
+            \item Example: In the harmonic oscillator approximation, the first zero is at $\pi/2\omega_0$, and the period is $2\pi/\omega_0=4\cdot\pi/2\omega_0$.
+        \end{itemize}
+        \item Thus, determining the period $T(\mu)$ becomes a problem of finding $t$ such that $\theta(t;\mu)=0$.
+        \item The zeroes of $\theta(t;\mu)$ will be equal to the zeroes of $\theta(t;\mu)/\mu$, so we seek $t$ such that the implicit function
+        \begin{equation*}
+            F(t;\mu) = \frac{\theta(t;\mu)}{\mu}
+            = \cos\omega_0t+\mu^2\left[ \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t) \right]
+            = 0
+        \end{equation*}
+        \item When $\mu=0$, the mathematical pendulum is stationary, but this does technically mean that it has a zero at $(\pi/2\omega_0;0)$. This point is important because for $\mu$ small enough that the harmonic oscillator approximation is good, the first zero should be very close to $\pi/2\omega_0$. Thus, we choose to solve $F(t;\mu)=0$ around $(t_0;\mu_0)=(\pi/2\omega_0;0)$.
+        \item The requirement for the Implicit Function Theorem is met since
+        \begin{align*}
+            {\pdv{F}{t}}(t_0;\mu_0) &= -\omega_0\sin\omega_0t_0+\mu_0^2\left( \frac{\omega_0}{16}\sin\omega_0t_0+\frac{\omega_0^2t_0}{16}\cos\omega_0t_0+\frac{1}{192}(-\omega_0\sin\omega_0t_0+3\omega_0\sin 3\omega_0t_0) \right)\\
+            &= -\omega_0\sin\frac{\pi}{2}+0^2(\dots)\\
+            &= -\omega_0\\
+            &\neq 0
+        \end{align*}
+        \item Thus, there exists $t_1(\mu)$ smooth defined on some neighborhood of $\mu_0=0$ satisfying $t_1(0)=\pi/2\omega_0$ and $F(t_1(\mu);\mu)=0$.
+        \item We cannot (easily??) obtain $t_1(\mu)$ directly, so we will look for its second-order Taylor expansion
+        \begin{equation*}
+            t_1(\mu) = \frac{\pi}{2\omega_0}+b_1\mu+b_2\mu^2+O(\mu^3)
+        \end{equation*}
+        \item We need not compute a bunch of derivatives to find $b_1,b_2$, though. Indeed, we can just substitute into $F(t_1(\mu);\mu)=0$ and compare different powers of $\mu$. Doing so, we obtain
+        \begin{align*}
+            0 ={}& F(t_1(\mu);\mu)\\
+            \begin{split}
+                ={}& \cos(\frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3))\\
+                &+ \mu^2\left[ \frac{1}{16}\left( \frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3) \right)\sin(\frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3)) \right.\\
+                &+ \left. \frac{1}{192}\left( \cos(\frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3))-\cos 3\left( \frac{\pi}{2}+\omega_0b_1\mu+\omega_0b_2\mu^2+O(\mu^3) \right) \right) \right]
+            \end{split}\\
+            ={}& -\omega_0b_1\mu+\left( \frac{\pi}{32}-\omega_0b_2 \right)\mu^2+O(\mu^3)
+        \end{align*}
+        from which we can determine that
+        \begin{align*}
+            0 &= -\omega_0b_1&
+            0 &= \frac{\pi}{32}-\omega_0b_2\\
+            b_1 &= 0&
+            b_2 &= \frac{\pi}{32\omega_0}
+        \end{align*}
+        \item Thus,
+        \begin{align*}
+            T(\mu) &= 4\cdot t_1(\mu)\\
+            &= \frac{2\pi}{\omega_0}+\frac{\pi}{8\omega_0}\mu^2+O(\mu^3)\\
+            &= 2\pi\sqrt{\frac{\ell}{g}}\left( 1+\frac{1}{16}\mu^2+O(\mu^3) \right)
+        \end{align*}
+    \end{itemize}
+    \item We calculate an accumulation that is a perturbation of an ODE in the bonus this week, reproducing Einstein's work.
 \end{itemize}
 
 
