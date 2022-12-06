@@ -1,0 +1,160 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{6}
+
+\begin{document}
+
+
+
+
+\chapter{???}
+\section{Peano Existence Theorem}
+\begin{itemize}
+    \item \marginnote{11/7:}Today: Peano Existence Theorem.
+    \item For an IVP of a first-order differential system, as long as the RHS is continuous, we get at least one solution.
+    \item The proof provides an algorithm that can be really useful in computing the solution provided that uniqueness exists.
+    \item We will need a theorem from analysis to start.
+    \item Theorem (Arzel\`{a}-Ascoli\footnote{This is not the full Arzel\`{a}-Ascoli theorem, but a special case. The proof is similar, regardless, though. See Honors Analysis in $\R^n$ I Notes.}): Let $h_k:[a,b]\to\R^n$ be a sequence of functions that is uniformly bounded and uniformly Lipschitz continuous wrt. $L$. Then $\{h_k\}$ contains a uniformly convergent subsequence and the limit has the same bound and Lipschitz constant.
+    \begin{proof}
+        Recall the property of sequential compactness\footnote{The Bolzano-Weierstrass Theorem/Theorem 15.18 from Honors Calculus IBL.}, i.e., that every bounded sequence of numbers contains a convergent subsequence. We want to prove this for a sequence of functions. To do so, we will need the Cantor diagonalization technique.\par
+        $\Q$ is countable. Thus, we can enumerate the rationals in $[a,b]$ by $r_1,r_2,r_3,\dots$. Since $\{h_k(r_1)\}$ is a bounded sequence of numbers, we have by the above that there is a subsequence $C_1$ --- say $h_1^{(1)},h_2^{(1)},h_3^{(1)},\dots$ --- such that $C_1=\{h_k^{(1)}(r_1)\}$ is a convergent subsequence in $\R^n$ of the original sequence. Now $C_1$ is still a bounded sequence, so we can obtain a subsequence $C_2$ of \emph{it} --- say $h_1^{(2)},h_2^{(2)},h_3^{(2)},\dots$ --- such that $C_2=\{h_k^{(2)}(r_2)\}$ is a convergent subsequence in $\R^n$ at $r_2$ (and, by inductive hypothesis, at $r_1$!). Inductively, we can obtain $C_\ell=\{h_k^{(\ell)}\}_{\ell,k=1}^\infty$ convergent at $r_1,r_2,\dots,r_\ell$. We then write down the elements of the sequences as a table. (For example, the $k^\text{th}$ row of the table is a sequence that converges at $r_1,\dots,r_k$.)
+        \begin{equation*}
+            \begin{matrix}
+                h_1^{(1)} & h_2^{(1)} & h_3^{(1)} & \cdots\\
+                h_1^{(2)} & h_2^{(2)} & h_3^{(2)} & \cdots\\
+                h_1^{(3)} & h_2^{(3)} & h_3^{(3)} & \cdots\\
+                \vdots & \vdots & \vdots & \ddots\\
+            \end{matrix}
+        \end{equation*}
+        Consider the diagonal sequence $\{f_\ell\}_{\ell=1}^\infty$ where $f_\ell=h_\ell^{(\ell)}$. By definition, it converges at all rational points. We now seek to prove that it converges uniformly at \emph{all} points.\par
+        To prove that $\{f_\ell\}$ is a uniformly convergent sequence of functions, it will suffice to show that for all $\varepsilon>0$, there exists $N$ such that if $k,\ell>N$, then $|f_k(t)-f_\ell(t)|<\varepsilon$ for all $t\in[a,b]$. Let $\varepsilon>0$ be arbitrary. Divide $[a,b]$ into $m$ congruent subintervals $I_\alpha$ ($\alpha=1,\dots,m$) such that $|I_\alpha|\leq\varepsilon/3L$ for all $\alpha$. This guarantees that the oscillation of each $f_k$ on any $I_\alpha$ is $\leq\varepsilon/3$ since if $x,y\in I_\alpha$ for some $\alpha$, then
+        \begin{equation*}
+            |f_\ell(x)-f_\ell(y)| \leq L|x-y|
+            \leq L\cdot\frac{\varepsilon}{3L}
+            = \frac{\varepsilon}{3}
+        \end{equation*}
+        Using the fact that $\{f_\ell\}$ is convergent and hence Cauchy on the rationals, pick $N$ large enough so that $r_\alpha\in I_\alpha$ implies $|f_k(r_\alpha)-f_\ell(r_\alpha)|<\varepsilon/3$ for $k,\ell>N$. We will choose this $N$ to be our $N$. Now let $t\in[a,b]$ be arbitrary. By their definition, we know $t\in I_\alpha$ for some $\alpha$. Therefore,
+        \begin{align*}
+            |f_k(t)-f_\ell(t)| &\leq |f_k(t)-f_k(r_\alpha)|+|f_k(r_\alpha)-f_\ell(r_\alpha)|+|f_\ell(r_\alpha)-f_\ell(t)|\\
+            &< \frac{\varepsilon}{3}+\frac{\varepsilon}{3}+\frac{\varepsilon}{3}\\
+            &= \varepsilon
+        \end{align*}
+        as desired.\par
+        Lastly, we can prove that the limit function $f$ of $\{f_\ell\}$ is $L$-Lipschitz as follows. Let $t,t'\in[a,b]$ be arbitrary. Then
+        \begin{equation*}
+            \left| \frac{f(t)-f(t')}{t-t'} \right| = \lim_{k\to\infty}\left| \frac{f_k(t)-f_k(t')}{t-t'} \right|
+            \leq \lim_{k\to\infty}\left| \frac{L|t-t'|}{t-t'} \right|
+            = \lim_{k\to\infty}|L|
+            = L
+        \end{equation*}
+        as desired.
+    \end{proof}
+    \item Now we come to the proof of the Peano Existence Theorem.
+    \item Theorem (Peano Existence Theorem): Let $f:[t_0,t_0+a]\times\bar{B}(y_0,b)\to\R^n$ be bounded ($|f(t,z)|\leq M$) and continuous. Then the IVP
+    \begin{equation*}
+        y'(t)=f(t,y(t))
+        ,\quad
+        y(t_0)=b
+    \end{equation*}
+    has at least one solution for $t\in[t_0,t_0+T]$ where $T=\min(a,b/M)$.
+    \begin{proof}
+        % Fix $T=\min(a,b/M)$. Divide $[t_0,t_0+T]$ into $m$ congruent subintervals $I_\alpha$ ($\alpha=1,\dots,m$). Suppose that $m$ is large so that every subinterval is small. In particular, on each $I_\alpha$, we may replace $y'(t)$ with the difference quotient $h=|I_\alpha|=I/m$. Thus, let $y_m(t_{\alpha+1})=y_m(t_\alpha)+f(t_\alpha,y_m(t_\alpha))h$. That is, we define inductively the value of the solution as the value at the previous node plus the increment. Very similar to Euler's method. The second term is approximately equal to $f'(t_\alpha,y(t_\alpha))h$. In between the nodes, we assume that the function is linear. We connect all nodes by linear functions and say that the piecewise linear function is approximately equal to the solution. We want to use the Arzel\`{a}-Ascoli theorem to prove that something converges uniformly on this time interval. Fix a scalar of error $\varepsilon>0$. Let $f(t,z)$ be uniformly continuous for $(t,z)$, i.e., $|f(t,z)-f(t',z')|\leq\varepsilon/T$ when $|t-t'|+|z-z'|\leq\delta$.
+
+
+        Since there is no Lipschitz condition, we use another strategy to find approximate solutions.\par
+        \emph{picture}
+        Fix $T=\min(a,b/M)$. We divide $[t_0,t_0+T]$ into $m$ congruent closed subintervals $I_\alpha$ ($\alpha=0,\dots,m-1$), each of length $h_m=T/m$. Define a continuous function $y_m(t)$ as follows: The values at the nodes $t_\alpha$ (the intersection points of adjacent congruent subintervals) are defined inductively via
+        \begin{equation*}
+            y_m(t_{\alpha+1}) = y_m(t_\alpha)+f(t_\alpha,y_m(t_\alpha))h_m
+        \end{equation*}
+        for $\alpha=0,\dots,m-1$, and $y_m$ is taken to be linear between the nodes\footnote{Note that this construction is quite similar to that employed in Euler's method.}. The idea is that we replace the derivative $y'(t)$ by the difference quotient $[y(t+h)-y(t)]/h$. It follows by the construction that every function in the set $\{y_k(t):[t_0,t_0+T]\to\bar{B}(y_0,b)\}$ is piecewise linear (hence continuous), uniformly bounded, and uniformly $M$-Lipschitz continuous. Therefore, by the Arzel\'{a}-Ascoli theorem, $\{y_k\}$ contains a uniformly convergent subsequence $y_{m_k}\to y$.\par
+        It remains to verify that $y$ is a solution to the integral equation
+        \begin{equation*}
+            y(t) = y_0+\int_{t_0}^tf(\tau,y(\tau))\dd\tau
+        \end{equation*}
+        Observe that the domain of $f$ is a closed and bounded subset of the real numbers. Thus, it is compact by the Heine-Borel theorem\footnote{Theorem 10.16 of Honors Calculus IBL.}. Moreover, since $f$ is a continuous function on a compact domain, we have by the Heine-Cantor theorem\footnote{Theorem 13.6 of Honors Calculus IBL.} that $f$ is uniformly continuous. Thus, for any $\varepsilon>0$, there exists $N$ such that if $m>N$, then
+        \begin{equation*}
+            |f(t,y_m(t))-f(t_\alpha,y_m(t_\alpha))| < \frac{\varepsilon}{T}
+        \end{equation*}
+        for all $\alpha=0,\dots,m-1$ and $t\in I_\alpha$. Additionally, observe that
+        \begin{equation*}
+            y_{m_k}(t) = y_0+\sum_{\alpha=0}^{m-1}\int_{t_\alpha}^{t_{\alpha+1}}\chi_t(\tau)f(t_\alpha,y_{m_k}(t_\alpha))\dd\tau
+        \end{equation*}
+        where $\chi_t(\tau)$ denotes the \textbf{characteristic function} of $[t_0,t]$. To see this, compare with the original inductive definition of $y_m(t_{\alpha+1})$.
+        \emph{picture}
+        We thus see that $y_0$ in the above equation corresponds to $y_m(t_0)=y(t_0)$, as we would expect. We see that we are summing a series of side-by-side integrals so that in the end, we integrate over all of $[t_0,t_0+T]$. We see that the characteristic function restricts us to integrating over the ODE only up until $t$, as we would want for an approximation $y_{m_k}(t)$ at $t$ using Euler's method. And we see that since $f(t_\alpha,y_{m_k}(t_\alpha))$ is constant and $h_m=t_{\alpha+1}-t_\alpha$, the integral does take on the expected value $f(t_\alpha,y_m(t_\alpha))h_m$. Moving right along, we see that
+        \begin{align*}
+            \left| y_{m_k}(t)-y_0-\int_{t_0}^tf(\tau,y_{m_k}(\tau))\dd\tau \right| &\leq \sum_{\alpha=0}^{m-1}\int_{t_\alpha}^{t_{\alpha+1}}\chi_t(\tau)|f(t_\alpha,y_{m_k}(t_\alpha))-f(\tau,y_{m_k}(\tau))|\dd\tau\\
+            &< \int_{t_0}^{t_0+T}\chi_t(\tau)\cdot\frac{\varepsilon}{T}\dd\tau\\
+            &= \int_{t_0}^t\frac{\varepsilon}{T}\dd\tau\\
+            &= \varepsilon\cdot\frac{t-t_0}{T}\\
+            &\leq \varepsilon
+        \end{align*}
+        Thus, by uniform convergence, $\int_{t_0}^tf(\tau,y_{m_k}(\tau))\dd\tau\to\int_{t_0}^tf(\tau,y(\tau))\dd\tau$ uniformly, so $y$ does satisfy the integral equation, as desired.
+    \end{proof}
+    \item \textbf{Characteristic function} (of $[a,b]$): The function defined as follows. \emph{Denoted by} $\bm{\chi_{[a,b]}}$. \emph{Given by}
+    \begin{equation*}
+        \chi_{[a,b]}(t) =
+        \begin{cases}
+            1 & x\in[a,b]\\
+            0 & x\notin[a,b]
+        \end{cases}
+    \end{equation*}
+    \item Utility of the Peano Existence Theorem: Proves the \emph{existence} of a solution, but the proof is not constructive; it does not give an algorithm for finding the desired sequence. Nor does the PET make any statement on uniqueness.
+    \item We now look to use a related method to define a sequence of functions that will converge to the desired solution of the ODE.
+    \begin{itemize}
+        \item While the PET does not require it, in practice, most $f$ we would be interested in will satisfy an additional Lipschitz condition.
+        \item Define the integral operator
+        \begin{equation*}
+            \Phi[u] = y_0+\int_{t_0}^tf(\tau,u(\tau))\dd\tau
+        \end{equation*}
+        We will prove that $\Phi$ is a contraction on the function space. This will imply that $\Phi^N[u]$ converges across the entire interval $[t_0,t_0+T]$ to the solution $y$ for any $u:[t_0,t_0+T]\to\bar{B}(y_0,b)$, giving us our desired computational strategy. Let's begin.
+        \item To prove that $\Phi$ is a contraction, it will suffice to show that $\norm{\Phi^j[u_1]-\Phi^j[u_2]}\to 0$ as $j\to\infty$. Thus, we wish to put a bound on $\norm{\Phi^j[u_1]-\Phi^j[u_2]}$ that decreases as $j$ increases. To that end, we will prove that
+        \begin{equation*}
+            \norm{\Phi^j[u_1]-\Phi^j[u_2]} \leq \frac{(LT)^j}{j!}\cdot\norm{u_1-u_2}
+        \end{equation*}
+        for all $j$.
+        \begin{itemize}
+            \item We induct on $j$. For the base case $j=1$, we have that
+            \begin{align*}
+                |\Phi[u_1](t)-\Phi[u_2](t)| &\leq \int_{t_0}^tL|u_1(\tau)-u_2(\tau)|\dd\tau\\
+                &\leq L(t-t_0)\norm{u_1-u_2}\\
+                &\leq LT\norm{u_1-u_2}\\
+                &= \frac{(LT)^1}{1!}\cdot\norm{u_1-u_2}
+            \end{align*}
+            for all $t$.
+            \item Now suppose inductively that $\norm{\Phi^j[u_1]-\Phi^j[u_2]}\leq(LT)^j/j!\cdot\norm{u_1-u_2}$. Then we have that
+            \begin{align*}
+                |\Phi^{j+1}[u_1](t)-\Phi^{j+1}[u_2](t)| &\leq \int_{t_0}^tL|\Phi^j[u_1](\tau)-\Phi^j[u_2](\tau)|\dd\tau\\
+                &\leq \int_{t_0}^tL\cdot\frac{(LT)^j}{j!}\cdot\norm{u_1-u_2}\dd\tau\\
+                &= \cdots\\
+                &\leq \frac{(LT)^{j+1}}{j!}\cdot\norm{u_1-u_2}
+            \end{align*}
+            for all $t$, implying the desired result.
+        \end{itemize}
+        \item We now estimate the error between $y_m$ and $y$ in terms of $y_m$, alone. Indeed, we have from the above that
+        \begin{align*}
+            \norm{y_m-\Phi^N[y_m]} &\leq \sum_{j=0}^{N-1}\norm{\Phi^j[y_m]-\Phi^{j+1}[y_m]}\\
+            &\leq \norm{y_m-\Phi[y_m]}\sum_{j=0}^{N-1}\frac{(TL)^j}{j!}\\
+            \norm{y_m-y} &\leq \norm{y_m-\Phi[y_m]}\e[TL]
+        \end{align*}
+        where we get from the second to the third line by letting $N\to\infty$.
+        \begin{itemize}
+            \item The proof of the PET guarantees that $\norm{y_m-\Phi[y_m]}$ is small when $m$ is large, no matter whether $y_m$ itself converges or not.
+            \item In fact, when $f\in C^1$, the error is estimated as
+            \begin{equation*}
+                \norm{y_m-y} \leq \frac{LT\e[TL]}{m}
+            \end{equation*}
+            for $L=\norm{f}_{C^1}$.
+        \end{itemize}
+    \end{itemize}
+    \item Takeaway: This polygon method gives rise to an algorithm to solve ODEs. Theoretically, it converges much slower than the Picard iteration, but in practice, it has the advantage that we do not need to do any numerical integration. Indeed, to obtain the desired precision using the Picard iteration, the numerical integration will need more and more steps and the total accumulated error will not be less than this polygon method.
+    \item Better difference methods include Runge-Kutta or Heun, but please refer to monographs on numerical ODEs for these.
+\end{itemize}
+
+
+
+
+\end{document}
