@@ -1,0 +1,343 @@
+\documentclass[../psets.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\leftmark}{Problem Set \thesection}
+\setcounter{section}{4}
+\setenumerate[1]{label={\textbf{\arabic*.}}}
+\setenumerate[2]{label={(\arabic*)}}
+
+\begin{document}
+
+
+
+
+\section{Fixed Points and Perturbation}
+\subsection*{Problems Related to Fundamental Definitions}
+\begin{enumerate}
+    \item \marginnote{11/10:}Are the following real functions Lipschitz continuous near 0? If yes, find a Lipschitz constant for some interval containing 0.
+    \begin{enumerate}
+        \item $1/(1-x^2)$.
+        \begin{proof}
+            \fbox{Yes.} Consider the interval $[-0.5,0.5]$. Then we may take
+            \begin{equation*}
+                \boxed{L = \frac{16}{9}}
+            \end{equation*}
+        \end{proof}
+        \item $x\log|x|$.
+        \begin{proof}
+            \fbox{No.}
+        \end{proof}
+        \item $x^2\sin(1/x)$.
+        \begin{proof}
+            If we take the piecewise function consisting of the above expression on $\R\setminus\{0\}$ and 0 at 0, then \fbox{yes.} Consider the interval $[-1,1]$. Then we may take
+            \begin{equation*}
+                \boxed{L = 2}
+            \end{equation*}
+        \end{proof}
+    \end{enumerate}
+    \item Find the first two elements $y_1(t),y_2(t)$ for the Picard iteration sequence of the following initial value problems, and estimate the error between $y_2(t)$ and the actual solution. Since they are all of separable form, the actual solutions can be explicitly found.
+    \begin{enumerate}
+        \item $y'=1+y^2$, $y(0)=0$.
+        \begin{proof}
+            We take $y_0(t)=0$. Then
+            \begin{align*}
+                y_1(t) &= y_0(0)+\int_0^t[1+y_0(t)^2]\dd{t}\\
+                &= \int_0^t[1+0]\dd{t}\\
+                \Aboxed{y_1(t) &= t}
+            \end{align*}
+            and
+            \begin{align*}
+                y_2(t) &= y_0(0)+\int_0^t[1+y_1(t)^2]\dd{t}\\
+                &= \int_0^t[1+t^2]\dd{t}\\
+                \Aboxed{y_2(t) &= t+\frac{t^3}{3}}
+            \end{align*}
+            The error is between $y_2$ and the actual solution $y(t)=\tan(t)$ is given by
+            \begin{equation*}
+                \boxed{\varepsilon = \tan(t)-t-\frac{t^3}{3}}
+            \end{equation*}
+        \end{proof}
+        \item $y'=2ty$, $y(0)=1$.
+        \begin{proof}
+            We take $y_0(t)=1$. Then
+            \begin{align*}
+                y_1(t) &= y_0(0)+\int_0^t2ty_0(t)\dd{t}\\
+                &= 1+\int_0^t2t\dd{t}\\
+                \Aboxed{y_1(t) &= 1+t^2}
+            \end{align*}
+            and
+            \begin{align*}
+                y_2(t) &= y_0(0)+\int_0^t2ty_1(t)\dd{t}\\
+                &= 1+\int_0^t[2t+2t^3]\dd{t}\\
+                \Aboxed{y_2(t) &= 1+t^2+\frac{t^4}{2}}
+            \end{align*}
+            The error is between $y_2$ and the actual solution $y(t)=\e[t^2]$ is given by
+            \begin{equation*}
+                \boxed{\varepsilon = \e[t^2]-1-t^2-\frac{t^4}{2}}
+            \end{equation*}
+        \end{proof}
+        \item $y'=y/(1-t)$, $y(0)=1$.
+        \begin{proof}
+            We take $y_0(t)=1$. Then
+            \begin{align*}
+                y_1(t) &= y_0(0)+\int_0^t\frac{y_0(t)}{1-t}\dd{t}\\
+                &= 1+\int_0^t\frac{1}{1-t}\dd{t}\\
+                \Aboxed{y_1(t) &= 1-\ln|1-t|}
+            \end{align*}
+            and
+            \begin{align*}
+                y_2(t) &= y_0(0)+\int_0^t\frac{y_1(t)}{1-t}\dd{t}\\
+                &= 1+\int_0^t\frac{1-\ln|1-t|}{1-t}\dd{t}\\
+                \Aboxed{y_2(t) &= 1-\ln|1-t|+\frac{1}{2}(\ln|1-t|)^2}
+            \end{align*}
+            The error between $y_2$ and the actual solution $y(t)=\e[-\ln|1-t|]$ is given by
+            \begin{equation*}
+                \boxed{\varepsilon = \e[-\ln|1-t|]-1+\ln|1-t|-\frac{1}{2}(\ln|1-t|)^2}
+            \end{equation*}
+        \end{proof}
+    \end{enumerate}
+    \pagebreak
+    \item Check whether the implicit equation $F(x,y)=0$ uniquely determines an explicit function $y=f(x)$ around the given point $(x_0,y_0)$. If it does, compute $f'(x_0)$.
+    \begin{enumerate}
+        \item For $(x,y)\in\R^2$, $F(x,y)=x^2+y^2-1$, $(x_0,y_0)=(\sqrt{2}/2,-\sqrt{2}/2)$.
+        \begin{proof}
+            From the implicit equation, we have that
+            \begin{align*}
+                0 &= x^2+y^2-1\\
+                y &= \pm\sqrt{1-x^2}
+            \end{align*}
+            Since
+            \begin{align*}
+                -\frac{\sqrt{2}}{2} &= -\sqrt{1-\left( \frac{\sqrt{2}}{2} \right)^2}\\
+                y_0 &= -\sqrt{1-x_0^2}
+            \end{align*}
+            our explicit function \fbox{is uniquely determined around $(x_0,y_0)$.}\par
+            Moreover, we can compute that
+            \begin{align*}
+                f'(x_0) &= \frac{2x_0}{2\sqrt{1-x_0^2}}\\
+                \Aboxed{f'(x_0) &= 1}
+            \end{align*}
+        \end{proof}
+        \item For $(x,y)\in\R^2$, $F(x,y)=x^2-y^2-1$, $(x_0,y_0)=(1,0)$.
+        \begin{proof}
+            From the implicit equation, we have that
+            \begin{align*}
+                0 &= x^2-y^2-1\\
+                y &= \pm\sqrt{x^2-1}
+            \end{align*}
+            Since
+            \begin{align*}
+                y_0 &= \sqrt{x_0^2-1}&
+                y_0 &= -\sqrt{x_0^2-1}
+            \end{align*}
+            our explicit function \fbox{is not uniquely determined around $(x_0,y_0)$.}
+        \end{proof}
+        \item For $(x,y)\in\R^2$, $F(x,y)=x\e[y]+y$, $(x_0,y_0)=(0,0)$.
+        \begin{proof}
+            We apply the implicit function theorem.\par\smallskip
+            $F$ is defined on a subset of $\R^2$, as desired.\par
+            We have that
+            \begin{align*}
+                \pdv{F}{x} &= \e[y]&
+                \pdv{F}{y} &= x\e[y]+1
+            \end{align*}
+            Since both of the above partial derivatives are continuous, $F$ is continuously differentiable on its domain, as desired.\par
+            $(x_0,y_0)=(0,0)\in\R^2$, which is the domain of $F$, as desired.\par
+            $F(x_0,y_0)=0\e[0]+0=0$, as desired.\par
+            The truncated Jacobian matrix is $1\times 1$ and contains a nonzero element at $(x_0,y_0)$ --- in particular, it contains $\pdv*{F}{x}$ --- as desired.\par\smallskip
+            Therefore, our explicit function \fbox{is uniquely determined around $(x_0,y_0)$.}\par\smallskip
+            Moreover, we can compute that
+            \begin{align*}
+                f'(x_0) &= -\left( \pdv{F}{y}(x_0,y_0) \right)^{-1}\cdot\pdv{F}{x}(x_0,y_0)\\
+                &= -\left( 0\e[0]+1 \right)^{-1}\cdot\e[0]\\
+                \Aboxed{f'(x_0) &= -1}
+            \end{align*}
+        \end{proof}
+    \end{enumerate}
+\end{enumerate}
+
+
+\subsection*{Problems Involving the Banach Fixed Point Theorem}
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Show that the condition "constant $q<1$" in the statement of the Banach fixed point theorem is not redundant. You may give an example of a function $f:\R\to\R$ which satisfies the strict inequality $|f(x)-f(y)|<|x-y|$ but does not have a fixed point.
+        \begin{proof}
+            Choose
+            \begin{equation*}
+                \boxed{
+                    f(x) =
+                    \begin{cases}
+                        1 & x\leq 0\\
+                        x+\e[-x] & x>0
+                    \end{cases}
+                }
+            \end{equation*}
+            The fact that
+            \begin{equation*}
+                \dv{f}{x} =
+                \begin{cases}
+                    0 & x\leq 0\\
+                    1-\e[-x] & x>0
+                \end{cases}
+            \end{equation*}
+            implies that $|\dv*{f}{x}|<1$ for all $x$. Hence, $f$ satisfies the desired strict inequality. Additionally, since the graph of $f(x)>x$ for all $x$ (as can be readily verified from its definition), it has no fixed point, as desired.
+        \end{proof}
+        \item Let $f:\R^n\to\R^n$ be a Lipschitz mapping with uniform Lipschitz constant $q<1$, that is,
+        \begin{equation*}
+            |f(x)-f(y)| \leq q|x-y|
+        \end{equation*}
+        for all $x,y\in\R^n$. Prove that the mapping $x\mapsto x+f(x)$ is invertible with Lipschitz continuous inverse.
+        \begin{proof}
+            % WTS: There exists $x\in\R^n$ such that $y=g(x)=x+f(x)$.
+            % $f$ has a unique fixed point $x\in\R^n$.
+
+            % it is injective and surjective.\par
+            % Injectivity: Suppose $g(x)=g(y)$. Then
+            % \begin{align*}
+            %     x+f(x) &= y+f(y)\\
+            %     f(x)-f(y) &= y-x\\
+            %     |f(x)-f(y)| &= |x-y|
+            % \end{align*}
+            % It follows by substituting into the Lipschitz condition that
+            % \begin{equation*}
+            %     |x-y| \leq q|x-y|
+            % \end{equation*}
+            % This combined with the fact that
+            % \begin{align*}
+            %     q &< 1\\
+            %     q|x-y| &\leq |x-y|
+            % \end{align*}
+            % proves that
+            % \begin{align*}
+            %     |x-y| &= q|x-y|\\
+            %     (1-q)|x-y| &= 0\\
+            %     |x-y| &= 0\\
+            %     x &= y
+            % \end{align*}
+            % as desired.\par
+
+            % We have that
+            % \begin{align*}
+            %     |g(x)-g(y)| &= |[x+f(x)]-[y+f(y)]|\\
+            %     &= |[x-y]+[f(x)-f(y)]|\\
+            %     &\leq |x-y|+|f(x)-f(y)|\\
+            %     &\leq |x-y|+q|x-y|\\
+            %     &= (1+q)|x-y|
+            % \end{align*}
+            % Let $x,y\in\R^n$ be arbitrary. Then
+            % \begin{align*}
+            %     |g^{-1}(x)-g^{-1}(y)| &= |a-b|
+            % \end{align*}
+            
+            % WTS: $|g^{-1}(x)-g^{-1}(y)|\leq|x-y|$.
+
+            % WTS: $|x-y|\leq|g(x)-g(y)|$.
+            % To prove that $g^{-1}$ is Lipschitz continuous, it will suffice to show that
+            % \begin{equation*}
+            %     |g^{-1}(x)-g^{-1}(y)| \leq |x-y|
+            % \end{equation*}
+            % for all $x,y\in\R^n$. Let $x,y\in\R^n$ be arbitrary. Then
+            % \begin{align*}
+            %     |g^{-1}(x)-g^{-1}(y)| &= |
+            % \end{align*}
+            % \begin{align*}
+            %     |g(x)-g(y)| &= |x-y+f(x)-f(y)|\\
+            %     &\leq |x-y|+|f(x)-f(y)|\\
+            %     &\geq |x-y|
+            % \end{align*}
+
+
+            Let $g:\R^n\to\R^n$ be defined by $g(x)=x+f(x)$. To prove that $g$ is invertible, it will suffice to show that $g$ is one-to-one, that is, for every $b\in\R^n$, there exists a unique $a\in\R^n$ such that $g(a)=b$. Let $b\in\R^n$ be arbitrary. Define $h:\R^n\to\R^n$ by $h(x)=b-f(x)$. Then since
+            \begin{align*}
+                |h(x)-h(y)| &= |[b-f(x)]-[b-f(y)]|\\
+                &= |f(y)-f(x)|\\
+                &= |f(x)-f(y)|\\
+                &\leq q|x-y|
+            \end{align*}
+            we have by the Banach fixed point theorem that there exists a unique $a\in\R^n$ such that $a=h(a)$. It follows that
+            \begin{align*}
+                a &= b-f(a)\\
+                a+f(a) &= b\\
+                g(a) &= b
+            \end{align*}
+            as desired.\par
+            To prove that $g^{-1}$ is Lipschitz continuous, it will suffice to show that
+            \begin{equation*}
+                |g^{-1}(x)-g^{-1}(y)| \leq \frac{1}{1-q}|x-y|
+            \end{equation*}
+            for all $x,y\in\R^n$. Let $x,y\in\R^n$ be arbitrary. Define $a=g^{-1}(x)$ and $b=g^{-1}(y)$. Then since the first term below is nonnegative (as the product of two nonnegative numbers), we have that
+            \begin{align*}
+                (1-q)|a-b| &= |a-b|-q|a-b|\\
+                &\leq |a-b|-|f(a)-f(b)|\\
+                &= |a-b|-|f(b)-f(a)|\\
+                &= \big| |a-b|-|f(b)-f(a)| \big|\\
+                &\leq |[a-b]-[f(b)-f(a)]|\\
+                &= |[a+f(a)]-[b+f(b)]|\\
+                &= |g(a)-g(b)|
+            \end{align*}
+            It follows by returning the substitution that
+            \begin{align*}
+                (1-q)|g^{-1}(x)-g^{-1}(y)| &\leq |x-y|\\
+                |g^{-1}(x)-g^{-1}(y)| &\leq \frac{1}{1-q}|x-y|
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{enumerate}
+    \item Consider the following iterative algorithm to compute the square root of a given $a>1$.
+    \begin{equation*}
+        x_{n+1} = \frac{1}{2}\left( x_n+\frac{a}{x_n} \right)
+    \end{equation*}
+    \begin{enumerate}
+        \item Show that the function
+        \begin{equation*}
+            F(x) = \frac{1}{2}\left( x+\frac{a}{x} \right)
+        \end{equation*}
+        meets the requirements of the contraction mapping principle on the closed interval $[\sqrt{a/2},a]$. Prove that $x_n\to\sqrt{a}$.
+        \begin{proof}
+            We want to show that
+            \begin{equation*}
+                |F(x)-F(y)| \leq q|x-y|
+            \end{equation*}
+            for some $q\in(0,1)$ and all $x,y\in[\sqrt{a/2},a]$.
+
+            We have that
+            \begin{align*}
+                |F(x)-F(y)| &= \left| \frac{1}{2}\left( x+\frac{a}{x} \right)-\frac{1}{2}\left( y+\frac{a}{y} \right) \right|\\
+                &= \frac{1}{2}\left| (x-y)+\left( \frac{a}{x}-\frac{a}{y} \right) \right|\\
+                &= \frac{1}{2}\left| (x-y)+a\cdot\frac{y-x}{xy} \right|\\
+                &= \frac{1}{2}\left| \left( 1-\frac{a}{xy} \right)(x-y) \right|\\
+                &= \frac{1}{2}\left| 1-\frac{a}{xy} \right||x-y|\\
+                % &\leq \frac{1}{2}|x-y|
+            \end{align*}
+        \end{proof}
+        \item For $a=2$, start the iteration $x_{n+1}=F(x_n)$ with $x_0=1$. Use a calculator to compute the first 10 values of this iteration, up to 11 digits after the decimal point. Compare it with the exponentially converging sequence $1.4,1.41,1.414,1.4142,\dots$. Which of the two algorithms is better?
+        \begin{proof}
+            We have that
+            \begin{empheq}[box=\fbox]{align*}
+                x_0 &= 1\\
+                x_1 &= 1.5\\
+                x_2 &= 1.41666666667\\
+                x_3 &= 1.41421568627\\
+                x_4 &= 1.41421356237\\
+                x_5 &= 1.41421356237\\
+                x_6 &= 1.41421356237\\
+                x_7 &= 1.41421356237\\
+                x_8 &= 1.41421356237\\
+                x_9 &= 1.41421356237\\
+                x_{10} &= 1.41421356237
+            \end{empheq}
+            \fbox{The algorithm from part (1) is better.}
+        \end{proof}
+        \item Try to estimate the error $|x_n-\sqrt{a}|$ as well as possible. \emph{Hint}. There should be something related to an iterative sequence $\{b_n\}$ satisfying
+        \begin{equation*}
+            b_{n+1} \leq Mb_n^2
+        \end{equation*}
+        You should prove that the sequence converges to zero faster than any geometric progression.\par
+        Context: This algorithm is referred to as \textbf{Newton's method}. It is a rapidly converging algorithm to find zeros/fixed points of functions, capable of giving very precise approximations within very few steps. A variation of it, called the \textbf{Nash-Moser technique}, is a very powerful tool for proving the existence of solutions to nonlinear differential equations.
+    \end{enumerate}
+\end{enumerate}
+
+
+
+
+\end{document}
