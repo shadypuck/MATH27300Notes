@@ -156,5 +156,170 @@
 
 
 
+\section{Asymptotic Stability}
+\begin{itemize}
+    \item \marginnote{11/9:}Going forward, we restrict ourselves to autonomous ODEs $y'=f(y)$, where $f:\R^n\to\R^n$ is a smooth vector field.
+    \item For every $x\in\R^n$, the IVP
+    \begin{equation*}
+        y' = f(y)
+        ,\quad
+        y(0) = x
+    \end{equation*}
+    has a unique maximal solution $\phi_t(x)$ for $t\in I_x$.
+    \item \textbf{Orbit}: The following set. \emph{Given by}
+    \begin{equation*}
+        \{\phi_t(x):t\in I_x\}
+    \end{equation*}
+    \item Let $K\subset\R^n$ be compact.
+    \begin{itemize}
+        \item Then there exists $T_K\in\R$ such that $\phi_t(x)$ is defined for all $x\in K$ and $|t|\leq T_K$.
+        \item Moreover, the map from $K\to\R^n$ defined by $x\mapsto\phi_t(x)$ is injective due to uniqueness (and therefore a \textbf{homeomorphism}). We get one such map for each $t$.
+        \item Similar to the diffeomorphism idea from \emph{Differential Forms}.
+    \end{itemize}
+    \item \textbf{Invariant set}: A subset of $\R^n$ such that any orbit starting within it never leaves it.
+    \item Compact invariant sets are quite interesting.
+    \item Proposition: Let $\Omega\subset\R^n$ be a domain with a piecewise smooth boundary $\partial\Omega$. Suppose $f(x)$ is transversal to $\partial\Omega$ and inward pointing: That is, if $\nu$ is the inward pointing unit normal, then $f(x)\cdot\nu(x)\geq 0$ for all $x\in\partial\Omega$. Then $\bar{\Omega}$ is an invariant set: That is, any orbit starting from a point $\bar{\Omega}$ exists throughout the time and never leaves $\bar{\Omega}$.
+    \begin{proof}[Proof idea]
+        $x\in\partial\Omega$ ensures that $\phi_t(x)$ must be in $\Omega$ for small $t$. Hence, it suffices to consider $x\in\Omega$. In that case, pick the smallest $T>0$ such that $\phi_T(x)\in\partial\Omega$. Then by transversality it must turn back into $\Omega$.
+    \end{proof}
+    \item This simple proposition is especially useful when establishing global attraction of the orbits.
+    \item \textbf{Fixed point}: A point in $\R^n$ at which $f$ evaluates to zero. \emph{Denoted by} $\bm{x_0}$.
+    \begin{itemize}
+        \item This means that the vector at $x_0$ is zero.
+    \end{itemize}
+    \item \textbf{Lyapunov stable} (fixed point): A fixed point $x_0$ such that for any neighborhood $B(x_0,\varepsilon)$, there exists a neighborhood $B(x_0,\delta)$ such that $\phi_t(x)\in B(x_0,\varepsilon)$ for any $t\geq 0$ and $x\in B(x_0,\delta)$.
+    \item \textbf{Asymptotically stable} (fixed point): A Lyapunov stable fixed point $x_0$ such that $\phi_t(x)\to x_0$ as $t\to+\infty$ for $x\in B(x_0,\delta)$.
+    \item Example of a system that is Lyapunov stable but not asymptotically stable: The system
+    \begin{equation*}
+        y' =
+        \begin{pmatrix}
+            0 & 1\\
+            -1 & 0\\
+        \end{pmatrix}
+        y
+    \end{equation*}
+    where $A$ denotes a rotation.
+    \begin{itemize}
+        \item The orbits are concentric circles and never converge to 0.
+    \end{itemize}
+    \item Investigation: The local behavior near a fixed point.
+    \begin{itemize}
+        \item Consider $y'=f(y)$ as a perturbation of the linearized system $y'=f'(x_0)y$. In this case,
+        \begin{equation*}
+            f(x) = f'(x_0)(x-x_0)+O(|x-x_0|^2)
+        \end{equation*}
+        as $x\to x_0$.
+    \end{itemize}
+    \item Theorem: Let $f(x_0)=0$. If the eigenvalues of the linearization $A=f'(x_0)$ all have negative real parts, then the fixed point $x=x_0$ is asymptotically stable.
+    \begin{proof}
+        WLOG let $x_0=0$. Write $f(x)=Ax+g(x)$, where $g(x)=O(|x|^2)$. Since every $\lambda\in\sigma(A)$ has negative real part, there exist $a,C>0$ (let $C>1$ WLOG) such that
+        \begin{equation*}
+            |\e[tA]x| \leq C\e[-at]|x|
+        \end{equation*}
+        The $C$ arises because the matrix norm of $\e[tA]$ is bounded as $t\to +\infty$ if all eigenvalues are negative. The $\e[-at]$ arises similarly, and reflects the exponential decrease in magnitude happening along all subspaces on which $\e[tA]$ acts.\par
+        Let $\delta$ be such that $|g(x)|\leq a|x|/2C$ when $|x|\leq\delta$. Now consider the IVP
+        \begin{equation*}
+            y' = Ay+g(y)
+            ,\quad
+            y(0) \in \bar{B}\left( 0,\frac{\delta}{2C} \right)
+        \end{equation*}
+        Then at least for small $t$ (i.e., $t$ such that $|y(t)|\leq\delta$),
+        \begin{equation*}
+            |y(t)| \leq C\e[-at]|y(0)|+\frac{a}{2C}\int_0^t\e[-a(t-\tau)]|y(\tau)|\dd\tau
+        \end{equation*}
+        It follows from Gr\"{o}nwall's inequality that
+        \begin{equation*}
+            \e[at]|y(t)| \leq C|y(0)|\e[at/2]
+        \end{equation*}
+        hence
+        \begin{equation*}
+            |y(t)| \leq \frac{\delta}{2}\e[-at/2]
+            < \delta
+        \end{equation*}
+        Hence, any orbit of the system starting from $\bar{B}(0,\delta/2C)$ stays in $\bar{B}(0,\delta)$. So the maximal time of existence $T$ is $+\infty$. This is because if not then, then the IVP starting from $y(T)$ is still solvable, contradicting the definition of $T$. Thus, we have proven that
+        \begin{equation*}
+            |y(t)| \leq \frac{\delta}{2}\e[-at/2]
+        \end{equation*}
+        for all $t\geq 0$ as long as $|y(0)|\leq\delta/2C$.
+    \end{proof}
+    \item This is the last rigorous proof given in this course.
+    \item A similar theorem:
+    \item Theorem: Let $f(0)=0$. If one of the eigenvalues of $A=f'(0)$ has positive real part, then the fixed point $x=0$ is not Lyapunov stable.
+    \item Initial application: Nonlinear mechanical system with frictions, e.g., ideal pendulum with friction.
+    \begin{equation*}
+        ml\theta''+b\theta' = -mg\sin\theta
+    \end{equation*}
+    \begin{itemize}
+        \item Substitute $\eta=b/ml$ and $\omega=\theta'$ to get a nonlinear system
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                \omega\\
+                -\eta\omega-g/l\sin\theta\\
+            \end{pmatrix}
+        \end{equation*}
+        \item At the equilibrium position $(\theta,\omega)=(0,0)$, we have
+        \begin{equation*}
+            A =
+            \begin{pNiceMatrix}
+                \pdv{\theta}(\omega) & \pdv{\omega}(\omega)\\
+                \pdv{\theta}(-\eta\omega-g/l\sin\theta) & \pdv{\omega}(-\eta\omega-g/l\sin\theta)\\
+            \end{pNiceMatrix}
+            \approx
+            \begin{pmatrix}
+                0 & 1\\
+                -g/l & -\eta\\
+            \end{pmatrix}
+        \end{equation*}
+        i.e.,
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                0 & 1\\
+                -g/l & -\eta\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}
+            +O(|\theta|^2+|\omega|^2)
+        \end{equation*}
+        \begin{itemize}
+            \item Since $\eta>0$, the eigenvalues have a common negative real part, so the equilibrium is asymptotically stable.
+        \end{itemize}
+        \item At the equilibrium $(\pi,0)$, we have
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                0 & 1\\
+                g/l & -\eta\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \theta-\pi\\
+                \omega\\
+            \end{pmatrix}
+            +O(|\theta-\pi|^2+|\omega|^2)
+        \end{equation*}
+        \begin{itemize}
+            \item For $\eta\geq 0$, there is one positive and one negative eigenvalue, so this equilibrium is unstable.
+        \end{itemize}
+        \item These results should make intuitive sense: If a pendulum is resting at the bottom, that is a stable equilibrium. If a pendulum is resting at the top, that is not a stable equilibrium.
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}
