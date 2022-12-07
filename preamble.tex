@@ -1,10 +1,12 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{csquotes}
 \usepackage{fancyhdr}
+\usepackage{xr}
 \usepackage{marginnote}
 \usepackage{enumitem}
 \usepackage{scrextend}
 \usepackage[bottom]{footmisc}
+\usepackage[style=apa]{biblatex}
 \usepackage{siunitx}
 \usepackage{graphicx,tikz,circuitikz}
 \usepackage{subcaption}
@@ -29,9 +31,16 @@
 \reversemarginpar
 
 \setitemize[3]{label={\scriptsize$\blacksquare$}}
+\setitemize[4]{label={\tikz[scale=0.06,baseline={(0,-0.14)}]{
+    \draw [line width=0.3pt] (0,1) -- (1.2,0) -- (0,-1) -- (3.5,0) -- cycle;
+    \fill (1.2,0) -- (0,-1) -- (3.5,0);
+}}}
 
 \deffootnotemark{\textsuperscript{\textup{[}\thefootnotemark\textup{]}}}
 \deffootnote[1.8em]{0em}{0em}{\textsuperscript{\thefootnote}}
+
+\addbibresource{../main.bib}
+\DefineBibliographyStrings{english}{bibliography={References}}
 
 \usetikzlibrary{decorations.pathmorphing}
 \colorlet{rex}{red!80!black!90!orange!80}
@@ -52,6 +61,8 @@
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Imm}{Im}
 \DeclareMathOperator{\Trc}{Tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sign}{sign}
 
 \newtheorem{theorem}{Theorem}
 

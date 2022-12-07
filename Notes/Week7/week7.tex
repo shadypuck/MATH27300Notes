@@ -9,7 +9,7 @@
 
 
 
-\chapter{???}
+\chapter{Solution Existence and Stability}
 \section{Peano Existence Theorem}
 \begin{itemize}
     \item \marginnote{11/7:}Today: Peano Existence Theorem.
@@ -174,7 +174,7 @@
     \begin{itemize}
         \item Then there exists $T_K\in\R$ such that $\phi_t(x)$ is defined for all $x\in K$ and $|t|\leq T_K$.
         \item Moreover, the map from $K\to\R^n$ defined by $x\mapsto\phi_t(x)$ is injective due to uniqueness (and therefore a \textbf{homeomorphism}). We get one such map for each $t$.
-        \item Similar to the diffeomorphism idea from \emph{Differential Forms}.
+        \item Similar to the diffeomorphism idea from \textcite{bib:DifferentialForms}.
     \end{itemize}
     \item \textbf{Invariant set}: A subset of $\R^n$ such that any orbit starting within it never leaves it.
     \item Compact invariant sets are quite interesting.
@@ -316,6 +316,157 @@
             \item For $\eta\geq 0$, there is one positive and one negative eigenvalue, so this equilibrium is unstable.
         \end{itemize}
         \item These results should make intuitive sense: If a pendulum is resting at the bottom, that is a stable equilibrium. If a pendulum is resting at the top, that is not a stable equilibrium.
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{Applications of the Lyapunov Method}
+\begin{itemize}
+    \item \marginnote{11/11:}Purely imaginary eigenvalues can still lead to Lyapunov stability.
+    \item \textbf{Lyapunov function} (of a system $y'=f(y)$ with fixed point $x_0$ near $x_0$): A continuous real function on $\R^n$ such that the following two axioms hold. \emph{Denoted by} $\bm{L}$.
+    \begin{enumerate}
+        \item $L(x_0)=0$ and $L(x)>0$ for all $x\in\mathring{B}(x_0,\delta)=B(x_0,\delta)\setminus\{x_0\}$.
+        \item $\dot{L}(x)=\nabla L(x)\cdot f(x)\leq 0$ for all $x\in\mathring{B}(x_0,\delta)=B(x_0,\delta)\setminus\{x_0\}$.
+    \end{enumerate}
+    \item Since
+    \begin{equation*}
+        \dv{t}L(\phi_t(x)) = \nabla L(\phi_t(x))\cdot f(\phi_t(x))
+    \end{equation*}
+    the second condition is equivalent to saying that the function $L$ is decreasing along the orbits starting near $x_0$.
+    \item \textbf{Strict} (Lyapunov function): A Lyapunov function for which the decreasing is strict.
+    \item Theorem: For the autonomous system $y'=f(y)$, a fixed point $x_0$ is
+    \begin{enumerate}
+        \item Stable if there is a Lyapunov function near it;
+        \begin{proof}
+            Pick a small number $\delta>0$. Let\footnote{Intuitively (in 2D), we take a ring around $x_0$, find the nonzero value of $L(x)$ at each point on the ring, and take the minimum among them. Imagine a circular valley with hills rising all around the bottommost point; we are essentially looking for the hill that rises the least.}
+            \begin{equation*}
+                m := \min\{L(x):|x-x_0|=\delta\}
+            \end{equation*}
+            Since $x_0$ does not satisfy $|x-x_0|=\delta>0$, we know from the first constraint on Lyapunov functions that $L(x)>0$ for all $x$ satisfying said relation. Thus, $m>0$. Consequently, any orbit starting from $\{x\mid L(x)<m\}\cap B(x_0,\delta)$ can never meet $\partial B(x_0,\delta)$ since $L(x)$ is decreasing along any orbit (and we would have to go up to get to the boundary). So $L(\phi_t(x))<m$ for all $x\in\{x\mid L(x)<m\}\cap B(x_0,\delta)$. But this means that $\{x\mid L(x)<m\}\cap B(x_0,\delta)$ is in fact an invariant set. Therefore, $x_0$ is Lyapunov stable.
+        \end{proof}
+        \item Asymptotically stable if there is a strict Lyapunov function near it.
+        \begin{proof}
+            If $x\in\{x\mid L(x)<m\}\cap B(x_0,\delta)$, then $L(\phi_t(x))$ is strictly decreasing. As $t\to +\infty$, $\phi_t(x)$ has a partial limit $z_0$, say $\phi_{t_k}(x)\to z_0$ (Lemma 6.6 of \textcite{bib:Teschl}). If $z_0\neq x_0$, then the orbit $\{\phi_t(z_0)\mid t\in I_{z_0}\}$ is not a single point: Since $L$ is a strict Lyapunov function, we have $L(\phi_t(z_0))<L(z_0)$ for all $t>0$. When $k$ is large, $\phi_{t_k}(x)$ is close to $z_0$, so by continuity,
+            \begin{equation*}
+                L(\phi_{t+t_k}(x)) = L(\phi_t(\phi_{t_k}(x))) < L(z_0)
+            \end{equation*}
+            But this contradicts $L(\phi_t(x))>L(z_0)$ (which we must have if there are arbitrarily large $t$ such that $\phi_t(x)$ is close to $z_0$). Therefore, $x_0=z_0$.
+        \end{proof}
+    \end{enumerate}
+    \item If all eigenvalues of $A$ have negative real parts, then the perturbed system
+    \begin{equation*}
+        y' = Ay+g(y)
+    \end{equation*}
+    has a strict Lyapunov function around the fixed point $x=0$.
+    \begin{itemize}
+        \item This observation yields another proof of the stability theorem.
+    \end{itemize}
+    \item Advantage of the Lyapunov function: Can be constructed globally and thus gives us global information on the system.
+    \item Examples in studying the global behavior of a phase portrait:
+    \begin{itemize}
+        \item Consider a mass point moving along the real axis in a potential field $U(x)$. Then
+        \begin{equation*}
+            mx'' = -U'(x)
+        \end{equation*}
+        \begin{itemize}
+            \item The total energy
+            \begin{equation*}
+                E = \frac{m}{2}|x'|^2+U(x)
+            \end{equation*}
+            is always a constant along any solution.
+            \item Introducing the velocity allows us to obtain a planar system
+            \begin{equation*}
+                \begin{pmatrix}
+                    x\\
+                    v\\
+                \end{pmatrix}'
+                =
+                \begin{pmatrix}
+                    v\\
+                    -U'(x)/m\\
+                \end{pmatrix}
+            \end{equation*}
+            \item Thus, $E(x,v)$ is a global Lyapunov function.
+            \item Any fixed point of the system must be of the form $(x_0,0)$, where $U'(x_0)=0$.
+            \begin{itemize}
+                \item Intuitively, this means that the velocity must be zero (that makes sense) and the position must be such that we are at a critical point of the potential.
+            \end{itemize}
+            \item Because of this, the linearization at a fixed point must be of the following form.
+            \begin{equation*}
+                \begin{pmatrix}
+                    v\\
+                    -U'(x)/m\\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    0 & 1\\
+                    -U''(x_0)/m & 0\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    x-x_0\\
+                    v\\
+                \end{pmatrix}
+                +O(|x-x_0|^2+|v|^2)
+            \end{equation*}
+            \item Thus, $(x_0,0)$ is Lyapunov stable if $U$ has a nondegenerate local minimum at $x_0$ and unstable if $U$ has a nondegenerate local maximum at $x_0$.
+            \begin{itemize}
+                \item In the former case, the orbits near $(x_0,0)$ are closed curves, corresponding to periodic oscillations near $x_0$ (e.g., harmonic oscillator and ideal pendulum again).
+            \end{itemize}
+        \end{itemize}
+        \item Prey-predator model with capacity:
+        \begin{equation*}
+            \begin{pmatrix}
+                x\\
+                y\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                (1-y-\lambda x)x\\
+                \alpha(x-1-\mu y)y\\
+            \end{pmatrix}
+        \end{equation*}
+        $\alpha,\lambda,\mu>0$.
+        \begin{itemize}
+            \item $x$ is the number of rabbits and $y$ is the number of wolves.
+            \item Different ranges of $\lambda$ induce different global behavior (thus, this is an example of \textbf{bifurcation}).
+            \item General observation: $(x,y)=(0,0)$ is a saddle point since the linearization there is $\diag(1,-\alpha)$.
+            \item For $x=0$ or $y=0$, the equation is of separable form; the positive $x,y$-axes are invariant sets.
+            \begin{itemize}
+                \item Implication: No orbit in the first quadrant can escape it (compatible with meaning as population).
+            \end{itemize}
+            \item Jacobian:
+            \begin{equation*}
+                \begin{pmatrix}
+                    1-y-2\lambda x & -x\\
+                    \alpha y & \alpha(x-1)-2\alpha\mu y\\
+                \end{pmatrix}
+            \end{equation*}
+            \item When $\lambda,\mu=0$, we're back to the Lotka-Volterra system, where there is a single fixed point $(1,1)$.
+            \begin{itemize}
+                \item In that case,
+                \begin{equation*}
+                    (y-\log y-1)+\alpha(x-\log x-1)
+                \end{equation*}
+                is a Lyapunov function.
+                \item However, it is not a strict Lyapunov function since it is constant along any orbit.
+                \item Moreover, the function is convex, so all level sets are closed curves around the fixed point.
+                \item This is, indeed, the behavior we observe in Figure \ref{fig:LotkaVolteraSolns}.
+            \end{itemize}
+            \item Other cases: $\lambda\geq 1$.
+            \begin{itemize}
+                \item There is only one additional fixed point of interest: $(1/\lambda,0)$. Note that there are other fixed points, but these do not lie in the first quadrant and thus we are not interested.
+                \item For $\lambda>1$, the fixed point is stable (a sink) and when $\lambda=1$, one eigenvalue is 0 since the linearization at that point is $\diag(-1,\alpha(1/\lambda-1))$.
+            \end{itemize}
+            \item $0<\lambda<1$.
+            \begin{itemize}
+                \item $(1/\lambda,0)$ becomes a saddle point, and there is a third fixed point
+                \begin{equation*}
+                    (x_0,y_0) = \left( \frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda} \right)
+                \end{equation*}
+            \end{itemize}
+            \item More on this case in Chapter 7 of \textcite{bib:Teschl}. This is relevant here!
+        \end{itemize}
     \end{itemize}
 \end{itemize}
 
