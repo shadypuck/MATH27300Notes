@@ -635,5 +635,337 @@
 
 
 
+\section{Chapter 1: Introduction}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 1.5: Qualitative Analysis of First-Order Equations}
+\begin{itemize}
+    \item \marginnote{11/15:}Only a few ODEs are explicitly solvable. However, in many situations, only certain qualitative aspects of the solution (e.g., whether or not it stays within a certain region, what it looks like for large $t$, etc.) are of interest.
+    \begin{itemize}
+        \item "Moreover, even in situations where an exact solution can be obtained, a qualitative analysis can give a better overview of the behavior than the formula for the solution" \parencite[20]{bib:Teschl}.
+    \end{itemize}
+    \item Example: Qualitative analysis of a model of logistic growth.
+    \begin{equation*}
+        \dot{x}(t) = (1-x(t))x(t)-h
+    \end{equation*}
+    \begin{itemize}
+        \item Plot the parabola $f(x)=(1-x)x-h$.
+        \item The sign of $f$ tells us what direction the solution will move.
+        \item We divide into three cases ($0<h<1/4$, $h=1/4$, and $h>1/4$)
+        \item $0<h<1/4$:
+        \begin{itemize}
+            \item There are two unique zeroes of the parabola, namely $x_{1,2}=0.5(1\pm\sqrt{1-4h})$ where we choose $x_1<x_2$.
+            \item If $x_0<x_1$, $f(x_0)<0$, and the solution will decrease and converge to $-\infty$.
+            \item If $x_0=x_1$ (resp., $x_2$), then the solution will stay fixed for all $t$, i.e., $x(t)=x_0$ is the solution.
+            \item If $x_1<x_0<x_2$, the solution will increase and converge to $x_2$.
+            \item If $x_0>x_2$, the solution will decrease and converge to $x_2$.
+            \item Note how this mirrors our understanding of the logistic growth model, as well as the discussion from Lecture 2.1.
+        \end{itemize}
+    \end{itemize}
+    \item What we have seen in the above example motivates the following lemma.
+    \item Lemma 1.1: Consider the first-order autonomous initial value problem
+    \begin{equation*}
+        \dot{x} = f(x)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    where $f\in C(\R)$ is such that the solutions are unique.
+    \begin{enumerate}
+        \item If $f(x_0)=0$, then $x(t)=x_0$ for all $t$.
+        \item If $f(x_0)<0$, then $x(t)$ converges to the first zero left of $x_0$. If there is no such zero, the solution converges to $-\infty$.
+        \item If $f(x_0)>0$, then $x(t)$ converges to the first zero right of $x_0$. If there is no such zero, the solution converges to $+\infty$.
+    \end{enumerate}
+    \item \textcite{bib:Teschl} qualitatively analyzes a Riccati type ODE; I would need to study the previous subsection to understand this in full depth.
+    \item Observations from a Mathematica-facilitated numerical analysis:
+    \begin{itemize}
+        \item Mathematica complains about the step size getting too small on one side of the interval, so the solution only exists for finite time.
+        \item There is symmetry with respect to the transformation $(t,x)\mapsto(-t,-x)$; thus, we only need to consider $t\geq 0$.
+        \item For different sets of initial conditions, solutions never cross; this is a consequence of uniqueness (see Lecture 5.1).
+        \item There seem to be two cases: either the solution escapes to $+\infty$ in finite time or it converges to the line $x=-t$.
+        \item We need further proof, however, to verify that these observations are true and not just numerical glitches. In other words, Mathematica can guide our intuition, but we must still do the hard math ourselves.
+    \end{itemize}
+    \item A more in-depth qualitative sign analysis of the same equation follows to verify the above claims.
+    \item The extent to which this qualitative analysis is covered, though, goes well-beyond anything mentioned in class.
+    \item The final theorem could be useful, though again, it is never covered.
+\end{itemize}
+
+
+\subsection*{Section 1.6: Qualitative Analysis of First-Order Periodic Equations}
+\begin{itemize}
+    \item Again, largely beyond the scope of class.
+    \item \textbf{Periodic} (ODE): An ODE for which $f(t+1,x)=f(t,x)$, where we take the period to be 1 WLOG.
+\end{itemize}
+
+
+
+\section{Chapter 2: Initial Value Problems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 2.1: Fixed Point Theorems}
+\begin{itemize}
+    \item Starting now, we are going to follow a brief tangent into linear algebra and mathematical analysis. The purpose of this is to facilitate "an easy and transparent proof of our basic existence and uniqueness theorem" \parencite[35]{bib:Teschl}.
+    \item \textbf{Vector space}: \emph{Definition assumed}. \emph{Denoted by} $\bm{X}$.
+    \item \textbf{Norm} (on $X$): A map from $X\to[0,\infty)$ satisfying the following requirements. \emph{Denoted by} $\bm{||\cdot||}$.
+    \begin{enumerate}
+        \item $\norm{0}=0$, $\norm{x}>0$ for $x\in X\setminus\{0\}$.
+        \item $\norm{\alpha x}=|\alpha|\norm{x}$ for all $\alpha\in\R$ and $x\in X$.
+        \item $\norm{x+y}\leq\norm{x}+\norm{y}$ for all $x,y\in X$ (\textbf{triangle inequality}).
+    \end{enumerate}
+    \item \textbf{Inverse triangle inequality}: The following inequality, which holds for all $x,y\in X$. \emph{Given by}
+    \begin{equation*}
+        |\norm{x}-\norm{y}| \leq \norm{x-y}
+    \end{equation*}
+    \item \textbf{Normed vector space}: A vector space $X$ along with a norm on $X$. \emph{Also known as} \textbf{normed space}. \emph{Denoted by} $\bm{(X,||\cdot||)}$.
+    \item \textbf{Convergent} (sequence of vectors): A sequence of vectors $\{f_n\}$ such that
+    \begin{equation*}
+        \lim_{n\to\infty}\norm{f_n-f} = 0
+    \end{equation*}
+    for some $f\in X$. \emph{Denoted by} $\bm{f_n\to f}$.
+    \item \textbf{Limit} (of a convergent sequence of vectors): The vector $f$ in the above definition.
+    \item \textbf{Continuous} (mapping between two normed spaces): A function $F:X\to Y$, where $X,Y$ are normed spaces, such that $f_n\to f$ implies $F(f_n)\to F(f)$.
+    \item Example: The norm, vector addition, and scalar multiplication are all continuous under the above definition.
+    \begin{itemize}
+        \item Problem 2.2 walks us through this.
+    \end{itemize}
+    \item \textbf{Cauchy} (sequence): Defined as in class.
+    \item \textbf{Complete} (vector space): A vector space for which every Cauchy sequence has a limit.
+    \item \textbf{Banach space}: A complete normed space.
+    \item Example: $\R^n$ and $\C^n$ are Banach spaces under the usual \textbf{Euclidean norm}.
+    \item \textbf{Euclidean norm}: The following norm, applicable to $\R^n$ and $\C^n$. \emph{Given by}
+    \begin{equation*}
+        |x| = \sqrt{\sum_{j=1}^n|x_j|^2}
+    \end{equation*}
+    \item We will mainly be interested in the following example of a Banach space.
+    \item Example: The set of continuous function $C(I)$ on $I\subset\R$ a compact interval.
+    \begin{itemize}
+        \item A vector space if addition and scalar multiplication are defined pointwise on the functions.
+        \item A normed space under
+        \begin{equation*}
+            \norm{x} = \sup_{t\in I}|x(t)|
+        \end{equation*}
+        \begin{itemize}
+            \item Problem 2.3 walks us through verifying that the above norm satisfies the three axioms.
+        \end{itemize}
+        \item A complete vector space because\dots
+        \begin{itemize}
+            \item $\{x_n\}$ Cauchy implies that $x_n\to x$ pointwise. But is $x\in C(I)$?
+            \item Well, $x_n\to x$ implies
+            \begin{equation*}
+                \lim_{n\to\infty}\sup_{t\in I}|x_n(t)-x(t)| = \lim_{n\to\infty}\norm{x_n-x}
+                = 0
+            \end{equation*}
+            \item The above equation implies that $x_n$ converges \textbf{uniformly} to $x$.
+            \item Since $x_n\to x$ uniformly and each $x_n$ is continuous, we have by the Uniform Limit Theorem\footnote{Theorem 17.6 from Honors Calculus IBL.} that $x$ is continuous, i.e., $x\in C(I)$ as desired.
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Uniformly convergent} (sequence of functions): A convergent sequence of functions $\{x_n\}$ such that for all $\varepsilon>0$, there exists $N\in\N$ such that if $n\geq N$, then
+    \begin{equation*}
+        |x_n(t)-x(t)| < \varepsilon
+    \end{equation*}
+    for all $t\in I$.
+    \item \textbf{Endofunction}: A function from some set to the same set. \emph{Denoted by} $\bm{K:C\to C}$.
+    \begin{itemize}
+        \item Note that we do not require that $K$ be bijective, only that it map a set to (some part of) itself.
+    \end{itemize}
+    \item \textbf{Fixed point} (of an endofunction): An element $x\in C$ such that $K(x)=x$.
+    \item \textbf{Contraction}: An endofunction $K$ for which there exists a constant $\theta\in[0,1)$ such that
+    \begin{equation*}
+        \norm{K(x)-K(y)} \leq \theta\norm{x-y}
+    \end{equation*}
+    for all $x,y\in C$.
+    \item Denoting function composition.
+    \begin{itemize}
+        \item We inductively define $K^0(x)=\id(x)=x$, $K^n(x)=K(K^{n-1}(x))$.
+    \end{itemize}
+    \item Theorem 2.1 (Contraction principle): Let $C$ be a (nonempty) closed subset of a Banach space $X$ and let $K:C\to C$ be a contraction. Then $K$ has a unique fixed point $\bar{x}\in C$ such that
+    \begin{equation*}
+        \norm{K^n(x)-\bar{x}} \leq \frac{\theta^n}{1-\theta}\norm{K(x)-x}
+    \end{equation*}
+    for all $x\in C$.
+    \begin{proof}
+        As in class.\par
+        Note that we use the closed-ness hypothesis to guarantee that $C$ is still complete, i.e., that $\bar{x}\in C$ (we could very well define $K$ on $C\setminus\{\bar{x}\}$, and it would still be a contraction). 
+    \end{proof}
+    \item Note that the contraction principle and the Banach fixed point theorem from class are the same statement; the contraction principle just states the inequality used in the proof of the Banach fixed point theorem as an additional result.
+\end{itemize}
+
+
+\subsection*{Section 2.2: The Basic Existence and Uniqueness Result}
+\begin{itemize}
+    \item We now prove the basic existence and uniqueness result, using the theory from the previous section.
+    \item \textbf{Initial value problem}: A mathematical question for which the desired solution is a function that satisfies both a differential equation and maps a specific point of its domain to a specific point of its codomain. \emph{Also known as} \textbf{IVP}. \emph{Given by}
+    \begin{equation*}
+        \dot{x} = f(t,x)
+        ,\quad
+        x(t_0) = x_0
+    \end{equation*}
+    \item For the purposes of our study, we will suppose that $f\in C(U,\R^n)$, where $U\subset\R^{n+1}$ is open, and that $(t_0,x_0)\in U$.
+    \item To begin, integrate the ODE as follows.
+    \begin{align*}
+        \int_{x_0}^x\dd{\chi} &= \int_{t_0}^tf(s,x(s))\dd{s}\\
+        x(t)-x_0 &= \int_{t_0}^tf(s,x(s))\dd{s}\\
+        x(t) &= x_0+\int_{t_0}^tf(s,x(s))\dd{s}
+    \end{align*}
+    \item \textbf{Integral equation}: A form of an ODE that reexpresses the equation in terms of (the) integral(s) of a function instead of its deriavative(s).
+    \begin{itemize}
+        \item The last line above is the integral equation corresponding to the IVP ODE.
+    \end{itemize}
+    \item How changing to the integral equation helps.
+    \begin{itemize}
+        \item Notice that $x_0(t)=x_0$ is an approximate solution for $t$ close to $t_0$.
+        \item Plugging $x_0(t)$ into the integral gives another approximate solution
+        \begin{equation*}
+            x_1(t) = x_0+\int_{t_0}^tf(s,x_0(s))\dd{s}
+        \end{equation*}
+        \item In fact, as we will soon show, $x_1(t)$ is a "better" approximation than $x_0(t)$. To this end, iterating the procedure infinitely many times will eventually get you to $x(t)$. Indeed, if we recursively define a sequence of functions
+        \begin{equation*}
+            x_m(t) = K^m(x_0)(t)
+        \end{equation*}
+        where
+        \begin{equation*}
+            K(x)(t) = x_0+\int_{t_0}^tf(s,x(s))\dd{s}
+        \end{equation*}
+        we can show that the limit is the desired solution.
+        \item Since the limit will necessarily satisfy $K(x)=x$, the tack we take is proving that $K$ is a contraction on some subset of $C(I)$ (which we have proven is a Banach space) and invoking the contraction principle.
+        \item At this point, the previous section should be fully motivated.
+    \end{itemize}
+    \item Going forward, we will take $t_0=0$ and only consider the case where $t\geq 0$; the other cases can be handled analogously (but require considerably more absolute value symbols).
+    \item Take
+    \begin{equation*}
+        X = C([0,T],\R^n)
+    \end{equation*}
+    to be our Banach space for some suitable $T$ (we will put constraints on the value of $T$ as we build the rest of our argument).
+    \item We need some $C\subset X$ on which to define $K$ as an endofunction. Let's try
+    \begin{equation*}
+        C = \overline{B_\delta(x_0)}
+    \end{equation*}
+    \begin{itemize}
+        \item In words, we let $C$ be the closed ball of radius $\delta$ surrounding the constant function $x_0(t)$ in $X=C([0,T],\R^n)$.
+        \begin{itemize}
+            \item Geometrically, $C$ is the set of all functions $f:[0,T]\to\R^n$ such that the vector $f(t)-x_0(t)\in\R^n$ is within $\delta$ of the origin for all $t\in[0,T]$.
+            \item Notice how the definition of the sup norm on $C(I)$ motivates the above geometric picture.
+        \end{itemize}
+        \item This will end up working, as long as we have a suitable relation (to be derived) between $T$ and $\delta$.
+    \end{itemize}
+    \item Constraints on $f$.
+    \begin{itemize}
+        \item By hypothesis, $(0,x_0)\in U$, where we recall that $U$ is the domain of $f$.
+        \item We additionally require that $U$ contains $V=[0,T]\times\overline{B_\delta(x_0)}$.
+        \item Since $V$ is compact and $f$ is continuous, we have by the Extreme Value Theorem in $\R^n$\footnote{Theorem 18.44 from Honors Calculus IBL.} that $f$ has a maximum $M$ on $V$. In particular, there exists
+        \begin{equation*}
+            M = \max_{(t,x)\in V}|f(t,x)|
+        \end{equation*}
+        \item When we later seek to prove that $K$ is a contraction, it will be useful to know that $f$ is \textbf{locally Lipschitz continuous} in the second argument and \textbf{uniformly Lipschitz continuous} in the first argument. In particular, for every compact $V_0\subset U$, the \textbf{Lipschitz constant} (which depends on $V_0$) is finite.
+    \end{itemize}
+    \item \textbf{Lipschitz continuous} (function): A function $f:X\to Y$, where $X,Y$ are normed spaces, such that the following number is finite.
+    \begin{equation*}
+        L = \sup_{x_1\neq x_2\in X}\frac{|f(x_1)-f(x_2)}{|x_1-x_2|}
+    \end{equation*}
+    \emph{Also known as} \textbf{uniformly Lipschitz continuous}.
+    \begin{itemize}
+        \item Lipschitz continuity is a \textbf{strong} form of \textbf{uniform continuity}.
+    \end{itemize}
+    \item \textbf{Lipschitz constant} (of a Lipschitz continuous function): The following value, where $f$ is Lipschitz continuous. \emph{Denoted by} $\bm{L}$. \emph{Given by}
+    \begin{equation*}
+        L = \sup_{x_1\neq x_2\in X}\frac{|f(x_1)-f(x_2)}{|x_1-x_2|}
+    \end{equation*}
+    \begin{itemize}
+        \item For functions in $C(I)$, $L$ corresponds to the smallest bound on the slope of $f$.
+    \end{itemize}
+    \item \textbf{Uniformly continuous} (function): A function $f:X\to Y$, where $X,Y$ are normed spaces, such that for all $\varepsilon>0$, there exists a $\delta>0$ such that for all $x_1,x_2\in X$, $|x_1-x_2|<\delta$ implies
+    \begin{equation*}
+        |f(y)-f(x)| < \varepsilon
+    \end{equation*}
+    \item \textbf{Strong} (condition): A condition that implies some other condition that does not, in turn, imply the original condition.
+    \begin{itemize}
+        \item For example, all Lipschitz continuous functions are uniformly continuous, but not all uniformly continuous functions are Lipschitz continuous.
+    \end{itemize}
+    \item \textbf{Locally Lipschitz continuous} (function): A function $f:X\to Y$, where $X,Y$ are normed spaces, such that for every compact $X_0\subset X$, $f:X_0\to Y$ is Lipschitz continuous.
+    \item \textbf{Graph} (of $x\in C$): The set defined as follows. \emph{Denoted by} $\bm{G(x)}$. \emph{Given by}
+    \begin{equation*}
+        G(x) = \{(t,x(t))\mid t\in[0,T]\}
+    \end{equation*}
+    \item Proving that $K:C\to C$.
+    \begin{itemize}
+        \item At this point, we can compute
+        \begin{align*}
+            |K(x)(t)-x_0| &= \left| \int_0^tf(s,x(s))\dd{s} \right|\\
+            &\leq \int_0^t|f(s,x(s))|\dd{s}\tag*{Theorem 13.26\footnotemark}\\
+            &\leq tM\tag*{Theorem 13.27\footnotemark[\value{footnote}]}
+        \end{align*}
+        \footnotetext{From Honors Calculus IBL.}
+        for any $x$ satisfying $G(x)\subset V$.
+        \item Thus, if we take
+        \begin{equation*}
+            T \leq \frac{\delta}{M}
+        \end{equation*}
+        then $|K(x)(t)-x_0|\leq TM\leq\delta$ for all $t\in[0,T]$.
+        \item It follows that under this definition of $T$, $\norm{K(x)-x_0}\leq\delta$, so $K(x)\in\overline{B_\delta(x_0)}$ for all $x$ with graph in $V$.
+        \item In the special case $M=0$ (which would imply $T=\infty$), we may take $T$ to be some arbitrary positive real number.
+    \end{itemize}
+    \item Proving that $K$ is a contraction.
+    \begin{itemize}
+        \item To estimate $|K(x)(t)-K(y)(t)|$, we finally invoke the Lipschitz continuity constraint on $f$. In particular, we have
+        \begin{align*}
+            |K(x)(t)-K(y)(t)| &\leq \int_0^t|f(s,x(s))-f(s,y(s))|\dd{s}\\
+            &\leq L\int_0^t|x(s)-y(s)|\dd{s}\\
+            &\leq Lt\sup_{0\leq s\leq t}|x(s)-y(s)|\\
+            &\leq LT\norm{x-y}
+        \end{align*}
+        \item Thus, if we take
+        \begin{equation*}
+            T < \frac{1}{L}
+        \end{equation*}
+        we have that $K$ is a contraction.
+    \end{itemize}
+    \item Having two constraints on the value of $T$, we may now formally take
+    \begin{equation*}
+        T = \min\left( \frac{\delta}{M},\frac{1}{2L} \right)
+    \end{equation*}
+    \begin{itemize}
+        \item Note that this definition satisfies $T\leq\delta/M$ and $T<L^{-1}$.
+        \item If either of $M,L=0$, we understand that that constraint no longer matters and we need only consider the other one. If $M=L=0$, then we may take $T$ to be any positive real number.
+    \end{itemize}
+    \item Having defined a contraction $K:C\to C$, the existence and uniqueness of our ODE follows from the contraction principle:
+    \item Theorem 2.2 (Picard-Lindel\"{o}f): Suppose $f\in C(U,\R^n)$, where $U\subset\R^{n+1}$ is open and $(t_0,x_0)\in U$. If $f$ is locally Lipschitz continuous in the second argument, uniformly with respect to the first, then there exists a unique local solution $\bar{x}(t)\in C^1(I)$ of the IVP
+    \begin{equation*}
+        \dot{x} = f(t,x)
+        ,\quad
+        x(t_0) = x_0
+    \end{equation*}
+    where $I$ is some interval around $t_0$.\par
+    More specifically, if $V=[t_0,t_0+T]\times\overline{B_\delta(x_0)}\subset U$ and $M$ denotes the maximum of $|f|$ on $V$, then the solution exists for at least $t\in[t_0,t_0+T]$ and remains in $\overline{B_\delta(x_0)}$, where
+    \begin{equation*}
+        T = \frac{\delta}{M}\footnotemark
+    \end{equation*}
+    \footnotetext{We are not missing the Lipschitz constraint here; indeed, it is superfluous, as will be shown in the next section.}
+    The analogous result holds for the interval $[t_0-T,t_0]$.
+    \item \textbf{Picard iteration}: The procedure for finding the solution, involving calculating successive elements of the sequence $\{x_m\}$ as defined above by $x_m(t)=K^m(x_0)(t)$.
+    \begin{itemize}
+        \item The Picard iteration is useful for proofs, such as the above one, but it is not suitable for actually finding the solution since the integrals are not computable in general except by tedious numerical methods.
+        \item If $f(t,x)$ is \textbf{analytic}, however, then $x_m(t)$ equals the Taylor expansion of the solution $\bar{x}(t)$ about $t_0$ up to order $m$. This can be used for numerical computations.
+        \begin{itemize}
+            \item Problem 4.4 walks us through this.
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Analytic} (function): A function that is locally given by a convergent power series.
+    \item $f\in C^1(U,\R^n)$ implies that $f$ is locally Lipschitz continuous in the second argument, uniformly with respect to the first.
+    \begin{itemize}
+        \item Problem 2.5 walks us through this.
+        \item It follows from this statement that if $f\in C^1(U,\R^n)$, then the corresponding IVP $\dot{x}=f(t,x)$, $x(t_0)=x_0$ has a unique solution as per the Picard-Lindel\"{o}f theorem.
+    \end{itemize}
+    \item This observation can be slightly extended via the following lemma.
+    \item Lemma 2.3: Suppose $f\in C^k(U,\R^n)$ for some $k\geq 1$, where $U\subset\R^{n+1}$ is open and $(t_0,x_0)\in U$. Then the local solution $\bar{x}$ of the corresponding IVP is $C^{k+1}(I)$.
+    \begin{proof}
+        We induct on $k$. For the base case $k=1$, $\bar{x}(t)\in C^1$ by the Picard-Lindel\"{o}f theorem. Additionally, since $f\in C^1$, we have that $\dot{\bar{x}}(t)=f(t,\bar{x}(t))\in C^1$. Thus, since the derivative of $\bar{x}$ is continuously differentiable, $\bar{x}(t)$ must be \emph{twice} continuously differentiable, or $C^2$. The inductive step is very similar.
+    \end{proof}
+\end{itemize}
+
+
+\subsection*{Section 2.3: Some Extensions}
+\begin{itemize}
+    \item Extensions of the Picard-Lindel\"{o}f theorem that weren't covered in class.
+\end{itemize}
+
+
+
 
 \end{document}

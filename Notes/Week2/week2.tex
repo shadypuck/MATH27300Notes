@@ -629,5 +629,76 @@
 
 
 
+\section{Chapter 1: Introduction}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 1.3: First Order Autonomous Equations}
+\begin{itemize}
+    \item \marginnote{11/15:}We start with the simplest nontrivial case of a first-order autonomous equation:
+    \begin{equation*}
+        \dot{x} = f(x)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    \begin{itemize}
+        \item We may let $t_0=0$ WLOG: If $\phi(t)$ is a solution to an autonomous equation satisfying $\phi(0)=x_0$, then $\psi(t)=\phi(t-t_0)$ is a solution with $\psi(t_0)=0$.
+    \end{itemize}
+    \item Solving this ODE.
+    \begin{itemize}
+        \item Suppose $f(x_0)\neq 0$. Divide both sides by $f(x)$ and integrate from the initial conditions onward to yield
+        \begin{equation*}
+            \int_0^t\frac{\dot{x}(s)\dd{s}}{f(x(s))} = t
+        \end{equation*}
+        \item Define
+        \begin{equation*}
+            F(x) := \int_{x_0}^x\frac{\dd{y}}{f(y)}
+        \end{equation*}
+        \begin{itemize}
+            \item Note that this is just the previous equation under the "$u$-substitution" $y(t)=x(t)$, $\dd{y}=\dot{x}(t)\dd{t}$, $y(0)=x(0)=x_0$, $y(t)=x$.
+        \end{itemize}
+        \item Thus, in our new notation, any possible solution $x$ to the ODE must satisfy $F(x(t))=t$. Since $F(x(t))$ is monotone (near $x_0$??), it can thus be inverted to yield the unique solution
+        \begin{equation*}
+            \phi(t) = F^{-1}(t)
+            ,\quad
+            \phi(0) = F^{-1}(0) = x_0
+        \end{equation*}
+    \end{itemize}
+    \item \textcite{bib:Teschl} does a deep dive on the maximal integral where $\phi$ is defined.
+    \item Examples of first-order autonomous systems given.
+    \item Most of this section goes beyond what was covered in class in terms of depth.
+\end{itemize}
+
+
+\subsection*{Section 1.4: Finding Explicit Solutions}
+\begin{itemize}
+    \item Solving ODEs for explicit solutions is impossible in general unless the equation is of a particular form.
+    \item This section: Classes of first-order ODEs which are explicitly solvable.
+    \item Strategy: Find a change of variables that transforms the ODE into a solvable form.
+    \item Linear equation.
+    \begin{align*}
+        \dot{x} &= a(t)x&
+        \dot{x} &= a(t)x+g(t)
+    \end{align*}
+    \begin{itemize}
+        \item The left equation above is the homogeneous linear equation, and the right equation above is the corresponding inhomogeneous linear equation.
+        \item The general solution to the homogeneous linear equation is
+        \begin{equation*}
+            \phi(t) = x_0A(t,t_0)
+        \end{equation*}
+        where
+        \begin{equation*}
+            A(t,s) = \e[\int_s^ta(s)\dd{s}]
+        \end{equation*}
+        \item The general solution to the inhomogeneous linear equation is
+        \begin{equation*}
+            \phi(t) = x_0A(t,t_0)+\int_{t_0}^tA(t,s)g(s)\dd{s}
+        \end{equation*}
+        \item \textcite{bib:Teschl} covers the more detailed mathematics of coordinate transformations in depth. This definitely would have been useful to understand for solving the PSet 1 problems, so I should return and understand it before the final.
+    \end{itemize}
+    \item Using Mathematica to help solve ODEs and gain an intuition for how they work (e.g., with slope fields).
+    \item Equations of exact form are covered in the problems to this section.
+\end{itemize}
+
+
+
 
 \end{document}

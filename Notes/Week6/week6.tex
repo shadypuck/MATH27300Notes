@@ -554,5 +554,176 @@
 
 
 
+\section{Chapter 2: Initial Value Problems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 2.4: Dependence on the Initial Condition}
+\begin{itemize}
+    \item \marginnote{11/15:}In applications from which ODEs are derived, we usually only know several data approximately. In other words, we're primarily concerned with \textbf{well-posed} IVPs.
+    \item \textbf{Well-posed} (IVP): An IVP for which, from an intuitive standpoint, small changes in the data result in small changes of the solution.
+    \item That an IVP (under certain conditions) is well-posed will be proven by our next theorem.
+    \item To prove this theorem, we will need the following lemma.
+    \item Lemma 2.7 (Generalized Gr\"{o}nwall's inequality): Suppose $\psi(t)$ satisfies
+    \begin{equation*}
+        \psi(t) \leq \alpha(t)+\int_0^t\beta(s)\psi(s)\dd{s}
+    \end{equation*}
+    for all $t\in[0,T]$. Suppose also that $\alpha(t)\in\R$ and $\beta(t)\geq 0$ for all $t\in[0,T]$. Then
+    \begin{equation*}
+        \psi(t) \leq \alpha(t)+\int_0^t\alpha(s)\beta(s)\exp(\int_s^t\beta(r)\dd{r})\dd{s}
+    \end{equation*}
+    for all $t\in[0,T]$.\par
+    If, in addition, $\alpha(s)\leq\alpha(t)$ for $s\leq t$, then
+    \begin{equation*}
+        \psi(t) \leq \alpha(t)\exp(\int_0^t\beta(s)\dd{s})
+    \end{equation*}
+    for all $t\in[0,T]$.
+    \begin{proof}
+        Let
+        \begin{equation*}
+            \phi(t) := \exp(-\int_0^t\beta(s)\dd{s})
+        \end{equation*}
+        Then we have
+        \begin{align*}
+            \dv{t}(\phi(t)\int_0^t\beta(s)\psi(s)\dd{s}) &= -\beta(t)\phi(t)\cdot\int_0^t\beta(s)\psi(s)\dd{s}+\phi(t)\cdot\beta(t)\psi(t)\\
+            &= \beta(t)\phi(t)\left( \phi(t)-\int_0^t\beta(s)\phi(s)\dd{s} \right)\\
+            &\leq \alpha(t)\beta(t)\phi(t)
+        \end{align*}
+        where the first equality holds by the product rule and the FTC, and the last inequality above holds by the first assumption in the statement of the lemma. Integrating the above inequality with respect to $t$ and dividing the result by $\phi(t)$ shows that
+        \begin{align*}
+            \int_0^t\beta(s)\psi(s)\dd{s} &\leq \int_0^t\alpha(s)\beta(s)\frac{\phi(s)}{\phi(t)}\dd{s}
+            \alpha(t)+\int_0^t\beta(s)\psi(s)\dd{s} &\leq \alpha(t)+\int_0^t\alpha(s)\beta(s)\exp(\int_s^t\beta(r)\dd{r})\dd{s}
+        \end{align*}
+        It follows that
+        \begin{equation*}
+            \psi(t) \leq \alpha(t)+\int_0^t\beta(s)\psi(s)\dd{s}
+            \leq \alpha(t)+\int_0^t\alpha(s)\beta(s)\exp(\int_s^t\beta(r)\dd{r})\dd{s}
+        \end{equation*}
+        as desired.\par
+        The proof of the second claim is covered in Problem 2.11 (and is not applicable to course content).
+    \end{proof}
+    \item A simple consequence of the generalized Gr\"{o}nwall's inequality.
+    \begin{itemize}
+        \item If
+        \begin{equation*}
+            \psi(t) \leq \alpha+\int_0^t(\beta\psi(s)+\gamma)\dd{s}
+        \end{equation*}
+        for all $t\in[0,T]$, where $\alpha,\gamma\in\R$ and $\beta\geq 0$, then
+        \begin{equation*}
+            \psi(t) \leq \alpha\e[\beta t]+\frac{\gamma}{\beta}(\e[\beta t]-1)
+        \end{equation*}
+        for all $t\in[0,T]$.
+        \item See Problem \ref{prb:2.12} for the proof.
+    \end{itemize}
+    \item We can now show that the IVP is well-posed.
+    \item Theorem 2.8: Suppose $f,g\in C(U,\R^n)$ and let $f$ be locally Lipschitz continuous in the second argument, uniformly with respect to the first. If $x(t),y(t)$ are respective solutions of the IVPs
+    \begin{align*}
+        \dot{x} &= f(t,x)&
+            \dot{y} &= g(t,y)\\
+        x(t_0) &= x_0&
+            y(t_0) &= y_0
+    \end{align*}
+    then
+    \begin{equation*}
+        |x(t)-y(t)| \leq |x_0-y_0|\e[L|t-t_0|]+\frac{M}{L}(\e[L|t-t_0|]-1)
+    \end{equation*}
+    where $L$ is the Lipschitz constant of $f:V\to\R^n$, $M=\norm{f-g}$ for $f,g:V\to\R^n$, and $V\subset U$ contains $G(x),G(y)$.
+    \begin{proof}
+        WLOG let $t_0=0$. Then
+        \begin{align*}
+            |x(t)-y(t)| &\leq |x_0-y_0|+\int_0^t|f(s,x(s))-g(s,y(s))|\dd{s}\\
+            &\leq |x_0-y_0|+\int_0^t(L|x(s)-y(s)|+M)\dd{s}
+        \end{align*}
+        Thus, taking
+        \begin{equation*}
+            \underbrace{|x(t)-y(t)|}_{\psi(t)} \leq \underbrace{|x_0-y_0|}_\alpha+\int_0^t(\underbrace{\vphantom{|}L}_\beta\underbrace{|x(s)-y(s)|}_{\phi(s)}+\underbrace{\vphantom{|}M}_\gamma)\dd{s}
+        \end{equation*}
+        we have by the above consequence of the generalized Gr\"{o}nwall's inequality that
+        \begin{equation*}
+            |x(t)-y(t)| \leq |x_0-y_0|\e[Lt]+\frac{M}{L}(\e[Lt]-1)
+        \end{equation*}
+        as desired.
+    \end{proof}
+    \item Establishing continuous dependence on the initial condition.
+    \begin{itemize}
+        \item Denote the solution of the IVP by $\phi(t,t_0,x_0)$ to emphasize the dependence on the initial condition.
+        \item Then in the special case $f=g$ (i.e., where $M=0$), Theorem 2.8 implies that
+        \begin{equation*}
+            |\phi(t,t_0,x_0)-\phi(t,t_0,y_0)| \leq |x_0-y_0|\e[L|t-t_0|]
+        \end{equation*}
+        \item In other words, $\phi$ depends continuously on the initial value.
+        \item Of course, this bound blows up exponentially as $t$ increases, but the linear equation $\dot{x}=x$ shows that we cannot define a better bound in general.
+    \end{itemize}
+    \item We now formalize the above notion.
+    \item Theorem 2.9: Suppose $f\in C(U,\R^n)$ is locally Lipschitz continuous in the second argument, uniformly with respect to the first. Around each point $(t_0,x_0)\in U$, we can find a compact set $I\times B\subset U$ such that $\phi(t,s,x)\in C(I\times I\times B,\R^n)$. Moreover, $\phi(t,t_0,x_0)$ is Lipschitz continuous with
+    \begin{equation*}
+        |\phi(t,t_0,x_0)-\phi(s,s_0,y_0)| \leq |x_0-y_0|\e[L|t-t_0|]+(|t-s|+|t_0-s_0|\e[L|t-s_0|])M
+    \end{equation*}
+    where $L$ is the Lipschitz constant of $f:V\to\R^n$, $M=\norm{f}$ for $f:V\to\R^n$, and $V\subset U$ compact contains $I\times\phi(I\times I\times B)$.
+    \begin{proof}
+        By the Picard-Lindel\"{o}f theorem, there exists $V=[t_0-\varepsilon,t_0+\varepsilon]\times\overline{B_\delta(x_0)}$ such that $\phi(t,t_0,x_0)$ exists and is continuous for $|t-t_0|<\varepsilon$. It can be shown that $\phi(t,t_1,x_1)$ exists for $|t-t_1|\leq\varepsilon/2$, provided that $|t_1-t_0|\leq\varepsilon/2$ and $|x_1-x_0|\leq\delta/2$. Thus, choose $I=[t_0-\varepsilon/2,t_0+\varepsilon/2]$ and $B=\overline{B_{\delta/2}(x_0)}$.\par
+        Moreover, we have that
+        \begin{align*}
+            \begin{split}
+                |\phi(t,t_0,x_0)-\phi(s,s_0,y_0)| \leq{}& |\phi(t,t_0,x_0)-\phi(t,t_0,y_0)|\\
+                &+|\phi(t,t_0,y_0)-\phi(t,s_0,y_0)|\\
+                &+|\phi(t,s_0,y_0)-\phi(s,s_0,y_0)|
+            \end{split}\\
+            \begin{split}
+                \leq{}& |x_0-y_0|\e[L|t-t_0|]\\
+                &+\left| \int_{t_0}^tf(r,\phi(r,t_0,y_0))\dd{r}-\int_{s_0}^tf(r,\phi(r,s_0,y_0))\dd{r} \right|\\
+                &+\left| \int_s^tf(r,\phi(r,s_0,y_0))\dd{r} \right|
+            \end{split}
+        \end{align*}
+        We estimated the first term using the note on continuous dependence directly preceding this theorem and proof. We can estimate the third term to be $M|t-s|$. We can estimate the second term as follows: Abbreviating $\Delta(t):=|\phi(t,t_0,y_0)-\phi(t,s_0,y_0)|$ and assuming WLOG that $t_0\leq s_0\leq t$, we have that
+        \begin{align*}
+            \Delta(t) &= \left| \int_{t_0}^tf(r,\phi(r,t_0,y_0))\dd{r}-\int_{s_0}^tf(r,\phi(r,s_0,y_0))\dd{r} \right|\\
+            &= \left| \int_{t_0}^{s_0}f(r,\phi(r,t_0,y_0))\dd{r}+\int_{s_0}^tf(r,\phi(r,t_0,y_0))\dd{r}-\int_{s_0}^tf(r,\phi(r,s_0,y_0))\dd{r} \right|\\
+            &\leq \int_{t_0}^{s_0}|f(r,\phi(r,t_0,y_0))|\dd{r}+\int_{s_0}^t|f(r,\phi(r,t_0,y_0))-f(r,\phi(r,s_0,y_0))|\dd{r}\\
+            &\leq |t_0-s_0|M+L\int_{s_0}^t\Delta(r)\dd{r}
+        \end{align*}
+        Therefore, by Gr\"{o}nwall's inequality (as in Problem \ref{prb:2.12}; note that $\gamma=0$ here),
+        \begin{equation*}
+            \Delta(t) \leq |t_0-s_0|M\e[L|t-s_0|]
+        \end{equation*}
+        as desired.
+    \end{proof}
+    \item By Problem 1.8, we have $\phi(t,t_0,x_0)=\phi(t-t_0,0,x_0)$ for an autonomous system, so we may consider $\phi(t,x_0)=\phi(t,0,x_0)$.
+    \item The previous result of \emph{continuous} dependence on initial conditions is not good enough in every situation; sometimes, we need to be able to \emph{differentiate} with respect to the initial condition.
+\end{itemize}
+
+\subsubsection*{Problems}
+\begin{enumerate}[label={\textbf{2.\arabic*.}},ref={2.\arabic*},leftmargin=3.5em]
+    \setcounter{enumi}{11}
+    \item \label{prb:2.12}Show that if
+    \begin{equation*}
+        \psi(t) \leq \alpha+\int_0^t(\beta\psi(s)+\gamma)\dd{s}
+    \end{equation*}
+    for all $t\in[0,T]$, where $\alpha,\gamma\in\R$ and $\beta\geq 0$, then
+    \begin{equation*}
+        \psi(t) \leq \alpha\e[\beta t]+\frac{\gamma}{\beta}(\e[\beta t]-1)
+    \end{equation*}
+    for all $t\in[0,T]$. \emph{Hint}: Introduce $\tilde{\psi}(t)=\psi(t)+\gamma/\beta$.
+    \begin{proof}
+        Taking the hint and substituting $\psi(t)=\tilde{\psi}(t)-\gamma/\beta$, we get
+        \begin{align*}
+            \tilde{\psi}(t)-\frac{\gamma}{\beta} &\leq \alpha+\int_0^t\left( \beta\left( \tilde{\psi}(t)-\frac{\gamma}{\beta} \right)+\gamma \right)\dd{s}\\
+            \tilde{\psi}(t) &\leq \alpha+\frac{\gamma}{\beta}+\int_0^t\beta\tilde{\psi}(t)\dd{s}
+        \end{align*}
+        It follows by the generalized Gr\"{o}nwall's inequality that
+        \begin{align*}
+            \tilde{\psi}(t) &\leq \alpha+\frac{\gamma}{\beta}+\int_0^t\left( \alpha+\frac{\gamma}{\beta} \right)\beta\exp(\int_s^t\beta\dd{r})\dd{s}\\
+            &= \alpha+\frac{\gamma}{\beta}+\int_0^t(\alpha\beta+\gamma)\e[\beta(t-s)]\dd{s}\\
+            &= \alpha+\frac{\gamma}{\beta}+(\alpha\beta+\gamma)\e[\beta t]\int_0^t\e[-\beta s]\dd{s}\\
+            &= \alpha+\frac{\gamma}{\beta}+(\alpha\beta+\gamma)\e[\beta t]\left( \frac{1}{-\beta}\e[-\beta t]-\frac{1}{-\beta}\e[0] \right)\\
+            &= \alpha+\frac{\gamma}{\beta}+\left( \alpha+\frac{\gamma}{\beta} \right)\e[\beta t](1-\e[-\beta t])\\
+            &= \alpha+\frac{\gamma}{\beta}+\left( \alpha+\frac{\gamma}{\beta} \right)(\e[\beta t]-1)\\
+            &= \alpha+\frac{\gamma}{\beta}+\alpha\e[\beta t]-\alpha+\frac{\gamma}{\beta}(\e[\beta t]-1)\\
+            &= \frac{\gamma}{\beta}+\alpha\e[\beta t]+\frac{\gamma}{\beta}(\e[\beta t]-1)
+        \end{align*}
+        Subtracting $\gamma/\beta$ from both sides and returning the substitution yields the desired result.
+    \end{proof}
+\end{enumerate}
+
+
+
 
 \end{document}
