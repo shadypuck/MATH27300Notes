@@ -481,5 +481,173 @@
 
 
 
+\section{Chapter 1: Introduction}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 1.1: Newton's Equations}
+\begin{itemize}
+    \item \marginnote{11/11:}Before we begin defining abstract terms, let's look at an example in which many of these terms arise.
+    \item Investigation: Describing the motion of a particle using classical mechanics.
+    \begin{itemize}
+        \item The location, velocity, and acceleration of a particle are typically given by the related functions\footnote{Newton's notation for derivatives uses a number of dots above the dependent variable to indicate the order of the derivative to which we are referring. For example, $\dot{x}$ denotes the first derivative of $x$ with respect to it's independent variable, and $\ddot{x}$ denotes the second derivative of $x$ with respect to it's independent variable.}
+        \begin{align*}
+            x:\R\to\R^3&&
+            v=\dot{x}:\R\to\R^3&&
+            a=\dot{v}:\R\to\R^3
+        \end{align*}
+        \item The particle does not move randomly, though; its motion is governed by an external force field $F:\R^3\to\R^3$ which exerts a vector force $F(x)$ on the particle when it is at $x\in\R^3$.
+        \item Additionally, Newton's second law of motion asserts that at every $x\in\R^3$, the force acting on the particle must equal the acceleration of the particle times its mass, that is,
+        \begin{equation*}
+            m\ddot{x}(t) = F(x(t))
+        \end{equation*}
+        for all $t\in\R$.
+        \item Given a force field $F$, physicists often seek to determine how bodies evolve under $F$ over time. Mathematically, they seek functions $x(t)$ that satisfy $m\ddot{x}(t)=F(x(t))$ for a given $F$.
+        \item Consider the example of a stone falling toward the Earth under gravity from class.
+        \begin{itemize}
+            \item In the vicinity of the surface of Earth, the gravitational force is approximately constant and given by
+            \begin{equation*}
+                F(x) = -mg
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                    1\\
+                \end{pmatrix}
+            \end{equation*}
+            where $g$ is the positive \textbf{gravitational constant} and the $+x_3$ direction is taken to be normal to the Earth's surface.
+            \item Hence, the system of differential equations reads
+            \begin{align*}
+                m\ddot{x}_1 &= 0&
+                m\ddot{x}_2 &= 0&
+                m\ddot{x}_3 &= -mg
+            \end{align*}
+            \item The first equation can be integrated with respect to $t$ twice, yielding $x_1(t)=C_2+C_1t$. Computing $x_1(0)$ and $\dot{x}_1(0)$ shows that $C_2=x_1(0)$ and $C_1=v_1(0)$. An analogous result holds for the second equation. For the third equation, we get $x_3(t)=C_2+C_1t-\frac{1}{2}mgt^2$ where $C_2=x_3(0)$ and $C_1=v_1(0)$, again. Thus, the full solution reads
+            \begin{equation*}
+                x(t) = x(0)+v(0)t-\frac{g}{2}
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                    1\\
+                \end{pmatrix}
+                t^2
+            \end{equation*}
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Differential equation}: A relation between a function $x(t)$ and its derivatives.
+    \begin{itemize}
+        \item The equation $m\ddot{x}(t)=F(x(t))$, above, is an example of a differential equation.
+    \end{itemize}
+    \item \textbf{Second-order} (differential equation): A differential equation in which the highest derivative is of second degree.
+    \begin{itemize}
+        \item The equation $m\ddot{x}(t)=F(x(t))$, above, is an example of a second-order differential equation.
+    \end{itemize}
+    \item \textbf{$\bm{n}^\textbf{th}$-order} (differential equation): A differential equation in which the highest derivative is of degree $n$.
+    \item \textbf{System} (of differential equations): A finite set of differential equations.
+    \begin{itemize}
+        \item Systems of differential equations vary in how related they are, that is, they may or may not share variables.
+        \item Technically, $m\ddot{x}(t)=F(x(t))$ is a system of differential equations since $x=(x_1,x_2,x_3)$ gives rise to three independent differential equations, one for each Cartesian dimension, as follows.
+        \begin{align*}
+            m\ddot{x}_1 &= F(x_1(t))&
+            m\ddot{x}_2 &= F(x_2(t))&
+            m\ddot{x}_3 &= F(x_3(t))
+        \end{align*}
+    \end{itemize}
+    \item \textbf{Dependent} (variable): A variable whose value depends on that of another.
+    \begin{itemize}
+        \item In our example, $x$, $v$, and $a$ are all dependent variables.
+    \end{itemize}
+    \item \textbf{Independent} (variable): A variable whose value does not depend on that of another.
+    \begin{itemize}
+        \item In our example, $t$ is the independent variable.
+    \end{itemize}
+    \item \textbf{First-order} (system): A system of differential equations in which the differential equation of highest order is first order.
+    \begin{itemize}
+        \item One possible rewrite of the system $m\ddot{x}(t)=F(x(t))$ works by increasing the number of dependent variables from $x\in\R^3$ to $(x,v)\in\R^6$. Indeed, we can rewrite the second-order differential equation $m\ddot{x}(t)=F(x(t))$ as the following first-order system.
+        \begin{align*}
+            \dot{x}(t) &= v(t)\\
+            \dot{v}(t) &= \frac{1}{m}F(x(t))
+        \end{align*}
+        \item We will find that the above form is often better suited to theoretical investigations.
+    \end{itemize}
+    \item \textbf{$\bm{n}^\textbf{th}$-order} (system): A system of differential equations in which the differential equation of highest order is $n^\text{th}$ order.
+    \item One conclusion of our investigation of gravity's effect on a particle is that the entire fate (past and future) of our particle's position, velocity, and acceleration (under simple gravity) is uniquely determined by its initial location $x(0)$ and velocity $v(0)$.
+    \begin{itemize}
+        \item While we could use simple integration to solve this system, we cannot always do this (not even under Newtonian universal gravitation).
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Section 1.2: Classification of Differential Equations}
+\begin{itemize}
+    \item \marginnote{11/11:}$\bm{C^k(U,V)}$: The set of functions $f:U\to V$ having continuous derivatives up to order $k$, where $U\subseteq\R^m$, $V\subseteq\R^n$, and $k\in\N_0$.
+    \item $\bm{C(U,V)}$: The set of continuous functions $f:U\to V$. \emph{Given by}
+    \begin{equation*}
+        C(U,V) = C^0(U,V)
+    \end{equation*}
+    \item $\bm{C^\infty(U,V)}$: The set of smooth functions $f:U\to V$. \emph{Given by}
+    \begin{equation*}
+        C^\infty(U,V) = \bigcap_{k\in\N}C^k(U,V)
+    \end{equation*}
+    \item $\bm{C^k(U)}$: The set of real functions $f:U\to\R$ having continuous derivatives up to order $k$. \emph{Given by}
+    \begin{equation*}
+        C^k(U) = C^k(U,\R)
+    \end{equation*}
+    \item \textbf{Ordinary differential equation}: An equation of the form
+    \begin{equation*}
+        F(t,x,x^{(1)},\dots,x^{(k)}) = 0
+    \end{equation*}
+    where $F\in C(U)$ ($U\subseteq\R^{k+2}$ open) relates the unknown function $x\in C^k(J)$ ($J\subseteq\R$), its independent variable $t$, and its first $k$ derivatives;
+    \begin{equation*}
+        x^{(j)} := \dv[j]{x}{t}
+    \end{equation*}
+    for $j\in\N_0$. \emph{Also known as} \textbf{ODE}.
+    \item \textbf{Order} (of an ODE): The highest derivative appearing in the argument of $F$.
+    \item \textbf{Solution} (of an ODE): A function $\phi\in C^k(I)$ ($I\subseteq J$ an interval) satisfying the equation
+    \begin{equation*}
+        F(t,\phi(t),\phi^{(1)}(t),\dots,\phi^{(k)}(t)) = 0
+    \end{equation*}
+    for all $t\in I$.
+    \item Very little can be said about completely general ODEs.
+    \item Thus, we begin our investigation with the subclass of ODEs that can solved for their highest order derivative, that is, with ODEs of the form
+    \begin{equation*}
+        x^{(k)} = f(t,x,x^{(1)},\dots,x^{(k-1)})
+    \end{equation*}
+    \begin{itemize}
+        \item Relation between these ODEs and general ODEs: These ODEs are the ones for which $F$ has nonzero partial derivative with respect to $y_k$. Indeed, if $F$ satisfies this condition locally near $(x,y_k)\in U$, then the implicit function theorem permits the above rearrangement.
+    \end{itemize}
+    \item \textbf{System} (of ODEs): A finite set of ODEs. \emph{Given by}
+    \begin{align*}
+        x_1^{(k)} &= f_1(t,x,x^{(1)},\dots,x^{(k-1)})\\
+        &\hspace{0.5em}\vdots\\
+        x_n^{(k)} &= f_n(t,x,x^{(1)},\dots,x^{(k-1)})
+    \end{align*}
+    \begin{itemize}
+        \item Note that the use of an unsubscripted $x^{(j)}$ in the argument of each $f_i$ reflects the fact that every $f_i$ is a function of \emph{all} of the components of of $x$ and their derivatives (not just $x_i$ and its derivatives). Symbolically, each $f_i$ is a function of $x_l^{(j)}$ ($l=1,\dots,n$ and $j=0,\dots,k-1$), and
+        \begin{equation*}
+            f_i:\R\times\underbrace{\R^n\times\cdots\times\R^n}_{k\text{ times}}\to\R
+        \end{equation*}
+    \end{itemize}
+    \item \textbf{Linear} (system): A system of $n$ ordinary differential equations for which each $x_i^{(k)}$ is of the form
+    \begin{equation*}
+        x_i^{(k)} = g_i(t)+\sum_{l=1}^n\sum_{j=0}^{k-1}f_{i,j,l}(t)x_l^{(j)}
+    \end{equation*}
+    \begin{itemize}
+        \item The summations are over the $n$ components of $x$, and each of their $k$ derivatives up from the function itself ($l=0$) to $l=k-1$. In other words, if a (derivative of) a component of $x$ appears in a linear system, the only modification to it from itself should be a functional coefficient in the independent variable.
+    \end{itemize}
+    \item \textbf{Homogeneous} (linear system): A linear system for which $g_i(t)=0$.
+    \item \textbf{Inhomogeneous} (linear system): A linear system for which $g_i(t)=0$.
+    \item \textcite{bib:Teschl} goes over the conversion of a system to a first-order system, as covered in class.
+    \begin{itemize}
+        \item Also noted: We can include $t$ as a dependent variables by taking $z=(t,y)$ and making $\dot{z}_1=1$, $\dot{z}_i=z_{i+1}$ ($i=2,\dots,k$), and $\dot{z}_{k+1}=f(z)$.
+    \end{itemize}
+    \item \textbf{Autonomous} (system): A system in which $f$ does not depend on $t$.
+    \item We will often limit our studies to autonomous first-order ODEs since, as per the past two results, these encapsulate all higher order, potentially non-autonomous systems as well.
+    \item \textbf{Partial differential equation}: A differential equation for which $t\in\R^m$. \emph{Also known as} \textbf{PDE}.
+    \begin{itemize}
+        \item Name justification: $t\in\R^m$ necessitates the use of partial derivatives.
+    \end{itemize}
+    \item Complex values will not be considered until later.
+\end{itemize}
+
+
+
 
 \end{document}
