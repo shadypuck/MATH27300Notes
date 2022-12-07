@@ -1,0 +1,207 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{7}
+
+\begin{document}
+
+
+
+
+\chapter{???}
+\section{Midterm 2 Review}
+\begin{itemize}
+    \item \marginnote{11/14:}Still 3 problems total and 5 points each.
+    \begin{itemize}
+        \item The problems will be calculations based on the basic concepts.
+        \item Figure out the stable and unstable subspaces of some finite systems.
+        \item Figure out whether or not a system is stable.
+        \item Prove whether or not a function is planar linear
+    \end{itemize}
+    \item Starting with the classification of planar linear autonomous systems.
+    \begin{itemize}
+        \item We have $y'=Ay$ where $A$ is a $2\times 2$ real matrix.
+        \item As a result of the realness, the eigenvalues behave regularly, i.e., there are only finitely many types of eigenvalues. These are\dots
+        \begin{enumerate}
+            \item Real, nonzero, same sign. Depending on the sign, we'll either have a source or a sink. The orbits will be a distorted graph of a power function. If asked to investigate the phase portrait, then we need to figure out the stable and unstable subspaces and clearly indicate a basis. If asked to draw, we need to clearly indicate which subspaces are stable and unstable. We also need to clearly indicate the direction of the phase lines. First case: Everything is stable; second case: Everything is unstable. We draw the eigenspaces as well with arrows on the "axes." Figure \ref{fig:planarRealDiaga}-\ref{fig:planarRealDiagb}.
+            \item Real, different sign. One stable and one unstable subspace. We need to clearly indicate how the axes are tilted. Figure \ref{fig:planarRealDiagc}.
+            \item $A$ is similar to the Jordan block with zero eigenvalues and 1 in the upper right hand corner. Then
+            \begin{equation*}
+                A\sim
+                \begin{pmatrix}
+                    0 & 1\\
+                    0 & 0\\
+                \end{pmatrix}
+                \e[tA] =
+                \begin{pmatrix}
+                    1 & t\\
+                    0 & 1\\
+                \end{pmatrix}
+            \end{equation*}
+            \item Purely imaginary eigenvalues. These must appear in a conjugate pair. The phase diagram will be concentric ellipses, and we essentially have the harmonic oscillator equation. If we have to sketch, we must show how the ellipses are tilted.
+            \item Complex eigenvalues $\sigma\pm i\beta$. Either we have a spiral source or a spiral sink. It's meaningless to indicate how the spiral tilts here, so don't bother trying. Determining whether they spin clockwise or counterclockwise. If
+            \begin{equation*}
+                \begin{pmatrix}
+                    x\\
+                    y\\
+                \end{pmatrix}'
+                =
+                \begin{pmatrix}
+                    0 & 1\\
+                    -1 & 0\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    x\\
+                    y\\
+                \end{pmatrix}
+            \end{equation*}
+            then our fundamental solution is
+            \begin{equation*}
+                \begin{pmatrix}
+                    x\\
+                    y\\
+                \end{pmatrix}'
+                =
+                \begin{pmatrix}
+                    \cos t & \sin t\\
+                    -\sin t & \cos t\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    x\\
+                    y\\
+                \end{pmatrix}
+            \end{equation*}
+            and we rotate counterclockwise.
+            Since $A^2=-\mu^2 I_2$, $\e[tA]=I_2\cos\mu t+\mu^2I_2\sin t$.
+            Negative reverses everything.
+            Harmonic oscillator goes counterclockwise.
+        \end{enumerate}
+        \item There is an online website that gives us phase portraits for an equation. We can use this to help develop intuition.
+        \item If you have a set of eigenvectors, how do you know how to tilt it?
+        \begin{itemize}
+            \item Shao goes over examples of eigenvalues and eigenvectors.
+        \end{itemize}
+        \item This is not something you need to memorize, but something you need to be able to recover.
+    \end{itemize}
+    \item This is not a course for math majors; thus, there will not be proofs concerning the contraction mapping principle. We will not be asked to show existence, uniqueness, continuous difference, or differentiability with respect to parameters.
+    \item We do need to know Gr\"{o}nwall's inequality, however.
+    \item Gr\"{o}nwall's inequality: If $\phi:[p,T]\to\R$ and
+    \begin{equation*}
+        \phi(t) \leq b+a\int_0^t\phi(\tau)\dd\tau
+    \end{equation*}
+    then
+    \begin{equation*}
+        \phi(t) \leq b\e[at]
+    \end{equation*}
+    \begin{itemize}
+        \item Usually stated in the integral form, and we usually only need a special case.
+        \item We may need to prove this; the proof mimics the derivation of the Duhamel formula.
+        \item $a,b\in\R$.
+        \item We need to memorize the proof.
+        \item We also need to be able to recognize when we can and should use it. Let $\phi(t)=\Phi'(t)\leq b+a\Phi(t)$, $\Phi(0)=0$. Then $\phi(t) \leq b+a\int_0^t\varphi(\tau)\dd\tau$.
+        \item Use it when we want to bound a function that satisfies either an integral or a differential quantity.
+        \item This is the only proof in the theory of ODE systems we need to memorize.
+    \end{itemize}
+    \item We need to master the methods to compute perturbation series.
+    \begin{itemize}
+        \item Suppose our IVP depends on a parameter $\mu$ differentiably.
+        \begin{equation*}
+            \dv{y}{t}(t;\mu) = f(t;y(t;\mu);\mu), y(t_0)=x(\mu),\mu\approx 0
+        \end{equation*}
+        \item If the parameter is close to zer, then you should be able to compute the $\mu$-derivative with respect to the parameter.
+        \item By Taylor expanding with respect to the parameter, you should be able to recover solutions that are close to the actual.
+        \begin{equation*}
+            y(t;\mu) = y_0(t)+y_1(t)\mu+y_2(t)\mu^2+O(\mu^3)
+        \end{equation*}
+        \item We are typically satisfied with approximations to the second order.
+        \item We expand our ODE into a Taylor series of $\mu$. The differentiability with respect to parameters theorem (see Lecture 6.2 or Theorem 2.11 in \textcite{bib:Teschl}) tells us that this is legitimate.
+        \begin{align*}
+            \dv{t}(y_0(t)) &= f(t;y_0(t);0), y_0(t_0)=x(0)\\
+            \dv{t}(y_1(t)) &= \pdv{f}{z}(t;y_0(t);0)y_1(t)+\pdv{f}{\mu}(t;y_0(t);0), y_1(t)=\pdv{x}{\mu}(0)
+        \end{align*}
+        \item Just know the basic Taylor expansions (trig ones and exponential functions; usually we'll stick to polynomials, though).
+        \item Use the ansatz $y(t;\mu)=y_0(t)+y_1(t)\mu+y_2(t)\mu^2+O(\mu^3)$.
+        \item Substitute $y(t;\mu)$ into $f(t,y(t;\mu);\mu)$. Expand $f(t;y(t;\mu);\mu)$ into a Taylor series of $\mu$. Balance the coefficients of $\mu^0,\mu^1,\mu^2,\dots$.
+        \item Then you will get a series of equations that is theoretically solvable. Then a sequence of ODEs for $y_0(t),y_1(t),y_2(t),\dots$.
+        \item Your ODEs for $y_1,y_2,\dots$ should not involve $\mu$ (because they are coefficients in the Taylor expansion with respect to $\mu$. Coefficients of a Taylor series shouldn't involve the argument); if it does, there is something going wrong.
+        \item As for the initial value, $y_0(t_0)+y_1(t_0)\mu+y_2(t_0)\mu^2+\cdots$. This implies that something equals $x(\mu)$. The Taylor coefficients of $x(\mu)$ at $\mu=0$.
+        \item These are the general steps you use to find the perturbative series expansion.
+        \item The computations on the exam will not be too heavy.
+        \item If you're still unclear on the calculation, look through the HW answer keys.
+    \end{itemize}
+    \item Conclusion: The Gr\"{o}nwall's inequality is something we need to remember from the theory; the perturbative procedure is something we need to be able to do.
+    \item Why do we expand with respect to $\mu$?
+    \begin{itemize}
+        \item We do it with respect to $\mu$ because our function is a function of $\mu$. Differentiability and smallness imply we can use the Taylor series.
+    \end{itemize}
+    \item Shao reiterates: Definitely read through the key to HW5!!! All the steps you will need to do are done completely and in detail.
+    \item There will be things that are in HW6 (the one due Friday) that will appear on the exam because we have discussed these things in lecture.
+    \item The definitions of Lyapunov stability and asymptotic stability. These will appear in the exam. We need to \emph{clearly} remember the definitions.
+    \item Consider $y'=f(y)$, $f(x_0)=0$ (an autonomous system with a fixed point; we can transform our system via $(y-x_0)'=f(x_0+(y-x_0))$ to translate our fixed point to zero; implies $y'=f(x_0+y)$, $y=0$ is a fixed point). We should be able to determine the asymptotic stability near $x_0$ by computing the linearization (i.e., the Jacobian $f'(x_0)$) at the fixed point.
+    \begin{itemize}
+        \item Regarding determining stability near $x_0$, remember the following theorem.
+        \item Theorem: If all eigenvalues of $f'(x_0)$ have negative real parts, then $x_0$ is asymptotically stable. If at least one eigenvalue has real part greater than zero, then $x_0$ is not Lyapunov stable.
+        \item We should be able to apply the above criterion in practice.
+        \item We should also be able to reproduce the proof of the first part of Lyapunov's theorem (related to a question in HW6).
+        \item Lyapunov functions: $f(x_0)=0$. Definition:
+        \begin{enumerate}
+            \item $L(x)$ is $C^1$ near $x_0$, $L(x_0)=0$. $L(x)>0$ for $x$ near $x_0$.
+            \item $\nabla L(x)\cdot f(x)\leq 0$ for $x$ near $x_0$ iff $L(\phi_t(x))\leq L(x)$, $t\geq 0$. If $L(\phi_t(x))$ is always strictly decreasing, then it is a strict Lyapunov function.
+        \end{enumerate}
+        \item Theorem (Lyapunov's theorem): Usually, we can explicitly determine a Lyapunov function:
+        \begin{enumerate}
+            \item If there is a Lyapunov function near the fixed point, then it is Lyapunov stable. For trajectories starting at nearby points, the trajectory can never excape nearby points.
+            \item If there is a strict Lyapunov function, then it is asymptotically stable.
+        \end{enumerate}
+        \begin{itemize}
+            \item We need to be able to apply this theorem in practice; we don't need to know the proof.
+        \end{itemize}
+    \end{itemize}
+    \item Examples of Lyapunov functions: Newton's second law.
+    \begin{itemize}
+        \item Suppose you have a particle moving within a potential field with potential function $U$, i.e.,
+        \begin{equation*}
+            mx'' = -U'(x)
+        \end{equation*}
+        \item Then by a standard process, you can convert it to a planar linear system by introducing the variable $v$ (the velocity), i.e.,
+        \begin{equation*}
+            \begin{pmatrix}
+                x\\
+                v\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                v\\
+                -U(x)'/m\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Then $E(x,v)=\frac{m}{2}v^2+U(x)$ is constant along the orbits, that is,
+        \begin{equation*}
+            \nabla E(x,v)\cdot
+            \begin{pmatrix}
+                v\\
+                -U'(x)/m\\
+            \end{pmatrix}
+            = 0
+        \end{equation*}
+        \begin{itemize}
+            \item The gradient of the energy function is orthogonal to the vector field.
+        \end{itemize}
+        \item $E(x,v)$ is a Lyapunov function (global). This happens and induces a fixed point exactly where the velocity is zero and the function takes on a critical value.
+        \item Linearization at the fixed point $(x_0,0)$ is
+        \begin{equation*}
+            \begin{pmatrix}
+                0 & 1\\
+                -\frac{U''(x_0)}{m} & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        So $E(x_0,v)>E(x_0,0)$ for $x\sim x_0$, $v\sim 0$ iff $U$ takes a minimum at $x_0$. The energy function cannot always stay larger than the energy at the fixed point. Satisfies second Lyapunov condition, but not the first.
+        \item One question: Classification of planar linear autonomous systems, one on Gr\"{o}nwall, one on qualitative asymptotic analysis using Lyapunov. Three questions total. There will also be some questions (parts of questions, I guess) on perturbative series.
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\end{document}
