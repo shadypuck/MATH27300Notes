@@ -241,5 +241,136 @@
 
 
 
+\section{Question Session}
+\begin{itemize}
+    \item \marginnote{12/2:}The actual Lecture 9.1 system is
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            -y-[1-(x^2+y^2)]x\\
+            x-[1-(x^2+y^2)]y\\
+        \end{pmatrix}
+    \end{equation*}
+    \item Cannot derive a phase portrait spiral from a potential energy function.
+    \begin{itemize}
+        \item Relevant to 3c.
+        \item Idea is to show that the potential energy well is decreasing along any trajectory.
+    \end{itemize}
+    \item $r=\sqrt{c_0}$.
+    \begin{itemize}
+        \item Limit cycle is omega and alpha limit cycle.
+    \end{itemize}
+    \item Solving for the stable and unstable manifolds.
+    \begin{itemize}
+        \item Stable set consists of points which are attracted to the equilibrium. Curves are not attracted or repelled.
+        \item Stable subset: Points $(z,w)$ such that $(x,y)\to(0,0)$ as $t\to +\infty$. Stable subset: necessitates taking $w=0$ and then $z$ can be anything, so $x$ axis. 
+        \item Unstable: As $t\to -\infty$, $w$ can be anything and $y(t) \to 0$. The $+t$ terms will go to zero as $t\to -\infty$, and then we must have $z-w/2=0$. Put it in the form
+        \begin{align*}
+            x(t) &= (w^2(\e[2t]-\e[t])+\frac{w\e[t]}{2})+(z-\frac{w}{2})\e[-t]\\
+            &= ((w\e[t])^2+\frac{w\e[t]}{2})-w^2\e[t]+(z-\frac{w}{2})\e[-t]\\
+            &= (y^2+\frac{y}{2})-w^2\e[t]+(z-\frac{w}{2})\e[-t]
+        \end{align*}
+        \item There is a typo in the original form. There should be $\e[-t]$ for the last rightmost term above. We will converge and diverge along the manifolds.
+        \item I have a confusion in the stable/unstable subset definition? Unstable subset isn't the set of all points with orbits that diverge as $t\to +\infty$; it's the set of all points that diverge away from $x_0$.
+    \end{itemize}
+    \item Solving for the stable and unstable manifolds of a planar ODE given the explicit solution.
+    \begin{itemize}
+        \item We will treat
+        \begin{equation*}
+            \begin{pmatrix}
+                x\\
+                y\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                -x+y+3y^2\\
+                y\\
+            \end{pmatrix}
+        \end{equation*}
+        from Lecture 8.2.
+        \item The correct flow is as follows (there was a typo in class).
+        \begin{equation*}
+            \phi_t
+            \begin{pmatrix}
+                z\\
+                w\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                z\e[-t]+w\sinh(t)+w^2(\e[2t]-\e[-t])\\
+                w\e[t]\\
+            \end{pmatrix}
+        \end{equation*}
+        \item The stable manifold is going to be the set of all $x\in\R^2$ such that $\phi_t(x)\to 0$ as $t\to +\infty$. Approach: Find values of $z,w$ such that the solution converges to zero componentwise.
+        \begin{itemize}
+            \item Since $y(t)=w\e[t]$, we must have $w=0$; otherwise, we will get exponential divergence as $t\to +\infty$.
+            \item Thus, $x(t)=z\e[-t]$. This function converges to zero for any value of $z$, so we may let $z$ be arbitrary.
+            \item But the set of all points
+            \begin{equation*}
+                \begin{pmatrix}
+                    z\\
+                    0\\
+                \end{pmatrix}
+            \end{equation*}
+            is the $x$-axis!
+        \end{itemize}
+        \item Unstable manifold: We need to find the set of all points $x\in\R^2$ such that $\phi_t(x)\to 0$ as $t\to -\infty$. Approach: Again, go by components.
+        \begin{itemize}
+            \item $y(t)=w\e[t]$ will converge to 0 as $t\to -\infty$ for all $w$, so this component does not put any restrictions on $w$. Note that it also does not put any restrictions on $z$ since it does not even contain $z$.
+            \item Working with the other one, we expand and combine all $\e[at]$ terms for $a>0$ and all $\e[bt]$ terms for all $b<0$.
+            \begin{align*}
+                x(t) &= z\e[-t]+w\sinh(t)+w^2(\e[2t]-\e[-t])\\
+                &= z\e[-t]+w\cdot\frac{\e[t]-\e[-t]}{2}+w^2\e[2t]-w^2\e[-t]\\
+                &= z\e[-t]+\frac{w}{2}\e[t]-\frac{w}{2}\e[-t]+w^2\e[2t]-w^2\e[-t]\\
+                &= \left[ w^2\e[2t]+\frac{w}{2}\e[t] \right]+\left[ z-\frac{w}{2}-w^2 \right]\e[-t]
+            \end{align*}
+            \item The left term above will clearly converge to 0 as $t\to -\infty$.
+            \item However, the right term will diverge to $\infty$ as $t\to -\infty$ unless $z-w/2-w^2=0$, so we take this to be our condition.
+            \item Indeed, this implies that $z=w/2+w^2$ is a constraint on $z$, but $w$ can still take on any value, so our solution is
+            \begin{equation*}
+                W_u(0) = \left\{ \left( \frac{y}{2}+y^2,y \right) \,\middle|\, y\in\R \right\}
+            \end{equation*}
+            as desired.
+        \end{itemize}
+        % \item Shao also clearly labeled unstable vs. stable wrong in class and drew an incorrect picture first.
+    \end{itemize}
+    \item Number 5:
+    \begin{itemize}
+        \item What is a vector field in 1d? Vectors pointing in the positive or negative $x$ direction (just a function).
+        \item Set of points should be a subset of the real line (an interval).
+        \item You can only approach the zero.
+    \end{itemize}
+    \item Number 3 energy term.
+    \begin{itemize}
+        \item Multiply both sides by $x'$ to get
+        \begin{equation*}
+            x'x'' = \frac{1}{2}(x')^2
+        \end{equation*}
+        \item We have
+        \begin{align*}
+            0 &= x''+bx'+U'(x)\\
+            &= x'x''+b|x'|^2+x'U'(x)\\
+            &= \left( \frac{1}{2}(x')^2 \right)'+b|x'|^2+(U(x))'\\
+            -b|x'|^2 &= \dv{t}(\frac{1}{2}(x')^2+U(x))
+        \end{align*}
+    \end{itemize}
+    \item Lyapunov stuff. Was a question in HW6.
+    \begin{itemize}
+        \item ...
+        \item Intuitive justification for this Lyapunov function?
+        \item Most natural way is to look at when $A$ is diagonalizable.
+        \item Get expressions with negative eigenvalues.
+        \item We have that the sum is equal to $\dv{t}\langle y,Dy \rangle$. The INP is equal to $2\langle Dy,Dy \rangle$.
+        \item So it's a weighted norm.
+    \end{itemize}
+    \item We'll be allowed to bring the JNF notes to the exam!
+\end{itemize}
+
+
+
 
 \end{document}
