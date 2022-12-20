@@ -9,7 +9,7 @@
 
 
 
-\chapter{???}
+\chapter{Stability Grab Bag}
 \section{Midterm 2 Review}
 \begin{itemize}
     \item \marginnote{11/14:}Still 3 problems total and 5 points each.
@@ -198,6 +198,271 @@
         \end{equation*}
         So $E(x_0,v)>E(x_0,0)$ for $x\sim x_0$, $v\sim 0$ iff $U$ takes a minimum at $x_0$. The energy function cannot always stay larger than the energy at the fixed point. Satisfies second Lyapunov condition, but not the first.
         \item One question: Classification of planar linear autonomous systems, one on Gr\"{o}nwall, one on qualitative asymptotic analysis using Lyapunov. Three questions total. There will also be some questions (parts of questions, I guess) on perturbative series.
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{Misc. Stability Tools}
+\begin{itemize}
+    \item \marginnote{11/18:}Let $y'=f(y)$, where $f:\R^n\to\R^n$ is a smooth function and $x_0$ is a fixed point (i.e., $f(x_0)=0$).
+    \item \textbf{Hyperbolic} (fixed point of $f$): A fixed point $x_0\in\R^n$ for which $f'(x_0)$ has neither purely imaginary nor zero eigenvalues.
+    \item If $x_0$ is a hyperbolic fixed point of $A$, then we know that for the linear system $y'=Ay$, the eigenvalues of $A$ are never purely imaginary by definition.
+    \begin{itemize}
+        \item This allows us to decompose $\R^n$ into the direct sum of the \textbf{stable subspace} and the \textbf{unstable subspace} of the system.
+    \end{itemize}
+    \item \textbf{Stable subspace} (of $x_0$ under $A$): The space of all generalized eigenvectors of $A$ corresponding to eigenvalues $\lambda$ with $\Ree\lambda<0$. \emph{Also known as} \textbf{attracting subspace}. \emph{Denoted by} $\bm{\pmb{\mathbb{E}}_s}$.
+    \item \textbf{Unstable subspace} (of $x_0$ under $A$): The space of all generalized eigenvectors of $A$ corresponding to eigenvalues $\lambda$ with $\Ree\lambda>0$. \emph{Also known as} \textbf{repelling subspace}. \emph{Denoted by} $\bm{\pmb{\mathbb{E}}_u}$.
+    \item But what if $f$ is not a linear transformation? Then we cannot guarantee the subspace structure, so we need to generalize.
+    \item \textbf{Stable subset} (of $x_0$ under $f$): The set of all vectors attracted to $x_0$. \emph{Also known as} \textbf{attracting subset}. \emph{Denoted by} $\bm{W_s(x_0)}$. \emph{Given by}
+    \begin{equation*}
+        W_s(x_0) = \{x\in\R^n\mid\phi_t(x)\to x_0\text{ as }t\to +\infty\}
+    \end{equation*}
+    \item \textbf{Unstable subset} (of $x_0$ under $f$): The set of all vectors repelled from $x_0$. \emph{Also known as} \textbf{repelling subset}. \emph{Denoted by} $\bm{W_u(x_0)}$. \emph{Given by}
+    \begin{equation*}
+        W_u(x_0) = \{x\in\R^n\mid\phi_t(x)\to x_0\text{ as }t\to -\infty\}
+    \end{equation*}
+    \item Notice that if $f=A$, then the stable (resp. unstable) subset equals the stable (resp. unstable) subspace.
+    \item Theorem (stable manifold theorem): Let $y'=f(y)$ and let $x_0$ be a hyperbolic fixed point of $f$. Then there exists a neighborhood $U(x_0)$ of $x_0$ such that $U(x_0)\cap W_s(x_0)$ is a smooth submanifold of dimension $\dim\mathbb{E}_s[f'(x_0)]$ that is tangent to $\mathbb{E}_s[f'(x_0)]$ at $x_0$. An analogous statement holds for $U(x_0)\cap W_u(x_0)$.
+    \item \textbf{$\bm{k}$-dimensional smooth submanifold} (of $\R^n$): A subset congruent to the graph
+    \begin{equation*}
+        G = (w_1,\dots,w_k;h_1(w),\dots,h_{n-k}(w))
+    \end{equation*}
+    of some smooth function $h:\R^k\to\R^{n-k}$.
+    \item Example: $(w,w^2)$ is a 1-dimensional submanifold of $\R^2$.
+    \begin{itemize}
+        \item We know it as the graph of the unit parabola.
+    \end{itemize}
+    \item Example: $\left( w_1,w_2,\sqrt{1-(w_1^2+w_2^2)} \right)$ is a 2-dimensional submanifold of $\R^3$.
+    \begin{itemize}
+        \item In particular, it is the positive hemisphere of the unit two-sphere.
+    \end{itemize}
+    \item \textbf{Homeomorphism}: A continuous, invertible function with continuous inverse.
+    \begin{itemize}
+        \item Essentially, it's a coordinate change function.
+    \end{itemize}
+    \item Theorem (Hartman-Grobman Theorem): Let $y'=f(y)$, $x_0$ a hyperbolic fixed point, and $A=f'(x_0)$. Then there exists a neighborhood $U(x_0)$ and a homeomorphism $h:U(x_0)\to B(x_0,d)$ such that
+    \begin{equation*}
+        h\circ\phi_t = \e[tA]\circ h
+    \end{equation*}
+    for $|t|$ small.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../ExtFiles/HartmanGrobmanTrm.jpg}
+        \caption{Hartman-Grobman Theorem visualization.}
+        \label{fig:HartmanGrobmanTrm}
+    \end{figure}
+    \begin{itemize}
+        \item In laymen's terms: Near the hyperbolic fixed point, the orbits are just slight distortions of the linearized system.
+    \end{itemize}
+    \item Corollary: Suppose $A,B$ are matrices with no purely imaginary eigenvalues. Then the flows of $A,B$ are topologically conjugate iff $\dim\mathbb{E}_s(A)=\dim\mathbb{E}_s(B)$ (equivalently, iff $\dim\mathbb{E}_u(A)=\dim\mathbb{E}_u(B)$).
+    \item Example: Let
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            1 & 1\\
+            0 & 1\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            1 & 0\\
+            0 & 1\\
+        \end{pmatrix}
+    \end{align*}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../ExtFiles/conjFlows.jpg}
+        \caption{Topologically conjugate flows.}
+        \label{fig:conjFlows}
+    \end{figure}
+    \begin{itemize}
+        \item Consider the linear autonomous systems $y'=Ay$ and $x'=Bx$.
+        \item Then since
+        \begin{align*}
+            \e[tA] &=
+            \begin{pmatrix}
+                \e[t] & t\e[t]\\
+                0 & \e[t]\\
+            \end{pmatrix}&
+            \e[tB] &=
+            \begin{pmatrix}
+                \e[t] & 0\\
+                0 & \e[t]\\
+            \end{pmatrix}
+        \end{align*}
+        we know that the flows are
+        \begin{align*}
+            y(t) &=
+            \begin{pmatrix}
+                \e[t] & t\e[t]\\
+                0 & \e[t]\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                c_1\\
+                c_2\\
+            \end{pmatrix}
+                = c_1\e[t]
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                \end{pmatrix}
+                +c_2\e[t]
+                \begin{pmatrix}
+                    t\\
+                    1\\
+                \end{pmatrix}\\
+            x(t) &=
+            \begin{pmatrix}
+                \e[t] & 0\\
+                0 & \e[t]\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                c_1\\
+                c_2\\
+            \end{pmatrix}
+                = c_1\e[t]
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                \end{pmatrix}
+                +c_2\e[t]
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                \end{pmatrix}
+        \end{align*}
+        \item Since both $A,B$ have no purely imaginary eigenvalues, these flows will be topologically conjugate by the Corollary.
+        \begin{itemize}
+            \item Indeed, we can kind of see that one is a distortion of the other in Figure \ref{fig:conjFlows}.
+        \end{itemize}
+        \item We can't expect the coordinate change from Hartman-Grobman to be smooth, but it will exist.
+    \end{itemize}
+    \item Example: Let
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            -x+y+3y^2\\
+            y\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item We can solve this to get
+        \begin{equation*}
+            \phi_t
+            \begin{pmatrix}
+                z\\
+                w\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                z\e[-t]+w\sinh(t)+w^2(\e[2t]-\e[-t])\\
+                w\e[t]\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Notice that the origin 0 is a fixed point.
+        \item From this, we can determine that (how??)
+        \begin{align*}
+            W_s(0) &= x\text{-axis}&
+            W_u(0) &= \left\{ \left( \frac{y}{2}+y^2,y \right) \,\middle|\, y\in\R \right\}
+        \end{align*}
+    \end{itemize}
+    \item What if we can't solve the system in the above example explicitly?
+    \begin{itemize}
+        \item Take the Jacobian at 0:
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                -1 & 1\\
+                0 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Find its stable and unstable subspaces. Calculate eigenvalues and eigenvectors to be
+        \begin{align*}
+            \lambda_1 &= -1&
+                \lambda_2 &= 1\\
+            v_1 &=
+            \begin{pmatrix}
+                1\\
+                0\\
+            \end{pmatrix}&
+                v_2 &=
+                \begin{pmatrix}
+                    1\\
+                    2\\
+                \end{pmatrix}
+        \end{align*}
+        \item Thus, we get $v_1$ (the $x$-axis) as the stable subspace, and $v_2$ as the unstable subspace.
+    \end{itemize}
+    \item General procedure for planar systems:
+    \begin{enumerate}
+        \item Find all fixed points.
+        \item Determine the stability of the fixed points. If hyperbolic, then apply the stable manifold and Hartman theorems. If the eigenvalues are purely imaginary, try to find a Lyapunov function.
+        \item Decompose the plane into regions in which the monotonicity of
+        \begin{equation*}
+            \begin{pmatrix}
+                x(t)\\
+                y(t)\\
+            \end{pmatrix}
+        \end{equation*}
+        is determined, i.e., the signs of the two components of the vector field are determined. This step requires more improvisation.
+    \end{enumerate}
+    \item Example:
+    \begin{equation*}
+        \begin{pmatrix}
+            \theta\\
+            \omega\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            \omega\\
+            -\sin\theta\\
+        \end{pmatrix}
+    \end{equation*}
+    \emph{picture}
+    \begin{itemize}
+        \item We only care where $-\pi<\theta<\pi$. The fixed points are
+        \begin{align*}
+            \begin{pmatrix}
+                0\\
+                0\\
+            \end{pmatrix}&&
+            \pm
+            \begin{pmatrix}
+                \pi\\
+                0\\
+            \end{pmatrix}
+        \end{align*}
+        \item At 0, the linearization has purely imaginary eigenvalues. We have Lyapunov function
+        \begin{equation*}
+            E(\theta,\omega) = \frac{1}{2}\omega^2+(1-\cos\theta)
+        \end{equation*}
+        \item At $(\pi,0)$, the linearization is
+        \begin{equation*}
+            \begin{pmatrix}
+                0 & 1\\
+                1 & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        which has eigenvalues and eigenvectors
+        \begin{align*}
+            \lambda_1 &= 1&
+                \lambda_2 &= -1\\
+            v_1 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+            \end{pmatrix}&
+                v_2 &=
+                \begin{pmatrix}
+                    -1\\
+                    1\\
+                \end{pmatrix}
+        \end{align*}
+        \item Thus, we get orbits around 0 in the $\theta,\omega$ plane and two subspaces that converge/diverge to $(\pi,0)$. All of these lines are compatible tangentially.
     \end{itemize}
 \end{itemize}
 
