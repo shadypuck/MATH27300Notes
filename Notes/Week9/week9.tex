@@ -183,5 +183,63 @@
 
 
 
+\section{Nonlinear Oscillation}
+\begin{itemize}
+    \item \marginnote{11/30:}Friday: Review and questions session.
+    \item Monday: OH during class time in the class room and normal OH.
+    \item Exam time: Wednesday, December 7 from 7:30-9:30 AM. Will happen in this classroom; Shao hopes to finish grading the same day.
+    \item Last HW and review outline is due 12/2. 130 total points for the grade. 90/130 gives an A. That's 69\% and above.
+    \begin{itemize}
+        \item Minus 10, minus 10, for the grading below A range.
+    \end{itemize}
+    \item Last example that arises naturally.
+    \item RLC circuit: Nonlinear oscillation. Occurred in resonance. Nonlinear oscillation in $K$.
+    \item The circuit that we're interested in still is an RLC circuit (see Figure \ref{fig:drivenHOoriginb}).
+    \item We assume that the resistor satisfies Ohm's law, i.e., $I_R=V_R/R$. This is the linear case. Causes the voltage to decay exponentially fast, where the resistor acts as a kind of damping factor.
+    \item However, for some more delicate cases, Ohm's law might fail and we might get a nonlinear replacement $V_R=R(I_R)$. We let $R$ be any suitable function. We still have Kirchoff's law, i.e., that $I_R$, $I_C$, and $I_L$ are all the same and we can refer to them as $I$.
+    \item The system we're interested in is
+    \begin{equation*}
+        \begin{cases}
+            LI' &= -V_C-R(I)\\
+            CV' &= I
+        \end{cases}
+    \end{equation*}
+    \item Comparing to the linear case, we just want to replace $V_R/R$ in the same system with $R(I)$. After some suitable scaling, we can get the system
+    \begin{equation*}
+        \begin{cases}
+            x' &= y-f(x)\\
+            y' &= -x
+        \end{cases}
+    \end{equation*}
+    \item This is a classical nonlinear oscillation model, typically referred to as the \textbf{Li\'{e}nard equation}.
+    \item The first case of the Li\'{e}nard equation studied in detail was when
+    \begin{equation*}
+        f(x) = \mu\left( \frac{x^3}{3}-x \right)
+    \end{equation*}
+    \begin{itemize}
+        \item Discovered by the engineer van der Pol while he was investigating RLC circuits, and hence referred to as the \textbf{van der Pol oscillator}.
+    \end{itemize}
+    \item Theorem: Suppose $f(x)$ is odd, i.e., $f(x)=-f(-x)$. Also suppose that $f(x)<0$ for $x\in(0,\alpha)$ for some $\alpha>0$ (i.e., $f(x)$ is less than zero for sufficiently small positive values of $x$). Moreover, suppose that $\liminf_{x\to\infty}f(x)>0$ (i.e., $f$ does not diverge). Lastly, suppose that $f(x)$ is increasing for $x>\alpha$. Then the conclusion is that the Li\'{e}nard system has a unique closed orbit. Every other orbit except for the trivial orbit $(0,0)$ will be attracted to this periodic solution as the system evolves ($t\to +\infty$).
+    \begin{itemize}
+        \item This explains the term "nonlinear oscillation." As long as we are away from the equilibrium, we converge to it??
+    \end{itemize}
+    \item Wrt the van der Pol oscillator, we sketch the boundary first and then put in the limit cycle. The origin is an unstable fixed point, and any origin starting from the origin will spiral and approximate the limit cycle.
+    \begin{itemize}
+        \item ?? is guaranteed by the Poincar\'{e}-Bendixson theorem.
+    \end{itemize}
+    \item The proof does not use any advanced math, but it is complex, so we'll sketch it. The proof is in \textcite{bib:Teschl} if we're interested. It only involves calculus.
+    \item End of lecture.
+    \item First problem, second section of HW: First integral: Conservative law.
+    \item What is the correct first variational equation?
+    \item Difference between not Lyapunov stable and completely unstable?
+    \begin{itemize}
+        \item Something is repelled away vs. everything is repelled away.
+    \end{itemize}
+    \item The iodine clock is not super hard, but it needs some improvisation. That's what we talked about at the end of last lecture.
+    \item Friday will be a review of everything since the second midterm.
+\end{itemize}
+
+
+
 
 \end{document}
