@@ -1,0 +1,326 @@
+\documentclass[../psets.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\leftmark}{Problem Set \thesection}
+\setcounter{section}{2}
+\setenumerate[1]{label={\textbf{\arabic*.}}}
+\setenumerate[2]{label={(\arabic*)}}
+
+\begin{document}
+
+
+
+
+\section{Explicitly Solvable Higher Order ODEs}
+\subsection*{Required Problems}
+\begin{enumerate}
+    \item \marginnote{10/26:}Consider a scalar linear differential equation with constant coefficients:
+    \begin{equation*}
+        x^{(n)}+a_{n-1}x^{(n-1)}+\cdots+a_1x'+a_0x = g(t)
+    \end{equation*}
+    Prove that the solution of this equation must take the form:
+    \begin{equation*}
+        x(t) = x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau
+    \end{equation*}
+    where $x_h$ is any solution of the homogeneous equation, and $U$ is the solution of the homogeneous equation with initial condition $U(0)=U'(0)=\cdots=U^{(n-2)}(0)=0$, $U^{(n-1)}(0)=1$.\par
+    In particular, the driven harmonic oscillator equation
+    \begin{equation*}
+        x''+\omega^2x = f(t)
+    \end{equation*}
+    is solved by
+    \begin{equation*}
+        x(t) = x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau
+    \end{equation*}
+    \begin{proof}
+        % Let
+        % \begin{equation*}
+        %     x(t) = x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau
+        % \end{equation*}
+        % and let $a_n=1$. Then we have that Use induction? Integration by parts?
+        % \begin{align*}
+        %     \sum_{k=0}^na_kx^{(k)} &= \sum_{k=0}^na_k\left( x_h+\int_0^tU(t-\tau)g(\tau)\dd\tau \right)^{(k)}\\
+        %     &= \sum_{k=0}^na_kx_h^{(k)}+\sum_{k=0}^na_k{\dv[k]{x}{t}}\left( \int_0^tU(t-\tau)g(\tau)\dd\tau \right)\\
+        %     &= 0+a_0\int_0^tU(t-\tau)g(\tau)\dd\tau+\sum_{k=2}^na_k{\dv[k]{x}{t}}\left( \int_0^tU(t-\tau)g(\tau)\dd\tau \right)
+        % \end{align*}
+
+        % We induct on $n$. For the base case $n=1$, we have that
+        % \begin{align*}
+        %     \dv{t}(x_h+\int_0^tU(t-\tau)g(\tau)\dd\tau)+a_0\left( x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau \right) &= 
+        % \end{align*}
+        
+        We can convert the general scalar linear ODE to the form
+        \begin{equation*}
+            \begin{pmatrix}
+                Y^1\\
+                \vdots\\
+                Y^{n-1}\\
+                Y^n\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                0 & 1 & \cdots & 0\\
+                \vdots & \vdots & \ddots & \vdots\\
+                0 & 0 & \cdots & 1\\
+                -a_0 & -a_1 & \cdots & -a_{n-1}\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                Y^1\\
+                \vdots\\
+                Y^{n-1}\\
+                Y^n\\
+            \end{pmatrix}
+            +
+            \begin{pmatrix}
+                0\\
+                \vdots\\
+                0\\
+                g(t)\\
+            \end{pmatrix}
+        \end{equation*}
+        This is a linear equation of the form $y'=Ay+f$. Thus, as stated in class, its solutions are given by the modified Duhamel formula:
+        \begin{equation*}
+            y(t) = \e[tA]y_0+\int_0^t\e[(t-\tau)A]f(\tau)\dd\tau
+        \end{equation*}
+        The above equation is of the form
+        \begin{align*}
+            \begin{pmatrix}
+                x(t)\\
+                \vdots\\
+                x^{(n-1)}(t)\\
+            \end{pmatrix}
+            &=
+            \begin{pmatrix}
+                {\e[tA]}_{11} & \cdots & {\e[tA]}_{1n}\\
+                \vdots & \ddots & \vdots\\
+                {\e[tA]}_{n1} & \cdots & {\e[tA]}_{nn}\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                y_0^1\\
+                \vdots\\
+                y_0^n\\
+            \end{pmatrix}
+            +\int_0^t
+            \begin{pmatrix}
+                {\e[(t-\tau)A]}_{11} & \cdots & {\e[(t-\tau)A]}_{1n}\\
+                \vdots & \ddots & \vdots\\
+                {\e[(t-\tau)A]}_{n1} & \cdots & {\e[(t-\tau)A]}_{nn}\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                0\\
+                \vdots\\
+                1\\
+            \end{pmatrix}
+            g(\tau)\dd\tau
+            % \\
+            % &=
+            % \begin{pmatrix}
+            %     y_0^1{\e[tA]}_{11}+\cdots+y_0^n{\e[tA]}_{1n}\\
+            %     \vdots\\
+            %     y_0^1{\e[tA]}_{n1}+\cdots+y_0^n{\e[tA]}_{nn}\\
+            % \end{pmatrix}
+            % +\int_0^t
+            % \begin{pmatrix}
+            %     {\e[(t-\tau)A]}_{1n}\\
+            %     \vdots\\
+            %     {\e[(t-\tau)A]}_{nn}\\
+            % \end{pmatrix}
+            % g(\tau)\dd\tau\\
+            % &=
+            % \begin{pmatrix}
+            %     y_0^1{\e[tA]}_{11}+\cdots+y_0^n{\e[tA]}_{1n}+\int_0^t{\e[(t-\tau)A]}_{1n}g(\tau)\dd\tau\\
+            %     \vdots\\
+            %     y_0^1{\e[tA]}_{n1}+\cdots+y_0^n{\e[tA]}_{nn}+\int_0^t{\e[(t-\tau)A]}_{nn}g(\tau)\dd\tau\\
+            % \end{pmatrix}
+        \end{align*}
+        where the left term in the RHS is a solution of the homogeneous equation, and the right term in the RHS is the integral of the product of the solution of the homogeneous equation with the given initial condition and $g(\tau)$, as desired.\par
+        We will solve the particular case bit by bit, adding components together into a final solution. To begin, we have that
+        \begin{align*}
+            \dv{t}(\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau) &= \lim_{h\to 0}\frac{1}{h}
+        \end{align*}
+        % \begin{align*}
+        %     x''+\omega^2x &= \dv[2]{t}(x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau)
+        % \end{align*}
+    \end{proof}
+    \item We know that for complex numbers $z,w$, $\e[z+w]=\e[z]\e[w]$. However, in general this cannot be generalized to matrix exponentials.
+    \begin{enumerate}
+        \item Suppose $A,B$ are $n\times n$ complex matrices. If $AB=BA$, prove that $\e[A+B]=\e[A]\e[B]$. You need to substitute in the power series expansion of $\e[A]$ and $\e[B]$ and do some combinatorics.
+        \begin{proof}
+            We have that
+            \begin{align*}
+                \e[A+B] &= \sum_{k=0}^\infty\frac{(A+B)^k}{k!}\\
+                &= \sum_{k=0}^\infty\frac{1}{k!}\sum_{\ell=0}^k\binom{k}{\ell}A^{k-\ell}B^\ell\\
+                &= \sum_{k=0}^\infty\frac{1}{k!}\sum_{\ell=0}^k\frac{k!}{(k-\ell)!\ell!}A^{k-\ell}B^\ell\\
+                &= \sum_{k=0}^\infty\sum_{\ell=0}^k\frac{1}{(k-\ell)!\ell!}A^{k-\ell}B^\ell\\
+                &= \sum_{k=0}^\infty\sum_{k'=0}^\infty\frac{1}{k!k'!}A^kB^{k'}\\
+                &= \left( \sum_{k=0}^\infty\frac{A^k}{k!} \right)\left( \sum_{k'=0}^\infty\frac{B^{k'}}{k'!} \right)\\
+                &= \e[A]\e[B]
+            \end{align*}
+            as desired.
+        \end{proof}
+        \item Now suppose
+        \begin{align*}
+            A &=
+            \begin{pmatrix}
+                0 & 1\\
+                0 & 0\\
+            \end{pmatrix}&
+            B &=
+            \begin{pmatrix}
+                0 & 0\\
+                1 & 0\\
+            \end{pmatrix}
+        \end{align*}
+        Compute $AB-BA$, $\e[A]\e[B]$, and $\e[A+B]$. \emph{Hint}: Since $A,B$ are both nilpotent, you do not have to reduce them to Jordan normal forms. Also, what is $(A+B)^2$? Why does this help you to compute $\e[A+B]$?
+    \end{enumerate}
+    \item The general formula for the exponential of an $n\times n$ invertible matrix is very lengthy. However, for real $t$ and any $2\times 2$ complex matrix
+    \begin{equation*}
+        A =
+        \begin{pmatrix}
+            a & b\\
+            c & d\\
+        \end{pmatrix}
+    \end{equation*}
+    there is a direct formula for $\e[tA]$:
+    \begin{equation*}
+        \e[tA] = \e[t\delta]\left[ \cosh(t\Delta)I_2+\frac{\sinh(\Delta)}{t\Delta}
+        \begin{pmatrix}
+            \gamma & b\\
+            c & -\gamma\\
+        \end{pmatrix}
+        \right]
+    \end{equation*}
+    where
+    \begin{align*}
+        \delta &= \frac{a+d}{2}&
+        \gamma &= \frac{a-d}{2}&
+        \Delta &= \sqrt{\gamma^2+bc}
+    \end{align*}
+    and the functions $\cosh$ and $\sinh$ are interpreted as power series as follows.
+    \begin{align*}
+        \cosh(z) &= \sum_{k=0}^\infty\frac{z^{2k}}{(2k)!}&
+        \frac{\sinh(z)}{z} &= \sum_{k=0}^\infty\frac{z^{2k}}{(2k+1)!}
+    \end{align*}
+    Thus, $\cosh(t\Delta)$ and $\sinh(t\Delta)$ are single valued, no matter which branch of $\Delta$ is considered. Prove the above formula. \emph{Hint}: Decompose $A=\delta I_2+C$ and apply the result of the previous problem.
+    % \begin{proof}
+    %     We have
+    %     \begin{align*}
+    %         A &= \delta I_2+C\\
+    %         \begin{pmatrix}
+    %             a & b\\
+    %             c & d\\
+    %         \end{pmatrix}
+    %         &= \frac{a+d}{2}
+    %         \begin{pmatrix}
+    %             1 & 0\\
+    %             0 & 1\\
+    %         \end{pmatrix}
+    %         +
+    %         \begin{pmatrix}
+    %             \frac{a-d}{2} & b\\
+    %             c & \frac{d-a}{2}\\
+    %         \end{pmatrix}\\
+    %         \begin{pmatrix}
+    %             a & b\\
+    %             c & d\\
+    %         \end{pmatrix}
+    %         &= \frac{a+d}{2}
+    %         \begin{pmatrix}
+    %             1 & 0\\
+    %             0 & 1\\
+    %         \end{pmatrix}
+    %         +
+    %         \begin{pmatrix}
+    %             \gamma & b\\
+    %             c & -\gamma\\
+    %         \end{pmatrix}
+    %     \end{align*}
+    %     We have that
+    %     \begin{align*}
+    %         \e[tA] &= \e[t\delta I_2]\e[tC]
+    %     \end{align*}
+    % \end{proof}
+    \item Which of the following can be the solution of a first-order autonomous homogeneous 2-dimensional system?
+    \begin{align*}
+        \begin{pmatrix}
+            2\e[t]+\e[-t]\\
+            \e[2t]\\
+        \end{pmatrix}&&
+        \begin{pmatrix}
+            2\e[t]+\e[-t]\\
+            \e[t]\\
+        \end{pmatrix}&&
+        \begin{pmatrix}
+            2\e[t]+\e[-t]\\
+            t\e[t]\\
+        \end{pmatrix}&&
+        \begin{pmatrix}
+            2\e[t]\\
+            t^3\e[t]\\
+        \end{pmatrix}&&
+        \begin{pmatrix}
+            2\e[t]\\
+            t\e[t]\\
+        \end{pmatrix}
+    \end{align*}
+    \emph{Hint}: Compare with the necessary structure of the solution discussed in class.
+    \item Solve the following 2-dimensional initial value problems:
+    \begin{align*}
+        y' &=
+        \begin{pmatrix}
+            2 & 1\\
+            0 & 2\\
+        \end{pmatrix}
+        y,\quad
+        y(0) =
+        \begin{pmatrix}
+            1\\
+            1\\
+        \end{pmatrix}&
+        y' &=
+        \begin{pmatrix}
+            -1 & 1\\
+            0 & 1\\
+        \end{pmatrix}
+        y,\quad
+        y(0) =
+        \begin{pmatrix}
+            1\\
+            -1\\
+        \end{pmatrix}&
+    \end{align*}
+    Determine the stable and unstable subspaces for each equation.
+\end{enumerate}
+
+
+\subsection*{Bonus Problems}
+\begin{enumerate}
+    \item At the end of the 19th century, the English mathematician and physicist Oliver Heaviside introduced an operational calculus to solve differential equations related to circuit analysis. To briefly describe Heaviside's idea, we consider the equation of RC charging circuits:
+    \begin{equation*}
+        RQ'(t)+\frac{1}{C}Q(t) = V_0
+    \end{equation*}
+    Of course, we know how to solve it using the standard separation of variables method. However, Heaviside introduced a "formal" method of computation as follows. Regard the differential operator $\dv*{t}$ as a "symbol" $p$, so that the equation is rewritten as
+    \begin{equation*}
+        \left( p+\frac{1}{RC} \right)Q = \frac{V_0}{R}
+        \quad\Longleftrightarrow\quad
+        Q = \left( p+\frac{1}{RC} \right)^{-1}\frac{V_0}{R}
+    \end{equation*}
+    The next step seems surprising and does not make any sense mathematically: Expand the factor $(p+1/RC)^{-1}$ into a geometric series of $1/p$, giving an "equation"
+    \begin{equation*}
+        Q = \frac{1}{p}\frac{V_0}{R}-\frac{1}{RCp^2}\frac{V_0}{R}+\cdots+\frac{(-1)^k}{(RC)^kp^{k+1}}\frac{V_0}{R}+\cdots
+    \end{equation*}
+    Heaviside considered the symbol $1/p$ to be the "inverse" of the symbol $p$, namely $1/p=\int_0^t$. Thus, formally,
+    \begin{align*}
+        Q &= \int_0^t\frac{V_0}{R}-\frac{1}{RC}\int_0^t\int_0^t\frac{V_0}{R}+\cdots+\frac{(-1)^k}{(RC)^kp^{k+1}}\underbrace{\int_0^t\cdots\int_0^t}_{k+1\text{ times}}\frac{V_0}{R}+\cdots\\
+        &= \frac{tV_0}{R}-\frac{t^2}{2!RC}\frac{V_0}{R}+\cdots+\frac{t^k}{k!(RC)^k}\frac{V_0}{R}+\cdots
+    \end{align*}
+    and this gives the correct result $Q(t)=(1-\e[-t/RC])V_0/R$, very strangely!\par
+    At a first glance, Heaviside's argument does not make much sense mathematically: We cannot simply regard a linear operator as a number, let alone the problem of convergence. However, there is a mathematical object that can rigorize Heaviside's idea; it is called the \textbf{Laplace transform}. It takes a function defined for $t\geq 0$ to a function of a complex variable $s=\sigma+i\beta$ via
+    \begin{equation*}
+        \mathfrak{L}[f](s) = \int_0^\infty\e[-st]f(t)\dd{t}
+    \end{equation*}
+\end{enumerate}
+
+
+
+
+\end{document}
