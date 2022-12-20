@@ -372,5 +372,66 @@
 
 
 
+\section{Office Hours (Shao)}
+\begin{itemize}
+    \item Question 3(1): How do we derive the energy function?
+    \begin{itemize}
+        \item We don't actually need to give a final expression for the energy function; just show that it's always decreasing.
+    \end{itemize}
+    \item Question 3(2): How should we apply the stable manifold theorem and Hartman linearization theorem?
+    \begin{itemize}
+        \item By the stable manifold theorem, we can determine source, sink, saddle.
+        \item By the Hartman linearization theorem, we can further characterize the saddle point by saying that all orbits not on the stable/unstable manifolds (which we don't have to find) approach the fixed point and then diverge away.
+        \item Submit a sketch of the local behavior of each one with my answer!!
+    \end{itemize}
+    \item Question 4(3): What does this even mean?
+    \begin{itemize}
+        \item Solution is $1/3(x^3+y^3)+xy=a$.
+        \item As $a\to 1/3$, the orbits have shape very similar to an ellipse.
+        \item We need $a=0$ because we must have the system pass through zero.
+        \item This is related to the Lotka-Voterra model from Lecture 2.1.
+        \item $F$ is called a first integral.
+        \begin{itemize}
+            \item To be more general, in an undamped Newtonian system, the energy function is a first integral of the system. Think like quantum mechanics and vibrational energy levels being equivalent to segments of the energy parabola. More generally, though, this perspective applies to all mechanical systems via Hamiltonian mechanics. We don't need to understand Hamiltonian mechanics for this course, though, because we've defined phase spaces independently (a phase space is like the $(\theta,\omega)$ plane for the harmonic oscillator).
+            \item We talked about first integrals when we discussed the Kepler problem. The Kepler problem is covered in Section 8.5 of \textcite{bib:Teschl}.
+        \end{itemize}
+        \item We take
+        \begin{align*}
+            \frac{x'}{y'} &= \frac{-x-y^2}{x^2+y}\\
+            (x^2+y)\dv{x}{t} &= (-x-y^2)\dv{y}{t}\\
+            (x^2+y)\dv{x}{t}+(x+y^2)\dv{y}{t} &= 0
+        \end{align*}
+        Solve this for $F$, which will be a polynomial.
+    \end{itemize}
+    \item Question 4(4): What does this even mean?
+    \begin{itemize}
+        \item For the $c=0$ case, the stable set is the part of the curve tangent to the $x$-axis and the unstable set is the part of the curve tangent to the $y$-axis. We get a change from stable to unstable at $(0,0)$ and $(-1.5,-1.5)$.
+    \end{itemize}
+    \item Enzyme kinetics 1(1): What does "two first integrals" mean?
+    \begin{itemize}
+        \item First conservation law: Conservation of the substrate in all its forms. Second: Conservation of the enzyme in all its forms.
+        \item Sum of the second and third equations equals zero.
+        \item Sum of first, third, and fourth is zero.
+        \item We have
+        \begin{equation*}
+            0 = \dv{\cnc{E}}{t}+\dv{\cnc{ES}}{t}
+        \end{equation*}
+        This is also obvious from their definitions. Thus, $\cnc{E}+\cnc{ES}=\cnc[0]{E}$ is a first integral.
+        \item This is not an equation of exact form because of 3 derivatives, but it still implies a conservation law/has a first integral:
+        \begin{equation*}
+            0 = \dv{\cnc{S}}{t}+\dv{\cnc{ES}}{t}+\dv{\cnc{P}}{t}
+        \end{equation*}
+        That first integral is $\cnc{S}+\cnc{ES}+\cnc{P}=\cnc[0]{S}$
+    \end{itemize}
+    \item Iodine Clock: 2(1)?
+    \begin{itemize}
+        \item Ben knows what's going on here.
+        \item There are curves that divide the first quadrant into regions of definite sign.
+        \item Definite sign: Neither component changes sign in a certain region
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}
