@@ -468,5 +468,47 @@
 
 
 
+\section{Chapter 9: Local Behavior Near Fixed Points}
+\emph{From \textcite{bib:Teschl}}
+\subsection*{Section 9.1: Stability of Linear Systems}
+\begin{itemize}
+    \item \marginnote{12/6:}Goal for the chapter: "Show that a lot of information on the stability of a flow near a fixed point can be read off by linearizing the system around the fixed point" \parencite[253]{bib:Teschl}.
+    \item Recall the stability discussion for linear systems
+    \begin{equation*}
+        \dot{x} = Ax
+    \end{equation*}
+    from Section 3.2.
+    \begin{itemize}
+        \item Additionally, our definition from Section 6.5 is invariant under a linear change of coordinates, so we may work in JCF.
+        \item Recall that the long-term behavior is determined by the real part of the eigenvalues.
+        \item "In general, it depends on the initial condition, and there are two linear manifolds $E^+(\e[A])$ and $E^-(\e[A])$ such that if we start in $E^+(\e[A])$ (resp. $E^-(\e[A])$), then $x(t)\to 0$ as $t\to +\infty$ (resp. $t\to -\infty$)" \parencite[253]{bib:Teschl}.
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Section 9.2: Stable and Unstable Manifolds}
+\begin{itemize}
+    \item Goal: Transfer results from the previous section to nonlinear equations.
+    \item \textbf{Stable set} (of a fixed point): The set of all points converging to the fixed point $x_0$ for $t\to +\infty$. \emph{Denoted by} $\bm{W^+(x_0)}$. \emph{Given by}
+    \begin{equation*}
+        W^+(x_0) = \{x\in M\mid\lim_{t\to +\infty}|\Phi(t,x)-x_0|=0\}
+    \end{equation*}
+    \item \textbf{Unstable set} (of a fixed point): The set of all points converging to the fixed point $x_0$ for $t\to -\infty$. \emph{Denoted by} $\bm{W^-(x_0)}$. \emph{Given by}
+    \begin{equation*}
+        W^-(x_0) = \{x\in M\mid\lim_{t\to -\infty}|\Phi(t,x)-x_0|=0\}
+    \end{equation*}
+    \item Both the stable and unstable sets are invariant under the flow.
+    \item We know that for small $t$, the solutions are adequately described by the linearization, but what about for large $t$?
+    \begin{itemize}
+        \item In this section, we generalize the Section 6.5 result for $n=1$ stability and $A=f'(x_0)$ to higher dimensions.
+    \end{itemize}
+    \item \textbf{Hyperbolic} (fixed point of $f$): A fixed point $x_0$ for which the linearization $f'(x_0)$ has no eigenvalues with zero real part.
+    \begin{itemize}
+        \item Note that this is equivalent to the definition from class: The "zero real part" condition can be divided into two cases (equal to zero and nonzero but purely imaginary). This definition says no "zero real part;" that definition says not either of the latter two cases.
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}

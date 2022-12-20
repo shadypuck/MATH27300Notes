@@ -967,5 +967,312 @@
 
 
 
+\section{Chapter 3: Linear Equations}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 3.2: Linear Autonomous First-Order Systems}
+\begin{itemize}
+    \item \marginnote{12/6:}The solutions of an autonomous linear first-order system are given by $x(t)=\exp(tA)x_0$.
+    \begin{itemize}
+        \item Rigorous perspective: $\exp(tA)$ is an isomorphism between all initial conditions $x_0$ and all solutions.
+        \item Implication: The set of solutions is a vector space isomorphic to $\R^n$ (resp. $\C^n$).
+    \end{itemize}
+    \item To understand the dynamics of the solution, we need to understand $\exp(tA)$.
+    \item We do so starting with the case of two real dimensions (which covers all prototypical cases).
+    \item \textcite{bib:Teschl} does exactly what we did in class in Lecture 5.1.
+    \item \textbf{Source}: A descriptor applied to the origin of the real plane when both eigenvalues of the planar linear autonomous first-order system in question have \emph{positive} real part, and thus all solutions grow exponentially as $t\to +\infty$ and decay exponentially as $t\to -\infty$.
+    \item \textbf{Sink}: A descriptor applied to the origin of the real plane when both eigenvalues of the planar linear autonomous first-order system in question have \emph{negative} real part, and thus all solutions decay exponentially as $t\to +\infty$ and grow exponentially as $t\to -\infty$.
+    \item \textbf{Saddle}: A descriptor applied to the origin of the real plane when one eigenvalues of the planar linear autonomous first-order system in question has positive real part and the other has negative real part.
+    \item \textbf{Center}: A descriptor applied to the origin of the real plane when both eigenvaluess of the planar linear autonomous first-order system in question have \emph{purely imaginary} value.
+    \item Theorem 3.4: A solution of the linear system
+    \begin{equation*}
+        \dot{x}(t) = Ax(t)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    converges to 0 as $t\to +\infty$ iff the initial condition $x_0$ lies in the subspace spanned by the generalized eigenspaces corresponding to eigenvalues with negative real part.\par
+    It will remain bounded as $t\to +\infty$ iff $x_0$ lies in the subspace spanned by the generalized eigenspaces corresponding to eigenvalues with negative real part plus the eigenspaces corresponding to eigenvalues with vanishing real part.\par
+    The behavior as $t\to -\infty$ mimics the above description, except that we replace "negative" with "positive."
+    \item \textbf{Stable} (linear system): A linear system for which all solutions remain bounded as $t\to +\infty$.
+    \item \textbf{Asymptotically stable} (linear system): A linear system for which all solutions converge to 0 as $t\to +\infty$.
+    \item Corollary 3.5: The linear system
+    \begin{equation*}
+        \dot{x}(t) = Ax(t)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    is stable iff all eigenvalues $\alpha_j$ of $A$ satisfy $\Ree(\alpha_j)\leq 0$, and for all eigenvalues with $\Ree(\alpha_j)=0$, the corresponding algebraic and geometric multiplicities are equal. Moreover, in this case, there is a constant $C$ such that
+    \begin{equation*}
+        \norm{\exp(tA)} \leq C
+    \end{equation*}
+    for all $t\geq 0$.
+    \item Corollary 3.6: The linear system
+    \begin{equation*}
+        \dot{x}(t) = Ax(t)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    is asymptotically stable iff all eigenvalues $\alpha_j$ of $A$ satisfy $\Ree(\alpha_j)<0$. Moreover, in this case, there is a constant $C=C(\alpha)$ for every $\alpha<\min\{-\Ree(\alpha_j)\}_{j=1}^m$ (i.e., for every number of lesser value than the absolute value of the real component of the eigenvalue with smallest real part) such that
+    \begin{equation*}
+        \norm{\exp(tA)} \leq C\e[-t\alpha]
+    \end{equation*}
+    for all $t\geq 0$.
+    \begin{proof}
+        It remains to prove the second claim.\par
+        Since $\norm{U\exp(tJ)U^{-1}}\leq\norm{U}\norm{\exp(tJ)}\norm{U^{-1}}$, we can assume that $A$ is in JCF WLOG\footnote{Note that it also makes intuitive sense that the matrix norm should be the same for $A,J$ since they are the same linear transformation in different bases and will thus distort the unit $n$-sphere symmetrically.}. Now observe that
+        \begin{align*}
+            \norm{\exp(tA)} &= \norm{\exp(-t\alpha\mathbb{I}+tA+t\alpha\mathbb{I})}\\
+            &= \norm{\exp(-t\alpha\mathbb{I})\exp(t(A+\alpha\mathbb{I}))}\\
+            &= \norm{\e[-t\alpha]\exp(\mathbb{I})}\norm{\exp(t(A+\alpha\mathbb{I}))}\\
+            &= \e[-t\alpha]\norm{\exp(t(A+\alpha\mathbb{I}))}
+        \end{align*}
+        Since $\Ree(\alpha_j+\alpha)<0$ (sum of two negative components will be negative), all entries of the matrix $\exp(t(A+\alpha\mathbb{I}))$ are bounded as $t\to +\infty$ and consequently $\norm{\exp(t(A+\alpha\mathbb{I}))}$ is bounded --- say by $C$ --- so we may write
+        \begin{align*}
+            \norm{\exp(t(A+\alpha\mathbb{I}))} &\leq C\\
+            \e[t\alpha]\norm{\exp(tA)} &\leq C\\
+            \norm{\exp(tA)} &\leq C\e[-t\alpha]
+        \end{align*}
+        as desired.
+    \end{proof}
+    \item \textbf{Hurwitz matrix}: A matrix, the eigenvalues of which all satisfy $\Ree(\alpha_j)<0$.
+    \item \textbf{Routh-Hurwitz criterion}: What does this mean??
+    \item \textcite{bib:Teschl} reiterates \textbf{Duhamel's formula} for linear autonomous first-order systems.
+\end{itemize}
+
+
+
+\subsection*{Section 3.3: Linear Autonomous Equations of Order \texorpdfstring{$\bm{n}$}{TEXT}}
+\begin{itemize}
+    \item Consider the $n^\text{th}$ order equation
+    \begin{equation*}
+        x^{(n)}+c_{n-1}x^{(n-1)}+\cdots+c_1\dot{x}+c_0x = 0
+    \end{equation*}
+    with initial conditions
+    \begin{equation*}
+        x(0) = x_0,\quad
+        \dots,\quad
+        x^{(n-1)}(0) = x_{n-1}
+    \end{equation*}
+    \item As described in depth in Lecture 4.1 and 1.1, we can transform this equation to a linear system with matrix
+    \begin{equation*}
+        A =
+        \begin{pmatrix}
+            0 & 1 &  &  & \\
+             & 0 & 1 &  & \\
+             &  & \ddots & \ddots & \\
+             &  &  & 0 & 1\\
+            -c_0 & -c_1 & \cdots & \cdots & -c_{n-1}\\
+        \end{pmatrix}
+    \end{equation*}
+    \item Compute the characteristic polynomial by performing the Laplace expansion on the last row of
+    \begin{equation*}
+        z\mathbb{I}-A =
+        \begin{pmatrix}
+            z & -1 &  &  & \\
+             & z & -1 &  & \\
+             &  & \ddots & \ddots & \\
+             &  &  & z & -1\\
+            c_0 & c_1 & \cdots & \cdots & z+c_{n-1}\\
+        \end{pmatrix}
+    \end{equation*}
+    to yield
+    \begin{equation*}
+        \chi_A(z) = \det(z\mathbb{I}-A)
+        = z^n+c_{n-1}z^{n-1}+\cdots+c_1z+c_0
+    \end{equation*}
+    \begin{itemize}
+        \item Note that it is probably for the best to just accept that the characteristic polynomial has this nice form. We can prove this claim more rigorously using induction on $n$.
+    \end{itemize}
+    \item Claim: The geometric multiplicity of every eigenvalue is one.
+    \item Theorem 3.7: Let $\alpha_j$, $1\leq j\leq m$, be the zeros of the characteristic polynomial
+    \begin{equation*}
+        z^n+c_{n-1}z^{n-1}+\cdots+c_1z+c_0 = \prod_{j=1}^m(z-\alpha_j)^{a_j}
+    \end{equation*}
+    associated with $A$, and let $a_j$ be the corresponding multiplicities. Then the functions
+    \begin{equation*}
+        x_{j,k}(t) = t^k\exp(a_jt)
+    \end{equation*}
+    for $0\leq k<a_j$ and $1\leq j\leq m$ are $n$ linearly independent solutions of
+    \begin{equation*}
+        x^{(n)}+c_{n-1}x^{(n-1)}+\cdots+c_1\dot{x}+c_0x = 0
+    \end{equation*}
+    In particular, any other solution can be written as a linear combination of these solutions.
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Notes on Theorem 3.7.
+    \begin{itemize}
+        \item This theorem could be incredibly helpful to me!
+        \item Note that if $\alpha_j=\lambda_j+i\omega_j$, we take
+        \begin{align*}
+            t^k\e[\lambda_jt]\cos(\omega_jt)&&
+            t^k\e[\lambda_jt]\sin(\omega_jt)
+        \end{align*}
+        % \item Shao lied to me when he said the matrix form doesn't help us solve equations!
+    \end{itemize}
+    \item Example illustrating the power of Theorem 3.7.
+    \begin{itemize}
+        \item Consider the ODE
+        \begin{equation*}
+            \ddot{x}+\omega_0^2x = 0
+            ,\quad
+            \omega_0 > 0
+        \end{equation*}
+        \item The characteristic polynomial is $\alpha^2+\omega_0^2=0$ and the zeroes are $\alpha_1=i\omega_0$ and $\alpha_2=-i\omega_0$.
+        \item Hence, for $\omega_0>0$, a basis of solutions is
+        \begin{align*}
+            x_1(t) &= \e[i\omega_0t]&
+            x_2(t) &= \e[-i\omega_0t]
+        \end{align*}
+        \item If we want real solutions, we can get
+        \begin{align*}
+            x_1(t) &= \cos(\omega_0t)&
+            x_2(t) &= \sin(\omega_0t)
+        \end{align*}
+        \item If $\omega_0=0$, we only have one zero $\alpha_1=0$ of multiplicity $a_1=2$, so a basis of solutions is given by
+        \begin{align*}
+            x_{1,0}(t) &= 1&
+            x_{1,1}(t) &= t
+        \end{align*}
+    \end{itemize}
+    \item Consider the inhomogeneous equation
+    \begin{equation*}
+        x^{(n)}+c_{n-1}x^{(n-1)}+\cdots+c_1\dot{x}+c_0x = g(t)
+    \end{equation*}
+    \begin{itemize}
+        \item The general solution is given by Duhamel's formula as follows, where $x_h(t)$ is an arbitrary solution of the homogeneous equation (as provided by the above) and $u(t)$ is the solution of the homogeneous equation corresponding to the initial condition $u(0)=\dot{u}(0)=\cdots=u^{(n-2)}(0)=0$ and $u^{(n-1)}=1$ (see Problem 3.21).
+        \begin{equation*}
+            x(t) = x_h(t)+\int_0^tu(t-s)g(s)\dd{s}
+        \end{equation*}
+    \end{itemize}
+    \item Algorithm for solving a linear $n^\text{th}$ order equation with constant coefficients.
+    \begin{enumerate}
+        \item Start with the homogeneous equation.
+        \item Compute the zeroes of the characteristic polynomial and write down the general solution as a linear combination of the fundamental solutions.
+        \item Find a particular solution of the inhomogeneous equation and determine the unknown constants of the homogeneous equation from the initial conditions.
+    \end{enumerate}
+    \item Lemma 3.8: Consider the inhomogeneous equation
+    \begin{equation*}
+        x^{(n)}+c_{n-1}x^{(n-1)}+\cdots+c_1\dot{x}+c_0x = p(t)\e[\beta t]
+    \end{equation*}
+    where $p(t)$ is a polynomial. Then there is a particular solution of the same form $x_p(t)=q(t)\e[\beta t]$, where $q(t)$ is a polynomial which satisfies $\deg(q)=\deg(p)$ if $\beta\notin\{\alpha_j\}_{j=1}^m$ is not equal to any of the characteristic eigenvalues and $\det(q)=\deg(p)+a_j$ if $\beta=\alpha_j$ is equal to one of the characteristic eigenvalues whose algebraic multiplicity is $a_j$.
+    \begin{itemize}
+        \item In the case $\beta=\alpha_j$, we assume the first $a_j$ coefficients to be zero since they correspond to a homogeneous solution.
+        \item If you allow complex values $\beta=\lambda+i\omega$, then we get real $g(t)=p(t)\e[\lambda t]\cos(\omega t)$ or $g(t)=p(t)\e[\lambda t]\sin(\omega t)$.
+        \item Linear combinations of such terms comes for free by linearity.
+        \item Of particular importance: The case of second order, which appears in a vast number of applications.
+    \end{itemize}
+    \item \textbf{RLC circuit}: An inductor $L$, capacitor $C$, and resistor $R$ arranged in a loop together with an external power source $V$.
+    \item \textcite{bib:Teschl} does the RLC circuit derivation associated with Figure \ref{fig:drivenHOoriginb}. Particularly interesting notes:
+    \begin{itemize}
+        \item Since a circuit is a set of elements, each of which has two connectors (in and out) and every connector is connected to one or more connectors of the other elements, a circuit is mathematically a \textbf{directed graph}.
+        \item At each time $t$, there will be a certain current $I(t)$ flowing through each element and a certain voltage difference $V(t)$ between its connectors. The state space of the system is given by the pairs $(I,V)$ of all elements in the circuit.
+        \item The pairs $(I,V)$ must satisfy \textbf{Kirchoff's first law} and \textbf{Kirchoff's second law}. In this case, we have respectively that
+        \begin{align*}
+            I_R &= I_L = I_C&
+            V_R+V_L+V_C &= V
+        \end{align*}
+        \item We can write a further three equations
+        \begin{align*}
+            L\dot{I}_L &= V_L&
+            C\dot{V}_C &= I_C&
+            V_R &= RI_R
+        \end{align*}
+        where $L,C,R>0$ are the inductance, capacitance, and resistance, respectively; $I_L(t),I_C(t),I_R(t)$ is the current through the inductor, capacitor, and resistor, respectively; and $V_L(t),V_C(t),V_R(t)$ is the voltage difference across the inductor, capacitor, and resistor, respectively.
+        \item Combining these five equations into one.
+        \begin{itemize}
+            \item We first differentiate (wrt. $t$) and rearrange the latter three to put them in terms of $\dot{V}_i$ ($i=L,C,R$).
+            \begin{align*}
+                \dot{V}_L &= L\ddot{I}_L&
+                \dot{V}_C &= \frac{I_C}{C}&
+                \dot{V}_R &= R\dot{I}_R
+            \end{align*}
+            \item We then differentiate Kirchoff's second law and substitute in the above.
+            \begin{align*}
+                \dot{V}(t) &= \dot{V}_R+\dot{V}_L+\dot{V}_C\\
+                &= R\dot{I}_R+L\ddot{I}_L+\frac{I_C}{C}
+            \end{align*}
+            \item Lastly, we take advantage of Kirchoff's first law and drop the subscript from all of the currents.
+            \begin{equation*}
+                L\ddot{I}(t)+R\dot{I}(t)+\frac{1}{C}I(t) = \dot{V}(t)
+            \end{equation*}
+        \end{itemize}
+        \item To get our final equation, use the complex voltage $V(t)=V_0\e[i\omega t]$ and divide through by $L$.
+        \begin{equation*}
+            \ddot{I}+\frac{R}{L}\dot{I}+\frac{1}{LC}I = \frac{i\omega V_0}{L}\e[i\omega t]
+        \end{equation*}
+    \end{itemize}
+    \item \textbf{Kirchoff's first law}: Charge is conserved, i.e., the sum over all currents in a circuit element (graph vertex) must vanish.
+    \item \textbf{Kirchoff's second law}: The voltage corresponds to a potential, i.e., the sum over all voltage differences in a closed loop must vanish.
+    \item Analysis of the RLC circuit equation.
+    \emph{picture}
+    \begin{itemize}
+        \item The eigenvalues are
+        \begin{equation*}
+            \alpha_{1,2} = -\eta\pm\sqrt{\eta^2-\omega_0^2}
+        \end{equation*}
+        where we have defined
+        \begin{align*}
+            \eta &= \frac{R}{2L}&
+            \omega_0 &= \frac{1}{\sqrt{LC}}
+        \end{align*}
+        \item Three cases to consider based on the discriminant: $\eta>\omega_0$ (\textbf{over damping}), $\eta=\omega_0$ (\textbf{critical damping}), and $\eta<\omega_0$ (\textbf{under damping}).
+        \item It follows from Theorem 3.7 that the respective general homogeneous solutions for the current are
+        \begin{align*}
+            I_h(t) &= k_1\e[\alpha_1t]+k_2\e[\alpha_2t]&
+            I_h(t) &= (k_1+k_2t)\e[-\eta t]&
+            I_h(t) &= k_1\e[-\eta t]\cos(\beta t)+k_2\e[-\eta t]\sin(\beta t)
+        \end{align*}
+        for $k_1,k_2\in\C$ and where $\beta=\sqrt{\omega_0^2-\eta^2}>0$ in the last equation (under damping).
+        \item In every case, the real part of both eigenvalues is negative, so the homogeneous solution decays exponentially as $t\to +\infty$.
+        \item Observation: For fixed $\eta>0$, the choice $\omega_0=\eta$ gives the fastest decay without an oscillatory component.
+        \item To get a particular solution for the inhomogeneous equation, use $I_i(t)=k\e[i\omega t]$ as the ansatz:
+        \begin{align*}
+            -L\omega^2k\e[i\omega t]+Ri\omega k\e[i\omega t]+\frac{1}{C}k\e[i\omega t] &= \frac{i\omega V_0}{L}\e[i\omega t]\\
+            -L\omega^2k+Ri\omega k+\frac{1}{C}k &= \frac{i\omega V_0}{L}\\
+            k &= \frac{V_0}{R+i\left( L\omega-\frac{1}{\omega C} \right)}
+        \end{align*}
+        \item Since the homogeneous solution decays exponentially, we have after a short time
+        \begin{equation*}
+            I(t) \approx I_i(t)
+            = \frac{V_0}{Z}\e[i\omega t]
+            = \frac{1}{Z}V(t)
+        \end{equation*}
+        where
+        \begin{equation*}
+            Z = R+Z_L+Z_C,\quad
+            Z_L = iL\omega,\quad
+            Z_C = -\frac{i}{\omega C}
+        \end{equation*}
+        is the \textbf{complex impedence}.
+        \item It follows from the above that the current obtains its maximum when $|Z|^2$ (an easily computed measure of complex radius) is minimal. If we want to minimize
+        \begin{equation*}
+            |Z|^2 = R^2+\left( L\omega-\frac{1}{\omega C} \right)^2
+        \end{equation*}
+        then we should minimize $R$ and let
+        \begin{align*}
+            L\omega-\frac{1}{\omega C} &= 0\\
+            \omega &= \frac{1}{\sqrt{LC}} = \omega_0
+        \end{align*}
+        The frequency $\omega_0/2\pi$ is called the \textbf{resonance frequency} of the circuit.
+        \item By changing one of the parameters --- say $C$ --- you can thus tune the circuit to a specific resonance frequency.
+        \begin{itemize}
+            \item "This idea is for example used ot filter your favorite radio station out of many other available ones. In this case, the external power source corresponds to the signal picked up by your antenna and the RLC circuit starts only oscillating if the carrying frequency of your radio station matches its resonance frequency" \parencite[79]{bib:Teschl}.
+        \end{itemize}
+    \end{itemize}
+    \item Many other systems beyond RLC circuits can be described (at least for small amplitudes) by the differential equation
+    \begin{equation*}
+        \ddot{x}+2\eta\dot{x}+\omega_0^2x = 0
+        ,\quad
+        \eta,\omega_0 > 0
+    \end{equation*}
+    \begin{itemize}
+        \item $\eta$ is called the \textbf{damping factor}.
+        \item Making the equation inhomogeneous with a periodic \textbf{forcing} term $\cos(\omega t)$ produces maximal effect if the forcing is resonant, that is, if $\omega$ coincides with $\omega_0$.
+        \item If $\eta=0$, the solution corresponds to a free (undamped) oscillation $x(t)=k_1\cos(\omega_0t)+k_2\sin(\omega_0t)$ and a resonant forcing will result in a solution whose amplitude tends to $\infty$.
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}

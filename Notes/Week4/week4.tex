@@ -61,6 +61,7 @@
     \endgroup
     \begin{itemize}
         \item We get from the second to the third line by substituting $y(t)$, as defined into the second line, into where it appears in the integral.
+        \item This is one form of the Picard iteration. Another that's more consistent with other techniques we'll use later is presented in the reading. The above one substitutes in the first equation each time; the other one substitutes in the new equation each time.
     \end{itemize}
     \item We want to show that the integral converges to zero.
     \begin{itemize}
@@ -516,6 +517,212 @@
     \end{equation*}
     then the eigenspace corresponding to the upper block is said to be unstable, and the other one is said to be stable.
     \item Consider the vector $\e[tA]v$. The entries consist of linear combinations of functions of the form $t^k\e[t\lambda]$. If the real part is greater than zero, the solution grows exponentially fast in the $t$ direction (notice how $t\to\infty$ implies $t^k\e[t\lambda]\to\infty$). Otherwise, the solution decays exponentially fast (notice how $t\to\infty$ implies $t^k\e[t\lambda]\to 0$).
+\end{itemize}
+
+
+
+\section{Chapter 3: Linear Equations}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 3.1: The Matrix Exponential}
+\begin{itemize}
+    \item \marginnote{12/6:}Note: This section (in the book's chronology) follows several others that we will only study later in the course. Thus, when terms are bolded but not defined here, they are likely callbacks to prior sections in the book. You can look up their definitions in the portion of these notes treating those sections.
+    \item Herein, we will study the system
+    \begin{equation*}
+        \dot{x}(t) = Ax(t)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    where $A$ is an $n\times n$ matrix.
+    \item \textcite{bib:Teschl} reviews how we take the matrix product, the definition of the scalar product, and the definition of the norm.
+    \item \textcite{bib:Teschl} denotes the identity matrix by $\mathbb{I}$.
+    \item Deriving the solution to the above ODE.
+    \begin{itemize}
+        \item We use the \textbf{Picard iteration} to derive a Taylor series that converges to the solution to the ODE by the \textbf{Picard-Lindel\"{o}f theorem}.
+        \item Start with $x_0(t)=x_0$ as our first approximation. The first few terms are
+        \begin{align*}
+            x_0(t) &= x_0\\
+            x_1(t) &= x_0+\int_0^tAx_0(s)\dd{s}
+                = x_0+Ax_0\int_0^t\dd{s}
+                = x_0+tAx_0\\
+            x_2(t) &= x_0+\int_0^tAx_1(s)\dd{s}
+                = x_0+Ax_0\int_0^t\dd{s}+A^2x_0\int_0^tx\dd{s}\\
+                &= x_0+tAx_0+\frac{t^2}{2}A^2x_0
+        \end{align*}
+        \item This motivates an induction proof (omitted here and in \textcite{bib:Teschl}), resulting in the formula
+        \begin{equation*}
+            x_m(t) = \sum_{j=0}^m\frac{t^j}{j!}A^jx_0
+        \end{equation*}
+        \item As mentioned above, the Picard-Lindel\"{o}f theorem implies that the Taylor series converges and thus
+        \begin{equation*}
+            x(t) = \lim_{m\to\infty}x_m(t)
+            = \sum_{j=0}^\infty\frac{t^j}{j!}A^jx_0
+        \end{equation*}
+        \item But this series converges to a variant of the \textbf{matrix exponential}, yielding
+        \begin{equation*}
+            x(t) = \exp(tA)x_0
+        \end{equation*}
+        \item Therefore, "to understand our original problem, we have to understand the matrix exponential!" \parencite[60]{bib:Teschl}.
+    \end{itemize}
+    \item \textbf{Matrix exponential} (of $A$): The following matrix. \emph{Denoted by} $\bm{\textbf{exp}(A)}$. \emph{Given by}
+    \begin{equation*}
+        \exp(A) = \sum_{j=0}^\infty\frac{1}{j!}A^j
+    \end{equation*}
+    \item Going forward, we will work in $\C^n$ since $\C$ is algebraically closed (which will be important later on for JCF).
+    \item For use later, we introduce a suitable norm for matrices and give a direct proof for the convergence of the above series in this norm. In particular\dots
+    \item \textbf{Matrix norm} (of $A$): The following function from the space of $n\times n$ matrices to the nonnegative real numbers, where $A$ is a complex matrix acting on $\C^n$. \emph{Denoted by} $\bm{\Vert A\Vert}$. \emph{Given by}
+    \begin{equation*}
+        \norm{A} = \sup_{x:|x|=1}|Ax|
+    \end{equation*}
+    \item $\bm{\pmb{\C}^{n\times n}}$: The vector space of $n\times n$ matrices over $\C$.
+    \item Under the matrix norm, $\C^{n\times n}$ becomes a \textbf{Banach space}.
+    \item An interesting formula.
+    \begin{equation*}
+        \max_{1\leq 1,j\leq n}|A_{i,j}| \leq \norm{A}
+        \leq n\max_{1\leq i,j\leq n}|A_{i,j}|
+    \end{equation*}
+    \begin{itemize}
+        \item Implication: A sequence of matrices converges in the matrix norm iff all matrix entries converge.
+    \end{itemize}
+    \item Since $\norm{A^j}\leq\norm{A}^j$, convergence of the series defining $\exp(A)$ follows from convergence of
+    \begin{equation*}
+        \sum_{j=0}^\infty\frac{\norm{A}^j}{j!} = \exp(\norm{A})
+    \end{equation*}
+    \item \textbf{Commutator} (of $A,B$): The following matrix, where $A,B$ are matrices. \emph{Denoted by} $\bm{[A,B]}$. \emph{Given by}
+    \begin{equation*}
+        [A,B] = AB-BA
+    \end{equation*}
+    \begin{itemize}
+        \item The commutator vanishes iff $A,B$ commute.
+    \end{itemize}
+    \item Lemma 3.1: Suppose $A,B$ commute, i.e., $[A,B]=0$. Then
+    \begin{equation*}
+        \exp(A+B) = \exp(A)\exp(B)
+    \end{equation*}
+    \item Suppose we perform a linear change of coordinates $y=U^{-1}x$. Then the matrix exponential in the new coordinates is given by
+    \begin{equation*}
+        U^{-1}\exp(A)U = \exp(U^{-1}AU)
+    \end{equation*}
+    \begin{itemize}
+        \item This follows from the definition of the matrix exponential, the fact that $U^{-1}A^jU=(U^{-1}AU)^j$ for arbitrary natural number powers $j$, and the fact that the matrix product is continuous with respect to the matrix norm (i.e., if $A_j\to A$ and $B_j\to B$, then $A_jB_j\to AB$).
+        \item Thus, to compute $\exp(A)$, we'd prefer a coordinate transform which renders $A$ as simple as possible.
+    \end{itemize}
+    \item Theorem 3.2 (Jordan canonical form): Let $A$ be a complex $n\times n$ matrix. Then there exists a linear change of coordinates $U$ such that $A$ transforms into a block matrix
+    \begin{equation*}
+        U^{-1}AU =
+        \begin{pmatrix}
+            J_1 &  & \\
+             & \ddots & \\
+             &  & J_m\\
+        \end{pmatrix}
+    \end{equation*}
+    with each block of the form
+    \begin{equation*}
+        J = \alpha\mathbb{I}+N
+        =
+        \begin{pmatrix}
+            \alpha & 1 &  &  & \\
+             & \alpha & 1 &  & \\
+             &  & \alpha & \ddots & \\
+             &  &  & \ddots & 1\\
+             &  &  &  & \alpha\\
+        \end{pmatrix}
+    \end{equation*}
+    Here, $N$ is a matrix with ones in the first diagonal above the main diagonal and zeroes elsewhere.
+    \begin{itemize}
+        \item The numbers $\alpha$ are the eigenvalues of $A$. The new basis vectors $u_j$ (the columns of $U$) consist of generalized eigenvectors of $A$.
+        \item The general details of finding the JCF are quite cumbersome and deferred to Section 3.8. Typically, we use computers to do this nowadays.
+    \end{itemize}
+    \item We can now compute the matrix exponential.
+    \begin{itemize}
+        \item First, we break into Jordan blocks.
+        \begin{equation*}
+            \exp(U^{-1}AU) =
+            \begin{pmatrix}
+                \exp(J_1) &  & \\
+                 & \ddots & \\
+                 &  & \exp(J_m)\\
+            \end{pmatrix}
+        \end{equation*}
+        \item Since $\alpha I$ commutes with $N$, we infer from Lemma 3.1 that we can compute the matrix exponential of a Jordan block as follows.
+        \begin{equation*}
+            \exp(J) = \exp(\alpha\mathbb{I})\exp(N)
+            = \e[\alpha]\sum_{j=0}^{k-1}\frac{1}{j!}N^j
+            = \e[\alpha]
+            \begin{pmatrix}
+                1 & 1 & \frac{1}{2!} & \cdots & \frac{1}{(k-1)!}\\
+                 & 1 & 1 & \ddots & \vdots\\
+                 &  & 1 & \ddots & \frac{1}{2!}\\
+                 &  &  & \ddots & 1\\
+                 &  &  &  & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{itemize}
+            \item We assume that $J$ (and hence $\mathbb{I},N$) is/are $k\times k$.
+            \item In the last step, we make use of the fact that $N^j$ is a matrix with ones in the $j^\text{th}$ diagonal above the main diagonal, and thus that $N^j$ vanishes from when $j$ reaches the size of $N$. Indeed, we could still sum all the way up to $\infty$; we'd just only be adding on zeroes matrices after the $k-1$ term.
+        \end{itemize}
+    \end{itemize}
+    \item In two dimensions, the exponential of
+    \begin{equation*}
+        A =
+        \begin{pmatrix}
+            a & b\\
+            c & d\\
+        \end{pmatrix}
+    \end{equation*}
+    is given by
+    \begin{equation*}
+        \exp(A) = \e[\delta]\left(
+            \cosh(\Delta)\mathbb{I}+\frac{\sinh(\Delta)}{\Delta}
+            \begin{pmatrix}
+                \gamma & b\\
+                c & -\gamma\\
+            \end{pmatrix}
+        \right)
+    \end{equation*}
+    where
+    \begin{align*}
+        \delta &= \frac{a+d}{2}&
+        \gamma &= \frac{a-d}{2}&
+        \Delta &= \sqrt{\gamma^2+bc}
+    \end{align*}
+    \begin{itemize}
+        \item Special cases:
+        \begin{itemize}
+            \item $\Delta=0$. In this case, define
+            \begin{equation*}
+                \frac{\sinh(\Delta)}{\Delta} = 1
+            \end{equation*}
+            \item $\Delta$ is purely imaginary. In this case, we have
+            \begin{align*}
+                \cosh(i\Delta) &= \cos\Delta&
+                \frac{\sinh(i\Delta)}{i\Delta} &= \frac{\sin(\Delta)}{\Delta}
+            \end{align*}
+        \end{itemize}
+        \item Derivation: Given as in HW3 Q3.
+    \end{itemize}
+    \item If $A$ is in JCF, we can easily see that
+    \begin{equation*}
+        \det(\exp(A)) = \exp(\trace(A))
+    \end{equation*}
+    \begin{itemize}
+        \item Since the determinant and trace are invariant under coordinate change, this formula holds for arbitrary matrices, too.
+    \end{itemize}
+    \item Lemma 3.3: A vector $u$ is an eigenvector of $A$ corresponding to the eigenvalue $\alpha$ iff $u$ is an eigenvector of $\exp(A)$ corresponding to the eigenvalue $\e[\alpha]$.\par
+    Moreover, the Jordan structure of $A$ and $\exp(A)$ are the same except for the fact that the eigenvalues of $A$ which differ by a multiple of $2\pi i$ (as well as the corresponding Jordan blocks) are mapped to the same eigenvalue of $\exp(A)$. In particular, the geometric and algebraic multiplicity of $\e[\alpha]$ is the sum of the geometric and algebraic multiplicities of the eigenvalues which differ from $\alpha$ by a multiple of $2\pi i$.
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item \textcite{bib:Teschl} covers a method not described in class in which we can get an alternate \textbf{real Jordan canonical form}.
+    \begin{itemize}
+        \item This method may explain the complex eigenvectors final step for that subset of planar autonomous systems.
+    \end{itemize}
+\end{itemize}
+
+
+
+\subsection*{Section 3.8: Appendix -- Jordan Canonical Form}
+\begin{itemize}
+    \item \textcite{bib:Teschl} has quite a bit to say on JCF!
 \end{itemize}
 
 

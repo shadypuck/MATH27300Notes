@@ -433,5 +433,151 @@
 
 
 
+\section{Chapter 7: Planar Dynamical Systems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 7.2: Examples from Electrical Engineering}
+\begin{itemize}
+    \item \marginnote{12/6:}Consider an RLC circuit again, but this time with a resistor of arbitrary characteristic
+    \begin{equation*}
+        V_R = R(I_R)
+    \end{equation*}
+    \begin{itemize}
+        \item Ohm's law asserts that $R(I_R)=RI_R$, where the resistance $R$ is a constant.
+        \item But what about a stranger, more sophisticated element? We must have $R(0)=0$ (since there's no potential difference if there's no current) for any characteristic, but other than that, we're pretty free.
+    \end{itemize}
+    \item \textbf{Diode}: A circuit element that lets the current pass in only one direction.
+    \begin{itemize}
+        \item For example, the characteristic of a diode is given by
+        \begin{equation*}
+            V = \frac{kT}{q}\log(1+\frac{I}{I_L})
+        \end{equation*}
+        where $I_L$ is the leakage current, $q$ is the charge of an electron, $k$ is the Boltzmann constant, and $T$ is the absolute temperature.
+        \item Implications: In the positive direction, very little voltage gives a large current; in the negative direction, you will get almost no current even for fairly large voltages.
+    \end{itemize}
+    \item As in class, we obtain the system
+    \begin{align*}
+        L\dot{I}_L &= -V_C-R(I_L)\\
+        C\dot{V}_C &= I_L
+    \end{align*}
+    where $R(0)=0$ and $L,C>0$.
+    \item Additional note.
+    \begin{itemize}
+        \item Kirchoff's laws and the substitutions from Section 3.3 imply
+        \begin{align*}
+            I_LV_L+I_CV_C+I_RV_R &= 0\\
+            LI_L\dot{I}_L+CV_C\dot{V}_C+I_RR(I_R) &= 0\\
+            \dv{t}(\frac{L}{2}I_L^2+\frac{C}{2}V_C^2) &= -I_RR(I_R)
+        \end{align*}
+        \item Conclusion: The energy dissipated in the resistor has to come from the inductor and capacitor.
+    \end{itemize}
+    \item \textbf{Li\'{e}nard's equation}: The result of scaling the above system. \emph{Given by}
+    \begin{align*}
+        \dot{x} &= y-f(x)\\
+        \dot{y} &= -x
+    \end{align*}
+    \item The additional note now reads
+    \begin{equation*}
+        \dv{t}W(x,y) = -xf(x)
+    \end{equation*}
+    where
+    \begin{equation*}
+        W(x,y) = \frac{x^2+y^2}{2}
+    \end{equation*}
+    \begin{itemize}
+        \item If $xf(x)>0$ in a neighborhood of $x=0$, then $W$ is a Lyapunov function and hence $(0,0)$ is stable.
+    \end{itemize}
+    \item Theorem 7.5: Suppose $xf(x)\geq 0$ for all $x\in\R$ and $xf(x)>0$ for $0<|x|<\varepsilon$. Then every trajectory of Li\'{e}nard's equation converges to $(0,0)$.
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Conversely, if $xf(x)<0$ for $0<|x|<\varepsilon$, then $(0,0)$ is unstable (and the distance to the fixed point will actually grow).
+    \item \textcite{bib:Teschl} works through proving the main theorem from lecture (Theorem 7.8 below).
+    \item Theorem 7.8: Suppose $f$ satisfies requirements (i)-(iii) below.
+    \begin{enumerate}[label={(\roman*)}]
+        \item $f$ is odd, that is, $f(-x)=-f(x)$.
+        \item $f(x)<0$ for $0<x<\alpha$ ($f(\alpha)=0$ without restriction).
+        \item $\liminf_{x\to\infty}f(x)>0$ and, in particular, $f(x)>0$ for $x>\beta$ ($f(\beta)=0$ without restriction).
+        \item $f(x)$ is monotone increasing for $x>\alpha$ (i.e., $\alpha=\beta$).
+    \end{enumerate}
+    Then Li\'{e}nard's equation has at least one periodic orbit encircling $(0,0)$.\par
+    If in addition (iv) holds, this periodic orbit is unique and every trajectory (except $(0,0)$) converges to this orbit as $t\to\infty$.
+    \item The classical application of this theory is to \textbf{van der Pol's equation}.
+    \item \textbf{Van der Pol's equation}: The following ODE, which models a triode circuit. \emph{Given by}
+    \begin{equation*}
+        \ddot{x}-\mu(1-x^2)\dot{x}+x = 0
+        ,\quad
+        \mu > 0
+    \end{equation*}
+    \item We can show that van der Pol's equation is equivalent to Li\'{e}nard's equation with
+    \begin{equation*}
+        f(x) = \mu\left( \frac{x^3}{3}-x \right)
+    \end{equation*}
+    \item Therefore, by Theorem 7.8, van der Pol's equation has a unique periodic orbit and all trajectories converge to this orbit as $t\to\infty$.
+\end{itemize}
+
+
+\subsection*{Section 7.3: The Poincar\'{e}-Bendixson Theorem}
+\begin{itemize}
+    \item In all previous examples, the solutions of ODEs have either converged to a fixed point or a periodic orbit.
+    \begin{itemize}
+        \item This is normal behavior, and in this section we will classify all possible $\omega_\pm$-limit sets (for planar systems).
+        \item Note that the difference between $\R^2$ and $\R^n$ ($n\geq 3$) arises from the validity of the \textbf{Jordan Curve Theorem} in $\R^2$ and its being false in higher dimensions.
+    \end{itemize}
+    \item \textbf{Jordan curve}: A homeomorphic image of the circle $S^1$. \emph{Denoted by} $\bm{J}$.
+    \item \textbf{Jordan Curve Theorem}: Every Jordan curve dissects $\R^2$ into two connected regions. In particular, $\R^2\setminus J$ ahs two components.
+    \item \textcite{bib:Teschl} builds up to proving the Poincar\'{e}-Bendixson theorem.
+    \item Theorem 7.16 (generalized Poincar\'{e}-Bendixson): Let $M$ be an open subset of $\R^2$ and $f\in C^1(M,\R^2)$. Fix $x\in M$, $\sigma\in\{\pm\}$, and suppose $\omega_\sigma(x)\neq\emptyset$ is compact, connected, and contains only finitely many points. Then one of the following cases holds.
+    \begin{enumerate}[label={(\roman*)}]
+        \item $\omega_\sigma(x)$ is a fixed orbit.
+        \item $\omega_\sigma(x)$ is a regular periodic orbit.
+        \item $\omega_\sigma(x)$ consists of (finitely many) fixed points $\{x_j\}$ and non-closed orbits $\gamma(y)$ such that $\omega_\pm(y)\in\{x_j\}$.
+    \end{enumerate}
+    \item \textcite{bib:Teschl} gives an example of the third case.
+    \item Lemma 7.17: The interior of every periodic orbit must contain a fixed point.
+    \item \textbf{Limit cycle}: A periodic orbit attracting other orbits.
+    \item Lemma 7.18: Let $\gamma(y)$ be an isolated regular periodic orbit (such that there are no other periodic orbits within a neighborhood). Then every orbit $\gamma(x)$ starting sufficiently close to $\gamma(y)$ will have either $\omega_-(x)=\gamma(y)$ or $\omega_+(x)=\gamma(y)$.
+    \item Example: In general, the system
+    \begin{align*}
+        \dot{x} &= -y+f(r)x&
+        \dot{y} &= x+f(r)y
+    \end{align*}
+    becomes
+    \begin{align*}
+        \dot{r} &= rf(r)&
+        \dot{\theta} &= 1
+    \end{align*}
+    for any function $f$.
+\end{itemize}
+
+
+
+\section{Chapter 8: Higher Dimensional Dynamical Systems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 8.1: Attracting Sets}
+\begin{itemize}
+    \item Not much of relevance here.
+    \item A bit on the Duffing equation from HW7.
+    \item \textbf{Topologically transitive} (set): A closed invariant set $\Lambda$ such that for any two open sets $U,V\subset\Lambda$, there is some $t\in\R$ such that $\Phi(t,U)\cap V\neq\emptyset$.
+    \item \textbf{Attractor}: An attracting set which is topologically transitive. \emph{Denoted by} $\bm{\Lambda}$.
+\end{itemize}
+
+
+\subsection*{Section 8.2: The Lorenz Equation}
+\begin{itemize}
+    \item \textbf{Lorenz equation}: One of the most famous dynamical systems which exhibits chaotic behavior. \emph{Given by}
+    \begin{align*}
+        \dot{x} &= -\sigma(x-y)\\
+        \dot{y} &= rx-y-xz\\
+        \dot{z} &= xy-bz
+    \end{align*}
+    where $\sigma,r,b>0$.
+    \begin{itemize}
+        \item "Lorenz arrived at these equations when modelling a two-dimensional fluid cell between two parallel plates which are at different temperatures. The corresponding situation is described by a complicated system of nonlinear partial differential equations. To simplify the problem, he expanded the unknown functions into Fourier series with respect to the spacial coordinates and set all coefficients except for three equal to zero. The resulting equation for the three time dependent coefficients is [the above]. The variable $x$ is proportional to the intensity of convective motion, $y$ is proportional to the temperature difference between ascending and descending currents, and $z$ is proportional to the distortion from linearity of the vertical temperature profile" \parencite[234]{bib:Teschl}.
+    \end{itemize}
+    \item \textbf{Strange attractor}: An attractor that has a complicated set structure.
+\end{itemize}
+
+
+
 
 \end{document}

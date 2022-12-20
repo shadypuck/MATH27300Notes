@@ -472,5 +472,713 @@
 
 
 
+\section{Chapter 2: Initial Value Problems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 2.6: Extensibility of Solutions}
+\begin{itemize}
+    \item \marginnote{12/6:}Investigating the maximal interval on which a solution to an IVP can be defined.
+    \item Not really something we covered in class (certainly not from a theoretical point of view).
+\end{itemize}
+
+
+\subsection*{Section 2.7: Euler's Method and the Peano Theorem}
+\begin{itemize}
+    \item Mostly review from class; a few interesting points noted below.
+    \item We can derive the Peano proof technique from Taylor's theorem by approximating
+    \begin{equation*}
+        \phi(t_0+h) = x_0+\dot{\phi}(t_0)h+o(h)
+        = x_0+f(t_0,x_0)h+o(h)
+    \end{equation*}
+    eliminating the error term, and rearranging.
+    \item \textbf{Euler's method}: A method for approximating the solution to an ODE via
+    \begin{equation*}
+        x_h(t_{m+1}) = x_h(t_m)+f(t_m,x_h(t_m))h
+        ,\quad
+        t_m = t_0+mh
+    \end{equation*}
+    using linear interpolation in between.
+    \item \textbf{Equicontinuous} (family of functions): A family of functions $\{x_m\}$ such that for every $\varepsilon>0$, there is a $\delta>0$ such that if $|t-s|<\delta$ and $m\in\N$, then
+    \begin{equation*}
+        |x_m(t)-x_m(s)| \leq \varepsilon
+    \end{equation*}
+    \begin{itemize}
+        \item Note that each function in an equicontinuous family of functions is uniformly continuous.
+    \end{itemize}
+    \item Theorem 2.18 (Arzel\`{a}-Ascoli): Suppose the sequence of functions $x_m(t)\in C(I,\R^n)$, $m\in\N$, on a compact inverval $I$ is equicontinuous. If the sequence $x_m$ is bounded, then there is a uniformly convergent subsequence.
+    \item Theorem 2.19 (Peano): Suppose $f$ is continuous on $V=[t_0,t_0+T]\times\overline{B_\delta(x_0)}\subset U$ and denote the maximum of $|f|$ by $M$. Then there exists at least one solution of the initial value problem
+    \begin{equation*}
+        \dot{x} = f(t,x)
+        ,\quad
+        x(t_0) = x_0
+    \end{equation*}
+    for $t\in[t_0,t_0+T_0]$ which remains in $\overline{B_\delta(x_0)}$, where $T_0=\min(T,\delta/M)$. The analogous result holds for the interval $[t_0-T_0,t_0]$.
+    \item The Euler algorithm is not the most effective one available today.
+    \begin{itemize}
+        \item Variations on it usually take more terms in the Taylor expansion, resulting in an algorithm that converges faster but requires more calculations at each step.
+        \item A good compromise between more terms (but not too many more terms) is the \textbf{Runge-Kutta algorithm}.
+        \item Even better ones appear in the literature on numerical methods for ODEs.
+    \end{itemize}
+    \item \textbf{Runge-Kutta algorithm}: An algorithm which approximates $\phi(t_0+h)$ up to the fourth order in $h$, setting $t_m=t_0+hm$ and $x_m=x_n(t_m)$ to yield
+    \begin{equation*}
+        x_{m+1} = x_m+\frac{h}{6}(k_{1,m}+2k_{2,m}+2k_{3,m}+k_{4,m})
+    \end{equation*}
+    where
+    \begin{align*}
+        k_{1,m} &= f(t_m,x_m)&
+            k_{2,m} &= f(t_m+\tfrac{h}{2},x_m+\tfrac{h}{2}\cdot k_{1,m})\\
+        k_{3,m} &= f(t_m+\tfrac{h}{2},x_m+\tfrac{h}{2}\cdot k_{2,m})&
+            k_{4,m} &= f(t_{m+1},x_m+hk_{3,m})
+    \end{align*}
+\end{itemize}
+
+\subsubsection*{Problems}
+\begin{enumerate}[label={\textbf{2.\arabic*.}},ref={2.\arabic*},leftmargin=3.5em]
+    \setcounter{enumi}{22}
+    \item \label{prb:2.23}\textbf{Heun's method} (or \textbf{improved Euler}) is given by
+    \begin{equation*}
+        x_{m+1} = x_m+\frac{h}{2}(f(t_m,x_m)+f(t_{m+1},y_m))
+        ,\quad
+        y_m = x_m+f(t_m,x_m)h
+    \end{equation*}
+    Show that using this method, the error during one step is of $O(h^3)$, provided $f\in C^2$:
+    \begin{equation*}
+        \phi(t_0+h) = x_0+\frac{h}{2}(f(t_0,x_0)+f(t_1,y_0))+O(h^3)
+    \end{equation*}
+    Note that this is not the only possible scheme with this error order since
+    \begin{equation*}
+        \phi(t_0+h) = x_0+\frac{h}{2}(f(t_1,x_0)+f(t_0,y_0))+O(h^3)
+    \end{equation*}
+    as well.
+\end{enumerate}
+
+
+
+\section{Chapter 6: Dynamical Systems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 6.1: Dynamical Systems}
+\begin{itemize}
+    \item Good intuition for what a dynamical system is.
+    \item \textbf{Semigroup}: An algebraic structure consisting of a set together with an associative internal binary operation on it.
+    \begin{itemize}
+        \item Thus, like a \textbf{group}, a semigroup's operation is associative. However, we do not postulate the existence of an identity element or inverses in this case.
+    \end{itemize}
+    \item \textbf{Dynamical system}: The action of a semigroup $G$ with identity element $e$\footnote{So a \textbf{monoid}?? A monoid is, by definition, an algebraic structure consisting of a set together with an associative internal binary operation and an identity element.} on a set $M$.
+    \begin{itemize}
+        \item In particular, a dynamical system is a map $T:G\times M\to M$ which sends $(g,x)\mapsto T_g(x)$ such that
+        \begin{align*}
+            T_g\circ T_h &= T_{g\circ h}&
+            T_e &= \mathbb{I}
+        \end{align*}
+        \item Intuition: We often think of a dynamical system very similar to a diffeomorphism, in that as we slide $t$ up and down, a set of points gets distorted according to some field. Here, we're taking the formalization of time \emph{acting on} the points to move them around.
+        \item This is an incredibly minimal/broad/general definition; the dynamical systems we're interested in usually have far more structure.
+    \end{itemize}
+    \item \textbf{Invertible dynamical system}: A dynamical system for which $G$ is a group.
+    \item \textbf{Discrete dynamical system}: A dynamical system for which $G\in\{\N_0,\Z\}$.
+    \item \textbf{Continuous dynamical system}: A dynamical system for which $G\in\{\R^+,\R\}$.
+    \item Example: Iterated map, i.e., $f^n$.
+    \item Example: The flow of an autonomous differential equation, where $T_t=\Phi_t$ and $G=\R$; we consider this example in the next section.
+\end{itemize}
+
+
+\subsection*{Section 6.2: The Flow of an Autonomous Equation}
+\begin{itemize}
+    \item Herein, we consider the system
+    \begin{equation*}
+        \dot{x} = f(x)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    \item For the remainder of \textcite{bib:Teschl}, we assume $f\in C^k(M,\R^n)$ ($k\geq 1$).
+    \begin{itemize}
+        \item We also assume $M$ is an open subset of $\R^n$.
+    \end{itemize}
+    \item Such a system can be regarded as a \textbf{vector field} on $\R^n$.
+    \begin{itemize}
+        \item Solutions are curves in $M$ which are tangent to the vector field at each point.
+    \end{itemize}
+    \item \textbf{Integral curve}: A solution to an autonomous IVP. \emph{Also known as} \textbf{trajectory}.
+    \begin{itemize}
+        \item We say "$\phi$ is an integral curve at $x_0$" if $\phi(0)=x_0$.
+    \end{itemize}
+    \item By Theorem 2.13: Every point $x\in M$ has an associated (unique) \textbf{maximal integral curve}.
+    \item \textbf{Maximal integral curve} (at $x$): The unique integral curve at $x$, the domain of which is a \textbf{maximal interval}. \emph{Denoted by} $\bm{\phi_x}$.
+    \item \textbf{Maximal interval}: The interval for an integral curve at $x$ containing all other possible intervals on which the integral curve can be defined. \emph{Denoted by} $\bm{I_x}$, $\bm{(T_-(x),T_+(x))}$.
+    \item We define a set which contains information about the maximal interval of the integral curve at $x$ for all $x$:
+    \begin{equation*}
+        W = \bigcup_{x\in M}I_x\times\{x\}
+        \subset \R\times M
+    \end{equation*}
+    \item \textbf{Flow} (of a differential equation): The map from $W$ to $M$ which pairs every starting point $x$ and time $t$ to the point to which the differential equation will have moved $x$ after time $t$ has elapsed. \emph{Denoted by} $\bm{\Phi}$. \emph{Given by}
+    \begin{equation*}
+        (t,x) \mapsto \phi(t,x)
+    \end{equation*}
+    where $\phi(t,x)$ is the maximal integral curve at $x$.
+    \item Notation: We sometimes write
+    \begin{equation*}
+        \Phi(t,x) = \Phi_x(t) = \Phi_t(x)
+    \end{equation*}
+    \item If $\phi(\cdot)$ is the maximal integral curve at $x$, then $\phi(\cdot +s)$ is the maximal integral curve at $y=\phi(x)$ and $I_x=s+I_y$. It follows that for all $x\in M$ and $s\in I_x$, we have
+    \begin{equation*}
+        \Phi(s+t,x) = \Phi(t,\Phi(s,x))
+    \end{equation*}
+    for all $t\in I_{\Phi(s,x)}=I_x-s$.
+    \item We now state formally the ideas we've just developed informally.
+    \item Theorem 6.1: Suppose $f\in C^k(M,\R^n)$. For all $x\in M$, there exists an interval $I_x\subset\R$ containing 0 and a corresponding unique maximal integral curve $\Phi(\cdot,x)\in C^k(I_x,M)$ at $x$. Moreover, the set $W$ defined as above is open and $\Phi\in C^k(W,M)$ is a (local) flow on $M$, that is,
+    \begin{gather*}
+        \Phi(0,x) = x\\
+        \Phi(t+s,x) = \Phi(t,\Phi(s,x)),\quad
+            x\in M,\quad
+            x,t+s\in I_x
+    \end{gather*}
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Example: Let $M=\R$ and $f(x)=x^3$. Then $W=\{(t,x)\mid 2tx^2<1\}$\footnote{This condition is equivalent to all $(t,x)$ such that $1-2x^2t>0$, i.e., that the denominator of the flow is positive.} and
+    \begin{equation*}
+        \Phi(t,x) = \frac{x}{\sqrt{1-2x^2t}}
+    \end{equation*}
+    We have $T_-(x)=-\infty$ and $T_+(x)=1/(2x^2)$.
+    \item \textbf{Fixed point}: A point at which $f$ evaluates to 0. \emph{Denoted by} $\bm{x_0}$.
+    \item Lemma 6.2 (Straightening out vector fields): Suppose $f(x_0)\neq 0$. Then there is a local coordinate transform $y=\varphi(x)$ such that $\dot{x}=f(x)$ is transformed to
+    \begin{equation*}
+        \dot{y} = (1,0,\dots,0)
+    \end{equation*}
+\end{itemize}
+
+
+\subsection*{Section 6.3: Orbits and Invariant Sets}
+\begin{itemize}
+    \item Some of the definitions herein come up in class, some do not, but many are interesting and IMO grant a deeper understanding of dynamical systems.
+    \item \textbf{Orbit} (of $x$): The image under the flow of the maximal interval of the maximal integral curve at $x$. \emph{Denoted by} $\bm{\gamma(x)}$. \emph{Given by}
+    \begin{equation*}
+        \gamma(x) = \Phi(I_x\times\{x\})
+    \end{equation*}
+    \item $y\in\gamma(x)$ implies $y=\Phi(t,x)$ for some $t$, and hence (by Theorem 6.1) $\gamma(x)=\gamma(y)$.
+    \item Implication: Distinct orbits are disjoint.
+    \begin{itemize}
+        \item Formalism: The orbits partition $M$, i.e., we have an equivalence relation on $M$ defined by $x\sim y$ iff $\gamma(x)=\gamma(y)$.
+    \end{itemize}
+    \item \textbf{Fixed point} (of $\Phi$): A point $x\in M$ for which $\gamma(x)=\{x\}$. \emph{Also known as} \textbf{singular point}, \textbf{stationary point}, \textbf{equilibrium point}.
+    \item \textbf{Regular point} (of $\Phi$): A point $x\in M$ that is not a fixed point of $\Phi$.
+    \item If $x$ is a regular point, then $\Phi(\cdot,x):I_x\hookrightarrow M$\footnote{Notation: $\hookrightarrow$ indicates an injective function.}.
+    \item \textbf{Forward} (orbit of $x$): The image under the flow of the \emph{positive portion} of the maximal interval of the maximal integral curve at $x$. \emph{Denoted by} $\bm{\gamma_+(x)}$. \emph{Given by}
+    \begin{equation*}
+        \gamma_+(x) = \Phi((0,T_+(x))\times\{x\})
+    \end{equation*}
+    \item \textbf{Backward} (orbit of $x$): The image under the flow of the \emph{negative portion} of the maximal interval of the maximal integral curve at $x$. \emph{Denoted by} $\bm{\gamma_-(x)}$. \emph{Given by}
+    \begin{equation*}
+        \gamma_-(x) = \Phi((T_-(x),0)\times\{x\})
+    \end{equation*}
+    \item Relating the orbit, forward orbit, and backward orbit:
+    \begin{equation*}
+        \gamma(x) = \gamma_-(x)\cup\{x\}\cup\gamma_+(x)
+    \end{equation*}
+    \item \textbf{Periodic point} (of $\Phi$): A point $x\in M$ for which there exists $T>0$ such that $\Phi(T,x)=x$.
+    \item \textbf{Period} (of a periodic point $x$): The lower bound on the set of $T$ for which $\Phi(T,x)=x$. \emph{Denoted by} $\bm{T(x)}$. \emph{Given by}
+    \begin{equation*}
+        T(x) = \inf\{T>0\mid\Phi(T,x)=x\}
+    \end{equation*}
+    \item The continuity of $\Phi$ guarantees that
+    \begin{equation*}
+        \Phi(T(x),x) = x
+    \end{equation*}
+    for $T(x)$ as defined.
+    \item By the flow property (Theorem 6.1), we have
+    \begin{equation*}
+        \Phi(t,T(x),x) = \Phi(t,x)
+    \end{equation*}
+    \item \textbf{Periodic orbit}: An orbit for which one point (hence all points) of the orbit is/are periodic. \emph{Also known as} \textbf{closed orbit}.
+    \begin{itemize}
+        \item Reason for the moniker "closed orbit:" $x$ is periodic iff $\gamma_+(x)\cap\gamma_-(x)\neq\emptyset$, i.e., if the forward orbit joins the negative orbit and "closes" the loop.
+    \end{itemize}
+    \item Classification of the orbits of $f$:
+    \begin{enumerate}
+        \item Fixed orbits (corresponding to a periodic point with period zero).
+        \item Regular periodic orbits (corresponding to a periodic point with positive period).
+        \item Non-closed orbits (not corresponding to a periodic point).
+    \end{enumerate}
+    \item \textbf{Positive lifetime} (of $x$): The positive ending limit point of the maximal interval of $x$. \emph{Denoted by} $\bm{T_+(x)}$. \emph{Given by}
+    \begin{equation*}
+        T_+(x) = \sup I_x
+    \end{equation*}
+    \item \textbf{Negative lifetime} (of $x$): The negative ending limit point of the maximal interval of $x$. \emph{Denoted by} $\bm{T_-(x)}$. \emph{Given by}
+    \begin{equation*}
+        T_-(x) = \inf I_x
+    \end{equation*}
+    \item \textbf{$\bm{\sigma}$ complete} (point): A point $x\in M$ for which $T_\sigma(x)=\sigma\infty$, where $\sigma\in\{\pm\}$.
+    \item \textbf{Complete} (point): A point $x\in M$ that is both $+$ and $-$ complete.
+    \item Lemma 6.3: Let $x\in M$ and suppose that the forward (resp. backward) orbit lies in a compact subset $C$ of $M$. Then $x$ is $+$ (resp. $-$) complete.
+    \item Periodic points are complete.
+    \item \textbf{Complete} (vector field): A vector field in which all points are complete.
+    \item $f$ complete implies $\Phi$ is globally defined, that is, $W=\R\times M$.
+    \item \textbf{$\bm{\sigma}$ invariant}: A set $U\subset M$ such that $\gamma_\sigma(x)\subset U$ for all $x\in U$, where $\sigma\in\{\pm\}$.
+    \item $C\subset M$ a compact $\sigma$ invariant set implies (by Lemma 6.3) that all points in $C$ are $\sigma$ complete.
+    \item Lemma 6.4:
+    \begin{enumerate}
+        \item Arbitrary intersections and unions of $\sigma$ invariant sets are $\sigma$ invariant. Moreover, the closure of a $\sigma$ invariant set is again $\sigma$ invariant.
+        \item If $U,V$ are invariant, so is the complement $U\setminus V$.
+    \end{enumerate}
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Goal: Describe the long-term asymptotics of solutions.
+    \begin{itemize}
+        \item Tool: We introduce the set where an orbit eventually accumulates.
+    \end{itemize}
+    \item \textbf{$\bm{\omega_\pm}$-limit set} (of $x$): The set of all points $y\in M$ for which there exists a sequence $\{t_n\}$ that converges to $\pm\infty$ and satisfies $\Phi(t_n,x)\to y$. \emph{Denoted by} $\bm{\omega_\pm(x)}$.
+    \item By definition, $\omega_\pm(x)$ is empty unless $x$ is $\pm$ complete.
+    \item $y\in\gamma(x)$ implies $\omega_\pm(x)=\omega_\pm(y)$.
+    \begin{itemize}
+        \item This is because the hypothesis shows that $y=\Phi(t,x)$ for some $t$, so
+        \begin{equation*}
+            \Phi(t_n,x) = \Phi(t_n-t,\Phi(t,x))
+            = \Phi(t_n-t,y)
+        \end{equation*}
+        \item Hence, $\omega_\pm(x)$ depends only on the orbit $\gamma(x)$.
+    \end{itemize}
+    \item Lemma 6.5: The set $\omega_\pm(x)$ is a closed invariant set.
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Example: For $\dot{x}=-x$, $\omega_+(x)=\{0\}$ for all $x\in\R$ since every solution converges to 0 as $t\to +\infty$. Moreover, $\omega_-(x)=\emptyset$ for $x\neq 0$ and $\omega_-(0)=\{0\}$.
+    \item Conclusion: Even for $x$ complete, the set $\omega_\pm(x)$ can be empty.
+    \item Lemma 6.6: If $\gamma_\sigma(x)$ is contained in a compact set $C$, then $\omega_\sigma(x)$ is nonempty, compact, and connected.
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item Lemma 6.7: Suppose $\gamma_\sigma(x)$ is contained in a compact set. Then we have
+    \begin{equation*}
+        \lim_{t\to\sigma\infty}d(\phi(t,x),\omega_\sigma(x)) = 0
+    \end{equation*}
+    \begin{proof}
+        Given.
+    \end{proof}
+    \item \textcite{bib:Teschl} works through an example that proves that the compactness requirement is necessary.
+    \item \textbf{Minimal} (set): A nonempty, compact, $\sigma$ invariant set that contains no proper $\sigma$ invariant subset possessing these three properties.
+    \item Examples:
+    \begin{itemize}
+        \item The $\omega_\pm$-limit sets are minimal for all $x\in\omega_\pm(x)$.
+        \item A periodic orbit.
+        \begin{itemize}
+            \item In 2D, this is the only example by Corollary 7.12.
+            \item In three or more dimensions, orbits can be dense on a compact hypersurface, meaning that the hypersurface cnnot be split into smaller \emph{closed} invariant sets.
+        \end{itemize}
+    \end{itemize}
+    \item Lemma 6.8: Every nonempty, compact $\sigma$ invariant set $C\subset M$ contains a minimal $\sigma$ invariant set.\par
+    If in addition $C$ is homeomorphic to a closed $m$-dimensional disk (where $m$ is not necessarily the dimension of $M$), it contains a fixed point.
+    \begin{proof}
+        Given.
+    \end{proof}
+\end{itemize}
+
+
+\subsection*{Section 6.4: The Poincar\'{e} Map}
+\begin{itemize}
+    \item Never covered in class.
+\end{itemize}
+
+
+\subsection*{Section 6.5: Stability of Fixed Points}
+\begin{itemize}
+    \item Herein, we continue investigating the long-term behavior of the dynamical system
+    \begin{equation*}
+        \dot{x} = f(x)
+        ,\quad
+        x(0) = x_0
+    \end{equation*}
+    \begin{itemize}
+        \item In particular, we investigate whether or not a solution is \textbf{stable}.
+    \end{itemize}
+    \item \textbf{Stable} (fixed point): A fixed point $x_0$ of $f(x)$ such that for any given neighborhood $U(x_0)$, there exists another neighborhood $V(x_0)\subset U(x_0)$ such that any solution starting in $V(x_0)$ remains in $U(x_0)$ for all $t\geq 0$. \emph{Also known as} \textbf{Lyapunov stable}\footnote{\textcite{bib:Teschl} uses the alternate spelling "Liapunov;" I will continue using "Lyapunov" without further comment.}.
+    \begin{itemize}
+        \item If a solution remains in $U(x_0)$ for all $t\geq 0$, it remains in the compact set $\overline{U(x_0)}$ for all $t\geq 0$.
+        \item Thus, by Lemma 6.3, said solution exists for all positive times.
+    \end{itemize}
+    \item \textbf{Unstable} (fixed point): A fixed point which is not stable.
+    \item \textbf{Asymptotically stable} (fixed point): A fixed point $x_0$ of $f(x)$ that is stable and for which there exists a neighborhood $U(x_0)$ such that
+    \begin{equation*}
+        \lim_{t\to\infty}|\phi(t,x)-x_0| = 0
+    \end{equation*}
+    for all $x\in U(x_0)$.
+    \item \textbf{Exponentially stable} (fixed point): A fixed point $x_0$ of $f(x)$ for which there exist constants $\alpha,\delta,C>0$ such that
+    \begin{equation*}
+        |\phi(t,x)-x_0| \leq C\e[-\alpha t]|x-x_0|
+    \end{equation*}
+    when $|x-x_0|\leq\delta$.
+    \item Exponential stability implies both stability and asymptotic stability.
+    \item Example: Consider $\dot{x}=ax$ in $\R^1$. Then $x_0=0$ is stable iff $a\leq 0$ and exponentially stable iff $a<0$.
+    \item These definitions of stability agree with those we introduced for linear autonomous systems in Section 3.2.
+    \item \textcite{bib:Teschl} goes over an alternate stability criterion adapted from Section 1.5.
+    \item If $f'(x_0)\neq 0$, the stability of $x_0$ can be read off from the derivative of $f$ at $x_0$ alone.
+    \begin{itemize}
+        \item More generally, a fixed point is exponentially stable if this is true for the corresponding linearized system (the proof is not directly presented in \textcite{bib:Teschl} but is rather spread out, making it not of much use to me rn).
+    \end{itemize}
+    \item Theorem 6.10 (Exponential stability via linearization): Suppose $f\in C^1$ has a fixed point $x_0$ and suppose that all eigenvalues of the Jacobian matrix at $x_0$ have negative real part. Then $x_0$ is exponentially stable.
+    \item \textbf{Bifurcation theory}: The systematic study of small changes in an ODEs parameters that induce large changes in qualitative behavior.
+    \begin{itemize}
+        \item Theorem 2.11 asserts that provided $f$ depends smoothly on $\mu$, so does the flow. Nevertheless, very small changes in parameters can induce large changes in the qualitative behavior.
+        \item A few examples follow.
+    \end{itemize}
+    \item \textbf{Pitchfork bifurcation}: A stable fixed point for $\mu\leq 0$ which becomes unstable and splits off two stable fixed points at $\mu=0$.
+    \emph{picture}
+    \begin{itemize}
+        \item Example: $\dot{x}=\mu x-x^3$.
+    \end{itemize}
+    \item \textbf{Transcritical bifurcation}: Two stable fixed points for $\mu\neq 0$ which collide and exchange stability at $\mu=0$.
+    \emph{picture}
+    \begin{itemize}
+        \item Example: $\dot{x}=\mu x-x^2$.
+    \end{itemize}
+    \item \textbf{Saddle-node bifurcation}: One stable and one unstable fixed point for $\mu<0$ which collide at $\mu=0$ and vanish.
+    \emph{picture}
+    \begin{itemize}
+        \item Example: $\dot{x}=\mu+x^2$.
+    \end{itemize}
+    \item Rest of the chapter: Good criteria for the stability of $\dot{x}=f(x)$ (since it cannot be solved explicitly in general).
+\end{itemize}
+
+
+\subsection*{Section 6.6: Stability via Lyapunov's Method}
+\begin{itemize}
+    \item For a fixed point $x_0$ of $f$ and an open neighborhood $U(x_0)$ of $x_0$, we may define the following.
+    \item \textbf{Lyapunov function}: A continuous function $L:U(x_0)\to\R$ which is zero at $x_0$, positive for $x\neq x_0$, and satisfies
+    \begin{equation*}
+        L(\phi(t_0)) \geq L(\phi(t_1))
+    \end{equation*}
+    where $t_0<t_1$ and $\phi(t_j)\in U(x_0)\setminus\{x_0\}$ ($j=0,1$) for any solution $\phi(t)$.
+    \item \textbf{Strict Lyapunov function}: A Lyapunov function for which the central inequality in the above definition is strict.
+    \item Claim: If $L$ is strict, $U(x_0)\setminus\{x_0\}$ cannot contain any periodic orbits.
+    \begin{proof}
+        Suppose for the sake of contradiction that $\gamma(x)\subset U(x_0)\setminus\{x_0\}$. Since $\gamma(x)$ is a periodic orbit, $\phi(0,x)=\phi(T(x),x)$ where $T(x)>0$ by definition. Letting $t_0=0$ and $t_1=T(x)$, we have by the definition of a strict Lyapunov function that
+        \begin{equation*}
+            L(\phi(0,x)) > L(\phi(T(x),x))
+            = L(\phi(0,x))
+        \end{equation*}
+        contradicting the fact that $L$ is well-defined.
+    \end{proof}
+    \item $\bm{S_\delta}$: The following set. \emph{Given by}
+    \begin{equation*}
+        S_\delta = \{x\in U(x_0)\mid L(x)\leq\delta\}
+    \end{equation*}
+    \begin{itemize}
+        \item $S_\delta$ contains $x_0$.
+        \item In general, $S_\delta$ need not be closed since it can share boundary with $U(x_0)$. In such a case, orbits can escape through this part of the boundary.
+        \item Restricting $S_\delta$ to closed versions, though, we get the following lemma.
+    \end{itemize}
+    \item Lemma 6.11: If $S_\delta$ is closed, then it is positively invariant.
+    \item Lemma 6.12: For every $\delta>0$, there is an $\varepsilon>0$ such that $S_\varepsilon\subset B_\delta(x_0)$ and $B_\varepsilon(x_0)\subset S_\delta$.
+    \item Implication: Given any neighborhood $V(x_0)$, we can find an $\varepsilon$ such that $S_\varepsilon\subset V(x_0)$ is positively invariant. But this just means that $x_0$ is stable, and we have proven the following\footnote{Clever pedagogical tool: \textcite{bib:Teschl} weaves any really important proofs into the flow of the text so that you can't gloss over it.}.
+    \item Theorem 6.13 (Lyapunov): Suppose $x_0$ is a fixed point of $f$. If there is a Lyapunov function $L$, then $x_0$ is stable.
+    \item Theorem 6.14 (Krasovskii-LaSalle principle): Suppose $x_0$ is a fixed point of $f$. If there is a Lyapunov function $L$ which is not constant on any orbit lying entirely in $U(x_0)\setminus\{x_0\}$, then $x_0$ is asymptotically stable. This is for example the case if $L$ is a strict Lyapunov function. Moreover, every orbit lying entirely in $U(x_0)$ converges to $x_0$.
+    \item Theorem 6.15: Let $L:U\to\R$ be continuous and bounded from below. If for some $x$ we have $\gamma_+(x)\subset U$ and
+    \begin{equation*}
+        L(\phi(t_0,x)) \geq L(\phi(t_1,x))
+    \end{equation*}
+    for $t_0<t_1$, then $L$ is constant on $\omega_+(x)\cap U$.
+    \item Most Lypunov functions are differentiable.
+    \item If $L$ is differentiable, then $L(\phi(t_0))\geq L(\phi(t_1))$ for all $t_0<t_1$ iff
+    \begin{equation*}
+        \dv{t}L(\phi(t,x)) = \nabla(L)(\phi(t,x))\dot{\phi}(t,x)
+        = \nabla(L)(\phi(t,x))f(\phi(t,x))
+        \leq 0
+    \end{equation*}
+    \item \textbf{Lie derivative} (of $L$ along $f$): The following expression. \emph{Given by}
+    \begin{equation*}
+        \nabla(L)(x)\cdot f(x)
+    \end{equation*}
+    \item \textbf{Constant of motion}: A function for which the Lie derivative vanishes and, hence, is constant on every orbit.
+    \item Theorem 6.15 implies that all $\omega_\pm$-limit sets are contained in the set where the Lie derivative of $L$ vanishes.
+    \item Example: Consider the system
+    \begin{align*}
+        \dot{x} &= y&
+        \dot{y} &= -x
+    \end{align*}
+    with function
+    \begin{equation*}
+        L(x,y) = x^2+y^2
+    \end{equation*}
+    \begin{itemize}
+        \item For $x\in\R^2$ arbitrary, the Lie derivative is
+        \begin{equation*}
+            \nabla(L)(x)\cdot f(x) =
+            \begin{pmatrix}
+                2x\\
+                2y\\
+            \end{pmatrix}
+            \cdot
+            \begin{pmatrix}
+                y\\
+                -x\\
+            \end{pmatrix}
+            = 2xy-2xy
+            = 0
+        \end{equation*}
+        \item Thus, $L$ is a Lyapunov function.
+        \item In particular, $L$ is a constant of motion.
+        \item Thus, by Theorem 6.13, the origin is stable.
+        \item Every level set $L(x,y)=\delta$ corresponds to an orbit, so the system is not asymptotically stable.
+    \end{itemize}
+    \item Takeaway:
+    \begin{itemize}
+        \item Extract properties of Lyapunov functions from the fact that they are monotonically decreasing on all orbits.
+        \item Prove that a function is a Lyapunov function using the Lie derivative.
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Section 6.7: Newton's Equation in One Dimension}
+\begin{itemize}
+    \item Goal: Illustrate the results of Chapter 6 with a specific example.
+    \item Recall that the motion of a particle moving in one dimension under the external force field $f(x)$ is described by Newton's equation
+    \begin{equation*}
+        \ddot{x} = f(x)
+    \end{equation*}
+    \item \textbf{Phase space}: The set $\R^2$, as referred to by physicists.
+    \item \textbf{Phase point}: A point of the form $(x,\dot{x})$ in the phase space.
+    \item \textbf{Phase curve}: A solution to the ODE.
+    \item By the Picard-Lindel\"{o}f theorem (Theorem 2.2), precisely one phase curve passes through each phase point.
+    \item \textbf{Kinetic energy}: The following quadratic form. \emph{Denoted by} $\bm{T(\dot{x})}$. \emph{Given by}
+    \begin{equation*}
+        T(\dot{x}) = \frac{\dot{x}^2}{2}
+    \end{equation*}
+    \item \textbf{Potential energy}: The following function. \emph{Denoted by} $\bm{U(x)}$. \emph{Given by}
+    \begin{equation*}
+        U(x) = -\int_{x_0}^xf(\xi)\dd\xi
+    \end{equation*}
+    \begin{itemize}
+        \item Only determined up to an arbitrary constant.
+    \end{itemize}
+    \item \textbf{Energy} (of a Newtonian system): The sum of the kinetic and potential energies. \emph{Denoted by} $\bm{E}$. \emph{Given by}
+    \begin{equation*}
+        E = T(\dot{x})+U(x)
+    \end{equation*}
+    \begin{itemize}
+        \item $E$ is constant along a phase curve. Indeed, if $x(t)$ satisfies $\ddot{x}=f(x)=U'(x)$, i.e., $\ddot{x}-f(x)=0$, then
+        \begin{equation*}
+            \dv{E}{t} = \dot{x}\ddot{x}+U'(x)\dot{x}
+            = \dot{x}(\ddot{x}-f(x))
+            = 0
+        \end{equation*}
+        as desired.
+    \end{itemize}
+    \item The solution corresponding to the initial conditions $x(0)=x_0$, $\dot{x}(0)=x_1$ can be given implicitly.
+    \begin{itemize}
+        \item First off, we have that
+        \begin{align*}
+            E &= T(\dot{x})+U(x)\\
+            &= \frac{\dot{x}^2}{2}+U(x)\\
+            \sqrt{2(E-U(x))} &= \dv{x}{t}\\
+            \int_0^t\dd\tau &= \int_{x_0}^x\frac{\dd\xi}{\sqrt{2(E-U(\xi))}}\\
+            t &= \sign(x_1)\int_{x_0}^x\frac{\dd\xi}{\sqrt{2(E-U(\xi))}}
+        \end{align*}
+        \begin{itemize}
+            \item Why do we input $\sign(x_1)$ between the next-to-last and last lines??
+        \end{itemize}
+        \item Second, since $E$ is constant along the solution, its value at the start will be the same as its value at any other point. Thus, we can use the starting initial conditions to calculate it, as follows.
+        \begin{equation*}
+            E = \frac{{x_1}^2}{2}+U(x_0)
+        \end{equation*}
+        \item If $x_1=0$, then $\sign(x_1)$ must be replaced with $-\sign(U'(x_0))$.
+    \end{itemize}
+    \item Theorem 6.16: Newton's equation has a fixed point if and only if $\dot{x}=0$ and $U'(x)=0$ at this point. Moreover, a fixed point is stable if $U(x)$ has a local minimum there.
+    \begin{itemize}
+        \item If $U(x)$ has a local minimum at $x_0$, the energy $E-U(x_0)$ can be used as a Lyapunov function; we subtract $U(x_0)$ so that $E-U(x_0)$ evaluates to zero at $x_0$.
+    \end{itemize}
+    \item A fixed point cannot be asymptotically stable (due to conservation of energy).
+    \item Example: Mathematical pendulum.
+    \begin{equation*}
+        \ddot{x} = -\sin(x)
+    \end{equation*}
+    \begin{itemize}
+        \item $x$ describes the displacement angle from the position at rest ($x=0$).
+        \item $x$ should be understood modulo $2\pi$.
+        \item We have that
+        \begin{equation*}
+            U(x) = -\int_{x_0}^x(-\sin(\xi))\dd\xi
+            = \cos(x_0)-\cos(x)
+        \end{equation*}
+        \begin{itemize}
+            \item Since the constant is arbitrary, we may take $U(x)=1-\cos(x)$ for ease. This has the additional advantage that the energy is never negative.
+        \end{itemize}
+        \item We now begin the rigorous investigation.
+        \item We restrict our attention to the interval $x\in(-\pi,\pi]$. Thus, the fixed points are $x=0,\pi$.
+        \item By Theorem 6.16 and the fact that $U(0)$ is a minimum, 0 is a stable fixed point.
+        \item As before in the general case, $E(x,\dot{x})=\text{constant}$ gives invariant level sets.
+        \begin{itemize}
+            \item $E=0$: The corresponding level set is the equilibrium position $(x,\dot{x})=(0,0)$.
+            \item $0<E<2$: The level sets are homeomorphic to circles. Since these circles contains no fixed points, they are regular periodic orbits.
+            \item $E=2$: The level set consists of the fixed point $\pi$ and two non-closed orbits connecting $-\pi$ and $\pi$. This is a \textbf{separatrix}.
+            \item $E>2$: The level sets are again closed orbits (due to our modulo $2\pi$ perspective).
+        \end{itemize}
+        \item In a neighborhood of the equilibrium position $x=0$, the system is approximated by the linearization $\sin(x)=x+O(x^2)$ given by
+        \begin{equation*}
+            \ddot{x} = -x
+        \end{equation*}
+        and referred to as the \textbf{harmonic oscillator}.
+        \begin{itemize}
+            \item Here, we have
+            \begin{equation*}
+                E = \frac{\dot{x}^2}{2}+\frac{x^2}{2}
+            \end{equation*}
+            so the phase portrait consists of circle centered at 0.
+        \end{itemize}
+        \item More generally, if $U'(x_0)=0$ and $U''(x_0)=\omega^2/2>0$, then we should approximate our system with
+        \begin{equation*}
+            \ddot{y} = -\omega^2y
+            ,\quad
+            y(t) = x(t)-x_0
+        \end{equation*}
+        \item Lastly, if we use the momentum $p=\dot{x}$ (units chosen such that $m=1$) and the location $q=x$ as coordinates, then the energy
+        \begin{equation*}
+            H(p,q) = \frac{p^2}{2}+U(q)
+        \end{equation*}
+        is called the \textbf{Hamiltonian}.
+        \begin{itemize}
+            \item In this case, the equations of motion are
+            \begin{align*}
+                \dot{q} &= \pdv{H}{p}&
+                \dot{p} &= -\pdv{H}{q}
+            \end{align*}
+            \item This formalism is called \textbf{Hamiltonian mechanics}.
+            \item It is useful for systems with more than one degree of freedom.
+            \item See Section 8.3 for more.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{Chapter 7: Planar Dynamical Systems}
+\emph{From \textcite{bib:Teschl}.}
+\subsection*{Section 7.1: Examples from Ecology}
+\begin{itemize}
+    \item \textcite{bib:Teschl} derives via ecological reasoning the \textbf{Lotka-Volterra} predator-prey equations.
+    \item \textbf{Lotka-Volterra predator-prey equations}: The following system of differential equations. \emph{Given by}
+    \begin{align*}
+        \dot{x} &= (1-y)x&
+        \dot{y} &= \alpha(x-1)y
+    \end{align*}
+    for $\alpha>0$.
+    \item Two fixed points.
+    \begin{itemize}
+        \item $(0,0)$ gives rise to invariant subspaces along the $x$- and $y$-axes. Indeed,
+        \begin{align*}
+            \Phi(t,(0,y)) &= (0,y\e[-\alpha t])&
+            \Phi(t,(x,0)) &= (x\e[t],0)
+        \end{align*}
+        \begin{itemize}
+            \item Since no other solution can cross these lines, the first quadrant $Q=\{(x,y)\mid x,y>0\}$ is invariant. This is the region we are interested in.
+        \end{itemize}
+        \item $(1,1)$ is the other fixed point.
+        \begin{itemize}
+            \item Let's eliminate $t$ from the ODEs to get a single first-order equation for the orbits.
+            \item Writing $y=y(x)$, we infer from the chain rule that
+            \begin{equation*}
+                \dv{y}{x} = \dv{y}{t}\left( \dv{x}{t} \right)^{-1}
+                = \alpha\frac{(x-1)y}{(1-y)x}
+            \end{equation*}
+            \item This equation is separable. Solving it yields
+            \begin{equation*}
+                L(x,y) = f(y)+\alpha f(x) = \text{constant}
+            \end{equation*}
+            where
+            \begin{equation*}
+                f(a) = a-1-\log(a)
+            \end{equation*}
+            \begin{itemize}
+                \item Note that $\log$ denotes the natural logarithm.
+            \end{itemize}
+            \item $f$ cannot be inverted in terms of elementary functions. However, $f$ is convex with global minimum at $x=1$, and $f\to\infty$ as $a\to 0,+\infty$. It follows that the level sets are portions of this curve near the bottom of the well in both dimensions, and thus they are compact.
+            \item The exchange of energy from one to the other and back again also indicates that each orbit is periodic surrounding the fixed point $(1,1)$.
+        \end{itemize}
+    \end{itemize}
+    \item Theorem 7.1: All orbits of the Lotka-Volterra equations in $Q$ are closed and encircle the only fixed point $(1,1)$.
+    \item Modification: Let's assume each species' population can only grow so fast. Then we get
+    \begin{align*}
+        \dot{x} &= (1-y-\lambda x)x&
+        \dot{y} &= \alpha(x-1-\mu y)y
+    \end{align*}
+    for $\alpha,\lambda,\mu>0$.
+    \item We now have four fixed points:
+    \begin{align*}
+        (0,0)&&
+        (\lambda^{-1},0)&&
+        (0,-\mu^{-1})&&
+        \left( \frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda} \right)
+    \end{align*}
+    \begin{itemize}
+        \item The third lies outside of $\bar{Q}$, so we disregard it.
+        \item The fourth lies outside of $\bar{Q}$ if $\lambda>1$. Thus, let's start with the case $\lambda\geq 1$ so that we only have to deal with one new fixed point.
+        \item $\lambda\geq 1$.
+        \emph{picture}
+        \begin{itemize}
+            \item Our new fixed point is $(\lambda^{-1},0)$.
+            \item It is a hyperbolic sink if $\lambda>1$.
+            \item If $\lambda=1$, one eigenvalue is 0 and we need a more thorough investigation.
+            \item Idea: Split $Q$ into regions where $\dot{x},\dot{y}$ have definite signs and then use the elementary observation in Lemma 7.2.
+            \item The regions where $\dot{x},\dot{y}$ have definite signs are separated by the two lines
+            \begin{align*}
+                L_1 &= \{(x,y)\mid y=1-\lambda x\}&
+                L_2 &= \{(x,y)\mid\mu y=x-1\}
+            \end{align*}
+            \begin{itemize}
+                \item We derive these by setting $1-y-\lambda x=0$ and $x-1-\mu y=0$.
+            \end{itemize}
+            \item Label the regions in $Q$ enclosed by these lines from left to right by $Q_1,Q_2,Q_3$.
+            \item Observe that the lines are transversal, i.e., can only be crossed in the direction from $Q_3\to Q_2$ and $Q_2\to Q_1$. This can be seen from the solution curves in the picture.
+            \item Suppose we start at $(x_0,y_0)\in Q_3$.
+            \begin{itemize}
+                \item Additional constraint: $x\leq x_0$ (the flow is to the left??).
+                \item By Lemma 7.2: Either the trajectory enters $L_2$ or it converges to a fixed point in $\bar{Q}_3$. The latter case can only happen if $(\lambda^{-1},0)\in\bar{Q}_3$, i.e., if $\lambda=1$.
+            \end{itemize}
+            \item Similarly, starting in $Q_2$ either gets you across $L_1$ or to $(\lambda^{-1},0)$.
+            \item Starting in $Q_1$ must take you to the fixed point.
+            \item Thus, every trajectory converges to the fixed point.
+        \end{itemize}
+        \item Let $0<\lambda<1$.
+        \begin{itemize}
+            \item We apply the same strategy as before.
+            \item We have four regions this time. Let $Q_4$ be the new (bottom) one. We can only pass through these in the order $Q_4\to Q_3\to Q_2\to Q_1\to Q_4$.
+            \item Thus, we have to rule out the periodic case this time.
+            \item For simplicity's sake, let
+            \begin{equation*}
+                (x_0,y_0) = \left( \frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda} \right)
+            \end{equation*}
+            \item To do so, introduce (inspired by the original) the Lyapunov function
+            \begin{equation*}
+                L(x,y) = \gamma_1f(\tfrac{y}{y_0})+\alpha\gamma_2f(\tfrac{x}{x_0})
+            \end{equation*}
+            where, as before, $f(a)=a-1-\log(a)$.
+            \item We seek constraints on $\gamma_1,\gamma_2$ that will make $L$ strict.
+            \item Calculate
+            \begin{equation*}
+                \dot{L} = \pdv{L}{x}\dot{x}+\pdv{L}{y}\dot{y}
+                = -\alpha\left( \frac{\lambda\gamma_2}{x_0}\bar{x}^2+\frac{\mu\gamma_1}{y_0}\bar{y}^2+\left( \frac{\gamma_2}{x_0}-\frac{\gamma_1}{y_0} \right)\bar{x}\bar{y} \right)
+            \end{equation*}
+            where
+            \begin{align*}
+                \dot{x} &= (-\bar{y}-\lambda\bar{x})x&
+                \dot{y} &= \alpha(\bar{x}-\mu\bar{y})y&
+                \bar{x} &= x-x_0&
+                \bar{y} &= y-y_0
+            \end{align*}
+            \item The the RHS will be negative if we choose $\gamma_1=y_0$ and $\gamma_2=x_0$, so choose this, and then $L$ is strictly decreasing, so all orbits starting in $Q$ converge to the fixed point $(x_0,y_0)$.
+        \end{itemize}
+    \end{itemize}
+    \item Lemma 7.2: Let $\phi(t)=(x(t),y(t))$ be the solution of a planar system. Suppose $U$ is open and $\bar{U}$ is compact. If $x(t),y(t)$ are strictly monotone in $U$, then either $\phi$ hits the boundary at some finite time $t=t_0$ or $\phi(t)$ converges to a fixed point $(x_0,y_0)\in\bar{U}$.
+    \item Therefore, after all of that, we have proven the following.
+    \item Theorem 7.3: Suppose $\gamma\geq 1$. Then there is no fixed point of
+    \begin{align*}
+        \dot{x} &= (1-y-\lambda x)x&
+        \dot{y} &= \alpha(x-1-\mu y)y
+    \end{align*}
+    in $Q$ and all trajectories in $Q$ converge to the point $(\lambda^{-1},0)$.\par
+    If $0<\lambda<1$, then there is only one fixed point $(\frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda})$ in $Q$. It is asymptotically stable and all trajectories in $Q$ converge to this point.
+    \item Ecological interpretation: Predators can only survive if their growth rate is positive at the limiting population $\lambda^{-1}$ of the prey species.
+    \item \textcite{bib:Teschl} discusses cooperative and competing species.
+\end{itemize}
+
+
+
 
 \end{document}

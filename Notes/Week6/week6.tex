@@ -832,6 +832,150 @@
 \end{enumerate}
 
 
+\subsection*{Section 2.5: Regular Perturbation Theory}
+\begin{itemize}
+    \item \marginnote{12/6:}Goal of this section: Justify the perturbation method proposed in Problem \ref{prb:1.2} using Theorem 2.11.
+    \item \textbf{Regular perturbation problem}: An IVP of the following form. \emph{Given by}
+    \begin{equation*}
+        \dot{x} = f(t,x,\varepsilon)
+        ,\quad
+        x(t_0) = x_0
+    \end{equation*}
+    \item Let's try to solve such a problem in the general case first.
+    \begin{itemize}
+        \item Theorem 2.11: $f\in C^1$ implies $\phi(t,\varepsilon)=\phi(t,\varepsilon,t_0,x_0)\in C^1$.
+        \item If $\phi\in C^1$, then we have the following Taylor expansion.
+        \begin{equation*}
+            \phi(t,\varepsilon) = \phi_0(t)+\phi_1(t)\varepsilon+o(\varepsilon)
+        \end{equation*}
+        \item If $\varepsilon=0$, $\phi(t,\varepsilon)=\phi_0(t)$. Thus, $\phi_0(t)$ is the solution to the unperturbed equation
+        \begin{equation*}
+            \dot{\phi}_0 = f_0(t,\phi_0)
+            ,\quad
+            \phi_0(t_0) = x_0
+        \end{equation*}
+        where $f_0(t,x)=f(t,x,0)$.
+        \item Additionally, we can deduce from the Taylor series expansion that
+        \begin{align*}
+            \phi &= \phi_0+\phi_1\varepsilon\\
+            \pdv{\phi}{\varepsilon} &= \phi_1
+        \end{align*}
+        \item Thus, we have from the original ODE a new kind of first variational equation satisfied by $\phi_1=\pdv*{\phi}{\varepsilon}$, which we can use to solve for said quantity.
+        \begin{align*}
+            \pdv{\phi}{t} &= f(t,\phi(t,\varepsilon),\varepsilon)\\
+            \pdv{\phi}{\varepsilon}{t} &= \pdv{f}{t}\pdv{t}{\varepsilon}+\pdv{f}{x}\pdv{\phi}{\varepsilon}+\pdv{f}{\varepsilon}\pdv{\varepsilon}{\varepsilon}\\
+            \pdv{t}\pdv{\phi}{\varepsilon} &= \pdv{f}{x}\pdv{\phi}{\varepsilon}+\pdv{f}{\varepsilon}\\
+            \pdv{t}\underbrace{\eval{\pdv{\varepsilon}\phi(t,\varepsilon)}_{\varepsilon=0}}_{\phi_1} &= \underbrace{\eval{\pdv{x}f(t,\phi_0(t),0)}_{\varepsilon=0}}_{f_{10}(t,\phi_0(t))}\phi_1+\underbrace{\eval{\pdv{\varepsilon}f(t,\phi_0(t),\varepsilon)}_{\varepsilon=0}}_{f_{11}(t,\phi_0(t))}
+        \end{align*}
+        Note that the corresponding initial condition is
+        \begin{align*}
+            x(t_0) &= x_0\\
+            \phi(t_0,\varepsilon) &= x_0\\
+            \eval{\pdv{\varepsilon}\phi(t_0,\varepsilon)}_{\varepsilon=0} &= 0\\
+            \phi_1(t_0) &= 0
+        \end{align*}
+        \item "Hence, once we have the solution of the unperturbed problem $\phi_0(t)$, we can then compute the correction term $\phi_1(t)$ by solving another linear equation" \parencite[49]{bib:Teschl}.
+        \item Therefore, the "plug in the ansatz and compare coefficients" procedure is justified.
+    \end{itemize}
+    \item Example: Consider the equation
+    \begin{equation*}
+        \dot{v} = -\varepsilon v-g
+        ,\quad
+        v(0) = 0
+        ,\quad
+        \varepsilon \geq 0
+    \end{equation*}
+    which models the velocity of a falling object with air resistance.
+    \begin{itemize}
+        \item We can calculate the explicit solution and use it to check our answer.
+        \begin{equation*}
+            \phi(t,\varepsilon) = \frac{g}{\varepsilon}(\e[-\varepsilon t]-1)
+        \end{equation*}
+        \item Applying perturbation techniques, we start with the unperturbed problem
+        \begin{equation*}
+            \dot{\phi}_0 = -g
+            ,\quad
+            \phi_0(0) = 0
+        \end{equation*}
+        and solve to get
+        \begin{equation*}
+            \phi_0(t) = -gt
+        \end{equation*}
+        \item Now we use the first variational equation. We have
+        \begin{align*}
+            f_{10}(t,\phi_0(t)) &= \eval{\pdv{x}f(t,\phi_0(t),0)}_{\varepsilon=0}&
+                f_{11}(t,\phi_0(t)) &= \eval{\pdv{\varepsilon}f(t,\phi_0(t),\varepsilon)}_{\varepsilon=0}\\
+            &= \eval{\pdv{x}(-0\cdot\phi_0(t)-g)}_{\varepsilon=0}&
+                &= \eval{\pdv{\varepsilon}(-\varepsilon\phi_0(t)-g)}_{\varepsilon=0}\\
+            &= \eval{\pdv{x}(-g)}_{\varepsilon=0}&
+                &= -\phi_0(t)|_{\varepsilon=0}\\
+            &= 0|_{\varepsilon=0}&
+                &= gt|_{\varepsilon=0}\\
+            &= 0&
+                &= gt
+        \end{align*}
+        so that
+        \begin{align*}
+            \dot{\phi}_1 &= 0\cdot\phi_1+gt\\
+            \dot{\phi}_1 &= gt
+            ,\quad
+            \phi_1(0) = 0
+        \end{align*}
+        which we can solve to get
+        \begin{equation*}
+            \phi_1(t) = \frac{g}{2}t^2
+        \end{equation*}
+        \item Therefore, our overall approximation is
+        \begin{equation*}
+            v(t) = -g\left( t-\varepsilon\cdot\frac{t^2}{2}+o(\varepsilon) \right)
+        \end{equation*}
+        which does indeed correspond to the Taylor expansion of the exact solution.
+        \item Note that the approximation is only valid for fixed time and will get worse as $t$ increases; indeed, the appoximation diverges in the long run while the actual solution converges to $g/\varepsilon$.
+    \end{itemize}
+    \item Extending this procedure.
+    \item Theorem 2.12: Let $\Lambda$ be some open interval. Suppose $f\in C^k(U\times\Lambda,\R^n)$, $k\geq 1$ and fix some values $(t_0,x_0,\varepsilon_0)\in U\times\Lambda$. Let $\phi(t,\varepsilon)\in C^k(I\times\Lambda_0,\R^n)$ be the solution of the initial value problem
+    \begin{equation*}
+        \dot{x} = f(t,x,\varepsilon)
+        ,\quad
+        x(t_0) = x_0
+    \end{equation*}
+    guaranteed to exist by Theorem 2.11. Then
+    \begin{equation*}
+        \phi(t,\varepsilon) = \sum_{j=0}^k\frac{\phi_j(t)}{j!}(\varepsilon-\varepsilon_0)^j+o((\varepsilon-\varepsilon_0)^k)
+    \end{equation*}
+    where the coefficients can be obtained by recursively solving
+    \begin{equation*}
+        \dot{\phi}_j = f_j(t,\phi_0,\dots,\phi_j,\varepsilon_0)
+        ,\quad
+        \phi_j(t_0) =
+        \begin{cases}
+            x_0 & j = 0\\
+            0 & j\geq 1
+        \end{cases}
+    \end{equation*}
+    where the function $f_j$ is recursively defined via
+    \begin{equation*}
+        f_{j+1}(t,x_0,\dots,x_{j+1},\varepsilon) = {\pdv{f_j}{\varepsilon}}(t,x_0,\dots,x_j,\varepsilon)+\sum_{k=0}^j{\pdv{f_j}{x_k}}(t,x_0,\dots,x_j,\varepsilon)x_{k+1}
+        ,\quad
+        f_0(t,x_0,\varepsilon) = f(t,x_0,\varepsilon)
+    \end{equation*}
+    If we assume $f\in C^{k+1}$, the error term will be $O((\varepsilon-\varepsilon_0)^{k+1})$ uniformly for $t\in I$.
+    \begin{proof}
+        We plug the power series definition of $\phi(t,\varepsilon)$ given above into the differential equation and compare powers of $\varepsilon$.\par
+        Estimating the remainder in the Taylor expansion: Since $f\in C^{k+1}$, we know that $\pdv*[k+1]{\phi}{\varepsilon}$ is continuous and hence bounded on $I\times\Lambda_0$, as desired.
+    \end{proof}
+    \item If we're willing to deal with the Taylor series in more than one variable, we can definitely admit more than one parameter.
+    \item Include the case where the initial condition depends on $\varepsilon$ by simply replacing the initial conditions for $\phi_j(t_0)$ by the corresponding expansion coefficients of $x_0(\varepsilon)$.
+    \item The Taylor series will converge if $f$ is analytic with respect to all variables (see Theorem 4.2).
+\end{itemize}
+
+\subsubsection*{Problems}
+\begin{enumerate}[label={\textbf{2.\arabic*.}},ref={2.\arabic*},leftmargin=3.5em]
+    \setcounter{enumi}{15}
+    \item \label{prb:2.16}Compute the next term $\phi_2$ in the above example.
+\end{enumerate}
+
+
 
 
 \end{document}
