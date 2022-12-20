@@ -688,12 +688,120 @@
     \end{proof}
     \item By Problem 1.8, we have $\phi(t,t_0,x_0)=\phi(t-t_0,0,x_0)$ for an autonomous system, so we may consider $\phi(t,x_0)=\phi(t,0,x_0)$.
     \item The previous result of \emph{continuous} dependence on initial conditions is not good enough in every situation; sometimes, we need to be able to \emph{differentiate} with respect to the initial condition.
+    \item \marginnote{11/23:}Before we prove that a certain set of conditions will imply the existence of the derivative of a solution $\phi$ with respect to $x$, we will assume such a derivative exists and investigate some of its properties (so as to motivate the following theorem and proof).
+    \begin{itemize}
+        \item Suppose $\phi(t,t_0,x)$ is differentiable with respect to $x$.
+        \item If we assume $f\in C^k(U,\R^n)$ for some $k\geq 1$ and $\phi$ is sufficiently regular that its partial derivatives commute as well, then we may write\footnote{Note that dot-denoted derivatives refer to derivatives with respect to $t$.}
+        \begin{align*}
+            \dot{\phi}(t,t_0,x) &= f(t,\phi(t,t_0,x))\\
+            \pdv{\phi}{t} &= f(t,\phi)\\
+            \pdv{\phi}{x}{t} &= \pdv{f}{\phi}\pdv{\phi}{x}\\
+            \pdv{\phi}{t}{x} &= \pdv{f}{\phi}\pdv{\phi}{x}\\
+            \pdv{t}\pdv{\phi}{x} &= \pdv{f}{\phi}\pdv{\phi}{x}
+        \end{align*}
+        \item Thus, if $\pdv*{\phi}{x}$ exists, then it satisfies the \textbf{first variational equation} with $A(t,x)=\pdv*{f}{\phi}$.
+        \item It also necessarily satisfies the corresponding integral equation
+        \begin{equation*}
+            \underbrace{\vphantom{\pdv{f}{\phi}}{\pdv{\phi}{x}}(t,t_0,x)}_{y(t)} = \underbrace{\vphantom{\pdv{f}{\phi}}{\pdv{\phi}{x}}(t_0,t_0,x)}_\mathbb{I}+\int_{t_0}^t\underbrace{{\pdv{f}{\phi}}(s,\phi(s,t_0,x))}_{A(s,x)}\cdot\underbrace{\vphantom{\pdv{f}{\phi}}{\pdv{\phi}{x}}(s,t_0,x)}_{y(s)}\dd{s}
+        \end{equation*}
+    \end{itemize}
+    \item \textbf{First variational equation}: The following differential equation. \emph{Given by}
+    \begin{equation*}
+        \dot{y} = A(t,x)y
+    \end{equation*}
+    \begin{itemize}
+        \item Which is the correct first variational equation?? This one, or the one with $F(t;\mu)$ term?
+    \end{itemize}
+    \item Indeed, we have shown that $\pdv*{\phi}{x}$ necessarily satisfies the above integral equation if it exists. But using fixed point techniques, we can further show that said equation \emph{has} a solution (which is $\pdv*{\phi}{x}$) under certain conditions. We will not go into this argument in depth, but it will be used in our next theorem.
+    \item Theorem 2.10: Suppose $f\in C^k(U,\R^n)$, $k\geq 1$. Around each point $(t_0,x_0)\in U$, we can find an open set $I\times B\subset U$ such that $\phi(t,s,x)\in C^k(I\times I\times B,\R^n)$. Moreover, ${\pdv*{\phi}{t}}(t,s,x)\in C^k(I\times I\times B,\R^n)$ and if $D_k$ is a partial derivative of order $k$, then $D_k\phi$ satisfies the higher order variational equation obtained from
+    \begin{equation*}
+        \pdv{t}D_k\phi(t,s,x) = D_k\pdv{t}\phi(t,s,x)
+        = D_kf(t,\phi(t,s,x))
+    \end{equation*}
+    by applying the chain rule repeatedly. In particular, this equation is linear in $D_k\phi$ and it also follows that the corresponding higher-order derivatives commute.
+    \begin{proof}
+        % The average slope is equal to the beginning slope plus the average of the change. The second term and last term in the integral cancel.
+
+        % Page 7.
+
+
+        To prove the claim, we induct on $k$. For the base case $k=1$, we need only prove that $\phi(t,x)$ is \emph{differentiable} at every $x_1\in B$. We now define some terms that will be useful in our argument.\par
+        Using the trick on \textcite[7]{bib:Teschl}, add $t$ to the dependent variables to make the ODE autonomous. This allows us to consider $\phi(t,x)=\phi(t,0,x)$ WLOG. Thus, we have by Theorem 2.9 that there exists a set $I\times B\subset U$ such that $\phi(t,x_0)\in C(I\times B,\R^n)$. We may take $I=(-T,T)$ and $B=B_\delta(x_0)$ for some $T,\delta>0$ such that $\overline{I\times B}\subset U$. Additionally, let $x_1=0$ WLOG. Furthermore, let $\phi(t):=\phi(t,x_1)$, $A(t):=A(t,x_1)$, and $\psi(t)$ denote the solution to the first variational equation $\dot{\psi}(t)=A(t)\psi(t)$ corresponding to the initial condition $\psi(t_0)=\mathbb{I}$ ($\psi(t)$ is guaranteed to exist by the aforementioned fixed point argument). Lastly, let
+        \begin{equation*}
+            \theta(t,x) := \frac{\phi(t,x)-\phi(t)-\psi(t)x}{|x|}
+        \end{equation*}\par
+        The proof strategy is thus: If we can show that $\lim_{x\to x_1=0}\theta(t,x)=0$, then we will have proven that $\pdv*{\phi}{x}$ exists and is equal to $\psi$. To do so, we will derive a bound on $|\theta(t,x)|$ that we can more easily control. Let's begin.\par
+        Since $f\in C^1$, we have that
+        \begin{align*}
+            f(y)-f(x) &= \int_x^y{\pdv{f}{x}}(t)\dd{t}\\
+            \frac{f(y)-f(x)}{y-x} &= \frac{1}{y-x}\int_x^y{\pdv{f}{x}}(t)\dd{t}\\
+            &= \int_0^1{\pdv{f}{x}}(x+t(y-x))\dd{t}\\
+            &= {\pdv{f}{x}}(x)+\int_0^1\left( {\pdv{f}{x}}(x+t(y-x))-{\pdv{f}{x}}(x) \right)\dd{t}\\
+            f(y)-f(x) &= {\pdv{f}{x}}(x)(y-x)+|y-x|R(y,x)
+        \end{align*}
+        where
+        \begin{equation*}
+            |R(y-x)| \leq \max_{t\in[0,1]}\norm{{\pdv{f}{x}}(x+t(y-x))-{\pdv{f}{x}}(x)}
+        \end{equation*}
+        Let's take another minute to justify the above algebraic manipulations from a geometric perspective. The first line should be a fairly straightforward application of the FTC. The second line rephrases the equality as two different ways of calculating the average slope of $f$ on $[x,y]$; specifically, we may either do rise over run (LHS) or find the area under the derivative and divide by the "length" to get the average "height." The third line shrinks the domain of integration to an interval of unit length, compressing all of the information in $\pdv*{f}{x}$ along with it, and making it so that we no longer have to divide through by the "length." The fourth line adds and subtracts the starting point so that geometrically, we take the area in two parts: All of the area beneath the first point, and then all of the area that "changes." The last line sees us multiply both sides by $y-x$ and then take the integral to be a sort of "remainder." Alternatively, we may justify
+        \begin{equation*}
+            f(y) = f(x)+{\pdv{f}{x}}(x)(y-x)+\left( \int_0^1\left( {\pdv{f}{x}}(x+t(y-x))-{\pdv{f}{x}}(x) \right)\dd{t} \right)(y-x)
+        \end{equation*}
+        by analogy: If $f(x)=x^2$ and thus $\dv*{f}{x}=2x$, then $4^2$ equals $2^2$, plus the area under the curve $2x$ from $x=2$ to $x=4$ partitioned into the rectangle with base length $y-x=2$ and height ${\dv*{f}{x}}(2)=4$ and the triangle sitting on top of the aforementioned rectangle and below the graph of $\dv*{f}{x}$. Note that all of these justifications are taken from the perspective of $f$ being a single-variable function; to justify the transformations in the multivariable case would likely be much more complicated and is beyond my grasp at the moment (recall that $\pdv*{f}{x}$ is actually a matrix!). Also note that as such, the norm in the bound on $|R(y,x)|$ given above is the matrix norm.\par
+        Since $f\in C^1$, its partial derivatives are uniformly continuous in a neighborhood of $x_1$. It follows that $\lim_{y\to x}|R(y,x)|=0$ where the argument converges uniformly in $x$ in some neighborhood of $x_1=0$.\par
+        Using the above expression for $f(y)-f(x)$, we have that
+        \begin{align*}
+            \dot{\theta}(t,x) &= \frac{1}{|x|}[\dot{\phi}(t,x)-\dot{\phi}(t)-\dot{\psi}(t)x]\\
+            &= \frac{1}{|x|}[f(\phi(t,x))-f(\phi(t))-A(t)\psi(t)x]\\
+            &= \frac{1}{|x|}\left[ {\pdv{f}{x}}(\phi(t))(\phi(t,x)-\phi(t))+|\phi(t,x)-\phi(t)|R(\phi(t,x),\phi(t))-A(t)\psi(t)x \right]\\
+            &= A(t)\cdot\frac{\phi(t,x)-\phi(t)-\psi(t)x}{|x|}+\frac{|\phi(t,x)-\phi(t)|}{|x|}R(\phi(t,x),\phi(t))\\
+            &= A(t)\theta(t,x)+\frac{|\phi(t,x)-\phi(t)|}{|x|}R(\phi(t,x),\phi(t))
+        \end{align*}
+        Integrating and taking absolute values yields
+        \begin{align*}
+            |\theta(t,x)| &= |\theta(t,x)-\theta(0,x)|\\
+            &= \left| \int_0^t\left( A(s)\theta(s,x)+\frac{|\phi(s,x)-\phi(s)|}{|x|}R(\phi(s,x),\phi(s)) \right)\dd{s} \right|\\
+            &\leq \int_0^t\frac{1}{|x|}|\phi(s,x)-\phi(s,0)|\cdot|R(\phi(s,x),\phi(s))|\dd{s}+\int_0^t\norm{A(s)}|\theta(s,x)|\dd{s}\\
+            &\leq \int_0^t\frac{1}{|x|}|x-0|\e[L|s-0|]\cdot|R(\phi(s,x),\phi(s))|\dd{s}+\int_0^t\norm{A(s)}|\theta(s,x)|\dd{s}\\
+            &\leq \e[LT]\int_0^T|R(\phi(s,x),\phi(s))|\dd{s}+\int_0^t\norm{A(s)}|\theta(s,x)|\dd{s}
+        \end{align*}
+        Note that $\theta(0,x)=0$ since we have taken $t_0=x_1=0$ WLOG. Also note that we use the continuous dependence on initial conditions equation to get from line 2 to line 3. Lastly, note that from the next to the last to the last line, we use the inequality $\e[Ls]\leq\e[LT]$ to transform the exponential function into a constant that bounds it (recall that $s\leq T$ by definition).\par
+        Define
+        \begin{equation*}
+            \tilde{R}(x) = \e[LT]\int_0^T|R(\phi(s,x),\phi(s))|\dd{s}
+        \end{equation*}
+        so that
+        \begin{equation*}
+            |\theta(t,x)| \leq \tilde{R}(x)+\int_0^t\norm{A(s)}|\theta(s,x)|\dd{s}
+        \end{equation*}
+        It follows by the Generalized Gr\"{o}nwall's inequality that
+        \begin{equation*}
+            |\theta(t,x)| \leq \tilde{R}(x)\exp(\int_0^T\norm{A(s)}\dd{s})
+        \end{equation*}
+        This combined with the fact from earlier that $\lim_{y\to x}|R(y,x)|=0$ and hence $\lim_{x\to 0}\tilde{R}(x)=0$ implies that $\lim_{x\to 0}\theta(t,x)=0$, as desired.\par
+        Additionally, $\pdv*{\phi}{x}$ is continuous as the solution to the first variational equation. This completes the base case.\par\smallskip
+        Now suppose via strong induction that the claim holds for $1,\dots,k$, and let $f\in C^{k+1}$. Then $\phi(t,x)\in C^1$ and $\pdv*{\phi}{x}$ solves the first variational equation, as per the base case. But since $A(t,x)\in C^k$ and hence $\pdv*{\phi}{x}\in C^k$, we have by Lemma 2.3 that $\phi(t,x)\in C^{k+1}$.
+    \end{proof}
+    \item This theorem also allows us to handle dependence on parameters.
+    \begin{itemize}
+        \item In particular, if $f$ depends on some paramenters $\lambda\in\Lambda\subset\R^p$ such that we are now solving the IVP
+        \begin{equation*}
+            \dot{x}(t) = f(t,x,\lambda)
+            ,\quad
+            x(t_0) = x_0
+        \end{equation*}
+        for a solution $\phi(t,t_0,x_0,\lambda)$, then we have the following result.
+    \end{itemize}
+    \item Theorem 2.11: Suppose $f\in C^k(U\times\Lambda,\R^n)$, $k\geq 1$. Around each point $(t_0,x_0,\lambda_0)\in U\times\Lambda$ we can find an open set $I\times B\times\Lambda_0\subset U\times\Lambda$ such that $\phi(t,s,x,\lambda)\in C^k(I\times I\times B\times\Lambda_0,\R^n)$.
+    \begin{proof}
+        Largely follows from Theorem 2.10. Noteworthy modificatinos: We add the parameters $\lambda$ to the dependent variables and require $\dot{\lambda}=0$ (i.e., that the parameters do not change with time and therefore uniquely determine a solution over time).
+    \end{proof}
 \end{itemize}
 
 \subsubsection*{Problems}
 \begin{enumerate}[label={\textbf{2.\arabic*.}},ref={2.\arabic*},leftmargin=3.5em]
     \setcounter{enumi}{11}
-    \item \label{prb:2.12}Show that if
+    \item \label{prb:2.12}\marginnote{11/15:}Show that if
     \begin{equation*}
         \psi(t) \leq \alpha+\int_0^t(\beta\psi(s)+\gamma)\dd{s}
     \end{equation*}
