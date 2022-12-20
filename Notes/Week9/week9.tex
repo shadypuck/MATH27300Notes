@@ -1,0 +1,187 @@
+\documentclass[../notes.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ (#1)}{}}
+\setcounter{chapter}{8}
+
+\begin{document}
+
+
+
+
+\chapter{Periodicity}
+\section{Periodic Solutions of Planar Systems}
+\begin{itemize}
+    \item \marginnote{11/28:}Last lectures: Special solutions to planar systems. Usually encountered in applications of ODEs (e.g., the homework). If we encounter ODEs in our physical sciences lives, we may need to remember this.
+    \item There will be a Monday office hours that coincides with the regular lecture time.
+    \item Special (periodic) solutions of planar systems.
+    \item For a planar autonomous system
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            f(x,y)\\
+            g(x,y)\\
+        \end{pmatrix}
+    \end{equation*}
+    a periodic solution is equivalent to a closed orbit.
+    \item So geometrically, we'll be studying closed orbits. Analytically, we'll be studying periodic systems.
+    \item Simple examples: Harmonic oscillator
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            y\\
+            -x\\
+        \end{pmatrix}
+    \end{equation*}
+    \item Less trivial example: The pendulum
+    \begin{equation*}
+        \begin{pmatrix}
+            \theta\\
+            \omega\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            \omega\\
+            -\sin\theta\\
+        \end{pmatrix}
+    \end{equation*}
+    \item We can easily find Lyapunov functions for these two systems; both functions are the energy function.
+    \item Different orbital graphs: The first one is concentric circles; the second one is only sometimes periodic.
+    \emph{picture}
+    \item In general, these periodic cycles are dense in the plane.
+    \item However, we can also, at the other extreme, have isolated periodic solutions, referred to as \textbf{limit cycles}.
+    \item Simplest example:
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            -y-[1-(x^2+y^2)]x\\
+            x-[1-(x^2+y^2)]y\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Hard to see the behavior in Cartesian coordinates; much easier in polar. If we use $r=\sqrt{x^2+y^2}$ and $\theta=\arctan(y/x)$. We will see equations of this type in our homework.
+        \item Differentiating $r=\sqrt{x^2+y^2}$ implicitly with respect to time, we get
+        \begin{align*}
+            \dv{r}{t} &= \frac{xx'}{\sqrt{x^2+y^2}}+\frac{yy'}{\sqrt{x^2+y^2}}\\
+            &= -\frac{xy}{\sqrt{x^2+y^2}}+\frac{1-r^2}{r}x^2+\frac{xy}{\sqrt{x^2+y^2}}+\frac{1-r^2}{r}y^2\\
+            &= r(1-r^2)\cos^2\theta+r(1-r^2)\sin^2\theta\\
+            &= r(1-r^2)
+        \end{align*}
+        \item Differentiating $\theta=\arctan(y/x)$ implicitly with respect to time, we get
+        \begin{align*}
+            \dv{\theta}{t} &= \frac{-\frac{y}{x^2}x'}{1+\left( \frac{y}{x} \right)^2}+\frac{\frac{1}{x}y'}{1+\left( \frac{y}{x} \right)^2}\\
+            &= \frac{-yx'}{x^2+y^2}+\frac{xy'}{x^2+y^2}\\
+            &= 1
+        \end{align*}
+        \item Thus, we can transform the original equation to
+        \begin{equation*}
+            \begin{pmatrix}
+                r\\
+                \theta\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                r(1-r^2)\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        for $r>0$ and $\theta\in\R$.
+        \item This ODE can be explicitly solved, but since we are interested in qualitative behavior, we will not do that.
+        \item The unit circle partitions the $xy$-plane into two parts (inside and outside).
+        \emph{picture}
+        \item Let's start on the unit circle. Then we just spiral around on it with constant velocity ($r'=0$ and $\theta'=1$).
+        \item Let's now start inside. Since $\theta(t)=t+\theta(0)$, and $r'$ is positive, we get a spiral that approaches the unit circle.
+        \item If we start outside, we get a spiral that starts outside and spirals toward the unit circle.
+        \item Thus, in this case, the unit circle is the unique limit cycle of the system.
+    \end{itemize}
+    \item Shao suggests we search for iodine clock videos on YouTube to help with the homework. The iodine clock is described by the limit cycles.
+    \item Historical remark: David Hilbert posed 23 questions at the beginning of the 20th century. The 16th one asked about planar polynomial systems. For these, is it possible to estimate the number of limit cycles. Even for the case of quadratic polynomials, the question is still open! For quadratics, we know that there can be 1, 2, 3, or 4 cycles, but we have no idea whether or not there is an upper bound. This is a central open problem in the study of ODEs.
+    \item Basic theorem in this area is as follows.
+    \item Theorem (Poincar\'{e}-Bendixson Theorem): Let $\Omega\in\R^2$ be open, $f(x)$ a vector field on $\Omega$. Fix $x\in\Omega$. Define
+    \begin{equation*}
+        \omega(x) := \{z\in\Omega\mid\text{there is a sequence }t_n\to +\infty\text{ such that }\phi_{t_n}(x)\to z\}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \alpha(x) := \{z\in\Omega\mid\text{there is a sequence }t_n\to -\infty\text{ such that }\phi_{t_n}(x)\to z\}
+    \end{equation*}
+    That is, if you reverse the direction of time, $\alpha(x)$ collects all of the points. Also, let $\omega(x)\subset\Omega$ be compact and nonempty. In particular, there are three mutually exclusive cases for these limit sets.
+    \begin{enumerate}
+        \item $\omega(x)$ (or $\alpha(x)$\footnote{We just have to reverse the time.}) is a fixed point.
+        \item $\omega(x)$ is a limit cycle.
+        \item $\omega(x)$ consists of finitely many fixed points, together with curves joining these fixed points.
+    \end{enumerate}
+    \begin{proof}
+        The proof relies largely on algebraic topology, so we will not go into it in detail or even sketch it. The statement will be sufficient for our purposes.
+    \end{proof}
+    \item Theorem (Annulus theorem of Bendixson): Suppose $C_1,C_2$ are closed simple planar curves such that geometrically, one contains the other. We call the annular region (between the two curves) $A$. Suppose $f(x)$ is a planar vector field which points inward at every point of $\partial A$ (the boundary of $A$). Then the annular region $A$ is an invariant region of the plane. In particular, if $A$ does not contain any fixed points, then it must contain a limit cycle. As before, curves within and without spiral towards it.
+    \emph{picture}
+    \item Can produce beautiful diagrams: Zhifen Zhang's example --- \textcite{bib:Zhang} --- is the 4 limit cycle one. After her research, mathematicians found a family with four limit cycles.
+    \item System from the homework: Consider the system
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            a-x-\frac{4xy}{1+x^2}\\
+            b(x-\frac{xy}{1+x^2})\\
+        \end{pmatrix}
+    \end{equation*}
+    \emph{picture}
+    \begin{itemize}
+        \item We take $a,b>0$.
+        \item Every vector points in toward $a$, which points straight upward.
+        \item On the boundary,
+        \begin{equation*}
+            \begin{pmatrix}
+                a-x-\frac{4xy}{1+x^2}\\
+                b(x-\frac{xy}{1+x^2})\\
+            \end{pmatrix}
+            \cdot
+            \begin{pmatrix}
+                0\\
+                1\\
+            \end{pmatrix}
+            > 0
+        \end{equation*}
+        so we have a strict Lyapunov function.
+        \item Thus, any orbit in the first quadrant can never escape, reflecting our expectation that the concentration can never be negative.
+        \item Spoiler: Looks like a rectangular region.
+        \item We are also asked to find the fixed point and investigate its stability.
+    \end{itemize}
+    \item First step: Find fixed points.
+    \item Second step: Lyapunov functions.
+    \item Third step: Divide the vector field into positive and negative regions. Requires some improvization.
+    \item Fourth step: Check for an annular region.
+    \item Note: Note of these arguments can be generalized to higher dimensional systems. The regularity of the Poincar\'{e}-Bendixson system disappears as we go to higher dimensions.
+    \item Lorenz system: Oversimplified 3D quadratic system that serves as a simplification model for weather systems.
+    \begin{itemize}
+        \item Lorenz was an astronomer.
+        \item He discovered that even if the systems are very close together, the orbits will be separated indefinitely as time evolves on. It's not just about being stable or unstable, but overall global chaotic behavior.
+        \item Mathematicians quickly discovered that the Lorenz system has a \textbf{strange attractor}. An attractor for a planar system can only be closed orbits. In the Lorenz system, we have a strange type of butterfly. The dimension of the butterfly is not even an integer. Have to introduce Hausdorff measure to understand length and area in the more general framework of curves or surfaces.
+        \item No more detail, but a classical example of a chaotic ODE system worth mentioning. This phenomenon cannot appear for planar systems; even increasing the dimension by 1 can lead to chaos.
+        \item No widely accepted definition of mathematical chaos, but generally accepted ones are very irregular global attractors and points that are arbitrarily close and arbitrarily far from each other.
+        \item Fractorial sets.
+    \end{itemize}
+    \item Last lecture (Wednesday): Another example that has a limit cycle.
+    \item Friday will be a review.
+\end{itemize}
+
+
+
+
+\end{document}
