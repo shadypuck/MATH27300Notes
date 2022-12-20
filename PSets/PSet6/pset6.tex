@@ -1,0 +1,479 @@
+\documentclass[../psets.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\leftmark}{Problem Set \thesection}
+\setcounter{section}{5}
+\setenumerate[1]{label={\textbf{\arabic*.}}}
+\setenumerate[2]{label={(\arabic*)}}
+
+\begin{document}
+
+
+
+
+\section{Stability via Linearizations}
+\subsection*{Problems Related to Fundamental Definitions}
+\begin{enumerate}
+    \item \marginnote{11/18:}Write down the detail of calculations for the following proposition: Let $A$ be an $n\times n$ real matrix with one of its eigenvalues having positive real part. Then the fixed point $x_0=0$ of the linear autonomous system $y'=Ay$ is not Lyapunov stable.
+    \begin{proof}
+        To prove that $x_0$ is not Lyapunov stable, it will suffice to show that for all neighborhoods $B(x_0,\delta)$ ($\delta>0$), there exists $x\in B(x_0,\delta)$ and $t\geq 0$ such that $\phi_t(x)\notin B(x_0,\delta)$. Let $B(x_0,\delta)$ be an arbitrary neighborhood of $x_0$. We know that $y'=Ay$ is solved by $y=\e[tA]x$; hence, the solution for any $x$ is given by
+        \begin{equation*}
+            \phi_t(x) = \e[tA]x
+        \end{equation*}
+        Pick $x$ to be in the span of the eigenvector of $A$ corresponding to the eigenvalue $\lambda$ with positive real part, and pick it in particular to have magnitude less than $\delta$. Let $x$ be the first entry in the matrix $Q$ of (generalized) eigenvectors of $A$. Then since $\e[tA]x=Q\e[t\Lambda]Q^{-1}x$, we have that $\phi_t(x)=\e[t\lambda]x$. Thus,
+        \begin{align*}
+            |\phi_t(x)| &= |\e[t(\sigma+i\beta)]x|\\
+            &= \e[t\sigma]|\e[i\beta t]x|\\
+            &= \e[t\sigma]|\cos(\beta t)x+i\sin(\beta t)x|\\
+            &= \e[t\sigma]\sqrt{\cos^2(\beta t)|x|^2+\sin^2(\beta t)|x|^2}\\
+            &= \e[t\sigma]|x|
+        \end{align*}
+        Therefore, as $t\to+\infty$, $|\phi_t(x)|\to +\infty$, so we can pick a $t$ such that $|\phi_t(x)|\geq\delta$, i.e., $\phi_t(x)\notin B(x_0,\delta)$, as desired.
+    \end{proof}
+    \item 
+    \begin{enumerate}
+        \item For the system that describes the pendulum with friction, namely
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                \omega\\
+                -\eta\omega-g/l\sin\theta\\
+            \end{pmatrix}
+        \end{equation*}
+        where $\eta\geq 0$, compute its linearization at the fixed point $(\pi,0)$ and the eigenvalues of this linearization. Show that this fixed point is not Lyapunov stable (you may cite the unproved instability theorem from class).
+        \begin{proof}
+            The linearization is
+            \begin{align*}
+                A &=
+                \begin{pNiceMatrix}
+                    \eval{\pdv{\theta}(\omega)}_{(\pi,0)} & \eval{\pdv{\omega}(\omega)}_{(\pi,0)}\\
+                    \eval{\pdv{\theta}(-\eta\omega-\frac{g}{l}\sin\theta)}_{(\pi,0)} & \eval{\pdv{\omega}(-\eta\omega-\frac{g}{l}\sin\theta)}_{(\pi,0)}\\
+                \end{pNiceMatrix}\\
+                &=
+                \begin{pNiceMatrix}
+                    \left[ 0 \right]_{(\pi,0)} & \left[ 1 \right]_{(\pi,0)}\\
+                    \left[ -\frac{g}{l}\cos\theta \right]_{(\pi,0)} & \left[ -\eta \right]_{(\pi,0)}\\
+                \end{pNiceMatrix}\\
+                \Aboxed{
+                    A &= {
+                        \begin{pmatrix}
+                            0 & 1\\
+                            g/l & -\eta\\
+                        \end{pmatrix}
+                    }
+                }
+            \end{align*}
+            The eigenvalues of $A$ are
+            \begin{equation*}
+                \boxed{\lambda = \frac{-\eta\pm\sqrt{\eta^2+4g/l}}{2}}
+            \end{equation*}
+            Thus, since $4g/l$ is positive and hence $\sqrt{\eta^2+4gl}>\eta$ or $-\eta+\sqrt{\eta^2+4g/l}>0$, one of the eigenvalues of the linearization is positive, and hence has a positive rel part. It follows by the instability theorem from class that $(\pi,0)$ is not Lyapunov stable.
+        \end{proof}
+        \item Prove that if $\eta>0$, then any orbit of the system in (1) will converge to the fixed point $(0,0)$.
+        \begin{proof}
+            To prove the claim, it will suffice to show that $(0,0)$ is asymptotically stable. To do so, the theorem from class tells us that it will suffice to verify that all eigenvalues of the linearization have negative real parts. From class, we have that the linearization of the system in (1) at $(0,0)$ is
+            \begin{equation*}
+                A =
+                \begin{pmatrix}
+                    0 & 1\\
+                    -g/l & -\eta\\
+                \end{pmatrix}
+            \end{equation*}
+            Thus, computing the eigenvalues as above, we have that
+            \begin{equation*}
+                \lambda = \frac{-\eta\pm\sqrt{\eta^2-4g/l}}{2}
+            \end{equation*}
+            Consequently, if $\eta>0$, then both eigenvalues have negative real parts ($-\eta$ will be less than zero, $\sqrt{\eta^2-4g/l}$ will be less than $\eta$ if real and irrelevant if imaginary).
+        \end{proof}
+    \end{enumerate}
+    \item For the following planar vector fields, find all of the fixed points, compute the linearization of the system at these fixed points, and determine the stability of these fixed points.
+    \begin{enumerate}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                -2x(x-1)(2x-1)\\
+                -2y\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{proof}
+            Let $f:\R^2\to\R^2$ be a vector field defined by sending $(x,y)^T$ to the above. A fixed point of $f$ is a point where $f(x,y)=(0,0)$. It follows by solving the system of equations
+            \begin{equation*}
+                \begin{cases}
+                    -2x(x-1)(2x-1) &= 0\\
+                    -2y &= 0
+                \end{cases}
+            \end{equation*}
+            that the fixed points of $f$ are
+            \begin{align*}
+                x_0 &=
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                \end{pmatrix}&
+                x_1 &=
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                \end{pmatrix}&
+                x_2 &=
+                \begin{pmatrix}
+                    1/2\\
+                    0\\
+                \end{pmatrix}
+            \end{align*}
+            The linearizations are thus, respectively,
+            \begin{align*}
+                A_0 &=
+                \begin{pmatrix}
+                    -2 & 0\\
+                    0 & -2\\
+                \end{pmatrix}&
+                A_1 &=
+                \begin{pmatrix}
+                    -2 & 0\\
+                    0 & -2\\
+                \end{pmatrix}&
+                A_2 &=
+                \begin{pmatrix}
+                    1 & 0\\
+                    0 & -2\\
+                \end{pmatrix}
+            \end{align*}
+            Since these are all diagonal matrices, the eigenvalues can be read off the diagonal without further manipulation. Since all eigenvalues of $A_1,A_2$ are negative,
+            \begin{equation*}
+                \boxed{x_0,x_1\text{ are asymptotically stable.}}
+            \end{equation*}
+            Since one eigenvalue of $A_2$ is positive,
+            \begin{equation*}
+                \boxed{x_2\text{ is not even Lyapunov stable.}}
+            \end{equation*}
+        \end{proof}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                x(y+2x-2)\\
+                y(y+x-3)\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{proof}
+            Analogously to part (1), the fixed points are
+            \begin{align*}
+                x_0 &=
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                \end{pmatrix}&
+                x_1 &=
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                \end{pmatrix}&
+                x_2 &=
+                \begin{pmatrix}
+                    0\\
+                    3\\
+                \end{pmatrix}&
+                x_3 &=
+                \begin{pmatrix}
+                    -1\\
+                    4\\
+                \end{pmatrix}
+            \end{align*}
+            Thus, the linearizations are
+            \begin{align*}
+                A_0 &=
+                \begin{pmatrix}
+                    -2 & 1\\
+                    1 & -3\\
+                \end{pmatrix}&
+                A_1 &=
+                \begin{pmatrix}
+                    2 & 1\\
+                    1 & -2\\
+                \end{pmatrix}&
+                A_2 &=
+                \begin{pmatrix}
+                    1 & 1\\
+                    1 & 3\\
+                \end{pmatrix}&
+                A_3 &=
+                \begin{pmatrix}
+                    -2 & 1\\
+                    1 & 4\\
+                \end{pmatrix}
+            \end{align*}
+            Computing eigenvalues, we learn that
+            \begin{equation*}
+                \boxed{x_0\text{ is asymptotically stable.}}
+            \end{equation*}
+            and
+            \begin{equation*}
+                \boxed{x_1,x_2,x_3\text{ are not even Lyapunov stable.}}
+            \end{equation*}
+        \end{proof}
+        \item 
+        \begin{equation*}
+            \begin{pmatrix}
+                x(2-y-2x)\\
+                y(3-3y-x)\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{proof}
+            Analogously to part (1), the fixed points are
+            \begin{align*}
+                x_0 &=
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                \end{pmatrix}&
+                x_1 &=
+                \begin{pmatrix}
+                    1\\
+                    0\\
+                \end{pmatrix}&
+                x_2 &=
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                \end{pmatrix}&
+                x_3 &=
+                \begin{pmatrix}
+                    3/5\\
+                    4/5\\
+                \end{pmatrix}
+            \end{align*}
+            Thus, the linearizations are
+            \begin{align*}
+                A_1 &=
+                \begin{pmatrix}
+                    2 & -1\\
+                    -1 & 3\\
+                \end{pmatrix}&
+                A_2 &=
+                \begin{pmatrix}
+                    -2 & -1\\
+                    -1 & 2\\
+                \end{pmatrix}&
+                A_3 &=
+                \begin{pmatrix}
+                    1 & -1\\
+                    -1 & -3\\
+                \end{pmatrix}&
+                A_4 &=
+                \begin{pmatrix}
+                    -6/5 & -1\\
+                    -1 & -12/5\\
+                \end{pmatrix}
+            \end{align*}
+            Computing eigenvalues, we learn that
+            \begin{equation*}
+                \boxed{x_3\text{ is asymptotically stable.}}
+            \end{equation*}
+            and
+            \begin{equation*}
+                \boxed{x_0,x_1,x_2\text{ are not even Lyapunov stable.}}
+            \end{equation*}
+        \end{proof}
+    \end{enumerate}
+    \item Let $A$ be an $n\times n$ constant real matrix so that all eigenvalues of $A$ have negative real part. Let $f$ be a smooth vector field with a fixed point $x_0$ so that the linearization of $f(x)$ at $x_0$ equals $A$. Prove that
+    \begin{equation*}
+        L(x) = \int_0^\infty|\e[\tau A](x-x_0)|^2\dd\tau
+    \end{equation*}
+    is a strict Lyapunov function for the system $y'=f(y)$ near the fixed point $x_0$. What is the geometric shape of the level sets $L(x)<\infty$?
+    \begin{proof}
+        Since $L$ is a composition of continuous functions, $L$ is, itself, continuous.\par
+        If $x=x_0$, then
+        \begin{equation*}
+            L(x_0) = \int_0^\infty|\e[\tau A](x_0-x_0)|^2\dd\tau
+            = 0
+        \end{equation*}
+        If $x\neq x_0$, then $x-x_0\neq 0$. Since all eigenvalues of $\e[\tau A]$ have negative real part, we know that in particular, no eigenvalue is zero, so $\ker(\e[\tau A])=\{0\}$ for all $\tau$. Thus, $\e[\tau A](x-x_0)\neq 0$. Hence, the entire integrand is strictly positive. But this means that the integral must be strictly positive, as desired.\par
+        By the Leibniz integral rule,
+        \begin{align*}
+            \dot{L}(x) &= \int_0^\infty\dv{x}(|\e[\tau A](x_0-x_0)|^2)\dd\tau\\
+            &= \int_0^\infty 2|\e[\tau A](x_0-x_0)|\cdot\e[\tau A]\dd\tau\\
+            &= \nabla L(x)\cdot f(x)\\
+            &< 0
+        \end{align*}
+        The level sets will look like $n$-dimensional ellipsoids.
+    \end{proof}
+    \item Let $A$ be an $n\times n$ constant real matrix so that all eigenvalues of $A$ have negative real part. Let $f$ be a smooth vector field with a fixed point $x=0$ so that the linearization of $f(x)$ at 0 equals $A$. Let $\delta>0$ be a sufficiently small positive constant. Use the Banach fixed point theorem to give a direct proof of the stability theorem, by considering the space consisting of continuous mappings from $[0,+\infty)$ to the closed ball $\bar{B}(0,\delta)$. \emph{Hint}: That is, you need to solve the integral equation
+    \begin{equation*}
+        y(t) = \e[tA]x+\int_0^t\e[(t-\tau)A]g(y(\tau))\dd\tau
+    \end{equation*}
+    where $g(x)=f(x)-Ax$ in the space of continuous mappings from $[0,+\infty)$ to the closed ball $\bar{B}(0,\delta)$ for a suitable choice of $x$.
+    \begin{proof}
+        Let $x\in\bar{B}(0,\delta)$. WTS: $\phi_t(x)\to 0$ as $t\to+\infty$.
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Stability of Centrifugal Governor}
+\begin{enumerate}
+    \item Consider a real cubic polynomial
+    \begin{equation*}
+        p(x) = x^3+a_2x^2+a_1x+a_0
+    \end{equation*}
+    Prove the \textbf{Roth-Hurwitz criterion} for degree 3 polynomials: In order that $p$ is stable, i.e., every root of $p(x)$ has negative real part, it is necessary and sufficient that the following inequalities all hold.
+    \begin{align*}
+        a_2 &> 0&
+        a_1 &> 0&
+        a_0 &> 0
+    \end{align*}
+    \begin{equation*}
+        a_2a_1 > a_0
+    \end{equation*}
+    \emph{Hint}: $p(x)$ has at least one real root, and we might denote it by $-\lambda$. Factorize $p(x)=(x+\lambda)(x^2+bx+c)$. The necessary and sufficient condition for roots of $x^2+bx+c$ to have negative real part is $b>0$ and $c>0$.
+    \begin{proof}
+        % Since complex roots of a real polynomial must appear in conjugate pairs, we can write the three roots in full generality as
+        % \begin{align*}
+        %     r_1 &= \sigma+i\beta&
+        %     r_2 &= \sigma-i\beta&
+        %     r_3 &= \lambda
+        % \end{align*}
+        % for $\sigma,\beta,\lambda\in\R$. Moreover, since $p$ is stable, we know that $\sigma,\lambda<0$
+
+
+        Suppose first that $p$ is stable. Taking the hint, we know that $p$ has at least one real root, which we can denote by $-\lambda$ for some $\lambda\in\R_+$. Thus,
+        \begin{align*}
+            p(x) &= (x+\lambda)(x^2+bx+c)\\
+            &= x^3+bx^2+cx+\lambda x^2+b\lambda x+c\lambda\\
+            &= x^3+(b+\lambda)x^2+(c+b\lambda)x+c\lambda
+        \end{align*}
+        Moreover, taking the hint again, we know that we must have $b,c>0$. But if $\lambda,b,c>0$, then
+        \begin{align*}
+            a_2 &= b+\lambda > 0&
+            a_1 &= c+b\lambda > 0&
+            a_0 &= c\lambda > 0
+        \end{align*}
+        \begin{equation*}
+            a_2a_1 = (b+\lambda)(c+b\lambda)
+            = \lambda b^2+(c+\lambda^2)b+c\lambda
+            > c\lambda = a_0
+        \end{equation*}
+        as desired.\par
+        Now suppose that
+        \begin{align*}
+            a_2 &> 0&
+            a_1 &> 0&
+            a_0 &> 0
+        \end{align*}
+        \begin{equation*}
+            a_2a_1 > a_0
+        \end{equation*}
+        Once again $p$ has a real root we can denote by $-\lambda$, allowing us to factor $p$ into the above form. This allows us to deduce, as above, that
+        \begin{align*}
+            b+\lambda &> 0&
+            c+b\lambda &> 0&
+            c\lambda &> 0
+        \end{align*}
+        \begin{equation*}
+            \lambda b^2+(c+\lambda^2)b > 0
+        \end{equation*}
+        It is now our job to deduce that these four inequalities imply $b,c>0$. Since $c\lambda>0$ for $\lambda>0$, we can divide both sides by $\lambda$ to learn that $c>0$. As to $b$, we can rewrite the last inequality above in the form
+        \begin{equation*}
+            (c+b\lambda+\lambda^2)b > 0
+        \end{equation*}
+        This combined with the fact that $c+b\lambda>0$ and $\lambda^2>0$, hence, $c+\lambda b+\lambda^2>0$ implies that we can divide both sides above by this quantity without flipping the inequality. Therefore, $b>0$, too, as desired.
+    \end{proof}
+    \item Consider the system
+    \begin{align*}
+        \varphi' &= \psi\\
+        \psi' &= -\frac{b}{m}\psi+n^2\omega^2\sin\varphi\cos\varphi-g\sin\varphi\\
+        \omega' &= \frac{1}{J}(k\cos\varphi-F)
+    \end{align*}
+    \begin{enumerate}
+        \item Suppose $0<F/k<1$. Then the system has a unique fixed point $(\varphi_0,\psi_0,\omega_0)$. Find this fixed point, and compute the linearization at the fixed point.
+        \begin{proof}
+            We first find the fixed point. The fixed point is in particular the point $(\varphi_0,\psi_0,\omega_0)$ such that plugging these values into the system of differential equations for $\varphi,\psi,\omega$, respectively, makes all of the equations equal zero. We have from the first equation that $\psi=0$ if we want $\varphi'=0$. We have from the third equation that $\cos\varphi=F/k$ (hence $\varphi=\cos^{-1}(F/k)$) if we want $\omega'=0$. Using these two values (and the trigonometric deduction that if $\cos\varphi=F/k$, then $\sin\varphi=\sqrt{k^2-F^2}$), we can solve for $\omega$ using the second equation. This yields the following as the final result.
+            \begin{equation*}
+                \boxed{(\varphi_0,\psi_0,\omega_0) = \left( \cos^{-1}(F/k),0,\sqrt{\frac{gk}{Fn^2}} \right)}
+            \end{equation*}
+            The linearization $A$ at this fixed point is of the form
+            \begin{equation*}
+                A =
+                \begin{pmatrix}
+                    \eval{\pdv{\varphi'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\varphi'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\varphi'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)}\\
+                    \eval{\pdv{\psi'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\psi'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\psi'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)}\\
+                    \eval{\pdv{\omega'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\omega'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} & \eval{\pdv{\omega'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)}\\
+                \end{pmatrix}
+            \end{equation*}
+            We can compute all of these entries as follows.
+            \begingroup
+            \allowdisplaybreaks
+            \begin{gather*}
+                \eval{\pdv{\varphi'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} = 0\\
+                \eval{\pdv{\varphi'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} = 1\\
+                \eval{\pdv{\varphi'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)} = 0\\
+                \begin{split}
+                    \eval{\pdv{\psi'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} &= n^2\omega_0^2(\cos^2\varphi_0-\sin^2\varphi_0)-g\cos\varphi_0\\
+                    &= n^2\cdot\frac{gk}{Fn^2}\left( \frac{F^2}{k^2}-k^2+F^2 \right)-\frac{gF}{k}\\
+                    &= \frac{gk(F^2-k^2)}{F}
+                \end{split}\\
+                \eval{\pdv{\psi'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} = -\frac{b}{m}\\
+                \begin{split}
+                    \eval{\pdv{\psi'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)} &= 2n^2\omega_0\sin\varphi_0\cos\varphi_0\\
+                    &= 2n^2\sqrt{\frac{gk}{Fn^2}}\cdot\sqrt{k^2-F^2}\cdot\frac{F}{k}\\
+                    &= 2n\sqrt{\frac{gF(k^2-F^2)}{k}}
+                \end{split}\\
+                \begin{split}
+                    \eval{\pdv{\omega'}{\varphi}}_{(\varphi_0,\psi_0,\omega_0)} &= -\frac{1}{J}(k\sin\varphi_0+F)\\
+                    &= -\frac{1}{J}(k\sqrt{k^2-F^2}+F)
+                \end{split}\\
+                \eval{\pdv{\omega'}{\psi}}_{(\varphi_0,\psi_0,\omega_0)} = 0\\
+                \eval{\pdv{\omega'}{\omega}}_{(\varphi_0,\psi_0,\omega_0)} = 0
+            \end{gather*}
+            \endgroup
+            Therefore, we have that
+            \begin{equation*}
+                \boxed{A = {
+                    \begin{pNiceMatrix}
+                        0 & 1 & 0\\
+                        \frac{gk(F^2-k^2)}{F} & -\frac{b}{m} & 2n\sqrt{\frac{gF(k^2-F^2)}{k}}\\
+                        -\frac{1}{J}(k\sqrt{k^2-F^2}+F) & 0 & 0\\
+                    \end{pNiceMatrix}
+                }}
+            \end{equation*}
+        \end{proof}
+        \item Compute the characteristic polynomial of the linearization. Use the Roth-Hurwitz criterion to find the sufficient and necessary condition of stability of the fixed point in terms of $b$, $m$, $J$, $F$ and $\omega_0$.
+        \begin{proof}
+            The characteristic polynomial of the linearization from part (1) is
+            \begin{equation*}
+                \boxed{\chi_A(z) = -z^3-\frac{b}{m}z^2+\frac{kg(F^2-k^2)}{F}\cdot z-\frac{2n(F+k\sqrt{k^2-F^2})\sqrt{Fg(k^2-F^2)}}{\sqrt{k}J}}
+            \end{equation*}
+            Since $k=Fn^2\omega_0^2/g$, we can rewrite the characteristic polynomial as
+            \begin{equation*}
+                \chi_A(z) = -z^3-\frac{b}{m}z^2+\frac{n^2\omega_0^2F^2(g^2-n^4\omega_0^4)}{g^2}\cdot z-\frac{2F^2(\sqrt{n^4\omega_0^4-g^2}+Fn^2\omega_0^2(\frac{n^4\omega_0^4}{g^2}-1))}{J\omega_0}
+            \end{equation*}
+            Thus, applying the Roth-Hurwitz criterion, we have that
+            \begin{align*}
+                \frac{b}{m} &> 0&
+                -\frac{n^2\omega_0^2F^2(g^2-n^4\omega_0^4)}{g^2} &> 0&
+                \frac{2F^2(\sqrt{n^4\omega_0^4-g^2}+Fn^2\omega_0^2(\frac{n^4\omega_0^4}{g^2}-1))}{J\omega_0} &> 0
+            \end{align*}
+            \begin{equation*}
+                -\frac{bn^2\omega_0^2F^2(g^2-n^4\omega_0^4)}{mg^2} > \frac{2F^2(\sqrt{n^4\omega_0^4-g^2}+Fn^2\omega_0^2(\frac{n^4\omega_0^4}{g^2}-1))}{J\omega_0}
+            \end{equation*}
+        \end{proof}
+        \item The ratio $\nu=\omega_0/2F$ is usually called the \textbf{non-uniformity} of the governor. It characterizes how the change of load alters the stable speed $\omega_0$. From the stability condition obtained in part (2), answer the following question: By increasing the mass $m$, will stability of the system be enhanced or harmed? What about the friction $b$, the inertia $J$, and non-uniformity $\nu$?
+        \begin{proof}
+            Increasing $m$ \fbox{decreases} the stability. Increasing $m$ makes every condition in which it is present less "extreme" (e.g., increasing $m$ makes $b/m\to 0$ and the left term in the last inequality closer to the right term).\par
+            Increasing $b$ \fbox{increases} the stability. It makes every condition in which it is present more extreme.\par
+            Increasing $J$ \fbox{decreases} the stability. It makes the third condition less extreme to a greater extent than it makes the fourth condition more extreme.
+            Increasing $\nu$ \fbox{enhances} the stability. Increasing $\nu$ is the same as increasing the ratio of $\omega_0$ to $F$. If we do this in the above criterion, we can see that this always makes the condition more "extreme."
+        \end{proof}
+        \item Are these changes good or harmful for stability of the governor? If you are a designer of a steam engine and want to increase the stability of this controller system, what should you do?
+        \begin{proof}
+            These changes were overall \fbox{harmful} (hence the unreliability described in the intro to the question). Increasing the weight and reducing friction were harmful, while increasing speed (and hence $\nu$) and reducing $J$ was helpful. To increase the stability, you should decrease the mass, increase the friction, decrease the moment of inertia, and increase the non-uniformity.
+        \end{proof}
+    \end{enumerate}
+\end{enumerate}
+
+
+
+
+\end{document}
