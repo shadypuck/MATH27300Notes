@@ -1,0 +1,1521 @@
+\documentclass[../psets.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\leftmark}{Review}
+\setenumerate[1]{label={(\arabic*)}}
+
+\begin{document}
+
+
+
+
+\section{Review}
+\marginnote{12/2:}You may finish a section each day, so that your reviewing tasks are evenly distributed before the final exam. Please note that this list emphasizes more on the fundamental definitions and theorems, so you should also use the answers of problem sets as a resource for reviewing. If you finish this whole list, you will get five more points for your final score.
+
+
+\subsection*{Basic Definitions; Scalar Equations of Separable Form}
+\begin{enumerate}
+    \item Convert a scalar ODE $y^{(n)}=f(t,y,\dots,y^{(n-1)})$ to a vector-valued ODE of order 1.
+    \begin{proof}
+        Let
+        \begin{align*}
+            Y &=
+            \begin{pmatrix}
+                y\\
+                y'\\
+                \vdots\\
+                y^{(n-1)}\\
+            \end{pmatrix}&
+            f(t,y) &=
+            \begin{pmatrix}
+                Y^2\\
+                Y^3\\
+                \vdots\\
+                f(t,Y^1,Y^2,\dots,Y^{n-1})\\
+            \end{pmatrix}
+        \end{align*}
+        Then $Y'=f(t,Y)$, as desired.
+    \end{proof}
+    \item Derive the formula to solve the IVP of the scalar first-order ODE
+    \begin{equation*}
+        \dv{y}{x} = f(y)g(x)
+        ,\quad
+        y(x_0) = y_0
+    \end{equation*}
+    \begin{proof}
+        Rearrange the initial separable ODE as follows.
+        \begin{equation*}
+            \frac{1}{g(y)}\cdot\dv{y}{t} = f(t)
+        \end{equation*}
+        Define $\dv*{H}{y}=1/g(y)$. Then, continuing from the above, we have by the law of composite differentiation that
+        \begin{align*}
+            \dv{H}{y}\cdot\dv{y}{t} &= f(t)\\
+            \dv{H}{t} &= f(t)
+        \end{align*}
+        From the definition of $H$, we know that $H(y)=\int_{y_0}^f\dd{w}/g(w)$. We also have from the FTC that $f(t)=\dv{t}\int_{t_0}^tf(\tau)\dd\tau$. Thus, continuing from the above, we have that
+        \begin{align*}
+            \dv{t}(H) &= f(t)\\
+            \dv{t}\left[ \int_{y_0}^f\frac{\dd{w}}{g(w)} \right] &= \dd{t}\int_{t_0}^tf(\tau)\dd\tau\\
+            \dv{t}\left[ \int_{y_0}^{y(t)}\frac{\dd{w}}{g(w)}-\int_{t_0}^tf(\tau)\dd\tau \right] &= 0
+        \end{align*}
+        It follows since $y(t_0)=y_0$ that $C=H(y_0)=0$, so we can take the above to
+        \begin{equation*}
+            \int_{y_0}^{y(t)}\frac{\dd{w}}{g(w)} = \int_{t_0}^tf(\tau)\dd\tau
+        \end{equation*}
+        knowing that our constant of integration is zero.
+    \end{proof}
+    \item Solve the logistic growth equation
+    \begin{equation*}
+        \dv{y}{t} = ry\left( 1-\frac{y}{M} \right)
+        ,\quad
+        y(0) = y_0
+    \end{equation*}
+    Explain the meaning of this equation as a model for population growth.
+    \begin{proof}
+        The solution is
+        \begin{align*}
+            \frac{M\dd{y}}{y(M-y)} &= r\dd{t}\\
+            \log\frac{y}{M-y}-\log\frac{y_0}{M-y_0} &= rt\\
+            \frac{y(M-y_0)}{y_0(M-y)} &= \e[rt]\\
+            y\cdot\frac{M-y_0}{y_0} &= (M-y)\e[rt]\\
+            y\cdot\frac{M-y_0}{y_0}+y\e[rt] &= M\e[rt]\\
+            y\left( \frac{M-y_0}{y_0}+\e[rt] \right) &= M\e[rt]\\
+            y\left( \frac{M-y_0+y_0\e[rt]}{y_0} \right) &= M\e[rt]\\
+            y\left( \frac{M+y_0(\e[rt]-1)}{y_0} \right) &= M\e[rt]\\
+            y(t) &= \frac{My_0\e[rt]}{M+y_0(\e[rt]-1)}
+        \end{align*}
+        The ODE says that a population grows exponentially with a proportionality constant ($ry$ term), but also that ecosystems can only sustain so large a population (i.e., have a max capacity $M$). Thus, as $y\to M$, we lose our exponential growth and levels out.\par
+        This is also reflected by the solution: At $t=0$, the expression simplifies to the initial condition, as expected.
+        \begin{equation*}
+            y(0) = \frac{My_0\e[r\cdot 0]}{M+y_0(\e[r\cdot 0]-1)}
+            = \frac{My_0}{M}
+            = y_0
+        \end{equation*}
+        But as $t\to\infty$, the dominant terms in the numerator and denominator become the exponential ones, so for $t$ large,
+        \begin{equation*}
+            y(t) \approx \frac{My_0\e[rt]}{y_0\e[rt]} = M
+        \end{equation*}
+        Lastly, if we start with population greater than $M$, we will converge down to $M$ analogously to the above, reflecting the fact that overpopulation will result in a die off.
+    \end{proof}
+    \item Give an example of an IVP of a scalar first-order ODE with finite lifespan.
+    \begin{proof}
+        $x'=\e[x]\sin t$, $x(0)=x_0$ has finite lifespan. Indeed, solving by separation of variables, we get
+        \begin{equation*}
+            -\e[-x]+\e[-x_0] = 1-\cos t
+            \quad\Longleftrightarrow\quad
+            \boxed{x(t) = -\ln(\e[-x_0]-1+\cos t)}
+        \end{equation*}
+        The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is
+        \begin{equation*}
+            \boxed{\{x_0\in\R\mid x_0<\ln(1/2)\}}
+        \end{equation*}
+        When $x_0\geq\ln(1/2)$, the solution only exists in
+        \begin{equation*}
+            \boxed{\left[ 0,\arccos(1-\e[-x_0]) \right)}
+        \end{equation*}
+    \end{proof}
+    \item Write down a sufficient condition for the differential equation
+    \begin{equation*}
+        g(x,y)\dv{y}{x}+f(x,y) = 0
+    \end{equation*}
+    \begin{proof}
+        We must have
+        \begin{equation*}
+            \pdv{g}{x} = \pdv{f}{y}
+        \end{equation*}
+    \end{proof}
+    to be exact, i.e., to admit a general solution of the implicit form $F(x,y)=0$.
+    \item Give an example of an exact differential equation where $f,g$ are quadratic polynomials.
+    \begin{proof}
+        We could take
+        \begin{equation*}
+            (y^2+2xy)\dv{y}{x}+(x^2+y^2) = 0
+        \end{equation*}
+    \end{proof}
+    \item Find a first integral of the Lotka-Volterra system
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            (1-y)x\\
+            \alpha(x-1)y\\
+        \end{pmatrix}
+    \end{equation*}
+    Describe the global behavior of this system in the first quadrant.
+    \begin{proof}
+        We have
+        \begin{align*}
+            \frac{x'}{y'} &= \frac{(1-y)x}{\alpha(x-1)y}\\
+            \frac{y-1}{y}\cdot\dv{y}{t}+\frac{\alpha(x-1)}{x}\cdot\dv{x}{t} &= 0\\
+            \dv{t}[y(t)-\ln y(t)]+\alpha\dv{t}[x(t)-\ln x(t)] &= 0\\
+            y(t)-\ln y(t)+\alpha x(t)-\alpha\ln x(t) &= c
+        \end{align*}
+        The global behavior is a number of dense periodic orbits surrounding the fixed point $(1,1)$.
+    \end{proof}
+    \item Write down the second-order ODE describing the motion of an ideal pendulum. Find a first integral.
+    \begin{proof}
+        From Newton's second law, we can derive that
+        \begin{equation*}
+            0 = l\theta''+g\sin\theta
+        \end{equation*}
+        where $g$ is the gravitational constant and $l$ is the length of the pendulum's arm.\par
+        We can use the energy equation as a first integral. The kinetic energy component is
+        \begin{equation*}
+            T(\theta') = \frac{1}{2}|\theta'|^2
+        \end{equation*}
+        For the potential energy component (invariant with respect to vertical height), we may take $\theta_0=0$ so that
+        \begin{align*}
+            U(\theta) &= -\int_0^\theta -\frac{g}{l}\sin\theta\dd\theta\\
+            &= -\frac{g}{l}[\cos\theta]_0^\theta\\
+            &= \frac{g}{l}-\frac{g}{l}\cos\theta
+        \end{align*}
+        Therefore, an overall first integral is
+        \begin{equation*}
+            E = \frac{1}{2}|\theta'|^2+\frac{g}{l}-\frac{g}{l}\cos\theta
+        \end{equation*}
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Scalar Linear Equations of Order 1 and 2}
+\begin{enumerate}
+    \item Use the integrating factor method to derive the formula for solving the scalar linear IVP
+    \begin{equation*}
+        y' = p(t)y+f(t)
+        ,\quad
+        y(t_0) = y_0
+    \end{equation*}
+    In particular, prove the Duhamel formula for
+    \begin{equation*}
+        y' = ay+f(t)
+        ,\quad
+        y(0) = y_0
+    \end{equation*}
+    where $a$ is a constant.
+    \begin{proof}
+        Let $P(t)=\int_{t_0}^tp(\tau)\dd\tau$. Then
+        \begin{align*}
+            \e[-P(t)]y'(t)-p(t)\e[-P(t)]y &= \e[-P(t)]f(t)\\
+            \dv{t}(\e[-P(t)]y(t)) &= \e[-P(t)]f(t)\\
+            \e[-P(t)]y(t)-\e[-P(t_0)]y(t_0) &= \int_{t_0}^t\e[-P(\tau)]f(\tau)\dd\tau\\
+            y(t) &= y_0\e[P(t)-P(t_0)]+\e[P(t)]\int_{t_0}^t\e[-P(\tau)]f(\tau)\dd\tau
+        \end{align*}
+        Substituting $p(t)=a$ and $t_0=0$ yields $P(t)=at$ and thus
+        \begin{align*}
+            y(t) &= y_0\e[at-a\cdot 0]+\e[at]\int_0^t\e[-a\tau]f(\tau)\dd\tau\\
+            &= y_0\e[at]+\int_0^t\e[a(t-\tau)]f(\tau)\dd\tau
+        \end{align*}
+    \end{proof}
+    \item Describe the general steps for finding the solutions to the linear scalar second-order ODE
+    \begin{equation*}
+        y''+ay'+by = 0
+    \end{equation*}
+    Write down the formula for the general solution.
+    \begin{proof}
+        This is a linear equation, so start with the characteristic polynomial
+        \begin{align*}
+            0 &= x^2+ax+b\\
+            x_\pm &= \frac{-a\pm\sqrt{a^2-4b}}{2}
+        \end{align*}
+        It follows that a basis for the solution space is the two functions $\e[x_\pm t]$, so the general solution is
+        \begin{equation*}
+            y(t) = A\e[x_+t]+B\e[x_-t]
+        \end{equation*}
+    \end{proof}
+    \item Derive the damped harmonic oscillator equation.
+    \begin{proof}
+        Since a circuit is a set of elements, each of which has two connectors (in and out) and every connector is connected to one or more connectors of the other elements, a circuit is mathematically a directed graph. At each time $t$, there will be a certain current $I(t)$ flowing through each element and a certain voltage difference $V(t)$ between its connectors. The state space of the system is given by the pairs $(I,V)$ of all elements in the circuit. The pairs $(I,V)$ must satisfy Kirchoff's first law and Kirchoff's second law. In this case, we have respectively that
+        \begin{align*}
+            I_R &= I_L = I_C&
+            V_R+V_L+V_C &= V
+        \end{align*}
+        We can write a further three equations
+        \begin{align*}
+            L\dot{I}_L &= V_L&
+            C\dot{V}_C &= I_C&
+            V_R &= RI_R
+        \end{align*}
+        where $L,C,R>0$ are the inductance, capacitance, and resistance, respectively; $I_L(t),I_C(t),I_R(t)$ is the current through the inductor, capacitor, and resistor, respectively; and $V_L(t),V_C(t),V_R(t)$ is the voltage difference across the inductor, capacitor, and resistor, respectively. Combining these five equations into one. We first differentiate (wrt. $t$) and rearrange the latter three to put them in terms of $\dot{V}_i$ ($i=L,C,R$).
+        \begin{align*}
+            \dot{V}_L &= L\ddot{I}_L&
+            \dot{V}_C &= \frac{I_C}{C}&
+            \dot{V}_R &= R\dot{I}_R
+        \end{align*}
+        We then differentiate Kirchoff's second law and substitute in the above.
+        \begin{align*}
+            \dot{V}(t) &= \dot{V}_R+\dot{V}_L+\dot{V}_C\\
+            &= R\dot{I}_R+L\ddot{I}_L+\frac{I_C}{C}
+        \end{align*}
+        Lastly, we take advantage of Kirchoff's first law and drop the subscript from all of the currents.
+        \begin{equation*}
+            L\ddot{I}(t)+R\dot{I}(t)+\frac{1}{C}I(t) = \dot{V}(t)
+        \end{equation*}
+        To get our final equation, use the complex voltage $V(t)=V_0\e[i\omega t]$ and divide through by $L$.
+        \begin{equation*}
+            \ddot{I}+\frac{R}{L}\dot{I}+\frac{1}{LC}I = \frac{i\omega V_0}{L}\e[i\omega t]
+        \end{equation*}
+    \end{proof}
+    \item Describe the solution of the damped harmonic oscillator equation
+    \begin{equation*}
+        x''+bx'+\omega_0^2x = 0
+    \end{equation*}
+    for different choices of the damping parameter $b\geq 0$.
+    \begin{proof}
+        Again, we take the eigenvalues of the characteristic polynomial.
+        \begin{equation*}
+            x_\pm = \frac{-b\pm\sqrt{b^2-4\omega_0^2}}{2}
+        \end{equation*}
+        The three important cases are $b^2-4\omega^2$ positive, zero, and negative, corresponding to overdamping, critical damping, and under damping. In particular, the respective general solutions are
+        \begin{gather*}
+            x(t) = k_1\e[x_+t]+k_2\e[x_-t]\\
+            x(t) = (k_1+k_2t)\e[-bt/2]\\
+            x(t) = k_1\e[-bt/2]\cos(t\sqrt{4\omega_0^2-b^2}/2)+k_2\e[-bt/2]\sin(t\sqrt{4\omega_0^2-b^2}/2)
+        \end{gather*}
+    \end{proof}
+    \item Derive the Duhamel formula for the forced harmonic oscillator equation
+    \begin{equation*}
+        x''+\omega_0^2x = f(t)
+    \end{equation*}
+    \begin{proof}
+        
+    \end{proof}
+    \item Describe the phenomenon of resonance in the forced harmonic oscillator equation and the forced damped harmonic oscillator equation.
+    \begin{proof}
+        When the driving frequency is equal to the resonance frequency, the oscillation is maximized (damped forced harmonic oscillator) or grows unbounded (forced harmonic oscillator equation), leading to the so-called resonance catastrophe in this latter case.
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Jordan Normal Form and Matrix Calculus}
+\begin{enumerate}
+    \item Write down the definition of similarity for matrices.
+    \begin{proof}
+        Two matrices $A,B$ are \textbf{similar} if there exists a matrix $Q$ such that
+        \begin{equation*}
+            A = QBQ^{-1}
+        \end{equation*}
+    \end{proof}
+    \item Give examples of representing a given matrix under a new basis in two and three dimensional real spaces.
+    \begin{proof}
+        Consider the matrix
+        \begin{equation*}
+            \begin{pmatrix}
+                2 & 1\\
+                1 & 2\\
+            \end{pmatrix}
+        \end{equation*}
+        which sends $(1,1)$ to $(3,3)$ and $(-1,1)$ to itself. With respect to the basis
+        \begin{equation*}
+            B = \left\{
+                \begin{pmatrix}
+                    1\\
+                    1\\
+                \end{pmatrix},
+                \begin{pmatrix}
+                    -1\\
+                    1\\
+                \end{pmatrix}
+            \right\}
+        \end{equation*}
+        the matrix of this linear transformation is
+        \begin{equation*}
+            \begin{pmatrix}
+                3 & 0\\
+                0 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        In three dimensions, consider the matrix
+        \begin{equation*}
+            \begin{pmatrix}
+                3 & 1 & -1\\
+                1 & 3 & -2\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        which sends $(1,1,0)$ to $(4,4,0)$, $(1,-1,0)$ to $(2,-2,0)$, and $(0,1,1)$ to itself. With respect to the basis
+        \begin{equation*}
+            B = \left\{
+                \begin{pmatrix}
+                    1\\
+                    1\\
+                    0\\
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1\\
+                    -1\\
+                    0\\
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                    1\\
+                \end{pmatrix}
+            \right\}
+        \end{equation*}
+        the matrix of this linear transformation is
+        \begin{equation*}
+            \begin{pmatrix}
+                4 & 0 & 0\\
+                0 & 2 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{proof}
+    \item Write down the formula for computing the matrix exponential $\e[J]$ of a Jordan block $J$.
+    \begin{proof}
+        Given an arbitrary Jordan block of dimension $d$
+        \begin{equation*}
+            J =
+            \begin{pmatrix}
+                \lambda & 1 &  & 0\\
+                 & \lambda & \ddots & \\
+                 &  & \ddots & 1\\
+                0 &  &  & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        the matrix exponential is
+        \begin{equation*}
+            \e[J] =
+            \begin{pmatrix}
+                \e[\lambda] & \e[\lambda]/1! &  & \e[\lambda]/(d-1)!\\
+                 & \e[\lambda] & \ddots & \\
+                 &  & \ddots & \e[\lambda]/1!\\
+                0 &  &  & \e[\lambda]\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{proof}
+    \item Describe the general steps to reduce a $2\times 2$ matrix to Jordan normal form.
+    \begin{proof}
+        $A\in\mathcal{M}^2(\C)$ can only have nontrivial Jordan form if it has a single eigenvalue $\lambda$ with $\alpha_\lambda=2$ and $\gamma_\lambda=1$. If both equal 2, then $A=\lambda I_2$. If it has two eigenvalues, then it is regularly diagonalizable.
+        In this particular case, calculate $\lambda$ from $\chi_A(z)=(z-\lambda)^2$, find one eigenvector $v$, and find the other generalized eigenvector $u$; $u$ will satisfy $(A-\lambda I)u=v$. The connecting matrix will be $Q=(v|u)$\footnote{Order matters! We need the eigenvector, specifically, to get scaled by $\lambda$ only.} and the JNF is
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1\\
+                0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{proof}
+    \item Give an example for each possible case in part (4). There should be two cases in total: One for diagonalizable and one for non-diagonalizable matrices.
+    \begin{proof}
+        The diagonalizable example is on the left below, and the nondiagonalizable on the right.
+        \begin{align*}
+            A &=
+            \begin{pmatrix}
+                2 & 1\\
+                1 & 2\\
+            \end{pmatrix}&
+            B &=
+            \begin{pmatrix}
+                0 & -1\\
+                1 & -2\\
+            \end{pmatrix}
+        \end{align*}
+        We tackle $A$ first.\par
+        Calculate the characteristic polynomial to begin.
+        \begin{align*}
+            \chi_A(z) &= \det(A-zI)\\
+            &= z^2-4z+3\\
+            &= (1-z)(3-z)
+        \end{align*}
+        It follows that the eigenvalues are
+        \begin{align*}
+            \lambda_1 &= 1&
+            \lambda_2 &= 3
+        \end{align*}
+        Since these eigenvalues are distinct, we can fully diagonalize this matrix. Indeed, we can determine by inspection that suitable corresponding eigenvectors are
+        \begin{align*}
+            v_1 &=
+            \begin{pmatrix}
+                -1\\
+                1\\
+            \end{pmatrix}&
+            v_2 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                -1 & 1\\
+                1 & 1\\
+            \end{pmatrix}&
+            Q^{-1}AQ &=
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 3\\
+            \end{pmatrix}
+        \end{align*}
+        The procedure for $B$ is very much analogous to the procedure for $A$.\par
+        Characteristic polynomial:
+        \begin{align*}
+            \chi_B(z) &= \det(B-zI)\\
+            &= z^2+2z+1\\
+            &= (1+z)^2
+        \end{align*}
+        Eigenvalue:
+        \begin{equation*}
+            \lambda = -1
+        \end{equation*}
+        By inspection of $B+I$, we can pick one eigenvector of $B$:
+        \begin{equation*}
+            v =
+            \begin{pmatrix}
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        We now solve $(B+I)u=v$. By inspection, this yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 1\\
+                1 & 0\\
+            \end{pmatrix}&
+            Q^{-1}BQ &=
+            \begin{pmatrix}
+                -1 & 1\\
+                0 & -1\\
+            \end{pmatrix}
+        \end{align*}
+    \end{proof}
+    \item Describe the general steps for reducing a $3\times 3$ matrix to Jordan normal form.
+    \begin{proof}
+        We divide into three nontrivial cases: $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=2$, $\chi_A(z)=(z-\lambda)^3$ with $\gamma_\lambda=1$, and $\chi_A(z)=(z-\lambda)^2(z-\mu)$ with $\gamma_\lambda=1$.
+        In the first case, we have two eigenvectors $v_1,v_2$ (make sure to pick $v_1$ such that it is also in the column space of $A-\lambda I$!). We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_1$. Then $Q=(v_1|u|v_2)$ and the JNF is
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 0\\
+                0 & 0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        In the second case, we have one eigenvector $v$. We can find the second and third generalized eigenvectors by solving $(A-\lambda I)u_1=v$ and $(A-\lambda I)u_2=u_1$. Then $Q=(v|u_1|u_2)$ and
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 1\\
+                0 & 0 & \lambda\\
+            \end{pmatrix}
+        \end{equation*}
+        In the third case, we have two eigenvectors $v_\lambda,v_\mu$. We can find the third (generalized) eigenvector by solving $(A-\lambda I)u=v_\lambda$. Then $Q=(v_\lambda|u|v_\mu)$ and
+        \begin{equation*}
+            Q^{-1}AQ =
+            \begin{pmatrix}
+                \lambda & 1 & 0\\
+                0 & \lambda & 0\\
+                0 & 0 & \mu\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{proof}
+    \item Give an example for each possible case in part (6). There should be four cases in total: One for diagonalizable and three for non-diagonalizable matrices.
+    \begin{proof}
+        The nondiagonalizable examples are on the left below, and the diagonalizable is on the right.
+        \begin{align*}
+            A &=
+            \begin{pmatrix}
+                4 & -5 & 2\\
+                5 & -7 & 3\\
+                6 & -9 & 4\\
+            \end{pmatrix}&
+            B &=
+            \begin{pmatrix}
+                2 & -1 & -1\\
+                2 & -1 & -2\\
+                -1 & 1 & 2\\
+            \end{pmatrix}&
+            C &=
+            \begin{pmatrix}
+                2 & 1 & 3\\
+                0 & 2 & -1\\
+                0 & 0 & 2\\
+            \end{pmatrix}&
+            D &=
+            \begin{pmatrix}
+                3 & 1 & -1\\
+                1 & 3 & -2\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{align*}
+        We tackle $A$ first.\par
+        Calculate the characteristic polynomial to begin.
+        \begin{align*}
+            \chi_A(z) ={}& \det(A-z I)\\
+            % \begin{split}
+            %     ={}& (4-z)[(-7-z)(4-z)-(3)(-9)]\\
+            %     &-(-5)[(5)(4-z)-(3)(6)]\\
+            %     &+(2)[(5)(-9)-(-7-z)(6)]
+            % \end{split}\\
+            ={}& -z^3+z^2\\
+            ={}& z^2(1-z)
+        \end{align*}
+        It follows that the eigenvalues are
+        \begin{align*}
+            \lambda_1 &= \lambda_2 = 0&
+            \lambda_3 &= 1
+        \end{align*}
+        We can solve for an eigenvector $v_1$ corresponding to $\lambda_1=\lambda_2=0$ using the augmented matrix and row reduction as follows.
+        \begin{equation*}
+            \begin{pNiceArray}{ccc|c}
+                4 & -5 & 2 & 0\\
+                5 & -7 & 3 & 0\\
+                6 & -9 & 4 & 0\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -\frac{1}{3} & 0\\
+                0 & 1 & -\frac{2}{3} & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
+        \end{equation*}
+        Thus, if we choose $v_1^3=3$, then the desired eigenvector is
+        \begin{equation*}
+            v_1 =
+            \begin{pmatrix}
+                1\\
+                2\\
+                3\\
+            \end{pmatrix}
+        \end{equation*}
+        Similarly, we can solve for an eigenvector $v_3$ corresponding to $\lambda_3=1$ using the following. Note that to solve $Ax=1x$, we row-reduce $(A-I)x=0$.
+        \begin{equation*}
+            \begin{pNiceArray}{ccc|c}
+                3 & -5 & 2 & 0\\
+                5 & -8 & 3 & 0\\
+                6 & -9 & 3 & 0\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -1 & 0\\
+                0 & 1 & -1 & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
+        \end{equation*}
+        This yields
+        \begin{equation*}
+            v_3 =
+            \begin{pmatrix}
+                1\\
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        We now solve the equation $(A-0I)u=v_1$ to find a generalized eigenvector $u$ corresponding to $\lambda_1=\lambda_2=0$. This can also be done with an augmented matrix.
+        \begin{equation*}
+            \begin{pNiceArray}{ccc|c}
+                4 & -5 & 2 & 1\\
+                5 & -7 & 3 & 2\\
+                6 & -9 & 4 & 3\\
+            \end{pNiceArray}
+            \cong
+            \begin{pNiceArray}{ccc|c}
+                1 & 0 & -\frac{1}{3} & 0\\
+                0 & 1 & -\frac{2}{3} & 0\\
+                0 & 0 & 0 & 0\\
+            \end{pNiceArray}
+        \end{equation*}
+        This yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                0\\
+                1\\
+                3\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 0 & 1\\
+                2 & 1 & 1\\
+                3 & 3 & 1\\
+            \end{pmatrix}&
+            Q^{-1}AQ &=
+            \begin{pmatrix}
+                0 & 1 & 0\\
+                0 & 0 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{align*}
+        The procedure for $B$ is very much analogous to the procedure for $A$.\par
+        Characteristic polynomial:
+        \begin{align*}
+            \chi_B(z) &= \det(B-zI)\\
+            &= -z^3+3z^2-3z+1\\
+            &= (1-z)^3
+        \end{align*}
+        Eigenvalue:
+        \begin{equation*}
+            \lambda = 1
+        \end{equation*}
+        By inspection of
+        \begin{equation*}
+            B-I =
+            \begin{pmatrix}
+                1 & -1 & -1\\
+                2 & -2 & -2\\
+                -1 & 1 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        we can pick two eigenvectors of $B$ corresponding to $\lambda$, i.e., two elements of the null space of the above matrix. In this subcase of the $3\times 3$ case, we always pick the first of these to be an element of the column space of $B-I$, as well. Thus, choose
+        \begin{align*}
+            v_1 &=
+            \begin{pmatrix}
+                1\\
+                2\\
+                -1\\
+            \end{pmatrix}&
+            v_2 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{align*}
+        We now solve $(B-\lambda I)u=v_1$. By inspection, this yields
+        \begin{equation*}
+            u =
+            \begin{pmatrix}
+                1\\
+                0\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 1 & 1\\
+                2 & 0 & 1\\
+                -1 & 0 & 0\\
+            \end{pmatrix}&
+            Q^{-1}BQ &=
+            \begin{pmatrix}
+                1 & 1 & 0\\
+                0 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{align*}
+        The procedure for $C$ is likewise quite analogous.\par
+        The matrix is upper triangular, so the eigenvalues are on the diagonal. It follows that
+        \begin{equation*}
+            \lambda = 2
+        \end{equation*}
+        is the sole eigenvalue. We can solve $(C-2I)v=0$ for one eigenvector $v$ by inspection, yielding
+        \begin{equation*}
+            v =
+            \begin{pmatrix}
+                1\\
+                0\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        We can also solve $(C-2I)u_1=v$ by inspection to get
+        \begin{equation*}
+            u_1 =
+            \begin{pmatrix}
+                0\\
+                1\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        One more time, we can solve $(C-2I)u_2=u_1$ by inspection to get
+        \begin{equation*}
+            u_2 =
+            \begin{pmatrix}
+                0\\
+                3\\
+                -1\\
+            \end{pmatrix}
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 3\\
+                0 & 0 & -1\\
+            \end{pmatrix}&
+            Q^{-1}CQ &=
+            \begin{pmatrix}
+                2 & 1 & 0\\
+                0 & 2 & 1\\
+                0 & 0 & 2\\
+            \end{pmatrix}
+        \end{align*}
+        Lastly, for $D$, we have
+        \begin{align*}
+            0 &= \chi_A(z)\\
+            &= -z^3+7z^2-14z+8
+            &= (4-z)(2-z)(1-z)
+        \end{align*}
+        so
+        \begin{align*}
+            \lambda_1 &= 4&
+            \lambda_2 &= 2&
+            \lambda_3 &= 1
+        \end{align*}
+        Solving $(D-\lambda_iI)v_i=0$ ($i=1,2,3$) yields, respectively,
+        \begin{align*}
+            v_1 &=
+            \begin{pmatrix}
+                1\\
+                1\\
+                0\\
+            \end{pmatrix}&
+            v_2 &=
+            \begin{pmatrix}
+                1\\
+                -1\\
+                0\\
+            \end{pmatrix}&
+            v_3 &=
+            \begin{pmatrix}
+                0\\
+                1\\
+                1\\
+            \end{pmatrix}
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            Q &=
+            \begin{pmatrix}
+                1 & 1 & 0\\
+                1 & -1 & 1\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+            Q^{-1}DQ &=
+            \begin{pmatrix}
+                4 & 0 & 0\\
+                0 & 2 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+        \end{align*}
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Linear Autonomous Systems}
+\begin{enumerate}
+    \item Describe the steps of calculating the matrix exponential function $\e[tA]$.
+    \begin{proof}
+        First, we calculate the JNF for $A$. Then we calculate the exponential of the simplified matrix $Q^{-1}AQ$ block by block and surround this exponential with $Q$ on the left and $Q^{-1}$ on the right.
+    \end{proof}
+    \item Prove the Duhamel formula for the inhomogeneous linear system $y'=Ay+f(t)$, where the function $y$ takes value in $\C^n$ and $A$ is an $n\times n$ complex matrix.
+    \begin{proof}
+        We have that
+        \begin{align*}
+            y' &= Ay+f(t)\\
+            y'-Ay &= f(t)\\
+            \e[-tA]y'-A\e[-tA]y &= \e[-tA]f(t)\\
+            \dv{t}(\e[-tA]y(t)) &= \e[-tA]f(t)\\
+            \e[-tA]y(t)-y_0 &= \int_0^t\e[-\tau A]f(\tau)\dd\tau\\
+            y(t) &= \e[tA]y_0+\int_0^t\e[(t-\tau)A]f(\tau)\dd\tau
+        \end{align*}
+        as desired.
+    \end{proof}
+    \item For the linear system $y'=Ay$, describe the growth or decay of the solution according to the real part of eigenvalues of the coefficient matrix.
+    \begin{proof}
+        Positive real eigenvalues induce exponential growth on (and similar growth near) the span of their corresponding eigenvector.\par
+        Negative real eigenvalues induce exponential decay on (and similar decay near) the span of their corresponding eigenvector.\par
+        Complex conjugate eigenvalues with positive real part lead to spiral source-type behavior, and vice versa for those with negative real part.
+    \end{proof}
+    \item State the definition of stable and unstable subspaces.
+    \begin{proof}
+        \textbf{Stable subspace} (of $x_0$ under $A$): The space of all generalized eigenvectors of $A$ corresponding to eigenvalues $\lambda$ with $\Ree\lambda<0$. \emph{Also known as} \textbf{attracting subspace}. \emph{Denoted by} $\bm{\pmb{\mathbb{E}}_s}$.\par
+        \textbf{Unstable subspace} (of $x_0$ under $A$): The space of all generalized eigenvectors of $A$ corresponding to eigenvalues $\lambda$ with $\Ree\lambda>0$. \emph{Also known as} \textbf{repelling subspace}. \emph{Denoted by} $\bm{\pmb{\mathbb{E}}_u}$.
+    \end{proof}
+    \item Describe the general structure of the solution of the scalar equation
+    \begin{equation*}
+        x^{(n)}+a_{n-1}x^{(n-1)}+\cdots+a_1x'+a_0x = 0
+    \end{equation*}
+    \begin{proof}
+        Let $\alpha_j$, $1\leq j\leq m$, be the zeros of the characteristic polynomial
+        \begin{equation*}
+            z^n+c_{n-1}z^{n-1}+\cdots+c_1z+c_0 = \prod_{j=1}^m(z-\alpha_j)^{a_j}
+        \end{equation*}
+        associated with $A$, and let $a_j$ be the corresponding multiplicities. Then the functions
+        \begin{equation*}
+            x_{j,k}(t) = t^k\exp(a_jt)
+        \end{equation*}
+        for $0\leq k<a_j$ and $1\leq j\leq m$ are $n$ linearly independent solutions of
+        \begin{equation*}
+            x^{(n)}+c_{n-1}x^{(n-1)}+\cdots+c_1\dot{x}+c_0x = 0
+        \end{equation*}
+        In particular, any other solution can be written as a linear combination of these solutions.
+    \end{proof}
+    \item Prove the Duhamel formula for the inhomogeneous scalar equation
+    \begin{equation*}
+        x^{(n)}+a_{n-1}x^{(n-1)}+\cdots+a_1x'+a_0x = f(t)
+    \end{equation*}
+    \begin{proof}
+        Transform the scalar equation into the corresponding vector form
+        \begin{equation*}
+            y' = Ay+f(t)e_n
+        \end{equation*}
+        where $e_n$ is the $n^\text{th}$ standard basis vector of $\R^n$ and $f(t)$ is still a scalar function. Then by the same derivation as in part (2) of this section, we end up with
+        \begin{equation*}
+            y(t) = \e[tA]y_0+\int_0^t\e[(t-\tau)A]e_ng(\tau)\dd\tau
+        \end{equation*}
+        Note that $\e[t'A]e_n$ is the solution to the IVP $u'=Au$ with $u(0)=e_n$. Thus, letting $U(t')$ denote the solution to the homogeneous equation with initial conditions $U(0)=U'(0)=\cdots=U^{(n-2)}(0)=0$ and $U^{(n-1)}(0)=1$ and knowing that $\e[tA]y_0$ is a solution to the homogeneous form of the above matrix equation, we can substitute to yield
+        \begin{equation*}
+            y(t) = y_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau
+        \end{equation*}
+        as our final answer.
+    \end{proof}
+    \item Classify planar linear autonomous systems according to stability. Give an example from each class.
+    \begin{proof}
+        There are three main classes and several subclasses for certain classes. They are as follows.
+        \begin{enumerate}
+            \item $A$ has no real eigenvalues.
+            \begin{enumerate}
+                \item The real component $\sigma$ of the complex eigenvalues is $>0$.
+                \item The real component $\sigma$ of the complex eigenvalues is $=0$.
+                \item The real component $\sigma$ of the complex eigenvalues is $<0$.
+            \end{enumerate}
+            \item $A$ has real eigenvalues and is diagonalizable.
+            \begin{enumerate}
+                \item The eigenvalues are both $>0$.
+                \item The eigenvalues are both $<0$.
+                \item We have one of each.
+            \end{enumerate}
+            \item $A$ has real eigenvalues and is \emph{not} diagonalizable.
+        \end{enumerate}
+        The examples are, running down the list,
+        \begin{align*}
+            \begin{pmatrix}
+                1 & -1\\
+                1 & 1\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                0 & -1\\
+                1 & 0\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                -1 & -1\\
+                1 & -1\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                2 & 1\\
+                1 & 2\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                2 & 1\\
+                1 & -2\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                -1 & 1\\
+                0 & 1\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                2 & 1\\
+                0 & 2\\
+            \end{pmatrix}
+        \end{align*}
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Local Well-Posedness}
+\begin{enumerate}
+    \item State the three ingredients of local well-posedness for an IVP
+    \begin{equation*}
+        \dv{y}{t} = f(t,y)
+        ,\quad
+        y(t_0) = x
+    \end{equation*}
+    \begin{proof}
+        Existence (local in time), uniqueness (you cannot have multiple solutions), and local stability (if you perturb your initial value or equation a little bit, you do not expect your solution to vary crazily [esp. locally]).
+    \end{proof}
+    \item State and prove the Banach fixed point theorem.
+    \begin{proof}
+        Theorem (Banach fixed point theorem): Let $(X,d)$ be a complete metric space and let $\Phi:X\to X$ be a function for which there exists $q\in(0,1)$ such that for all $x,y\in X$,
+        \begin{equation*}
+            d(\Phi(x),\Phi(y)) \leq q\cdot d(x,y)
+        \end{equation*}
+        Then there exists a unique $x\in X$ such that $x=\Phi(x)$.
+        \begin{proof}
+            We first construct the desired fixed point $x$.\par
+            Pick any $x_0\in X$. Inductively define $\{x_n\}$ by $x_{n+1}=\Phi(x_n)$, starting from $n=0$. We will now show that $\{x_n\}$ is a Cauchy sequence. As a lemma, we will prove by induction that
+            \begin{equation*}
+                d(x_j,x_{j+1}) \leq q^j\cdot d(x_0,x_1)
+            \end{equation*}
+            for all $j\in\N_0$. For the base case $j=0$, equality evidently holds. Now suppose inductively that we have proven that $d(x_j,x_{j+1})\leq q^j\cdot d(x_0,x_1)$; we want to prove the claim for $j+1$. But we have that
+            \begin{align*}
+                d(x_{j+1},x_{j+2}) &= d(\Phi(x_j),\Phi(x_{j+1}))\\
+                &\leq q\cdot d(x_j,x_{j+1})\\
+                &\leq q\cdot q^j\cdot d(x_0,x_1)\\
+                &= q^{j+1}\cdot d(x_0,x_1)
+            \end{align*}
+            as desired.\par
+            It follows that
+            \begin{align*}
+                d(x_n,x_{n+m}) &\leq \sum_{k=0}^{m-1}d(x_{n+k},x_{n+k+1})\tag*{Triangle inequality}\\
+                &\leq \sum_{k=0}^{m-1}q^{n+k}\cdot d(x_0,x_1)\tag*{Lemma}\\
+                &= q^n(1+q+\cdots+q^{m-1})\cdot d(x_0,x_1)\\
+                &< q^n(1+q+\cdots+q^{m-1}+\cdots)\cdot d(x_0,x_1)\\
+                &= \frac{q^n}{1-q}\cdot d(x_0,x_1)
+            \end{align*}
+            It follows that the above term will converge to zero as $n\to\infty$, so $\{x_n\}$ is a Cauchy sequence and there exists an $x$ such that $x_n\xrightarrow{d}x$.\par\smallskip
+            We now prove that $x$ is a fixed point of $\Phi$, i.e., that $\Phi(x)=x$. We have that
+            \begin{align*}
+                d(x,\Phi(x)) &\leq d(x,x_n)+d(x_n,\Phi(x_n))+d(\Phi(x_n),\Phi(x))\\
+                &\leq d(x,x_n)+d(x_n,x_{n+1})+q\cdot d(x_n,x)\\
+                &= (1+q)\cdot d(x,x_n)+d(x_n,x_{n+1})
+            \end{align*}
+            where the first term converges since $\{x_n\}$ is convergent and the second term converges since $\{x_n\}$ is Cauchy. Thus, $d(x,\Phi(x))\to 0$ as $n\to\infty$, so $x=\Phi(x)$, as desired.\par
+            Lastly, we prove that $x$ is unique. Suppose that there exists $y\in X$ such that $y=\Phi(y)$. Then
+            \begin{equation*}
+                d(x,y) = d(\Phi(x),\Phi(y))
+                \leq q\cdot d(x,y)
+            \end{equation*}
+            It follows that $d(x,y)\leq q^n\cdot d(x,y)$, i.e., that $d(x,y)\to 0$ as $n\to\infty$. Therefore, we must have that $d(x,y)=0$, from which it follows that $x=y$, as desired.
+        \end{proof}
+    \end{proof}
+    \item Give two example applications of the Banach fixed point theorem.
+    \begin{proof}
+        We can apply it to the scalar function $\Phi(x)=x/2$ and the vector function $\Phi(x,y)=(x/2,y/2)$. In both cases, the origin of $\R^n$ ($n=1,2$) is the fixed point.
+    \end{proof}
+    \item State and prove the Cauchy-Lipschitz existence theorem.
+    \begin{proof}
+        Theorem (Cauchy-Lipschitz): Suppose $f\in C(U,\R^n)$, where $U\subset\R^{n+1}$ is open and $(t_0,x_0)\in U$. If $f$ is locally Lipschitz continuous in the second argument, uniformly with respect to the first, then there exists a unique local solution $\bar{x}(t)\in C^1(I)$ of the IVP
+        \begin{equation*}
+            \dot{x} = f(t,x)
+            ,\quad
+            x(t_0) = x_0
+        \end{equation*}
+        where $I$ is some interval around $t_0$.\par
+        More specifically, if $V=[t_0,t_0+T]\times\overline{B_\delta(x_0)}\subset U$ and $M$ denotes the maximum of $|f|$ on $V$, then the solution exists for at least $t\in[t_0,t_0+T]$ and remains in $\overline{B_\delta(x_0)}$, where
+        \begin{equation*}
+            T = \frac{\delta}{M}\footnotemark
+        \end{equation*}
+        \footnotetext{We are not missing the Lipschitz constraint here; indeed, it is superfluous, as will be shown in the next section.}
+        The analogous result holds for the interval $[t_0-T,t_0]$.
+        \begin{proof}
+            Let
+            \begin{equation*}
+                K(x)(t) = x_0+\int_{t_0}^tf(s,x(s))\dd{s}
+            \end{equation*}
+            Take
+            \begin{equation*}
+                X = C([0,T],\R^n)
+            \end{equation*}
+            to be our Banach space for some suitable $T$ (we will put constraints on the value of $T$ as we build the rest of our argument).
+            We need some $C\subset X$ on which to define $K$ as an endofunction. Let's try
+            \begin{equation*}
+                C = \overline{B_\delta(x_0)}
+            \end{equation*}
+            Proving that $K:C\to C$. At this point, we can compute
+            \begin{align*}
+                |K(x)(t)-x_0| &= \left| \int_0^tf(s,x(s))\dd{s} \right|\\
+                &\leq \int_0^t|f(s,x(s))|\dd{s}\tag*{Theorem 13.26\footnotemark}\\
+                &\leq tM\tag*{Theorem 13.27\footnotemark[\value{footnote}]}
+            \end{align*}
+            \footnotetext{From Honors Calculus IBL.}
+            for any $x$ satisfying $G(x)\subset V$.
+            Thus, if we take
+            \begin{equation*}
+                T \leq \frac{\delta}{M}
+            \end{equation*}
+            then $|K(x)(t)-x_0|\leq TM\leq\delta$ for all $t\in[0,T]$.
+            It follows that under this definition of $T$, $\norm{K(x)-x_0}\leq\delta$, so $K(x)\in\overline{B_\delta(x_0)}$ for all $x$ with graph in $V$.
+            In the special case $M=0$ (which would imply $T=\infty$), we may take $T$ to be some arbitrary positive real number.
+            Proving that $K$ is a contraction.
+            To estimate $|K(x)(t)-K(y)(t)|$, we finally invoke the Lipschitz continuity constraint on $f$. In particular, we have
+            \begin{align*}
+                |K(x)(t)-K(y)(t)| &\leq \int_0^t|f(s,x(s))-f(s,y(s))|\dd{s}\\
+                &\leq L\int_0^t|x(s)-y(s)|\dd{s}\\
+                &\leq Lt\sup_{0\leq s\leq t}|x(s)-y(s)|\\
+                &\leq LT\norm{x-y}
+            \end{align*}
+            Thus, if we take
+            \begin{equation*}
+                T < \frac{1}{L}
+            \end{equation*}
+            we have that $K$ is a contraction.
+            Having two constraints on the value of $T$, we may now formally take
+            \begin{equation*}
+                T = \min\left( \frac{\delta}{M},\frac{1}{2L} \right)
+            \end{equation*}
+            Note that this definition satisfies $T\leq\delta/M$ and $T<L^{-1}$.
+            If either of $M,L=0$, we understand that that constraint no longer matters and we need only consider the other one. If $M=L=0$, then we may take $T$ to be any positive real number.
+            Having defined a contraction $K:C\to C$, the existence and uniqueness of our ODE follows from the contraction principle.
+        \end{proof}
+    \end{proof}
+    \item State and prove Gr\"{o}nwall's inequality.
+    \begin{proof}
+        Lemma (Gr\"{o}nwall's inequality): Let $\varphi(t)$ be a real function defined for $t\in[t_0,t_0+T]$ such that
+        \begin{equation*}
+            \varphi(t) \leq f(t)+a\int_{t_0}^t\varphi(\tau)\dd\tau
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \varphi(t) \leq f(t)+a\int_{t_0}^t\e[a(t-\tau)]f(\tau)\dd\tau
+        \end{equation*}
+        \begin{proof}
+            Multiply both sides by $\e[-at]$:
+            \begin{align*}
+                \e[-at]\varphi(t)-a\e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau &\leq \e[-at]f(t)\\
+                \dv{t}(\e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau) &\leq \e[-at]f(t)\\
+                \e[-at]\int_{t_0}^t\varphi(\tau)\dd\tau &\leq \int_{t_0}^t\e[-a\tau]f(\tau)\dd\tau\\
+                \int_{t_0}^t\varphi(\tau)\dd\tau &\leq \int_{t_0}^t\e[a(t-\tau)]f(\tau)\dd\tau
+            \end{align*}
+            Substituting back into the original equality yields the result at this point.
+        \end{proof}
+    \end{proof}
+    \item Let $\mu$ be a small parameter. Write down the general ansatz for finding the perturbative expansion of the solution of
+    \begin{equation*}
+        \dv{t}y(t;\mu) = f(t,y(t;\mu))
+        ,\quad
+        y(t_0) = x(\mu)
+    \end{equation*}
+    assuming sufficient differentiability with respect to the parameter $\mu$.
+    \begin{proof}
+        The general ansatz is
+        \begin{equation*}
+            y(t;\mu) = y_0+y_1\mu+y_2\mu^2+\cdots+y_n\mu^n+O(\mu^{n+1})
+        \end{equation*}
+    \end{proof}
+    \item Give an example of perturbative computation in part (6).
+    \begin{proof}
+        Consider
+        \begin{equation*}
+            y' = \mu y
+            ,\quad
+            y(0) = 1
+        \end{equation*}
+        Substituting in the ansatz (say up to $\mu^2$), we get
+        \begin{equation*}
+            y_0'+y_1'\mu+y_2'\mu^2 = 0+y_0\mu+y_1\mu^2
+        \end{equation*}
+        A quick note on the initial conditions: The fact that
+        \begin{align*}
+            1 &= y(0)\\
+            1+0\mu+0\mu^2 &= y_0+y_1\mu+y_2\mu^2
+        \end{align*}
+        implies that the initial conditions for the perturbative equations are $y_0(0)=1$, $y_1(0)=y_2(0)=0$.
+        Continuing, we can solve
+        \begin{equation*}
+            y_0' = 0
+            \quad\Longleftrightarrow\quad
+            y_0(t) = C
+        \end{equation*}
+        Using the initial condition, we get that $C=1$. Substituting this into the second equation, we get
+        \begin{equation*}
+            y_1' = 1
+            \quad\Longleftrightarrow\quad
+            y_1(t) = t+C
+        \end{equation*}
+        Using the initial condition, we get that $C=0$. Substituting this into the third equation, we get
+        \begin{equation*}
+            y_2' = t
+            \quad\Longleftrightarrow\quad
+            y_2(t) = \frac{t^2}{2}+C
+        \end{equation*}
+        Using the initial condition, we again get that $C=0$. Thus, our perturbative solution is
+        \begin{equation*}
+            y(t) = 1+t\mu+\frac{t^2\mu^2}{2}+O(t^3)
+        \end{equation*}
+        which makes sense since these are the first three terms in the Taylor series of the known exact solution.
+    \end{proof}
+    \item For the ideal pendulum equation, considering the initial angle as the small parameter $\mu$, find the perturbative expansion with respect to $\mu$ up to order $\mu^3$ (that is, with error $O(\mu^4)$).
+    \begin{proof}
+        Suppose that the length of the rope is $\ell$ and the gravitational acceleration is $g$. Then
+        \begin{equation*}
+            \theta''(t;\mu) = -\frac{g}{\ell}\sin[\theta(t;\mu)]
+        \end{equation*}
+        Assume a small angle, $\theta(0)=\mu$ and $\theta'(0)=0$.
+        Substitute $\omega_0^2=g/\ell$.
+        In HS, we learned that the harmonic oscillator approximation of the mathematical pendulum is justified for small $\theta$. We now justify this.
+        Ansatz: $\theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3+O(\mu^4)$.
+        Recall that
+        \begin{equation*}
+            \sin\theta = \theta-\frac{\theta^3}{6}+O(\theta^5)
+        \end{equation*}
+        First step, solve to determine $\theta_0=0$.
+        Then we only have a term of order $O(\mu)$ and $O(\mu^3)$ to worry about.
+        Substitute the expansion in:
+        \begin{align*}
+            \sin\theta &= \theta-\frac{\theta^3}{6}+O(\theta^5)\\
+            &= \left( \theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3 \right)-\frac{1}{6}\left( \theta_0+\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3 \right)^3\\
+            &= 0+\theta_1\mu+\theta_2\mu^2+\left( \theta_3-\frac{\theta_1^3}{6} \right)\mu^3+O(\mu^4)
+        \end{align*}
+        We also have that
+        \begin{equation*}
+            \theta''(t;\mu) = \theta_1''\mu+\theta_2''\mu^2+\theta_3''\mu^3+O(\theta^4)
+        \end{equation*}
+        and
+        \begin{equation*}
+            -\omega_0^2\sin(\theta_1\mu+\theta_2\mu^2+\theta_3\mu^3+O(\mu^4)) = -\omega_0^2\theta_1\mu-\omega_0^2\theta_2\mu^2-\omega_0^2\left( \theta_3-\frac{\theta_1^3}{6} \right)\mu^3+O(\mu^4)
+        \end{equation*}
+        Initial conditions: $\theta_0=0$, $\theta_1(0)=1$, and $\theta_2(0) = \theta_3(0) = \theta_1'(0) = \cdots = \theta_3'(0) = 0$.
+        First order: $\theta_1''=-\omega_0^2\theta_1$, $\theta_1(0)=1$, $\theta_1'(0)=0$. Implies $\theta_1(t)=\cos\omega_0t$. This is why we can use the harmonic oscillator approximation.
+        Second order: $\theta_2=-\omega_0^2\theta_2$. Initial conditions imply $\theta_2(t)=0$.
+        Third order: $\theta_3''=-\omega_0^2\theta_3+\frac{\omega_0^2\theta_1^3}{6}$. Implies that
+        \begin{equation*}
+            \theta_3(t) = \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t)
+        \end{equation*}
+        In conclusion, we have the approximation of our solution up to order $O(\mu^3)$ as
+        \begin{equation*}
+            \theta(t;\mu) = \mu\cos\omega_0t+\mu^3\left[ \frac{\omega_0t}{16}\sin\omega_0t+\frac{1}{192}(\cos\omega_0t-\cos 3\omega_0t) \right]+O(\mu^4)
+        \end{equation*}
+        This approximation is only good for $T$ in a fixed, small time interval because the second term is not periodic.
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{The Method of Lyapunov}
+\begin{enumerate}
+    \item State the definition of Lyapunov stability and asymptotic stability for a fixed point of an autonomous ODE system.
+    \begin{proof}
+        \textbf{Lyapunov stable} (fixed point): A fixed point $x_0$ such that for any neighborhood $B(x_0,\varepsilon)$, there exists a neighborhood $B(x_0,\delta)$ such that $\phi_t(x)\in B(x_0,\varepsilon)$ for any $t\geq 0$ and $x\in B(x_0,\delta)$.\par
+        \textbf{Asymptotically stable} (fixed point): A Lyapunov stable fixed point $x_0$ such that $\phi_t(x)\to x_0$ as $t\to+\infty$ for $x\in B(x_0,\delta)$.
+    \end{proof}
+    \item State the definition of Lyapunov function and strict Lyapunov function.
+    \begin{proof}
+        \textbf{Lyapunov function} (of a system $y'=f(y)$ with fixed point $x_0$ near $x_0$): A continuous real function on $\R^n$ such that the following two axioms hold. \emph{Denoted by} $\bm{L}$.
+        \begin{enumerate}
+            \item $L(x_0)=0$ and $L(x)>0$ for all $x\in\mathring{B}(x_0,\delta)=B(x_0,\delta)\setminus\{x_0\}$.
+            \item $\dot{L}(x)=\nabla L(x)\cdot f(x)\leq 0$ for all $x\in\mathring{B}(x_0,\delta)=B(x_0,\delta)\setminus\{x_0\}$.
+        \end{enumerate}
+        \textbf{Strict} (Lyapunov function): A Lyapunov function for which the decreasing is strict.
+    \end{proof}
+    \item State and prove the stability criterion of Lyapunov.
+    \begin{proof}
+        Theorem: For the autonomous system $y'=f(y)$, a fixed point $x_0$ is
+        \begin{enumerate}
+            \item Stable if there is a Lyapunov function near it;
+            \begin{proof}
+                Pick a small number $\delta>0$. Let\footnote{Intuitively (in 2D), we take a ring around $x_0$, find the nonzero value of $L(x)$ at each point on the ring, and take the minimum among them. Imagine a circular valley with hills rising all around the bottommost point; we are essentially looking for the hill that rises the least.}
+                \begin{equation*}
+                    m := \min\{L(x):|x-x_0|=\delta\}
+                \end{equation*}
+                Since $x_0$ does not satisfy $|x-x_0|=\delta>0$, we know from the first constraint on Lyapunov functions that $L(x)>0$ for all $x$ satisfying said relation. Thus, $m>0$. Consequently, any orbit starting from $\{x\mid L(x)<m\}\cap B(x_0,\delta)$ can never meet $\partial B(x_0,\delta)$ since $L(x)$ is decreasing along any orbit (and we would have to go up to get to the boundary). So $L(\phi_t(x))<m$ for all $x\in\{x\mid L(x)<m\}\cap B(x_0,\delta)$. But this means that $\{x\mid L(x)<m\}\cap B(x_0,\delta)$ is in fact an invariant set. Therefore, $x_0$ is Lyapunov stable.
+            \end{proof}
+            \item Asymptotically stable if there is a strict Lyapunov function near it.
+            \begin{proof}
+                If $x\in\{x\mid L(x)<m\}\cap B(x_0,\delta)$, then $L(\phi_t(x))$ is strictly decreasing. As $t\to +\infty$, $\phi_t(x)$ has a partial limit $z_0$, say $\phi_{t_k}(x)\to z_0$ (Lemma 6.6 of \textcite{bib:Teschl}). If $z_0\neq x_0$, then the orbit $\{\phi_t(z_0)\mid t\in I_{z_0}\}$ is not a single point: Since $L$ is a strict Lyapunov function, we have $L(\phi_t(z_0))<L(z_0)$ for all $t>0$. When $k$ is large, $\phi_{t_k}(x)$ is close to $z_0$, so by continuity,
+                \begin{equation*}
+                    L(\phi_{t+t_k}(x)) = L(\phi_t(\phi_{t_k}(x))) < L(z_0)
+                \end{equation*}
+                But this contradicts $L(\phi_t(x))>L(z_0)$ (which we must have if there are arbitrarily large $t$ such that $\phi_t(x)$ is close to $z_0$). Therefore, $x_0=z_0$.
+            \end{proof}
+        \end{enumerate}
+    \end{proof}
+    \item Find a strict Lyapunov function for the linear autonomous system $y'=Ay$, where $A$ is a real matrix whose eigenvalues all have negative real part.
+    \item Give two proofs of the asymptotic stability theorem for a fixed point of an autonomous system, at which the eigenvalues of the linearization all have negative real part: One direct proof and one based on the Lyapunov function.
+    \begin{proof}
+        Theorem: Let $f(x_0)=0$. If the eigenvalues of the linearization $A=f'(x_0)$ all have negative real parts, then the fixed point $x=x_0$ is asymptotically stable.
+        \begin{proof}
+            WLOG let $x_0=0$. Write $f(x)=Ax+g(x)$, where $g(x)=O(|x|^2)$. Since every $\lambda\in\sigma(A)$ has negative real part, there exist $a,C>0$ (let $C>1$ WLOG) such that
+            \begin{equation*}
+                |\e[tA]x| \leq C\e[-at]|x|
+            \end{equation*}
+            The $C$ arises because the matrix norm of $\e[tA]$ is bounded as $t\to +\infty$ if all eigenvalues are negative. The $\e[-at]$ arises similarly, and reflects the exponential decrease in magnitude happening along all subspaces on which $\e[tA]$ acts.\par
+            Let $\delta$ be such that $|g(x)|\leq a|x|/2C$ when $|x|\leq\delta$. Now consider the IVP
+            \begin{equation*}
+                y' = Ay+g(y)
+                ,\quad
+                y(0) \in \bar{B}\left( 0,\frac{\delta}{2C} \right)
+            \end{equation*}
+            Then at least for small $t$ (i.e., $t$ such that $|y(t)|\leq\delta$),
+            \begin{equation*}
+                |y(t)| \leq C\e[-at]|y(0)|+\frac{a}{2C}\int_0^t\e[-a(t-\tau)]|y(\tau)|\dd\tau
+            \end{equation*}
+            It follows from Gr\"{o}nwall's inequality that
+            \begin{equation*}
+                \e[at]|y(t)| \leq C|y(0)|\e[at/2]
+            \end{equation*}
+            hence
+            \begin{equation*}
+                |y(t)| \leq \frac{\delta}{2}\e[-at/2]
+                < \delta
+            \end{equation*}
+            Hence, any orbit of the system starting from $\bar{B}(0,\delta/2C)$ stays in $\bar{B}(0,\delta)$. So the maximal time of existence $T$ is $+\infty$. This is because if not then, then the IVP starting from $y(T)$ is still solvable, contradicting the definition of $T$. Thus, we have proven that
+            \begin{equation*}
+                |y(t)| \leq \frac{\delta}{2}\e[-at/2]
+            \end{equation*}
+            for all $t\geq 0$ as long as $|y(0)|\leq\delta/2C$.
+        \end{proof}
+    \end{proof}
+    \item State the instability counterpart to the stability theorem in part (5).
+    \begin{proof}
+        Theorem: Let $f(0)=0$. If one of the eigenvalues of $A=f'(0)$ has positive real part, then the fixed point $x=0$ is not Lyapunov stable.
+    \end{proof}
+    \item Describe the stability of the equilibria of the Newtonian system $x''=-U'(x)$, where $x$ is the 1D coordinate of the particle.
+    \begin{proof}
+        For a Newtonian system $x''=-U'(x)$, the law of conservation of energy asserts that each solution corresponds to a specific energy level and moves so as to maintain its energy (faster and with more kinetic energy at lower energy levels and slower and with less kinetic energy at higher energy levels).
+    \end{proof}
+    \item Describe all fixed points of the system for a pendulum with friction. Prove the global asymptotic stability of the fixed point $(0,0)$.
+    \begin{proof}
+        For a pendulum with friction, the fixed points are $(0,0)$ and $(\pi,0)$ corresponding to the asymptotically stable equilibrium of the pendulum hanging at the bottom and the unstable equilibrium of the pendulum positioned exactly above the bottom (assuming that the arm of the pendulum is stiff).\par
+        The system is described by the ODE
+        \begin{equation*}
+            ml\theta''+b\theta' = -mg\sin\theta
+        \end{equation*}
+        Substitute $\eta=b/ml$ and $\omega=\theta'$ to get a nonlinear system
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                \omega\\
+                -\eta\omega-g/l\sin\theta\\
+            \end{pmatrix}
+        \end{equation*}
+        At the equilibrium position $(\theta,\omega)=(0,0)$, we have
+        \begin{equation*}
+            A =
+            \begin{pNiceMatrix}
+                \pdv{\theta}(\omega) & \pdv{\omega}(\omega)\\
+                \pdv{\theta}(-\eta\omega-g/l\sin\theta) & \pdv{\omega}(-\eta\omega-g/l\sin\theta)\\
+            \end{pNiceMatrix}
+            \approx
+            \begin{pmatrix}
+                0 & 1\\
+                -g/l & -\eta\\
+            \end{pmatrix}
+        \end{equation*}
+        i.e.,
+        \begin{equation*}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                0 & 1\\
+                -g/l & -\eta\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \theta\\
+                \omega\\
+            \end{pmatrix}
+            +O(|\theta|^2+|\omega|^2)
+        \end{equation*}
+        Since $\eta>0$, the eigenvalues have a common negative real part, so the equilibrium is asymptotically stable.
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Local Behavior Near a Hyperbolic Fixed Point}
+\begin{enumerate}
+    \item State the definition of hyperbolic fixed point of an autonomous ODE system.
+    \begin{proof}
+        \textbf{Hyperbolic} (fixed point of $f$): A fixed point $x_0\in\R^n$ for which $f'(x_0)$ has neither purely imaginary nor zero eigenvalues.
+    \end{proof}
+    \item State the definition of stable and unstable set of a fixed point of an autonomous ODE system.
+    \begin{proof}
+        \textbf{Stable subset} (of $x_0$ under $f$): The set of all vectors attracted to $x_0$. \emph{Also known as} \textbf{attracting subset}. \emph{Denoted by} $\bm{W_s(x_0)}$. \emph{Given by}
+        \begin{equation*}
+            W_s(x_0) = \{x\in\R^n\mid\phi_t(x)\to x_0\text{ as }t\to +\infty\}
+        \end{equation*}
+        \textbf{Unstable subset} (of $x_0$ under $f$): The set of all vectors repelled from $x_0$. \emph{Also known as} \textbf{repelling subset}. \emph{Denoted by} $\bm{W_u(x_0)}$. \emph{Given by}
+        \begin{equation*}
+            W_u(x_0) = \{x\in\R^n\mid\phi_t(x)\to x_0\text{ as }t\to -\infty\}
+        \end{equation*}
+    \end{proof}
+    \item State the stable manifold theorem for a hyperbolic fixed point of an autonomous ODE system.
+    \begin{proof}
+        Theorem (stable manifold theorem): Let $y'=f(y)$ and let $x_0$ be a hyperbolic fixed point of $f$. Then there exists a neighborhood $U(x_0)$ of $x_0$ such that $U(x_0)\cap W_s(x_0)$ is a smooth submanifold of dimension $\dim\mathbb{E}_s[f'(x_0)]$ that is tangent to $\mathbb{E}_s[f'(x_0)]$ at $x_0$. An analogous statement holds for $U(x_0)\cap W_u(x_0)$.
+    \end{proof}
+    \item Give a concrete example of the stable manifold theorem where the stable and unstable sets can be explicitly found.
+    \begin{proof}
+        We will treat
+        \begin{equation*}
+            \begin{pmatrix}
+                x\\
+                y\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                -x+y+3y^2\\
+                y\\
+            \end{pmatrix}
+        \end{equation*}
+        The correct flow is as follows (there was a typo in class).
+        \begin{equation*}
+            \phi_t
+            \begin{pmatrix}
+                z\\
+                w\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                z\e[-t]+w\sinh(t)+w^2(\e[2t]-\e[-t])\\
+                w\e[t]\\
+            \end{pmatrix}
+        \end{equation*}
+        The stable manifold is going to be the set of all $x\in\R^2$ such that $\phi_t(x)\to 0$ as $t\to +\infty$. Approach: Find values of $z,w$ such that the solution converges to zero componentwise.
+        Since $y(t)=w\e[t]$, we must have $w=0$; otherwise, we will get exponential divergence as $t\to +\infty$.
+        Thus, $x(t)=z\e[-t]$. This function converges to zero for any value of $z$, so we may let $z$ be arbitrary.
+        But the set of all points
+        \begin{equation*}
+            \begin{pmatrix}
+                z\\
+                0\\
+            \end{pmatrix}
+        \end{equation*}
+        is the $x$-axis!\par
+        Unstable manifold: We need to find the set of all points $x\in\R^2$ such that $\phi_t(x)\to 0$ as $t\to -\infty$. Approach: Again, go by components.
+        $y(t)=w\e[t]$ will converge to 0 as $t\to -\infty$ for all $w$, so this component does not put any restrictions on $w$. Note that it also does not put any restrictions on $z$ since it does not even contain $z$.
+        Working with the other one, we expand and combine all $\e[at]$ terms for $a>0$ and all $\e[bt]$ terms for all $b<0$.
+        \begin{align*}
+            x(t) &= z\e[-t]+w\sinh(t)+w^2(\e[2t]-\e[-t])\\
+            &= z\e[-t]+w\cdot\frac{\e[t]-\e[-t]}{2}+w^2\e[2t]-w^2\e[-t]\\
+            &= z\e[-t]+\frac{w}{2}\e[t]-\frac{w}{2}\e[-t]+w^2\e[2t]-w^2\e[-t]\\
+            &= \left[ w^2\e[2t]+\frac{w}{2}\e[t] \right]+\left[ z-\frac{w}{2}-w^2 \right]\e[-t]
+        \end{align*}
+        The left term above will clearly converge to 0 as $t\to -\infty$.
+        However, the right term will diverge to $\infty$ as $t\to -\infty$ unless $z-w/2-w^2=0$, so we take this to be our condition.
+        Indeed, this implies that $z=w/2+w^2$ is a constraint on $z$, but $w$ can still take on any value, so our solution is
+        \begin{equation*}
+            W_u(0) = \left\{ \left( \frac{y}{2}+y^2,y \right) \,\middle|\, y\in\R \right\}
+        \end{equation*}
+        as desired.
+    \end{proof}
+    \item State the Hartman linearization theorem.
+    \begin{proof}
+        Theorem (Hartman-Grobman Theorem): Let $y'=f(y)$, $x_0$ a hyperbolic fixed point, and $A=f'(x_0)$. Then there exists a neighborhood $U(x_0)$ and a homeomorphism $h:U(x_0)\to B(x_0,d)$ such that
+        \begin{equation*}
+            h\circ\phi_t = \e[tA]\circ h
+        \end{equation*}
+        for $|t|$ small.
+    \end{proof}
+    \item Describe the global behavior of the predator-prey system
+    \begin{equation*}
+        \begin{pmatrix}
+            x\\
+            y\\
+        \end{pmatrix}'
+        =
+        \begin{pmatrix}
+            (1-y-\lambda x)x\\
+            \alpha(x-1-\mu y)y\\
+        \end{pmatrix}
+    \end{equation*}
+    in the first quadrant according to different choices of positive parameters $\lambda,\mu$.
+    \begin{proof}
+        We now have four fixed points:
+        \begin{align*}
+            (0,0)&&
+            (\lambda^{-1},0)&&
+            (0,-\mu^{-1})&&
+            \left( \frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda} \right)
+        \end{align*}
+        The third lies outside of $\bar{Q}$, so we disregard it.
+        The fourth lies outside of $\bar{Q}$ if $\lambda>1$. Thus, let's start with the case $\lambda\geq 1$ so that we only have to deal with one new fixed point.
+        $\lambda\geq 1$.
+        Our new fixed point is $(\lambda^{-1},0)$.
+        It is a hyperbolic sink if $\lambda>1$.
+        If $\lambda=1$, one eigenvalue is 0 and we need a more thorough investigation.
+        Idea: Split $Q$ into regions where $\dot{x},\dot{y}$ have definite signs and then use the elementary observation in Lemma 7.2.
+        The regions where $\dot{x},\dot{y}$ have definite signs are separated by the two lines
+        \begin{align*}
+            L_1 &= \{(x,y)\mid y=1-\lambda x\}&
+            L_2 &= \{(x,y)\mid\mu y=x-1\}
+        \end{align*}
+        We derive these by setting $1-y-\lambda x=0$ and $x-1-\mu y=0$.
+        Label the regions in $Q$ enclosed by these lines from left to right by $Q_1,Q_2,Q_3$.
+        Observe that the lines are transversal, i.e., can only be crossed in the direction from $Q_3\to Q_2$ and $Q_2\to Q_1$. This can be seen from the solution curves in the picture.
+        Suppose we start at $(x_0,y_0)\in Q_3$.
+        Additional constraint: $x\leq x_0$ (the flow is to the left??).
+        By Lemma 7.2: Either the trajectory enters $L_2$ or it converges to a fixed point in $\bar{Q}_3$. The latter case can only happen if $(\lambda^{-1},0)\in\bar{Q}_3$, i.e., if $\lambda=1$.
+        Similarly, starting in $Q_2$ either gets you across $L_1$ or to $(\lambda^{-1},0)$.
+        Starting in $Q_1$ must take you to the fixed point.
+        Thus, every trajectory converges to the fixed point.
+        Let $0<\lambda<1$.
+        We apply the same strategy as before.
+        We have four regions this time. Let $Q_4$ be the new (bottom) one. We can only pass through these in the order $Q_4\to Q_3\to Q_2\to Q_1\to Q_4$.
+        Thus, we have to rule out the periodic case this time.
+        For simplicity's sake, let
+        \begin{equation*}
+            (x_0,y_0) = \left( \frac{1+\mu}{1+\mu\lambda},\frac{1-\lambda}{1+\mu\lambda} \right)
+        \end{equation*}
+        To do so, introduce (inspired by the original) the Lyapunov function
+        \begin{equation*}
+            L(x,y) = \gamma_1f(\tfrac{y}{y_0})+\alpha\gamma_2f(\tfrac{x}{x_0})
+        \end{equation*}
+        where, as before, $f(a)=a-1-\log(a)$.
+        We seek constraints on $\gamma_1,\gamma_2$ that will make $L$ strict.
+        Calculate
+        \begin{equation*}
+            \dot{L} = \pdv{L}{x}\dot{x}+\pdv{L}{y}\dot{y}
+            = -\alpha\left( \frac{\lambda\gamma_2}{x_0}\bar{x}^2+\frac{\mu\gamma_1}{y_0}\bar{y}^2+\left( \frac{\gamma_2}{x_0}-\frac{\gamma_1}{y_0} \right)\bar{x}\bar{y} \right)
+        \end{equation*}
+        where
+        \begin{align*}
+            \dot{x} &= (-\bar{y}-\lambda\bar{x})x&
+            \dot{y} &= \alpha(\bar{x}-\mu\bar{y})y&
+            \bar{x} &= x-x_0&
+            \bar{y} &= y-y_0
+        \end{align*}
+        The the RHS will be negative if we choose $\gamma_1=y_0$ and $\gamma_2=x_0$, so choose this, and then $L$ is strictly decreasing, so all orbits starting in $Q$ converge to the fixed point $(x_0,y_0)$.
+    \end{proof}
+\end{enumerate}
+
+
+\subsection*{Planar Systems}
+\begin{enumerate}
+    \item State the definition of $\omega$-limit sets and $\alpha$-limit sets for a given point in an autonomous ODE system.
+    \begin{proof}
+        \textbf{$\bm{\omega}$-limit set} (of $x$): The set of all points $y\in M$ for which there exists a sequence $\{t_n\}$ that converges to $+\infty$ and satisfies $\Phi(t_n,x)\to y$. \emph{Denoted by} $\bm{\omega(x)}$.\par
+        \textbf{$\bm{\alpha}$-limit set} (of $x$): The set of all points $y\in M$ for which there exists a sequence $\{t_n\}$ that converges to $-\infty$ and satisfies $\Phi(t_n,x)\to y$. \emph{Denoted by} $\bm{\alpha(x)}$.
+    \end{proof}
+    \item State the Poincar\'{e}-Bendixson theorem.
+    \begin{proof}
+        Theorem (Poincar\'{e}-Bendixson Theorem): Let $\Omega\in\R^2$ be open, $f(x)$ a vector field on $\Omega$. Fix $x\in\Omega$. Also, let $\omega(x)\subset\Omega$ be compact and nonempty. In particular, there are three mutually exclusive cases for these limit sets.
+        \begin{enumerate}
+            \item $\omega(x)$ (or $\alpha(x)$\footnote{We just have to reverse the time.}) is a fixed point.
+            \item $\omega(x)$ is a limit cycle.
+            \item $\omega(x)$ consists of finitely many fixed points, together with curves joining these fixed points.
+        \end{enumerate}
+    \end{proof}
+    \item Give a criterion for the existence of a limit cycle.
+    \begin{proof}
+        Theorem (Annulus theorem of Bendixson): Suppose $C_1,C_2$ are closed simple planar curves such that geometrically, one contains the other. We call the annular region (between the two curves) $A$. Suppose $f(x)$ is a planar vector field which points inward at every point of $\partial A$ (the boundary of $A$). Then the annular region $A$ is an invariant region of the plane. In particular, if $A$ does not contain any fixed points, then it must contain a limit cycle. As before, curves within and without spiral towards it.
+    \end{proof}
+    \item Give a criterion for the non-existence of a limit cycle.
+    \begin{proof}
+        Periodic orbits are \emph{not} isolated but are dense, and in particular, we have a strict Lyapunov function.
+    \end{proof}
+    \item Give an example of a planar autonomous system with exactly one limit cycle.
+    \begin{proof}
+        \begin{equation*}
+            \begin{pmatrix}
+                r\\
+                \theta\\
+            \end{pmatrix}'
+            =
+            \begin{pmatrix}
+                r(1-r^2)\\
+                1\\
+            \end{pmatrix}
+        \end{equation*}
+        where we use polar coordinates for simplicity.
+    \end{proof}
+\end{enumerate}
+
+
+
+
+\end{document}
