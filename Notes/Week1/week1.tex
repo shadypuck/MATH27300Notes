@@ -574,6 +574,174 @@
     \end{itemize}
 \end{itemize}
 
+\subsubsection*{Problems}
+\begin{enumerate}[label={\textbf{1.\arabic*.}},ref={1.\arabic*},leftmargin=3.5em]
+    \item \label{prb:1.1}\marginnote{11/24:}Consider the case of a stone dropped from a height $h$ above the Earth's surface. Denote by $r$ the distance of the stone from the Earth's surface. The initial condition reads $r(0)=h$, $\dot{r}(0)=0$. The equation of motion reads
+    \begin{equation*}
+        \ddot{r} = -\frac{\gamma M}{(R+r)^2}
+    \end{equation*}
+    for the exact model and
+    \begin{equation*}
+        \ddot{r} = -g
+    \end{equation*}
+    for the approximate model, where $R$ is the radius of the Earth, $M$ is the mass of the Earth, and $g=\gamma M/R^2$. Note that $\ddot{r}$ is acceleration, not force, and hence we do not see the mass of the stone in the RHS's above.
+    \begin{enumerate}[label={(\roman*)}]
+        \item Transform both equations into a first-order system.
+        \begin{proof}
+            Define $v=\dot{r}$. Then the first-order system corresponding to the exact model is
+            \begin{empheq}[box=\fbox]{align*}
+                \dot{r} &= v\\
+                \dot{v} &= -\frac{\gamma M}{(R+r)^2}
+            \end{empheq}
+            and the first-order system corresponding to the approximate model is
+            \begin{empheq}[box=\fbox]{align*}
+                \dot{r} &= v\\
+                \dot{v} &= -g
+            \end{empheq}
+        \end{proof}
+        \item Compute the solution to the approximate system corresponding to the given initial condition. Compute the time it takes for the stone to hit the surface ($r=0$).
+        \begin{proof}
+            We can integrate $\dot{v}=-g$ to determine that $v(t)=-gt+C_1$ for some $C_1\in\R$ and then integrate $\dot{r}=v$ to determine that
+            \begin{equation*}
+                r(t) = -\frac{1}{2}gt^2+C_1t+C_2
+            \end{equation*}
+            for some additional $C_2\in\R$. Using the initial conditions, we can determine that
+            \begin{align*}
+                h &= r(0) = C_2&
+                0 &= \dot{r}(0) = v(0) = C_1
+            \end{align*}
+            Thus, the solution to the approximate system corresponding to the given initial conditions is
+            \begin{equation*}
+                \boxed{r(t) = -\frac{1}{2}gt^2+h}
+            \end{equation*}
+            We can solve the equation $r(t)=0$ for $t$ as follows.
+            \begin{align*}
+                0 &= r(t)\\
+                &= -\frac{1}{2}gt^2+h\\
+                t &= \pm\sqrt{\frac{2h}{g}}
+            \end{align*}
+            Knowing that $t\geq 0$ by definition, we choose
+            \begin{equation*}
+                \boxed{t = \sqrt{\frac{2h}{g}}}
+            \end{equation*}
+        \end{proof}
+        \item Assume that the exact equation also has a unique solution corresponding to the given initial condition. What can you say about the time it takes for the stone to hit the surface in comparison to the approximate model? Will it be longer or shorter? Estimate the difference between the solutions in the exact and in the approximate case. \emph{Hints}: You should not compute the solution to the exact equation! Look at the minimum and maximum of the force.
+        \begin{proof}
+            It will take the stone \fbox{longer} to hit the surface in the exact model than in the approximate model. How do we \emph{estimate} the difference??
+        \end{proof}
+        \item Grab your physics book from high school and give numerical values for the case $h=\SI{10}{\meter}$.
+        \begin{proof}
+            For the approximate model,
+            \begin{equation*}
+                \boxed{t \approx \SI{1.43}{\second}}
+            \end{equation*}
+            and for the exact model, ...
+        \end{proof}
+    \end{enumerate}
+    \item \label{prb:1.2}Consider again the exact model from the previous problem and write
+    \begin{equation*}
+        \ddot{r} = -\frac{\gamma M\varepsilon^2}{(1+\varepsilon r)^2}
+    \end{equation*}
+    where $\varepsilon=1/R$. It can be shown that the solution $r(t)=r(t,\varepsilon)$ to the above with the given initial conditions is $C^\infty$ with respect to both $t,\varepsilon$. Show that
+    \begin{equation*}
+        r(t) = h-g\left( 1-\frac{2h}{R} \right)\frac{t^2}{2}+O\left( \frac{1}{R^4} \right)
+    \end{equation*}
+    where $g=\gamma M/R^2$. \emph{Hint}: Insert $r(t,\varepsilon)=r_0(t)+r_1(t)\varepsilon+r_2(t)\varepsilon^2+r_3(t)\varepsilon^3+O(\varepsilon^4)$ into the differential equation and collect powers of $\varepsilon$. Then solve the corresponding differential equations for $r_0(t),r_1(t),\dots$ and note that the initial conditions follow from $r(0,\varepsilon)=h$ and $\dot{r}(0,\varepsilon)=0$. A rigorous justification for this procedure will be given in Section 2.5.
+    \begin{proof}
+        Taking the hint, we get that
+        \begin{equation*}
+            r_0''(t)+r_1''(t)\varepsilon+r_2''(t)\varepsilon^2+r_3''(t)\varepsilon^3+O(\varepsilon^4) = -\frac{\gamma M\varepsilon^2}{(1+\varepsilon(r_0(t)+r_1(t)\varepsilon+r_2(t)\varepsilon^2+r_3(t)\varepsilon^3+O(\varepsilon^4)))^2}
+        \end{equation*}
+        We can rewrite the denominator $d$ as follows.
+        \begin{align*}
+            d ={}& (1+r_0(t)\varepsilon+r_1(t)\varepsilon^2+r_2(t)\varepsilon^3+O(\varepsilon^4))^2\\
+            \begin{split}
+                ={}& 1+r_0(t)\varepsilon+r_1(t)\varepsilon^2+r_2(t)\varepsilon^3+r_0(t)\varepsilon+r_0(t)^2\varepsilon^2+r_0(t)r_1(t)\varepsilon^3\\
+                &+r_1(t)\varepsilon^2+r_0(t)r_1(t)\varepsilon^3+r_2(t)\varepsilon^3+O(\varepsilon^4)
+            \end{split}\\
+            ={}& 1+2r_0(t)\varepsilon+(r_0(t)^2+2r_1(t))\varepsilon^2+2(r_0(t)r_1(t)+r_2(t))\varepsilon^3+O(\varepsilon^4)
+        \end{align*}
+        Multiplying both sides of the original equation by $d$ yields
+        \begin{align*}
+            \begin{split}
+                -\gamma M\varepsilon^2 ={}& r_0''+2r_0r_0''\varepsilon+(r_0^2+2r_1)r_0''\varepsilon^2+2(r_0r_1+r_2)r_0''\varepsilon^3\\
+                &+r_1''\varepsilon+2r_0r_1''\varepsilon^2+(r_0^2+2r_1)r_1''\varepsilon^3\\
+                &+r_2''\varepsilon^2+2r_0r_2''\varepsilon^3\\
+                &+r_3''\varepsilon^3+O(\varepsilon^4)
+            \end{split}\\
+            \begin{split}
+                0+0\varepsilon+0\varepsilon^2+0\varepsilon^3 ={}& r_0''\\
+                &+(2r_0r_0''+r_1'')\varepsilon\\
+                &+[\gamma M+(r_0^2+2r_1)r_0''+2r_0r_1''+r_2'']\varepsilon^2\\
+                &+[2(r_0r_1+r_2)r_0''+(r_0^2+2r_1)r_1''+2r_0r_2''+r_3'']\varepsilon^3
+            \end{split}
+        \end{align*}
+        Thus, by collecting powers of $\varepsilon$ and comparing, we have the system of differential equations
+        \begin{align*}
+            r_0''(t) &= 0\\
+            r_1''(t) &= -2r_0(t)r_0''(t)\\
+            r_2''(t) &= -\gamma M-(r_0(t)^2+2r_1(t))r_0''(t)-2r_0(t)r_1''(t)\\
+            r_3''(t) &= -2(r_0(t)r_1(t)+r_2(t))r_0''(t)-(r_0(t)^2+2r_1(t))r_1''(t)-2r_0(t)r_2''(t)
+        \end{align*}
+        which we can sequentially solve as follows.\par
+        Before we tackle the differential equations, however, a quick note on the initial conditions. We need
+        \begin{align*}
+            h &= r(0,\varepsilon)&
+                0 &= \dot{r}(0,\varepsilon)\\
+            &= r_0(0)+r_1(0)\varepsilon+r_2(0)\varepsilon^2+r_3(0)\varepsilon^3&
+                &= r_0'(0)+r_1'(0)\varepsilon+r_2'(0)\varepsilon^2+r_3'(0)\varepsilon^3
+        \end{align*}
+        But the only way these equations can be satisfied for all $\varepsilon$ is if
+        \begin{align*}
+            r_0(0) &= h&
+            r_1(0) &= \cdots = r_3(0) = r_0'(0) = \cdots = r_3'(0) = 0
+        \end{align*}
+        in agreement with the unjustified method from class!\par
+        The first differential equation has general solution
+        \begin{equation*}
+            r_0(t) = C_1t+C_2
+        \end{equation*}
+        Applying the initial conditions, we can learn that $C_1=0$ and $C_2=h$. This yields the solution
+        \begin{equation*}
+            r_0(t) = h
+        \end{equation*}
+        We can now move onto the second differential equation, which in light of the formula for $r_0$ can be rewritten as
+        \begin{equation*}
+            r_1''(t) = -2\cdot h\cdot 0 = 0
+        \end{equation*}
+        Solving and applying the initial conditions here yields
+        \begin{equation*}
+            r_1(t) = 0
+        \end{equation*}
+        Moving onto the third differential in the same fashion, we have
+        \begin{equation*}
+            r_2''(t) = -\gamma M-(h^2+2\cdot 0)\cdot 0-2\cdot h\cdot 0 = -\gamma M
+        \end{equation*}
+        Thus,
+        \begin{equation*}
+            r_2(t) = -\frac{\gamma M}{2}t^2
+        \end{equation*}
+        For the fourth and final differential equation, we have
+        \begin{equation*}
+            r_3''(t) = -2\left( h\cdot 0-\frac{\gamma M}{2}t^2 \right)\cdot 0-(h^2+2\cdot 0)\cdot 0-2\cdot h\cdot -\gamma M
+            = 2h\gamma M
+        \end{equation*}
+        Thus,
+        \begin{equation*}
+            r_3(t) = h\gamma Mt^2
+        \end{equation*}
+        Combining the last four results, we have that
+        \begin{align*}
+            r(t) &= r(t,\varepsilon)\\
+            &= r_0(t)+r_1(t)\varepsilon+r_2(t)\varepsilon^2+r_3(t)\varepsilon^3+O(\varepsilon^4)\\
+            &= h+0\cdot\varepsilon+\left( -\frac{\gamma M}{2}t^2 \right)\cdot\varepsilon^2+h\gamma Mt^2\varepsilon^3+O(\varepsilon^4)\\
+            &= h-\gamma M\varepsilon^2(1-2h\varepsilon)\frac{t^2}{2}+O(\varepsilon^4)\\
+            &= h-\underbrace{\frac{\gamma M}{R^2}}_g\left( 1-\frac{2h}{R} \right)\frac{t^2}{2}+O\left( \frac{1}{R^4} \right)
+        \end{align*}
+        as desired.
+    \end{proof}
+\end{enumerate}
+
 
 \subsection*{Section 1.2: Classification of Differential Equations}
 \begin{itemize}
