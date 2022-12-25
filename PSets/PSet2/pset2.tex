@@ -806,81 +806,425 @@
 \end{enumerate}
 
 
-% \subsection*{Bonus Problems}
-% \begin{enumerate}
-%     \item You may find the characteristic root method for the second-order equation $y''+ay'+b=0$ quite abrupt. This problem helps you see where it comes from. The origin of this method is in fact a comparison with the linear recursive relation
-%     \begin{equation*}
-%         y_{n+2}+ay_{n+1}+by_n = 0
-%     \end{equation*}
-%     where $a,b$ are given complex numbers.
-%     \begin{enumerate}
-%         \item The linear recursive relation $y_{n+1}+ay_n=0$ gives rise to a geometric sequence
-%         \begin{equation*}
-%             y_0,y_0(-a),y_0(-a)^2,\dots
-%         \end{equation*}
-%         We now want to try to reduce the second-order recursive relation $y_{n+2}+ay_{n+1}+by_n=0$ to a first-order relation. Thus, we look for complex numbers $\lambda,\mu$ such that
-%         \begin{equation*}
-%             (y_{n+2}-\lambda y_{n+1})-\mu(y_{n+1}-\lambda y_n) = 0
-%         \end{equation*}
-%         Then $\lambda,\mu$ should be the roots of the characteristic polynomial
-%         \begin{equation*}
-%             X^2+aX+b
-%         \end{equation*}
-%         Taking $\lambda,\mu$ as known quantities, find the general formula for $y_n$, regarding $y_0,y_1$ as known quantities. \emph{Hint}: $y_{n+1}-\lambda y_n$ is a geometric sequence with ratio $\mu$. You should also discuss $\mu\neq\lambda$ and $\mu=\lambda$ separately.
-%         \begin{proof}
-            
-%         \end{proof}
-%         % \item Use the method of part (1) to find the general formula for the linear discursive relation
-%         % \begin{equation*}
-%         %     y_{n+2}-2y_{n+1}+y_n = 0
-%         % \end{equation*}
-%         % Use the same method to find the general formula for the Fibonacci sequence
-%         % \begin{equation*}
-%         %     F_{n+2} = F_{n+1}+F_n
-%         % \end{equation*}
-%     \end{enumerate}
-%     % \item In this exercise, we aim to prove an important theorem in linear algebra:
-%     % \begin{equation*}
-%     %     \textit{Complex Hermitian matrices are always diagonalizable.}
-%     % \end{equation*}
-%     % Here the term "Hermitian" means that the matrix equals its conjugate transpose. In terms of entries, this means that in general, $a_{ij}=\bar{a}_{ji}$. For example,
-%     % \begin{equation*}
-%     %     \begin{pmatrix}
-%     %         2 & 1 & -i\\
-%     %         1 & 3 & -2i\\
-%     %         i & 2i & 1\\
-%     %     \end{pmatrix}
-%     % \end{equation*}
-%     % is Hermitian.
-%     % \begin{enumerate}
-%     %     \item Let $\inp{\cdot}{\cdot}$ be the standard Hermitian inner product, that is, for $x,y\in\C^n$,
-%     %     \begin{equation*}
-%     %         \inp{x}{y} = \sum_{j=1}^nx^j\bar{y}^j
-%     %     \end{equation*}
-%     %     Show that for any $n\times n$ real matrix,
-%     %     \begin{equation*}
-%     %         \inp{Ax}{y} = \inp{x}{A^*y}
-%     %     \end{equation*}
-%     %     for any $x,y\in\C^n$, where $A^*$ denotes the conjugate transpose of $A$. For example,
-%     %     \begin{equation*}
-%     %         A =
-%     %         \begin{pmatrix}
-%     %             1 & 1 & 2i\\
-%     %             0 & 3+i & 3\\
-%     %             2 & 0 & 1\\
-%     %         \end{pmatrix}
-%     %         \quad\Longleftrightarrow\quad
-%     %         A^* =
-%     %         \begin{pmatrix}
-%     %             1 & 0 & 2\\
-%     %             1 & 3-i & 0\\
-%     %             -2i & 3 & 1\\
-%     %         \end{pmatrix}
-%     %     \end{equation*}
-%     %     \item Suppose now that $A$ is Hermitian. Use part (1) to show that any eigenvalue of $A$ must be a real number. Show further that if $x,y$ are eigenvectors corresponding to different eigenvalues, then $\inp{x}{y}=0$, that is, $x$ is orthogonal to $y$.
-%     %     \item Prove that every Hermitian matrix $A$ is diagonalizable. \emph{Hint}: Take any eigenvector $v_1$ of $A$. Decompose $\C^n$ into the direct sum of $\spn(v_1)$ and its orthogonal complement. Show that the orthogonal complement is an invariant subspace for $A$.
-%     % \end{enumerate}
-% \end{enumerate}
+\subsection*{Bonus Problems}
+\begin{enumerate}
+    \item You may find the characteristic root method for the second-order equation $y''+ay'+b=0$ quite abrupt. This problem helps you see where it comes from. The origin of this method is in fact a comparison with the linear recursive relation
+    \begin{equation*}
+        y_{n+2}+ay_{n+1}+by_n = 0
+    \end{equation*}
+    where $a,b$ are given complex numbers.
+    \begin{enumerate}
+        \item The linear recursive relation $y_{n+1}+ay_n=0$ gives rise to a geometric sequence
+        \begin{equation*}
+            y_0,y_0(-a),y_0(-a)^2,\dots
+        \end{equation*}
+        We now want to try to reduce the second-order recursive relation $y_{n+2}+ay_{n+1}+by_n=0$ to a first-order relation. Thus, we look for complex numbers $\lambda,\mu$ such that
+        \begin{equation*}
+            (y_{n+2}-\lambda y_{n+1})-\mu(y_{n+1}-\lambda y_n) = 0
+        \end{equation*}
+        Then $\lambda,\mu$ should be the roots of the characteristic polynomial
+        \begin{equation*}
+            X^2+aX+b
+        \end{equation*}
+        Taking $\lambda,\mu$ as known quantities, find the general formula for $y_n$, regarding $y_0,y_1$ as known quantities. \emph{Hint}: The sequence of numbers $y_{n+1}-\lambda y_n$ is a geometric sequence with ratio $\mu$. You should also discuss $\mu\neq\lambda$ and $\mu=\lambda$ separately.
+        \begin{proof}
+            We start with the case $\mu\neq\lambda$ here. Define a sequence of numbers $\{x_n\}$ by
+            \begin{equation*}
+                x_n := y_{n+1}-\lambda y_n
+            \end{equation*}
+            We have from the above that $x_n$ is recursively defined by
+            \begin{equation*}
+                x_{n+1}-\mu x_n = 0
+                \quad\Longleftrightarrow\quad
+                x_n = x_0\mu^n
+            \end{equation*}
+            Returning the substitution, we have that
+            \begin{equation*}
+                y_{n+1}-\lambda y_n = (y_1-\lambda y_0)\mu^n
+            \end{equation*}
+            Rearranging, we have that
+            \begin{equation*}
+                y_{n+1} = \lambda y_n+(y_1-\lambda y_0)\mu^n
+            \end{equation*}
+            In other words, to generate each new term, we multiply through the previous term by $\lambda$ and add to it a new term. Let's investigate the effect of this procedure on the first few terms past $y_0,y_1$. These terms are
+            \begin{align*}
+                \begin{split}
+                    y_2 ={}& \lambda y_1+(y_1-\lambda y_0)\mu^1\\
+                    &= (\underbrace{\lambda+\mu}_{p_1(\lambda,\mu)})y_1-\lambda\mu(\underbrace{1}_{q_1(\lambda,\mu)})y_0
+                \end{split}\\
+                \begin{split}
+                    y_3 ={}& \lambda(\lambda+\mu)y_1-\lambda\mu\cdot\lambda y_0+(y_1-\lambda y_0)\mu^2\\
+                    &= [\lambda(\lambda+\mu)+\mu^2]y_1-\lambda\mu\cdot[\lambda+\mu]y_0\\
+                    &= (\underbrace{\lambda^2+\lambda\mu+\mu^2}_{p_2(\lambda,\mu)})y_1-\lambda\mu(\underbrace{\lambda+\mu}_{q_2(\lambda,\mu)})y_0
+                \end{split}\\
+                \begin{split}
+                    y_4 ={}& \lambda(\lambda^2+\lambda\mu+\mu^2)y_1-\lambda\mu\cdot\lambda(\lambda+\mu)y_0+(y_1-\lambda y_0)\mu^3\\
+                    &= [\lambda(\lambda^2+\lambda\mu+\mu^2)+\mu^3]y_1-\lambda\mu\cdot[\lambda(\lambda+\mu)+\mu^2]y_0\\
+                    &= (\underbrace{\lambda^3+\lambda^2\mu+\lambda\mu^2+\mu^3}_{p_3(\lambda,\mu)})y_1-\lambda\mu(\underbrace{\lambda^2+\lambda\mu+\mu^2}_{q_3(\lambda,\mu)})y_0
+                \end{split}
+            \end{align*}
+            There are a number of interesting things to note here. First of all, see that the first line defining each term comes straight from the recursive relation (i.e., is $\lambda$ times the previous term plus an auxiliary term). The second line is always a rewrite that combines all of the $y_1$ terms and all of the $y_0$ terms. The third line (if it exists; the second line for $y_2$ serves this purpose as well) is always a final simplification in terms of polynomials of $\lambda$ and $\mu$. We have taken the liberty of naming each of these final polynomials for purposes that will soon be revealed.\par
+            Notice that the polynomials appear to be defined by the recursive relations\footnote{We can rigorously prove this via induction. Also note the familiar theme of "multiply through by $\lambda$ and add a term."}
+            \begin{align*}
+                p_n &= \lambda p_{n-1}+\mu^n&
+                q_n &= \lambda q_{n-1}+\mu^{n-1}
+            \end{align*}
+            Also note that we factor $-\lambda\mu$ out of the $y_0$ term every time so that we have
+            \begin{equation*}
+                q_n = p_{n-1}
+            \end{equation*}
+            These polynomials have a very well-defined form; specifically,
+            \begin{equation*}
+                q_{n+1} = p_n
+                = \sum_{i=0}^n\lambda^{n-i}\mu^i
+                = \frac{\lambda^{n+1}-\mu^{n+1}}{\lambda-\mu}
+            \end{equation*}
+            This allows us to explicitly define the following general formula for $y_n$ in the $\mu\neq\lambda$ case.
+            \begin{equation*}
+                \boxed{y_n = \frac{\lambda^n-\mu^n}{\lambda-\mu}y_1-\lambda\mu\frac{\lambda^{n-1}-\mu^{n-1}}{\lambda-\mu}y_0}
+            \end{equation*}
+            I believe that this is along the lines of what Shao wanted us to do.\par
+            Note, however, that there exists an alternate, much more logical way to derive this formula using linear algebra. In particular, we have from the recursive relation and the trivial reflexive equality $y_1=y_1$ that
+            \begin{align*}
+                \begin{pmatrix}
+                    y_2\\
+                    y_1\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    -ay_1-by_0\\
+                    y_1\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    -a & -b\\
+                    1 & 0\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    y_1\\
+                    y_0\\
+                \end{pmatrix}
+            \end{align*}
+            It follows that
+            \begin{equation*}
+                \begin{pmatrix}
+                    y^{n+1}\\
+                    y^n\\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    -a & -b\\
+                    1 & 0\\
+                \end{pmatrix}^n
+                \begin{pmatrix}
+                    y_1\\
+                    y_0\\
+                \end{pmatrix}
+            \end{equation*}
+            Diagonalizing the matrix raised to the $n^\text{th}$ power above (which we may call $A$) requires finding the roots of the (of course similarly named) characteristic polynomial
+            \begin{align*}
+                0 &= \chi_A(z)\\
+                &= (-a-z)(-z)+b\\
+                &= z^2+az+b
+            \end{align*}
+            But we have from the problem statement that the roots of this polynomial are the same $\lambda,\mu$ we've been working with this whole time. Thus, we have a new interpretation of these roots: As \emph{eigenvalues}. And to each of these distinct eigenvalues corresponds a distinct eigenvector, which we may find by inspection as follows. Consider $\lambda$ WLOG. The eigenvector $v$ corresponding to $\lambda$ must satisfy
+            \begin{equation*}
+                \begin{pmatrix}
+                    -a-\lambda & -b\\
+                    1 & -\lambda\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    v^1\\
+                    v^2\\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    0\\
+                    0\\
+                \end{pmatrix}
+            \end{equation*}
+            If we choose $v^1=\lambda$ and $v^2=1$, then we of course have
+            \begin{equation*}
+                (1)(v^1)+(-\lambda)(v^2) = \lambda-\lambda
+                = 0
+            \end{equation*}
+            But we actually also have
+            \begin{equation*}
+                (-a-\lambda)(v^1)+(-b)(1) = -\lambda^2-a\lambda-b
+                = -(\lambda^2+a\lambda+b)
+                = -0
+                = 0
+            \end{equation*}
+            since $\lambda$ is a root of the characteristic polynomial! Thus, the eigenvectors corresponding to $\lambda,\mu$ are
+            \begin{equation*}
+                \begin{pmatrix}
+                    \lambda\\
+                    1\\
+                \end{pmatrix},
+                \begin{pmatrix}
+                    \mu\\
+                    1\\
+                \end{pmatrix}
+            \end{equation*}
+            respectively. Thus, with what we have so far plus an assist from Problem 2, we can diagonalize $A$ to
+            \begin{equation*}
+                \begin{pmatrix}
+                    -a & -b\\
+                    1 & 0\\
+                \end{pmatrix}
+                = \frac{1}{\lambda-\mu}
+                \begin{pmatrix}
+                    \lambda & \mu\\
+                    1 & 1\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \lambda & 0\\
+                    0 & \mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    1 & -\mu\\
+                    -1 & \lambda\\
+                \end{pmatrix}
+            \end{equation*}
+            It follows that
+            \begin{align*}
+                \begin{pmatrix}
+                    y^{n+1}\\
+                    y^n\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    -a & -b\\
+                    1 & 0\\
+                \end{pmatrix}^n
+                \begin{pmatrix}
+                    y_1\\
+                    y_0\\
+                \end{pmatrix}\\
+                &= \frac{1}{\lambda-\mu}
+                \begin{pmatrix}
+                    \lambda & \mu\\
+                    1 & 1\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \lambda & 0\\
+                    0 & \mu\\
+                \end{pmatrix}^n
+                \begin{pmatrix}
+                    1 & -\mu\\
+                    -1 & \lambda\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    y_1\\
+                    y_0\\
+                \end{pmatrix}\\
+                &= \frac{1}{\lambda-\mu}
+                \begin{pmatrix}
+                    \lambda & \mu\\
+                    1 & 1\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \lambda^n & 0\\
+                    0 & \mu^n\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    y_1-\mu y_0\\
+                    -(y_1-\lambda y_0)\\
+                \end{pmatrix}\\
+                &= \frac{1}{\lambda-\mu}
+                \begin{pmatrix}
+                    \lambda & \mu\\
+                    1 & 1\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \lambda^n(y_1-\mu y_0)\\
+                    -\mu^n(y_1-\lambda y_0)\\
+                \end{pmatrix}\\
+                &= \frac{1}{\lambda-\mu}
+                \begin{pmatrix}
+                    \lambda^{n+1}(y_1-\mu y_0)-\mu^{n+1}(y_1-\lambda y_0)\\
+                    \lambda^n(y_1-\mu y_0)-\mu^n(y_1-\lambda y_0)\\
+                \end{pmatrix}
+            \end{align*}
+            From the above, we can read that
+            \begin{align*}
+                y_n &= \frac{1}{\lambda-\mu}[\lambda^n(y_1-\mu y_0)-\mu^n(y_1-\lambda y_0)]\\
+                &= \frac{\lambda^n-\mu^n}{\lambda-\mu}y_1-\frac{\lambda^n\mu-\lambda\mu^n}{\lambda-\mu}y_0\\
+                &= \frac{\lambda^n-\mu^n}{\lambda-\mu}y_1-\lambda\mu\frac{\lambda^{n-1}-\mu^{n-1}}{\lambda-\mu}y_0
+            \end{align*}
+            in agreement with the original answer.\par\smallskip
+            We now treat the case where $\mu=\lambda$. We will do this using linear algebra, alone, since this is a far more rigorous and overall superior method. That being said, a purely sequence-based method would also work here. Let's begin.\par
+            The setup proceeds as before. However, this time we only have one distinct eigenvalue. Moreover, this eigenvalue only corresponds to one eigenvector since
+            \begin{equation*}
+                \begin{pmatrix}
+                    -a-\mu & -b\\
+                    1 & -\mu\\
+                \end{pmatrix}
+            \end{equation*}
+            is a rank 1 matrix, not a rank 0 matrix. Thus, we must delve into JNF and generalized eigenvectors. In particular, we can still choose
+            \begin{equation*}
+                \begin{pmatrix}
+                    \mu\\
+                    1\\
+                \end{pmatrix}
+            \end{equation*}
+            as an eigenvector, but we must solve
+            \begin{equation*}
+                \begin{pmatrix}
+                    -a-\mu & -b\\
+                    1 & -\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    u^1\\
+                    u^2\\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    \mu\\
+                    1\\
+                \end{pmatrix}
+            \end{equation*}
+            to obtain the following additional \emph{generalized} eigenvector.
+            \begin{equation*}
+                \begin{pmatrix}
+                    -1\\
+                    -2/\mu\\
+                \end{pmatrix}
+            \end{equation*}
+            Therefore, with what we have so far, we can diagonalize $A$ to
+            \begin{equation*}
+                \begin{pmatrix}
+                    -a & -b\\
+                    1 & 0\\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    \mu & -1\\
+                    1 & -2/\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \mu & 1\\
+                    0 & \mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    2/\mu & -1\\
+                    1 & -\mu\\
+                \end{pmatrix}
+            \end{equation*}
+            It follows that
+            \begin{align*}
+                \begin{pmatrix}
+                    y^{n+1}\\
+                    y^n\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    \mu & -1\\
+                    1 & -2/\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \mu & 1\\
+                    0 & \mu\\
+                \end{pmatrix}^n
+                \begin{pmatrix}
+                    2/\mu & -1\\
+                    1 & -\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    y_1\\
+                    y_0\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    \mu & -1\\
+                    1 & -2/\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \mu^n & n\mu^{n-1}\\
+                    0 & \mu^n\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    2y_1/\mu-y_0\\
+                    y_1-\mu y_0\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    \mu & -1\\
+                    1 & -2/\mu\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    (n+2)\mu^{n-1}y_1-(n+1)\mu^ny_0\\
+                    \mu^ny_1-\mu^{n+1}y_0\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    (n+1)\mu^ny_1-n\mu^{n+1}y_0\\
+                    n\mu^{n-1}y_1-(n-1)\mu^ny_0\\
+                \end{pmatrix}
+            \end{align*}
+            From the above, we can read off the following general formula for $y_n$ in the $\mu=\lambda$ case.
+            \begin{equation*}
+                \boxed{y_n = n\mu^{n-1}y_1-(n-1)\mu^ny_0}
+            \end{equation*}
+        \end{proof}
+        \item Use the method of part (1) to find the general formula for the linear discursive relation
+        \begin{equation*}
+            y_{n+2}-2y_{n+1}+y_n = 0
+        \end{equation*}
+        Use the same method to find the general formula for the Fibonacci sequence
+        \begin{equation*}
+            F_{n+2} = F_{n+1}+F_n
+        \end{equation*}
+        \begin{proof}
+            The first part is plug and chug; the Fibonacci sequence I covered in LinAlgNotes, Chapter 6.\par
+            Last note: Somebody please explain to me how any of this makes the ODE-solving method make any more sense. I mean they're clearly related, but there's no Duhamel formula for sequences that I'm aware of!
+        \end{proof}
+    \end{enumerate}
+    \item In this exercise, we aim to prove an important theorem in linear algebra:
+    \begin{equation*}
+        \textit{Complex Hermitian matrices are always diagonalizable.}
+    \end{equation*}
+    Here the term "Hermitian" means that the matrix equals its conjugate transpose. In terms of entries, this means that in general, $a_{ij}=\bar{a}_{ji}$. For example,
+    \begin{equation*}
+        \begin{pmatrix}
+            2 & 1 & -i\\
+            1 & 3 & -2i\\
+            i & 2i & 1\\
+        \end{pmatrix}
+    \end{equation*}
+    is Hermitian.
+    \begin{enumerate}
+        \item Let $\inp{\cdot}{\cdot}$ be the standard Hermitian inner product, that is, for $x,y\in\C^n$,
+        \begin{equation*}
+            \inp{x}{y} = \sum_{j=1}^nx^j\bar{y}^j
+        \end{equation*}
+        Show that for any $n\times n$ real matrix,
+        \begin{equation*}
+            \inp{Ax}{y} = \inp{x}{A^*y}
+        \end{equation*}
+        for any $x,y\in\C^n$, where $A^*$ denotes the conjugate transpose of $A$. For example,
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                1 & 1 & 2i\\
+                0 & 3+i & 3\\
+                2 & 0 & 1\\
+            \end{pmatrix}
+            \quad\Longleftrightarrow\quad
+            A^* =
+            \begin{pmatrix}
+                1 & 0 & 2\\
+                1 & 3-i & 0\\
+                -2i & 3 & 1\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{proof}
+            I almost surely have this all written up somewhere in LinAlgNotes, LADRNotes, or MATH20700Notes.
+        \end{proof}
+        \item Suppose now that $A$ is Hermitian. Use part (1) to show that any eigenvalue of $A$ must be a real number. Show further that if $x,y$ are eigenvectors corresponding to different eigenvalues, then $\inp{x}{y}=0$, that is, $x$ is orthogonal to $y$.
+        \item Prove that every Hermitian matrix $A$ is diagonalizable. \emph{Hint}: Take any eigenvector $v_1$ of $A$. Decompose $\C^n$ into the direct sum of $\spn(v_1)$ and its orthogonal complement. Show that the orthogonal complement is an invariant subspace for $A$.
+    \end{enumerate}
+\end{enumerate}
 
 
 
