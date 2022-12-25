@@ -278,7 +278,7 @@
     \end{itemize}
     \item \textbf{Monic polynomial}: A polynomial whose highest-degree coefficient equals 1.
     \item \textbf{Minimal polynomial} (of $A$): The unique monic polynomial $p$ of smallest degree such that $p(A)=0$.
-    \item Theorem: In the Jordan normal form $F[p]$, each $\lambda_j$ corresponds to only one Jordan block.
+    \item Theorem: In the JNF of $F[p]$, each $\lambda_j$ corresponds to only one Jordan block.
     \begin{itemize}
         \item Thus,
         \begin{equation*}
@@ -289,20 +289,19 @@
                  &  & J_{\alpha_m}(\lambda_m)\\
             \end{pmatrix}
         \end{equation*}
-        The implication is that
+        where $\lambda_1,\dots,\lambda_m$ are distinct.
+        \item For example, the JNF matrix of $F[p]$ will never have along the diagonal a $1\times 1$ Jordan block followed by a $2\times 2$ Jordan block, both corresponding to the same eigenvalue $\lambda$.
         \begin{equation*}
-            J_d(\lambda) \neq
             \begin{pmatrix}
-                \lambda &  & \\
+                \lambda & 0 & \\
                  & \lambda & 1\\
                  &  & \lambda\\
             \end{pmatrix}
         \end{equation*}
-        ever??
     \end{itemize}
-    \item Corollary: The solution $y(t)$ is of the form
+    \item Corollary\footnote{This is Theorem 3.7 of \textcite{bib:Teschl}.}: The general solution $y(t)$ is of the form
     \begin{equation*}
-        (\cdots)+a_1\e[t\lambda_j]+\cdots+c_{\alpha_j-1}t^{\alpha_j-1}\e[t\lambda_j]+\cdots
+        (\cdots)+(a_1\e[t\lambda_j]+\cdots+a_{\alpha_j-1}t^{\alpha_j-1}\e[t\lambda_j])+(\cdots)
     \end{equation*}
     \item Example: Solving a second-order ODE.
     \begin{equation*}
@@ -722,7 +721,7 @@
 
 \subsection*{Section 3.8: Appendix -- Jordan Canonical Form}
 \begin{itemize}
-    \item \textcite{bib:Teschl} has quite a bit to say on JCF!
+    \item \textcite{bib:Teschl} has quite a bit to say on JCF from Lecture 3.2 and the polynomial mechanics of Lecture 4.1!
 \end{itemize}
 
 

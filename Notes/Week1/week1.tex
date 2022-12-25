@@ -35,7 +35,7 @@
         \item $y=y(t)$ is an unknown function.
     \end{itemize}
     \item \textbf{Order $\bm{n}$} (ODE): An ODE for which the $n^\text{th}$ derivative of $y$ is the highest-order derivative involved (and is involved).
-    \item ODEs are of the form $y'=f(t,y)$ or, more generally, $y^{(n)}=F(t,y,y',\dots,y^{(n-1)})$.
+    \item ODEs of the form $y'=f(t,y)$ or, more generally, $y^{(n)}=F(t,y,y',\dots,y^{(n-1)})$ are of particular interest.
     \begin{itemize}
         \item We can transform this second form into the first form via
         \begin{align*}
@@ -62,7 +62,7 @@
             (Y^{n-1})' &= F(t,Y^1,Y^2,\dots,Y^{n-1})
         \end{align*}
         \begin{itemize}
-            \item Think about this conversion more.
+            \item Think about this conversion more --- the last equation is basically the original ODE, and the others are variable substitutions.
         \end{itemize}
         \item Thus, we mainly focus on equations of the form $y'=f(t,y)$ (where $y$ may be a scalar or vector function), because that's general enough.
     \end{itemize}
@@ -90,7 +90,7 @@
                     Y^2\\
                     Y^3\\
                     \vdots\\
-                    b(t)-a_0(t)Y^1-\cdots-a_{n-1}(t)Y^{n-1}\\
+                    b(t)-a_0(t)Y^1-\cdots-a_{n-1}(t)Y^n\\
                 \end{pmatrix}
             }_{g(t,y)}\\
             &=
@@ -98,7 +98,7 @@
                 Y^2\\
                 Y^3\\
                 \vdots\\
-                -a_0(t)Y^1-\cdots-a_{n-1}(t)Y^{n-1}\\
+                -a_0(t)Y^1-\cdots-a_{n-1}(t)Y^n\\
             \end{pmatrix}
             +\underbrace{
                 \begin{pmatrix}
@@ -212,21 +212,25 @@
         \Phi(t_2,\Phi(t_1,x)) = \Phi(t_1+t_2,x)
     \end{equation*}
     \begin{itemize}
-        \item $\Phi$ is very related to $y$, though how exactly is still a bit of a mystery?? Perhaps it's
-        \begin{equation*}
-            \Phi(t,x) = y(t)
-        \end{equation*}
-        where $y$ is the solution to the IVP $y'=f(t,y)$, $y(0)=x$.
-        \item It appears that $\Phi(t,x)$ is related to $f_t(x)$ from \textcite{bib:DifferentialForms}, i.e., we are picking a point $x$ and traveling along its integral curve for time $t$.
+        \item $\Phi(t,x)$ is very related to $y(t)$.
+        \begin{itemize}
+            % \item $x$ is the initial condition (analogous to $y_0$).
+            \item Explicitly, $\Phi(t,x)=y(t)$ where $y$ is the solution to the IVP $y'=f(t,y)$, $y(0)=x$.
+            \item Essentially, we notationally emphasize the initial condition $x$ in dynamical systems' solutions.
+            \item See the relevant sections of Chapter 6 from \textcite{bib:Teschl}.
+        \end{itemize}
+        \item $\Phi(t,x)$ is related to $f_t(x)$ from \textcite{bib:DifferentialForms}, i.e., we are picking a point $x$ and traveling along its integral curve for time $t$.
+        \begin{itemize}
+            \item The final property expresses the notion that if you have a system and evolve it by time $t_1$ and then time $t_2$, that's equivalent to evolving it by time $t_1+t_2$. This is Property 3 of $f_t$ from Chapter 2 of \textcite{bib:DifferentialForms}.
+        \end{itemize}
         \item Think about $y(t)=a\e[t-t_0]$ as an integral curve of the one-dimensional vector field $X(x)=x$.
-        \item The final property appears to express the notion that if you have a system and evolve it by time $t_1$ and then time $t_2$, that's equivalent to evolving it by time $t_1+t_2$.
     \end{itemize}
     \item \textbf{Steady flow}: A vector field on a manifold contained in $\R^2$ or $\R^3$ that does not vary with time.
-    \item Let $X$ be a vector field.
     \begin{itemize}
+        \item Let $X$ be a vector field.
         \item Trajectory of a particle: At $x\in\Omega$, the velocity of the particle should coincide with $X(x)$.
-        \item The differential equation $\dot{x}=X(x)$ is what we're interested in.
-        \item A solid shape gets shifted and deformed (imagine a chunk of water falling out of the end of a pipe). This is the \textbf{local group of transformation}.
+        \item The differential equation $\dot{x}=X(x)$ is what we're interested in (the dynamical system present).
+        \item A solid shape gets shifted and deformed (imagine a chunk of water falling out of the end of a pipe). This is the \textbf{local group of transformation}. Also rationalizes the term "steady flow."
         \item Differential geometry is the purview of such things.
     \end{itemize}
     \item Newton's law of motion $F=m\cdot a$ applied to $n$ particles is nothing but the system of equations
@@ -235,6 +239,7 @@
     \end{equation*}
     for $i=1,\dots,n$.
     \begin{itemize}
+        \item All systems whose motion are governed by Newton's laws are dynamical systems. We shall denote a great deal of time to such systems this quarter.
         \item Many well-known examples.
         \item The best known one perhaps is that of uniform acceleration of a single particle. In this case,
         \begin{equation*}
@@ -262,11 +267,13 @@
         \end{itemize}
         \item Another example: The mathematical pendulum.
         \begin{itemize}
-            \item The radial directions balance ($mg\cos\theta$).
-            \item The tangential directions do not ($mg\sin\theta$). Thus, our ODE is
-            \begin{equation*}
-                l\dv[2]{\theta}{t} = g\sin\theta
-            \end{equation*}
+            \item Shao analyzes a free body diagram. Simple pendulum with mass $m$ of length $\ell$.
+            \item The radial forces balance (both $mg\cos\theta$). The tangential forces do not:
+            \begin{align*}
+                \textstyle\sum\tau &= I\alpha\\
+                -mg\sin\theta &= m\ell\dv[2]{\theta}{t}\\
+                \dv[2]{\theta}{t} &= -\frac{g}{\ell}\sin\theta
+            \end{align*}
         \end{itemize}
         \item One last set of examples from ecology:
         \begin{itemize}
@@ -278,12 +285,12 @@
             \begin{equation*}
                 \dv{y}{t} = k(M-y)
             \end{equation*}
-            \item Lotka-Volterra prey-predator model: Wolf population ($W$) and rabbit population ($R$). We have
+            \item Lotka-Volterra prey-predator model: For a wolf population $W$ and rabbit population $R$,
             \begin{align*}
                 R' &= k_1R-aWR\\
                 W' &= -k_2W+bWR
             \end{align*}
-            \item We can also introduce more species and capacities and et cetera, et cetera.
+            \item We can also introduce more species, capacities, etc.
         \end{itemize}
     \end{itemize}
     \item Conclusion: Dynamical systems are everywhere, especially in physics, chemistry, and ecology.
@@ -392,15 +399,12 @@
                 = \int_a^b\left\{ \pdv{F}{z}(x,y(x)+th(x),y'(x)+th'(x))-\dv{x}\left[ \pdv{F}{w}(x,y(x)+th(x),y'(x)+th'(x)) \right] \right\}h(x)\dd{x}
             \end{equation*}
         \end{itemize}
-        \item Thus,
+        \item Now suppose $y$ is the solution. Then $y$ minimizes $J[y]$. But if this is true, then any variation $th$ will cause $J[y+th]>J[y]$. It follows that for every $h$, $f(t)$ has a minimum at $t=0$. But if $f$ has a minimum at 0 for all $h$, then
         \begin{equation*}
             f'(0) = \int_a^b\left\{ {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] \right\}h(x)\dd{x}
             = 0
         \end{equation*}
         for all $h$.
-        \begin{itemize}
-            \item Now suppose $y$ is the solution. Then $y$ minimizes $J[y]$. But if this is true, then any variation $th$ will cause $J[y+th]>J[y]$. It follows that for every $h$, $f(t)$ has a minium at $t=0$. But if $f$ has a minimum at 0 for all $h$, then $f'(0)=0$ for all $h$.
-        \end{itemize}
         \item Lemma: Let $\phi$ be continuous on $(a,b)$. If for every $h\in C^1([a,b])$ vanishing on $a,b$ we have that
         \begin{equation*}
             \int_a^b\phi(x)h(x)\dd{x} = 0
@@ -413,9 +417,9 @@
         \begin{equation*}
             {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] = 0
         \end{equation*}
+        is a necessary condition for $y$ to be an extrema of $J[y]$.
         \begin{itemize}
             \item This is a second-order differential equation, specifically the \textbf{Euler-Lagrange equation}.
-            \item It is a necessary condition for $y$ to be an extrema.
             \item Euler-Lagrange equations are not easy to solve in general. However, we're lucky here.
         \end{itemize}
         \item In our example,
@@ -450,12 +454,12 @@
             \pdv{F}{w} = \frac{w}{\sqrt{1+w^2}}\cdot\frac{1}{\sqrt{2gz}}
             = \frac{y'}{\sqrt{1+(y')^2}}\cdot\frac{1}{\sqrt{2gy}}
         \end{equation*}
-        \item It follows that our solution function $y$ satisfies the separable differential equation
+        \item It follows that our solution function $y$ must satisfy the separable differential equation
         \begin{align*}
             \sqrt{\frac{1+(y')^2}{2gy}}-\frac{y'}{\sqrt{1+(y')^2}}\cdot\frac{1}{\sqrt{2gy}}\cdot y' &= A\\
             \frac{1+(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}}-\frac{(y')^2}{\sqrt{1+(y')^2}\sqrt{2gy}} &= A\\
             \frac{1}{\sqrt{2gy(1+(y')^2)}} &= A\\
-            (y')^2 &= \frac{1/2A^2g-y}{y}
+            (y')^2 &= \frac{\frac{1}{2A^2g}-y}{y}
         \end{align*}
         \item The solution, as we can determine using methods from Calculus I-II, is the \textbf{cycloid}
         \begin{equation*}
@@ -465,6 +469,7 @@
             \end{cases}
         \end{equation*}
         where the specific parameters come from the boundary values.
+        \item Note that we have not explicitly proven here that this extrema solution to the E-L equation is a \emph{minima}, but comparison to other intuitive examples will show that it is certainly not a maxima (and, in fact, there is no theoretical maxima as we can find paths that will take a point an arbitrarily long time to travel along).
     \end{itemize}
     \item \textbf{Functional}: A map from a function space to a set of numbers.
     \item \textbf{Sturm-Liouville problems}: Boundary value problems concerning the integral
@@ -519,7 +524,7 @@
                 m\ddot{x}_2 &= 0&
                 m\ddot{x}_3 &= -mg
             \end{align*}
-            \item The first equation can be integrated with respect to $t$ twice, yielding $x_1(t)=C_2+C_1t$. Computing $x_1(0)$ and $\dot{x}_1(0)$ shows that $C_2=x_1(0)$ and $C_1=v_1(0)$. An analogous result holds for the second equation. For the third equation, we get $x_3(t)=C_2+C_1t-\frac{1}{2}mgt^2$ where $C_2=x_3(0)$ and $C_1=v_1(0)$, again. Thus, the full solution reads
+            \item The first equation can be integrated with respect to $t$ twice, yielding $x_1(t)=C_2+C_1t$. Computing $x_1(0)$ and $\dot{x}_1(0)$ shows that $C_2=x_1(0)$ and $C_1=v_1(0)$. An analogous result holds for the second equation. For the third equation, we get $x_3(t)=C_2+C_1t-\frac{1}{2}gt^2$ where $C_2=x_3(0)$ and $C_1=v_1(0)$, again. Thus, the full solution reads
             \begin{equation*}
                 x(t) = x(0)+v(0)t-\frac{g}{2}
                 \begin{pmatrix}
@@ -566,6 +571,7 @@
             \dot{v}(t) &= \frac{1}{m}F(x(t))
         \end{align*}
         \item We will find that the above form is often better suited to theoretical investigations.
+        \item Note the parallel to the rewrites to the form $y'=f(t,y)$ in class.
     \end{itemize}
     \item \textbf{$\bm{n}^\textbf{th}$-order} (system): A system of differential equations in which the differential equation of highest order is $n^\text{th}$ order.
     \item One conclusion of our investigation of gravity's effect on a particle is that the entire fate (past and future) of our particle's position, velocity, and acceleration (under simple gravity) is uniquely determined by its initial location $x(0)$ and velocity $v(0)$.
@@ -801,7 +807,7 @@
         \item The summations are over the $n$ components of $x$, and each of their $k$ derivatives up from the function itself ($l=0$) to $l=k-1$. In other words, if a (derivative of) a component of $x$ appears in a linear system, the only modification to it from itself should be a functional coefficient in the independent variable.
     \end{itemize}
     \item \textbf{Homogeneous} (linear system): A linear system for which $g_i(t)=0$.
-    \item \textbf{Inhomogeneous} (linear system): A linear system for which $g_i(t)=0$.
+    \item \textbf{Inhomogeneous} (linear system): A linear system for which $g_i(t)\neq 0$.
     \item \textcite{bib:Teschl} goes over the conversion of a system to a first-order system, as covered in class.
     \begin{itemize}
         \item Also noted: We can include $t$ as a dependent variables by taking $z=(t,y)$ and making $\dot{z}_1=1$, $\dot{z}_i=z_{i+1}$ ($i=2,\dots,k$), and $\dot{z}_{k+1}=f(z)$.

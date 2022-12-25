@@ -333,7 +333,7 @@
         \item Thus, to solve the above inhomogeneous equation, we just have to find a particular solution.
     \end{itemize}
     \item WLOG let $\omega>0$.
-    \item From the homework, a particular solution $x_p(t)$ with initial condition $x_p(0)=x_p'(0)=\mu=0$ can be obtained from the Duhamel formula as follows.
+    \item From HW3 Q1, a particular solution $x_p(t)$ with initial condition $x_p(0)=x_p'(0)=\mu=0$ can be obtained from the Duhamel formula as follows.
     \begin{equation*}
         x_p(t) = H_0\int_0^t\frac{\sin\omega_0(t-\tau)}{\omega_0}\e[i\omega\tau]\dd\tau
     \end{equation*}
@@ -369,7 +369,7 @@
         x_p(t) = A(\omega)H_0\e[i\omega t]
     \end{equation*}
     \begin{itemize}
-        \item From HW1, we have three cases when $\mu>0$: $0<\mu<2\omega_0$, $\mu=2\omega_0$, and $\mu>2\omega_0$. These are just the three cases of the characteristic polynomial??
+        \item From HW1, we have three types of homogeneous solutions when $\mu>0$: $0<\mu<2\omega_0$, $\mu=2\omega_0$, and $\mu>2\omega_0$.
         \item Substituting the proposed form of the particular solution into the differential equation, we get
         \begin{align*}
             x_p''+\mu x_p'+\omega_0^2x_p &= H_0\e[i\omega t]\\
@@ -377,7 +377,7 @@
             (-\omega^2+i\omega\mu+\omega_0^2)A(\omega) &= 1\\
             A(\omega) &= \frac{1}{\omega_0^2-\omega^2+i\mu\omega}
         \end{align*}
-        \item In theory, we avoid the resonance catastrophe in this case. In practice, however, when $\omega\to 0$, we still run into issues.
+        \item In theory, we avoid the resonance catastrophe in this case. In practice, however, when $\mu\to 0$, we still run into issues.
         \item For mass point:
         \begin{equation*}
             |H_0A(\omega)| = \frac{|H_0|}{\sqrt{(\omega^2-\omega_0^2)^2+\mu^2\omega^2}}
@@ -455,7 +455,7 @@
     \item Cauchy-Lipschitz this Friday.
     \item Next week: Continuous dependence on initial values and differentiation with respect to the parameter of this equation.
     \item After this, we will be able to compute classical examples in the theory of perturbations.
-    \item We will be able to solve the procession of Mercury problem (which was the first experimental verification of general relativity).
+    \item We will be able to solve the precession of Mercury problem (which was the first experimental verification of general relativity).
 \end{itemize}
 
 
@@ -1089,7 +1089,7 @@
     \end{equation*}
     associated with $A$, and let $a_j$ be the corresponding multiplicities. Then the functions
     \begin{equation*}
-        x_{j,k}(t) = t^k\exp(a_jt)
+        x_{j,k}(t) = t^k\exp(\alpha_jt)
     \end{equation*}
     for $0\leq k<a_j$ and $1\leq j\leq m$ are $n$ linearly independent solutions of
     \begin{equation*}
@@ -1107,7 +1107,7 @@
             t^k\e[\lambda_jt]\cos(\omega_jt)&&
             t^k\e[\lambda_jt]\sin(\omega_jt)
         \end{align*}
-        % \item Shao lied to me when he said the matrix form doesn't help us solve equations!
+        \item Shao lied to me when he said the matrix form doesn't help us solve equations!
     \end{itemize}
     \item Example illustrating the power of Theorem 3.7.
     \begin{itemize}
