@@ -32,22 +32,6 @@
         x(t) = x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau
     \end{equation*}
     \begin{proof}
-        % Let
-        % \begin{equation*}
-        %     x(t) = x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau
-        % \end{equation*}
-        % and let $a_n=1$. Then we have that Use induction? Integration by parts?
-        % \begin{align*}
-        %     \sum_{k=0}^na_kx^{(k)} &= \sum_{k=0}^na_k\left( x_h+\int_0^tU(t-\tau)g(\tau)\dd\tau \right)^{(k)}\\
-        %     &= \sum_{k=0}^na_kx_h^{(k)}+\sum_{k=0}^na_k{\dv[k]{x}{t}}\left( \int_0^tU(t-\tau)g(\tau)\dd\tau \right)\\
-        %     &= 0+a_0\int_0^tU(t-\tau)g(\tau)\dd\tau+\sum_{k=2}^na_k{\dv[k]{x}{t}}\left( \int_0^tU(t-\tau)g(\tau)\dd\tau \right)
-        % \end{align*}
-
-        % We induct on $n$. For the base case $n=1$, we have that
-        % \begin{align*}
-        %     \dv{t}(x_h+\int_0^tU(t-\tau)g(\tau)\dd\tau)+a_0\left( x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau \right) &= 
-        % \end{align*}
-        
         We can convert the general scalar linear ODE to the form
         \begin{equation*}
             \begin{pmatrix}
@@ -77,85 +61,170 @@
                 g(t)\\
             \end{pmatrix}
         \end{equation*}
-        This is a linear equation of the form $y'=Ay+f$. Thus, as stated in class, its solutions are given by the modified Duhamel formula:
+        This is a linear equation of the form $y'=Ay+f$. Thus, as stated in class, its solutions are given by the modified Duhamel formula, as follows.
+        \begin{align*}
+            y(t) &= \e[tA]y_0+\int_0^t\e[(t-\tau)A]f(\tau)\dd\tau\\
+            &= x_h(t)+\int_0^t\e[(t-\tau)A]e_ng(\tau)\dd\tau\\
+            &= x_h(t)+\int_0^tU(t-\tau)g(\tau)\dd\tau
+        \end{align*}
+        This is the desired result. A few notes on the transitions between the equations, though:
+        \begin{enumerate}[label={\arabic*.}]
+            \item $\e[tA]y_0$ is the solution to the homogeneous variant of the given equation, so we are ok to replace it with $x_h(t)$.
+            \item $e_n$ denotes the $n^\text{th}$ standard basis vector of length $n$. By definition (see the above), $f(t)=e_ng(t)$, where $g(t)$ is a "scalar."
+            \item Analogously to the first remark, $\e[tA]e_n$ is the solution of the homogeneous equation with initial condition $e_n$ or, equivalently, $U(0)=U'(0)=\cdots=U^{(n-2)}(0)=0$, $U^{(n-1)}(0)=1$. Thus, by hypothesis, we may rename it $U(t)$ and take its value at $t-\tau$, as needed.
+        \end{enumerate}
+        We now address the driven, undamped harmonic oscillator equation. Convert it into a 2D system to start.
         \begin{equation*}
-            y(t) = \e[tA]y_0+\int_0^t\e[(t-\tau)A]f(\tau)\dd\tau
+            \begin{pmatrix}
+                Y^1\\
+                Y^2\\
+            \end{pmatrix}'
+            = \underbrace{
+                \begin{pmatrix}
+                    0 & 1\\
+                    -\omega^2 & 0\\
+                \end{pmatrix}
+            }_A
+            \begin{pmatrix}
+                Y^1\\
+                Y^2\\
+            \end{pmatrix}
         \end{equation*}
-        The above equation is of the form
+        Diagonalize $A$.
+        \begin{equation*}
+            A =
+            \begin{pmatrix}
+                -i & i\\
+                \omega & \omega\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                i\omega & 0\\
+                0 & -i\omega\\
+            \end{pmatrix}
+            \begin{pNiceMatrix}
+                \frac{i}{2} & \frac{1}{2\omega}\\
+                -\frac{i}{2} & \frac{1}{2\omega}\\
+            \end{pNiceMatrix}
+        \end{equation*}
+        Then the general solution is
         \begin{align*}
-            \begin{pmatrix}
-                x(t)\\
-                \vdots\\
-                x^{(n-1)}(t)\\
-            \end{pmatrix}
-            &=
-            \begin{pmatrix}
-                {\e[tA]}_{11} & \cdots & {\e[tA]}_{1n}\\
-                \vdots & \ddots & \vdots\\
-                {\e[tA]}_{n1} & \cdots & {\e[tA]}_{nn}\\
-            \end{pmatrix}
-            \begin{pmatrix}
-                y_0^1\\
-                \vdots\\
-                y_0^n\\
-            \end{pmatrix}
-            +\int_0^t
-            \begin{pmatrix}
-                {\e[(t-\tau)A]}_{11} & \cdots & {\e[(t-\tau)A]}_{1n}\\
-                \vdots & \ddots & \vdots\\
-                {\e[(t-\tau)A]}_{n1} & \cdots & {\e[(t-\tau)A]}_{nn}\\
-            \end{pmatrix}
-            \begin{pmatrix}
-                0\\
-                \vdots\\
-                1\\
-            \end{pmatrix}
-            g(\tau)\dd\tau
-            % \\
-            % &=
-            % \begin{pmatrix}
-            %     y_0^1{\e[tA]}_{11}+\cdots+y_0^n{\e[tA]}_{1n}\\
-            %     \vdots\\
-            %     y_0^1{\e[tA]}_{n1}+\cdots+y_0^n{\e[tA]}_{nn}\\
-            % \end{pmatrix}
-            % +\int_0^t
-            % \begin{pmatrix}
-            %     {\e[(t-\tau)A]}_{1n}\\
-            %     \vdots\\
-            %     {\e[(t-\tau)A]}_{nn}\\
-            % \end{pmatrix}
-            % g(\tau)\dd\tau\\
-            % &=
-            % \begin{pmatrix}
-            %     y_0^1{\e[tA]}_{11}+\cdots+y_0^n{\e[tA]}_{1n}+\int_0^t{\e[(t-\tau)A]}_{1n}g(\tau)\dd\tau\\
-            %     \vdots\\
-            %     y_0^1{\e[tA]}_{n1}+\cdots+y_0^n{\e[tA]}_{nn}+\int_0^t{\e[(t-\tau)A]}_{nn}g(\tau)\dd\tau\\
-            % \end{pmatrix}
+            Y ={}& \e[tA]y_0+\int_0^t\e[(t-\tau)A]e_2f(\tau)\dd\tau\\
+            \begin{split}
+                \begin{pmatrix}
+                    Y^1\\
+                    Y^2\\
+                \end{pmatrix}
+                ={}&
+                \begin{pmatrix}
+                    -i & i\\
+                    \omega & \omega\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \e[i\omega t] & 0\\
+                    0 & \e[-i\omega t]\\
+                \end{pmatrix}
+                \begin{pNiceMatrix}
+                    \frac{i}{2} & \frac{1}{2\omega}\\
+                    -\frac{i}{2} & \frac{1}{2\omega}\\
+                \end{pNiceMatrix}
+                \begin{pmatrix}
+                    x(0)\\
+                    x'(0)\\
+                \end{pmatrix}\\
+                &+\int_0^t
+                \begin{pmatrix}
+                    -i & i\\
+                    \omega & \omega\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \e[i\omega(t-\tau)] & 0\\
+                    0 & \e[-i\omega(t-\tau)]\\
+                \end{pmatrix}
+                \begin{pNiceMatrix}
+                    \frac{i}{2} & \frac{1}{2\omega}\\
+                    -\frac{i}{2} & \frac{1}{2\omega}\\
+                \end{pNiceMatrix}
+                \begin{pmatrix}
+                    0\\
+                    1\\
+                \end{pmatrix}
+                f(\tau)\dd\tau
+            \end{split}\\
+            \begin{split}
+                ={}&
+                \begin{pNiceMatrix}
+                    x(0)\frac{1}{2}(\e[i\omega t]+\e[-i\omega t])+\frac{x'(0)}{\omega}\frac{1}{2i}(\e[i\omega t]-\e[-i\omega t])\\
+                    x(0)\frac{1}{2}(i\omega\e[i\omega t]-i\omega\e[-i\omega t])+\frac{x'(0)}{2}(\e[i\omega t]+\e[-i\omega t])\\
+                \end{pNiceMatrix}\\
+                &+\int_0^t
+                \begin{pNiceMatrix}
+                    \frac{1}{\omega}\frac{1}{2i}(\e[i\omega(t-\tau)]-\e[-i\omega(t-\tau)])\\
+                    \frac{1}{2}(\e[i\omega(t-\tau)]+\e[-i\omega(t-\tau)])\\
+                \end{pNiceMatrix}
+                f(\tau)\dd\tau
+            \end{split}\\
+            \begin{split}
+                ={}&
+                \begin{pNiceMatrix}
+                    x(0)\cos\omega t+\frac{x'(0)}{\omega}\sin\omega t\\
+                    -\omega x(0)\sin\omega t+x'(0)\cos\omega t\\
+                \end{pNiceMatrix}\\
+                &+\int_0^t
+                \begin{pNiceMatrix}
+                    \frac{1}{\omega}\sin\omega(t-\tau)\\
+                    \cos\omega(t-\tau)\\
+                \end{pNiceMatrix}
+                f(\tau)\dd\tau
+            \end{split}\\
+            ={}&
+            \begin{pNiceMatrix}
+                x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau\\
+                -\omega x(0)\sin\omega t+x'(0)\cos\omega t+\int_0^t\cos\omega(t-\tau)f(\tau)\dd\tau\\
+            \end{pNiceMatrix}
         \end{align*}
-        where the left term in the RHS is a solution of the homogeneous equation, and the right term in the RHS is the integral of the product of the solution of the homogeneous equation with the given initial condition and $g(\tau)$, as desired.\par
-        We will solve the particular case bit by bit, adding components together into a final solution. To begin, we have that
-        \begin{align*}
-            \dv{t}(\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau) &= \lim_{h\to 0}\frac{1}{h}
-        \end{align*}
-        % \begin{align*}
-        %     x''+\omega^2x &= \dv[2]{t}(x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau)
-        % \end{align*}
+        To convert back to scalar land, recall that by the construction of the 2D system, $Y^1=x$. Therefore, we can read from the above that
+        \begin{equation*}
+            x(t) = x(0)\cos\omega t+x'(0)\frac{\sin\omega t}{\omega}+\int_0^t\frac{\sin\omega(t-\tau)}{\omega}f(\tau)\dd\tau
+        \end{equation*}
+        as desired.
     \end{proof}
     \item We know that for complex numbers $z,w$, $\e[z+w]=\e[z]\e[w]$. However, in general this cannot be generalized to matrix exponentials.
     \begin{enumerate}
         \item Suppose $A,B$ are $n\times n$ complex matrices. If $AB=BA$, prove that $\e[A+B]=\e[A]\e[B]$. You need to substitute in the power series expansion of $\e[A]$ and $\e[B]$ and do some combinatorics.
         \begin{proof}
-            We have that
+            Let
+            \begin{equation*}
+                y(t) = \e[tA]\e[tB]
+            \end{equation*}
+            Then we know from the product rule and from class that
+            \begin{align*}
+                y'(t) &= \dv{t}(\e[tA])\e[tB]+\e[tA]\dv{t}(\e[tB])\\
+                &= A\e[tA]\e[tB]+\e[tA]B\e[tB]\\
+                &= A\e[tA]\e[tB]+B\e[tA]\e[tB]\\
+                &= (A+B)\e[tA]\e[tB]\\
+                &= (A+B)y(t)
+            \end{align*}
+            Note that $B$ commutes with $\e[tA]$ because $B$ commutes with every matrix in the power series expansion of $\e[tA]$ (all of which are powers of $A$). By viewing $y(t)$ as a function $y:\R\to\R^{n^2}$ and $A+B$ as an $n^2\times n^2$ linear transformation on $y$, we can apply the result that the solution to $x'=Cx$ is $x=\e[tC]x_0$ and determine that
+            \begin{equation*}
+                y(t) = \e[t(A+B)]
+            \end{equation*}
+            Cutting this back down to size, substituting $t=1$, and applying transitivity yields
+            \begin{align*}
+                \e[1(A+B)] &= \e[1A]\e[1B]\\
+                \e[A+B] &= \e[A]\e[B]
+            \end{align*}
+            as desired.\par
+            Alternatively, the answer that was probably expected is the following. Start with
             \begin{align*}
                 \e[A+B] &= \sum_{k=0}^\infty\frac{(A+B)^k}{k!}\\
                 &= \sum_{k=0}^\infty\frac{1}{k!}\sum_{\ell=0}^k\binom{k}{\ell}A^{k-\ell}B^\ell\\
                 &= \sum_{k=0}^\infty\frac{1}{k!}\sum_{\ell=0}^k\frac{k!}{(k-\ell)!\ell!}A^{k-\ell}B^\ell\\
                 &= \sum_{k=0}^\infty\sum_{\ell=0}^k\frac{1}{(k-\ell)!\ell!}A^{k-\ell}B^\ell\\
-                &= \sum_{k=0}^\infty\sum_{k'=0}^\infty\frac{1}{k!k'!}A^kB^{k'}\\
-                &= \left( \sum_{k=0}^\infty\frac{A^k}{k!} \right)\left( \sum_{k'=0}^\infty\frac{B^{k'}}{k'!} \right)\\
+                \intertext{Then reindex the summation as follows. For each $k=0,1,\dots$, there is an $\ell=0$ term of the form $A^kB^0/k!0!$. Similarly, for each $k=1,2,\dots$, there is an $\ell=1$ term of the form $A^{k-1}B^1/(k-1)!1!$. Note that the smallest exponent of $A$ in this series is $k-1=0$, just like in the last series. Also note that each of these terms is generated by a set of indices $k,\ell$ that are distinct from any used previously (including in the set of terms $A^kB^0/k!0!$). In general, for each $k=\ell,\ell+1,\dots$, there is a term of the form $A^{k-\ell}B^\ell/(k-\ell)!\ell!$. As we should be able to see at this point, the set of all of these terms --- infinitely many for each $\ell$ --- is equal to the set of terms $A^mB^n/m!n!$ summed over $m,n$ independently from 0 to $\infty$. Symbolically, we may continue the above set of equivalences as follows.}
+                &= \sum_{m=0}^\infty\sum_{n=0}^\infty\frac{1}{m!n!}A^mB^n\\
+                &= \left( \sum_{m=0}^\infty\frac{A^m}{m!} \right)\left( \sum_{n=0}^\infty\frac{B^n}{n!} \right)\\
                 &= \e[A]\e[B]
             \end{align*}
-            as desired.
         \end{proof}
         \item Now suppose
         \begin{align*}
@@ -171,6 +240,76 @@
             \end{pmatrix}
         \end{align*}
         Compute $AB-BA$, $\e[A]\e[B]$, and $\e[A+B]$. \emph{Hint}: Since $A,B$ are both nilpotent, you do not have to reduce them to Jordan normal forms. Also, what is $(A+B)^2$? Why does this help you to compute $\e[A+B]$?
+        \begin{proof}
+            The commutator is
+            \begin{align*}
+                AB-BA &=
+                \begin{pmatrix}
+                    0 & 1\\
+                    0 & 0\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    0 & 0\\
+                    1 & 0\\
+                \end{pmatrix}
+                -
+                \begin{pmatrix}
+                    0 & 0\\
+                    1 & 0\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    0 & 1\\
+                    0 & 0\\
+                \end{pmatrix}\\
+                \Aboxed{
+                    AB-BA &= {
+                        \begin{pmatrix}
+                            1 & 0\\
+                            0 & -1\\
+                        \end{pmatrix}
+                    }
+                }
+            \end{align*}
+            As per the hint, $A,B$ are both nilpotent matrices. Thus computing their matrix exponentials follows from the power series definition. Indeed, we get
+            \begin{align*}
+                \e[A] &=
+                \begin{pmatrix}
+                    1 & 1\\
+                    0 & 1\\
+                \end{pmatrix}&
+                \e[B] &=
+                \begin{pmatrix}
+                    1 & 0\\
+                    1 & 1\\
+                \end{pmatrix}
+            \end{align*}
+            so that
+            \begin{equation*}
+                \boxed{\e[A]\e[B] =
+                    \begin{pmatrix}
+                        2 & 1\\
+                        1 & 1\\
+                    \end{pmatrix}
+                }
+            \end{equation*}
+            We have that $(A+B)^2=I_2$. Thus, $A+B$ raised to an odd power is $A+B$ and $A+B$ raised to an even power is the identity. Therefore, by the power series definition of the matrix exponential,
+            \begin{align*}
+                \e[A+B] &=
+                \begin{pNiceMatrix}
+                    1+\frac{1}{2!}+\frac{1}{4!}+\cdots & 1+\frac{1}{3!}+\frac{1}{5!}+\cdots\\
+                    1+\frac{1}{3!}+\frac{1}{5!}+\cdots & 1+\frac{1}{2!}+\frac{1}{4!}+\cdots\\
+                \end{pNiceMatrix}
+            \end{align*}
+            By inspection, we can recognize the upper-left and lower-right power series to be the Maclaurin series for the hyperbolic cosine function evaluated at $x=1$. Similarly, the other two entries are the Maclaurin series for the hyperbolic sine function evaluated at $x=1$. Thus,
+            \begin{equation*}
+                \boxed{\e[A+B] =
+                    \begin{pmatrix}
+                        \cosh(1) & \sinh(1)\\
+                        \sinh(1) & \cosh(1)\\
+                    \end{pmatrix}
+                }
+            \end{equation*}
+        \end{proof}
     \end{enumerate}
     \item The general formula for the exponential of an $n\times n$ invertible matrix is very lengthy. However, for real $t$ and any $2\times 2$ complex matrix
     \begin{equation*}
@@ -182,11 +321,11 @@
     \end{equation*}
     there is a direct formula for $\e[tA]$:
     \begin{equation*}
-        \e[tA] = \e[t\delta]\left[ \cosh(t\Delta)I_2+\frac{\sinh(\Delta)}{t\Delta}
-        \begin{pmatrix}
-            \gamma & b\\
-            c & -\gamma\\
-        \end{pmatrix}
+        \e[tA] = \e[t\delta]\left[ \cosh(t\Delta)I_2+\frac{\sinh(t\Delta)}{t\Delta}
+            \begin{pmatrix}
+                \gamma & b\\
+                c & -\gamma\\
+            \end{pmatrix}
         \right]
     \end{equation*}
     where
@@ -201,44 +340,101 @@
         \frac{\sinh(z)}{z} &= \sum_{k=0}^\infty\frac{z^{2k}}{(2k+1)!}
     \end{align*}
     Thus, $\cosh(t\Delta)$ and $\sinh(t\Delta)$ are single valued, no matter which branch of $\Delta$ is considered. Prove the above formula. \emph{Hint}: Decompose $A=\delta I_2+C$ and apply the result of the previous problem.
-    % \begin{proof}
-    %     We have
-    %     \begin{align*}
-    %         A &= \delta I_2+C\\
-    %         \begin{pmatrix}
-    %             a & b\\
-    %             c & d\\
-    %         \end{pmatrix}
-    %         &= \frac{a+d}{2}
-    %         \begin{pmatrix}
-    %             1 & 0\\
-    %             0 & 1\\
-    %         \end{pmatrix}
-    %         +
-    %         \begin{pmatrix}
-    %             \frac{a-d}{2} & b\\
-    %             c & \frac{d-a}{2}\\
-    %         \end{pmatrix}\\
-    %         \begin{pmatrix}
-    %             a & b\\
-    %             c & d\\
-    %         \end{pmatrix}
-    %         &= \frac{a+d}{2}
-    %         \begin{pmatrix}
-    %             1 & 0\\
-    %             0 & 1\\
-    %         \end{pmatrix}
-    %         +
-    %         \begin{pmatrix}
-    %             \gamma & b\\
-    %             c & -\gamma\\
-    %         \end{pmatrix}
-    %     \end{align*}
-    %     We have that
-    %     \begin{align*}
-    %         \e[tA] &= \e[t\delta I_2]\e[tC]
-    %     \end{align*}
-    % \end{proof}
+    \begin{proof}
+        Taking the hint and (naturally) defining $C:=A-\delta I_2$, we can determine that
+        \begin{align*}
+            A &= \delta I_2+C\\
+            \begin{pmatrix}
+                a & b\\
+                c & d\\
+            \end{pmatrix}
+            &= \frac{a+d}{2}
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{pmatrix}
+            +
+            \begin{pmatrix}
+                \frac{a-d}{2} & b\\
+                c & \frac{d-a}{2}\\
+            \end{pmatrix}\\
+            \begin{pmatrix}
+                a & b\\
+                c & d\\
+            \end{pmatrix}
+            &= \frac{a+d}{2}
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{pmatrix}
+            +
+            \begin{pmatrix}
+                \gamma & b\\
+                c & -\gamma\\
+            \end{pmatrix}
+        \end{align*}
+        Since
+        \begin{equation*}
+            t\delta I_2\cdot tC = t^2
+            \begin{pNiceMatrix}
+                \frac{a^2-d^2}{4} & \frac{b(a+d)}{2}\\
+                \frac{d(a+d)}{2} & \frac{d^2-a^2}{4}\\
+            \end{pNiceMatrix}
+            = tC\cdot t\delta I_2
+        \end{equation*}
+        for all $t\in\R$, we have by Problem 2(1) that
+        \begin{equation*}
+            \e[tA] = \e[t\delta I_2+tC]
+            = \e[t\delta I_2]\e[tC]
+        \end{equation*}
+        Additionally, observe that
+        \begin{equation*}
+            C^2 =
+            \begin{pmatrix}
+                \gamma & b\\
+                c & -\gamma\\
+            \end{pmatrix}^2
+            =
+            \begin{pmatrix}
+                \gamma^2+bc & \gamma b-b\gamma\\
+                c\gamma-\gamma c & cb+\gamma^2\\
+            \end{pmatrix}
+            = (\gamma^2+bc)
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{pmatrix}
+            = \Delta^2I_2
+        \end{equation*}
+        Thus,
+        \begin{equation*}
+            C^m =
+            \begin{cases}
+                \Delta^{2k}C & m=2k+1\\
+                \Delta^{2k}I_2 & m=2k
+            \end{cases}
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            \e[tA] &= \e[t\delta I_2]\e[tC]\\
+            &=
+            \begin{pmatrix}
+                \e[t\delta] & 0\\
+                0 & \e[t\delta]\\
+            \end{pmatrix}
+            \cdot\sum_{m=0}^\infty\frac{t^mC^m}{m!}\\
+            &= \e[t\delta]I_2\left[ \sum_{k=0}^\infty\frac{t^{2k}C^{2k}}{(2k)!}+\sum_{k=0}^\infty\frac{t^{2k+1}C^{2k+1}}{(2k+1)!} \right]\\
+            &= \e[t\delta]\left[ \sum_{k=0}^\infty\frac{t^{2k}\Delta^{2k}I_2}{(2k)!}+\sum_{k=0}^\infty\frac{t^{2k+1}\Delta^{2k}C}{(2k+1)!} \right]\\
+            &= \e[t\delta]\left[ \left( \sum_{k=0}^\infty\frac{(t\Delta)^{2k}}{(2k)!} \right)I_2+\left( \sum_{k=0}^\infty\frac{(t\Delta)^{2k}}{(2k+1)!} \right)C \right]\\
+            &= \e[t\delta]\left[ \cosh(t\Delta)I_2+\frac{\sinh(t\Delta)}{t\Delta}
+                \begin{pmatrix}
+                    \gamma & b\\
+                    c & -\gamma\\
+                \end{pmatrix}
+            \right]
+        \end{align*}
+        as desired.
+    \end{proof}
     \item Which of the following can be the solution of a first-order autonomous homogeneous 2-dimensional system?
     \begin{align*}
         \begin{pmatrix}
@@ -263,6 +459,24 @@
         \end{pmatrix}
     \end{align*}
     \emph{Hint}: Compare with the necessary structure of the solution discussed in class.
+    \begin{proof}
+        Taking the hint, we can determine by inspection that each component of the solution vector function will be a linear combination of the entries of the exponential Jordan matrix. A $2\times 2$ Jordan matrix can only have the following two forms for some $\lambda,\mu\in\C$.
+        \begin{align*}
+            \begin{pmatrix}
+                \e[\lambda t] & 0\\
+                0 & \e[\mu t]\\
+            \end{pmatrix}&&
+            \begin{pmatrix}
+                \e[\mu t] & t\e[\mu t]\\
+                0 & \e[\mu t]\\
+            \end{pmatrix}
+        \end{align*}
+        Thus, given a 2D vector function of $t$, we must check that either both entries are of the form $A\e[\lambda t]+B\e[\mu t]$ for some (possibly different between the entries) numbers $A,B\in\C$, or both entries are of the form $A\e[\mu t]+Bt\e[\mu t]$. Only the
+        \begin{equation*}
+            \boxed{\text{second and fifth}}
+        \end{equation*}
+        entries in the question have this form.
+    \end{proof}
     \item Solve the following 2-dimensional initial value problems:
     \begin{align*}
         y' &=
@@ -289,10 +503,13 @@
         \end{pmatrix}&
     \end{align*}
     Determine the stable and unstable subspaces for each equation.
+    \begin{proof}
+        I can do this.
+    \end{proof}
 \end{enumerate}
 
 
-\subsection*{Bonus Problems}
+\subsection*{Bonus Problem}
 \begin{enumerate}
     \item At the end of the 19th century, the English mathematician and physicist Oliver Heaviside introduced an operational calculus to solve differential equations related to circuit analysis. To briefly describe Heaviside's idea, we consider the equation of RC charging circuits:
     \begin{equation*}
@@ -316,8 +533,64 @@
     and this gives the correct result $Q(t)=(1-\e[-t/RC])V_0/R$, very strangely!\par
     At a first glance, Heaviside's argument does not make much sense mathematically: We cannot simply regard a linear operator as a number, let alone the problem of convergence. However, there is a mathematical object that can rigorize Heaviside's idea; it is called the \textbf{Laplace transform}. It takes a function defined for $t\geq 0$ to a function of a complex variable $s=\sigma+i\beta$ via
     \begin{equation*}
-        \mathfrak{L}[f](s) = \int_0^\infty\e[-st]f(t)\dd{t}
+        \Lap{f}{s} = \int_0^\infty\e[-st]f(t)\dd{t}
     \end{equation*}
+    \begin{enumerate}
+        \item Prove that as long as $|f(t)|\leq A\e[Mt]$, this integral converges for $\sigma>M$. Thus, the Laplace transform is defined for any function not growing faster than an exponential function.
+        \item Prove the following law of differentiation: If the Laplace transform of $f(t)$ is $F(s)$, then
+        \begin{equation*}
+            \Lap{f'}{s} = sF(s)-f(0)
+        \end{equation*}
+        In general,
+        \begin{equation*}
+            \Lap{f^{(n)}}{s} = s^nF(s)-\sum_{k=0}^{n-1}s^kf^{(k)}(0)
+        \end{equation*}
+        \item Prove the following law of integration: If the Laplace transform of $f(t)$ is $F(s)$, then
+        \begin{equation*}
+            \Lap{\int_0^tf(\tau)\dd\tau}{s} = \frac{F(s)}{s}
+        \end{equation*}
+        These justify Heaviside's notion of "differential operator $s$."
+        \item Prove the law of frequency shift: For any complex number $a$, the Laplace transform of $\e[at]f(t)$ is $F(s-a)$. Prove the law of convolution using integration by parts: If $\mathfrak{L}[f]=F$ and $\mathfrak{L}[g]=G$, then the Laplace transform of
+        \begin{equation*}
+            \int_0^tf(\tau)g(t-\tau)\dd\tau
+        \end{equation*}
+        is $F(s)G(s)$.
+        \item Compute the Laplace transforms of the following functions, where $a\in\C$ is arbitrary.
+        \begin{align*}
+            \e[at]&&
+            t^n\e[at]&&
+            \sin at&&
+            \cos at
+        \end{align*}
+        \item The inversion theorem states that, roughly speaking, the function $f(t)$ is completely determined by its Laplace transform. The inversion formula involves complex analysis and you are not required to verify it or use it for computation. It reads
+        \begin{equation*}
+            f(t) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}\e[st]F(s)\dd{s}
+        \end{equation*}
+        However, with the aid of the inversion theorem and part (4), compute the inverse functions of
+        \begin{align*}
+            \frac{1}{s}&&
+            \frac{1}{s-a}&&
+            \frac{n!}{(s+a)^{n+1}}&&
+            \frac{a}{s^2+a^2}&&
+            \frac{s}{s^2+a^2}
+        \end{align*}
+        \item We can now justify Heaviside's solution for the RC charging circuits equation. Let the Laplace transform of $Q(t)$ be $F(s)$. Then since $Q(0)=0$, taking the Laplace transform of both sides, the law of differentiation tells us that
+        \begin{equation*}
+            RsF(s)+\frac{F(s)}{C} = \frac{V_0}{s}
+            \quad\Longleftrightarrow\quad
+            F(s) = \left( s+\frac{1}{RC} \right)^{-1}\frac{V_0}{Rs}
+        \end{equation*}
+        Determine $Q(t)$ from its Laplace transform with the aid of part (7). Thus\dots
+        \item Use the method of part (7), together with the aid of parts (3)-(5), to solve the initial value problem of the second-order differential equation
+        \begin{equation*}
+            y''+ay'+by = f(t)
+            ,\quad
+            y(0) = y_0
+            ,\quad
+            y'(0) = y_1
+        \end{equation*}
+        Compare it with the result of Problem 1. Explain what role the characteristic polynomial $s^2+as+b$ plays here. You should discuss two cases (distinct characteristic roots and single characteristic root) separately.
+    \end{enumerate}
 \end{enumerate}
 
 
