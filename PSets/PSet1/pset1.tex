@@ -63,7 +63,7 @@
                 \begin{tabular}{c|c|c}
                     Order & Linear? & Autonomous?\\
                     \hline
-                    1 & Yes & No\\
+                    1 & No & No\\
                 \end{tabular}
             \end{center}
         \end{proof}
@@ -117,7 +117,7 @@
         \quad\Longleftrightarrow\quad
         x(t) = \frac{x_0}{1-x_0t}
     \end{equation*}
-    When $x_0\leq 0$, the solution exists throughout $t\geq 0$. When $x_0>0$, the solution only exists in $[0,1/x_0)$.
+    When $x_0\leq 0$, the solution exists throughout $t\geq 0$. When $x_0>0$, the solution only exists in $[0,1/x_0)$\footnote{This is an interval of existence. The problem asks for the lifespan. Thus, this example is wrong. It is probably what led most people to give an interval of existence in their answer instead of a lifespan.}.
     \begin{enumerate}
         \item $x'=x\sin t$.
         \begin{proof}
@@ -145,9 +145,17 @@
                 \quad\Longleftrightarrow\quad
                 \boxed{x(t) = \arcsin(\e[t^3/3]\sin x_0)}
             \end{equation*}
-            The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is $\boxed{\emptyset}$ because $\cot(x)$ blows up periodically. When $x_0=\pi n$ for any $n\in\Z$, there is no solution because cotangent is undefined at these values and the improper integral blows up. When $x_0\neq\pi n$, the solution only exists in
+            Based on the above, the solution is extendable to the whole of $t\geq 0$ only when $\e[t^3/3]\sin x_0$ remains in the domain of arcsine, i.e., $[-1,1]$ for all $t$. Based on what we know about exponential functions, this happens iff $\sin x_0=0$, i.e., iff
             \begin{equation*}
-                \boxed{\left[ 0,\sqrt[3]{3\ln\left| \frac{1}{\sin(x_0)} \right|} \right)}
+                \boxed{
+                    x_0 = \pi n
+                    ,\quad
+                    n\in\Z
+                }
+            \end{equation*}
+            When $x_0\neq\pi n$ for some $n\in\Z$, the lifespan is
+            \begin{equation*}
+                \boxed{\sqrt[3]{3\ln\left| \frac{1}{\sin(x_0)} \right|}}
             \end{equation*}
         \end{proof}
         \item $x'=1+x^2$.
@@ -158,13 +166,13 @@
             \end{equation*}
             The result is
             \begin{equation*}
-                \tan(x)-\tan(x_0) = t
+                \arctan(x)-\arctan(x_0) = t
                 \quad\Longleftrightarrow\quad
-                \boxed{x(t) = \arctan(t+\tan(x_0))}
+                \boxed{x(t) = \tan(t+\arctan(x_0))}
             \end{equation*}
-            The set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is
+            Since the tangent function blows up periodically, the set of $x_0$ for which the solution is extendable to the whole of $t\geq 0$ is $\boxed{\emptyset}$. With respect to lifespan, we use a similar approach to the above. In particular, the solution exists for $t\geq 0$ such that $t+\arctan(x_0)\in(-\pi/2,\pi/2)$, i.e., for $t$ in $[0,\pi/2-\arctan(x_0))$. Therefore, the lifespan is
             \begin{equation*}
-                \boxed{\R\setminus\left\{ \frac{\pi}{2}+\pi n\mid n\in\Z \right\}}
+                \boxed{\frac{\pi}{2}-\arctan(x_0)}
             \end{equation*}
         \end{proof}
         \item $x'=\e[x]\sin t$.
@@ -183,9 +191,9 @@
             \begin{equation*}
                 \boxed{\{x_0\in\R\mid x_0<\ln(1/2)\}}
             \end{equation*}
-            When $x_0\geq\ln(1/2)$, the solution only exists in
+            When $x_0\geq\ln(1/2)$, the lifespan is
             \begin{equation*}
-                \boxed{\left[ 0,\arccos(1-\e[-x_0]) \right)}
+                \boxed{\arccos(1-\e[-x_0])}
             \end{equation*}
         \end{proof}
     \end{enumerate}
@@ -197,56 +205,54 @@
     \begin{enumerate}
         \item Derive two linearly independent \emph{real} solutions when $\mu>0$. (Hint: You should consider the cases $\mu<2\omega$ and $\mu>2\omega$ separately.)
         \begin{proof}
-            We first state and prove the following claim: If $r$ is a zero of the characteristic polynomial $r^2+ar+b=0$, then $\e[rx]$ is a solution to the ODE $y''+ay'+by=0$. The proof is simple --- plugging $y=\e[rx]$ and its derivatives $y'=r\e[rx]$ and $y''=r^2\e[rx]$ into the original ODE, we have that
-            \begin{equation*}
-                r^2\e[rx]+ar\e[rx]+b\e[rx] = (r^2+ar+b)\e[rx]
-                = 0
-            \end{equation*}
-            iff $r^2+ar+b=0$, i.e., if $r$ is a root of said polynomial, as desired.\par
-            With this guiding idea, we will find the roots of
+            From class, we know that the form of the two linearly independent solutions to such an equation depends on whether or not the roots of the characteristic polynomial
             \begin{equation*}
                 r^2+\mu r+\omega^2 = 0
             \end{equation*}
-            Using the quadratic formula, the two roots are
+            are equal. At this point, we will take the hint and divide into three cases $(\mu>|2\omega|$, $\mu=2\omega$, and $\mu<|2\omega|$).\par
+            \underline{$\mu>|2\omega|$}: In this case, the two roots
             \begin{align*}
                 r_1 &= \frac{-\mu+\sqrt{\mu^2-4\omega^2}}{2}&
                 r_2 &= \frac{-\mu-\sqrt{\mu^2-4\omega^2}}{2}
             \end{align*}
-            We now divide into two cases ($\mu>2\omega$ and $\mu<2\omega$). If $\mu>2\omega$, then $r_1,r_2$ are real and we take
+            are not equal. Thus, the two linearly independent solutions are
             \begin{equation*}
                 \boxed{\e[r_1t],\e[r_2t]}
             \end{equation*}
-            to be our linearly independent, real solutions.\par
-            On the other hand, if $\mu<2\omega$, then $r_1,r_2$ are of the form $\alpha\pm i\beta$. However, we can still obtain real solutions from these by taking the following linear combinations.
+            Moreover, since $r_1,r_2$ are both real, the above constitute two linearly independent \emph{real} solutions, as desired.\par 
+            \underline{$\mu=2\omega$}: In this case, the two roots are equal, i.e., $r_1=r_2$. Specifically, both roots coincide at $-\mu/2$. Thus, the two linearly independent solutions are
+            \begin{equation*}
+                \boxed{\e[-\mu t/2],t\e[-\mu t/2]}
+            \end{equation*}
+            For the same reason as in the previous case, the above are also real solutions, as desired.\par
+            \underline{$\mu<|2\omega|$}: In this case, the two roots are once again unequal. Thus, the two linearly independent solutions are
+            \begin{equation*}
+                \e[r_1t],\e[r_2t]
+            \end{equation*}
+            However, this time, $r_1,r_2$ are \emph{not} real, so the above solutions are not real either. However, we can still obtain real solutions from these using Euler's formula. Notice that
             \begin{align*}
-                s_1 &= r_1+r_2 = 2\alpha&
-                s_2 &= i(r_1-r_2) = 2\beta
+                r_1 &= -\frac{\mu}{2}+i\sqrt{\omega^2-\frac{\mu^2}{4}}&
+                r_2 &= -\frac{\mu}{2}-i\sqrt{\omega^2-\frac{\mu^2}{4}}&
             \end{align*}
-            Thus, we take
-            \begin{equation*}
-                \boxed{\e[s_1t],\e[s_2t]}
-            \end{equation*}
-            to be our linearly independent, real solutions.\par
-            Thus, our general solution is of the form
-            \begin{equation*}
-                x(t) = A\e[c_1t]+B\e[c_2t]
-            \end{equation*}
-            where $c_1=r_1,s_1$ and $c_2=r_2,s_2$ for some $A,B\in\R$. Plugging in the initial conditions, we get
+            where both $-\mu/2$ and $\sqrt{\omega^2-\mu^2/4}$ are real numbers, which we may call $\alpha$ and $\beta$, respectively. Thus, since any linear combination of $\e[r_1t],\e[r_2t]$ is another solution, we know in particular that the functions
             \begin{align*}
-                x_0 = x(0) &= A+B\\
-                x_1 = x'(0) &= Ac_1+Bc_2
+                \frac{1}{2}(\e[r_1t]+\e[r_2t]) &= \frac{1}{2}(\e[\alpha t+it\beta]+\e[\alpha t-it\beta])\\
+                &= \frac{1}{2}\e[\alpha t][(\cos(t\beta)+i\sin(t\beta))+(\cos(t\beta)-i\sin(t\beta))]\\
+                &= \e[\alpha t]\cos(t\beta)\\
+                &= \e[-\mu t/2]\cos(t\sqrt{\omega^2-\frac{\mu^2}{4}})
             \end{align*}
-            which we can solve for $A,B$, yielding
+            and
+            \begin{align*}
+                \frac{1}{2i}(\e[r_1t]-\e[r_2t]) &= \frac{1}{2i}(\e[\alpha t+it\beta]-\e[\alpha t-it\beta])\\
+                &= \frac{1}{2i}\e[\alpha t][(\cos(t\beta)+i\sin(t\beta))-(\cos(t\beta)-i\sin(t\beta))]\\
+                &= \e[\alpha t]\sin(t\beta)\\
+                &= \e[-\mu t/2]\sin(t\sqrt{\omega^2-\frac{\mu^2}{4}})
+            \end{align*}
+            are solutions. These solutions are linearly independent. Additionally, they are real. Therefore, we may take them, restated as
             \begin{equation*}
-                \begin{cases}
-                    A = \frac{x_1-x_0c_2}{c_1-c_2}\\
-                    B = \frac{x_0c_1-x_1}{c_1-c_2}
-                \end{cases}
+                \boxed{\e[-\mu t/2]\cos(t\sqrt{\omega^2-\frac{\mu^2}{4}}),\e[-\mu t/2]\sin(t\sqrt{\omega^2-\frac{\mu^2}{4}})}
             \end{equation*}
-            Therefore, our final particular solution is
-            \begin{equation*}
-                \boxed{x(t) = \frac{x_1-x_0c_2}{c_1-c_2}\e[c_1t]+\frac{x_0c_1-x_1}{c_1-c_2}\e[c_2t]}
-            \end{equation*}
+            to be our desired linearly independent real solutions in this case.
         \end{proof}
         \item Recall that $\mu=b/m$ and $\omega^2=k/m$. Recall also that the mechanical energy for the oscillator reads
         \begin{equation*}
@@ -328,10 +334,7 @@
             \Aboxed{y(t) &= -\frac{1}{t}\sqrt{228-2t^4}}
         \end{align*}
         Note that we pick the negative in the final step to fit the initial condition.\par
-        The lifespan of $y(t)$ can be determined by calculating when $228-2t^4=0$. This occurs such that the lifespan is approximately
-        \begin{equation*}
-            \boxed{[0,3.27]}
-        \end{equation*}
+        The initial value of $t$ is 2 by hypothesis. The final value of $t$ can be determined by calculating when $228-2t^4=0$. This occurs such that the interval of existence is approximately $[2,3.27]$ and the lifespan is thus approximately $\boxed{1.27}$.
     \end{proof}
     \item Use the transformation $w=y^{1-\alpha}$ to convert Bernoulli's equation
     \begin{equation*}
@@ -397,7 +400,7 @@
     \end{equation*}
     is an exact equation, no matter what value $a,b$ take. Find the implicit relation satisfied by the solution $y(x)$ and $x$.
     \begin{proof}
-        To show that an equation of the form $gy'+f=0$ is exact, it will suffice to confirm that
+        To show that an equation of the form $g\dv*{y}{x}+f=0$ is exact, it will suffice to confirm that
         \begin{equation*}
             \pdv{g}{x} = \pdv{f}{y}
         \end{equation*}
@@ -407,12 +410,12 @@
             \pdv{f}{y} &= 4by+3
         \end{align*}
         By transitivity, we have the desired result.\par
-        We now want to find $F$ such that $\pdv*{F}{x}=f$ and $\pdv*{F}{y}=g$. Starting with the former constraint, we can determine that
+        Having confirmed that the given equation is exact as written (i.e., we do \emph{not} need integrating factors to make it so), we now want to find $F$ such that $\pdv*{F}{x}=f$ and $\pdv*{F}{y}=g$. Starting with the former constraint, we can determine that
         \begin{align*}
             F(x,y) &= \int(3x^2+8ax+2by^2+3y)\dd{x}\\
             &= x^3+4ax^2+2bxy^2+3xy+h(y)
         \end{align*}
-        where $h(y)$ is a functional "constant" of integration. We now differentiate with respect to $y$.
+        where $h(y)$ is a function of integration (as opposed to a constant of integration). We now differentiate with respect to $y$.
         \begin{equation*}
             \pdv{F}{y} = 4bxy+3x+\dv{h}{y}
         \end{equation*}
@@ -424,7 +427,11 @@
         \end{align*}
         Therefore, we know that
         \begin{equation*}
-            \boxed{F(x,y) = x^3+4ax^2+2bxy^2+3xy+5y}
+            F(x,y) = x^3+4ax^2+2bxy^2+3xy+5y
+        \end{equation*}
+        Since $F$ is constant along any solution by construction, the desired implicit relation is given by setting the above equal to some constant $C\in\R$, as follows.
+        \begin{equation*}
+            \boxed{x^3+4ax^2+2bxy^2+3xy+5y = C}
         \end{equation*}
     \end{proof}
     \item Let $a,b$ be constants. For Euler's equation
@@ -440,7 +447,106 @@
         y'(1) = 1
     \end{equation*}
     \begin{proof}
-        The differential equation satisfied by $w(\tau)$ is
+        % We use the coordinate transform tools from Section 1.4 of \textcite{bib:Teschl}. To facilitate the comparison, we change the notation of Euler's equation and our coordinate transform to
+        % \begin{align*}
+        %     t^2\ddot{x}+at\dot{x}+bx &= f(t)&
+        %     y(s) &= x(\e[s])
+        % \end{align*}
+        % We will change back before reporting our final results. At this point, we may define
+        % \begin{align*}
+        %     \eta(t,x) &= x&
+        %     \sigma(t) &= \ln(t)&
+        %     \tau(s) &= \e[s]&
+        %     \xi(s,y) &= y
+        % \end{align*}
+        % Then we know that the differential equation satisfied by $y(s)$ is
+        % \begin{align*}
+        %     \dot{y} &= \dot{\tau}\left( {\pdv{\eta}{t}}(\tau,\xi)+\pdv{\eta}{x}f(\tau,\xi) \right)\\
+        %     &= \e[s]\left( [0]_{(\e[s],y)}+[1]_{(\e[s],y)} \right)
+        % \end{align*}
+        % In the original notation,
+
+        % takes points $(t,y)$ in the product space of the original independent and dependent variable to points $(\tau,w)$ in the product space of the new independent and dependent variable
+
+
+        The given transformation can be split into the following two transformations (one for the dependent variable and one for the independent variable).
+        \begin{align*}
+            w &= y&
+                t &= \e[\tau]\\
+            &&
+                \tau &= \ln(t)
+        \end{align*}
+        Thus, differentiating our new dependent variable with respect to our new independent variable, we get
+        \begin{align*}
+            \dv{w}{\tau} &= \dv{y}{t}\dv{t}{\tau}\\
+            w'(\tau) &= y'(t)\e[\tau]\\
+            y'(t) &= \frac{w'(\tau)}{\e[\tau]}
+        \end{align*}
+        Differentiating again (and substituting in the above in a later step), we get
+        \begin{align*}
+            \dv{\tau}(\dv{w}{\tau}) &= \dv{\tau}(\dv{y}{t})\cdot\dv{t}{\tau}+\dv{y}{t}\cdot\dv{\tau}(\dv{t}{\tau})\\
+            \dv[2]{w}{\tau} &= \dv{t}(\dv{y}{t})\dv{t}{\tau}\cdot\dv{t}{\tau}+\dv{y}{t}\cdot\dv[2]{t}{\tau}\\
+            &= \dv[2]{y}{t}\left( \dv{t}{\tau} \right)^2+\dv{y}{t}\dv[2]{t}{\tau}\\
+            w''(\tau) &= y''(t)[\e[\tau]]^2+y'(t)\e[\tau]\\
+            &= y''(t)\e[2\tau]+w'(\tau)\\
+            y''(t) &= \frac{w''(\tau)-w'(\tau)}{\e[2\tau]}
+        \end{align*}
+        We can now substitute our transformed definitions of $y,y',y'',t$ back into the original Euler's equation.
+        \begin{align*}
+            t^2y''+aty'+by &= f(t)\\
+            [\e[\tau]]^2\cdot\frac{w''(\tau)-w'(\tau)}{\e[2\tau]}+a\cdot\e[\tau]\cdot\frac{w'(\tau)}{\e[\tau]}+b\cdot w(\tau) &= f(\e[\tau])\\
+            [w''(\tau)-w'(\tau)]+aw'(\tau)+bw(\tau) &= f(\e[\tau])\\
+            \Aboxed{w''(\tau)+(a-1)w'(\tau)+bw(\tau) &= f(\e[\tau])}
+        \end{align*}
+        This is an inhomogeneous second-order ODE with constant coefficients; we know how to solve these.\par
+        We now consider the given example. We can transform it into the general form by dividing through by 2 to yield
+        \begin{equation*}
+            t^2y''+\frac{3}{2}ty'-\frac{15}{2}y = 0
+        \end{equation*}
+        Applying the transformation, we get
+        \begin{equation*}
+            w''+\frac{1}{2}w'-\frac{15}{2}w = 0
+        \end{equation*}
+        as our new differential equation,
+        \begin{equation*}
+            \tau = \ln(1) = 0
+        \end{equation*}
+        as our new initial time, and
+        \begin{align*}
+            w(0) &= y(1) = 0&
+            w'(0) &= y'(1)\e[0] = 1
+        \end{align*}
+        as our new initial conditions. We can solve the characteristic polynomial for this differential equation as follows\footnote{Refer to Theorem 3.7 in \textcite{bib:Teschl} for a better justification of the solution. Alternatively, we can transform it into a 2D planar system and solve it using JNF.}.
+        \begin{align*}
+            0 &= z^2+\frac{1}{2}z-\frac{15}{2}\\
+            &= (z-5/2)(z+3)\\
+            z &= \frac{5}{2},-3
+        \end{align*}
+        Therefore, the general solution is
+        \begin{equation*}
+            w(\tau) = A\e[5\tau/2]+B\e[-3\tau]
+        \end{equation*}
+        where $A,B\in\R$. We can use the initial conditions to solve for specific values of $A,B$. In particular, $A,B$ are the solutions to the system of equations
+        \begin{align*}
+            0 = w(0)  &= A+B&
+            1 = w'(0) &= \frac{5}{2}A-3B
+        \end{align*}
+        or
+        \begin{align*}
+            A &= \frac{2}{11}&
+            B &= -\frac{2}{11}
+        \end{align*}
+        Thus, the solution to the transformed IVP is
+        \begin{equation*}
+            w(\tau) = \frac{2}{11}\e[5\tau/2]-\frac{2}{11}\e[-3\tau]
+        \end{equation*}
+        Using our inverse coordinate transforms, we can determine that the solution to the original IVP is
+        \begin{align*}
+            y(t) &= w(\ln(t))\\
+            &= \frac{2}{11}\e[5\ln(t)/2]-\frac{2}{11}\e[-3\ln(t)]\\
+            &= \frac{2}{11}\left( \e[\ln(t)] \right)^{5/2}-\frac{2}{11}\left( \e[\ln(t)] \right)^{-3}\\
+            \Aboxed{y(t) &= \frac{2}{11}t^{5/2}-\frac{2}{11}t^{-3}}
+        \end{align*}
     \end{proof}
     \item Suppose there is a capacitor with capacitance $C$ being charged by a battery of fixed voltage $V_0$. Suppose there is a resistor $R$ connected to $C$. Then the charge $Q(t)$ of the capacitor satisfies the differential equation
     \begin{equation*}
@@ -482,9 +588,9 @@
         \begin{equation*}
             \sum F_z = F_d-F_g = ma
         \end{equation*}
-        Since $a=x''$, $F_g=g$, and $F_d=\eta v^2=\eta(x')^2$, the differential equation satisfied by the shift $x$ is
+        Since $a=x''$, $F_g=mg$, and $F_d=\eta v^2=\eta(x')^2$, the differential equation satisfied by the shift $x$ is
         \begin{equation*}
-            mx'' = \eta(x')^2-g
+            mx'' = \eta(x')^2-mg
         \end{equation*}
         Let the time at which the parachute is opened be $t=0$. Then the initial conditions are
         \begin{align*}
@@ -493,26 +599,30 @@
         \end{align*}
         To solve this IVP, we substitute $v=x'$ and evaluate the resulting first-order differential equation to start:
         \begin{align*}
-            mv' &= \eta v^2-g\\
-            \frac{\dd{v}}{v^2-g/\eta} &= \frac{\eta}{m}\dd{t}\\
-            \int_{v_0}^v\frac{\dd{w}}{w^2-g/\eta} &= \int_0^t\frac{\eta}{m}\dd{\tau}\\
-            \coth^{-1}(v)-\coth^{-1}(v_0) &= \frac{\eta}{m}t\\
-            v &= \coth(\frac{\eta}{m}t+\coth^{-1}(v_0))
-            % -\frac{1}{2\sqrt{g/\eta}}\ln(\frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})}) &= \frac{\eta}{m}t\\
-            % \ln(\frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})}) &= -\frac{2t\sqrt{g\eta}}{m}\\
-            % \frac{(v+\sqrt{g/\eta})(v_0-\sqrt{g/\eta})}{(v-\sqrt{g/\eta})(v_0+\sqrt{g/\eta})} &= \e[-2t\sqrt{g\eta}/m]\\
-            % \frac{(v+\sqrt{g/\eta})}{(v-\sqrt{g/\eta})} &= \frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]\\
-            % v &= -\sqrt{g/\eta}\frac{1+\frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]}{1-\frac{(v_0+\sqrt{g/\eta})}{(v_0-\sqrt{g/\eta})}\e[-2t\sqrt{g\eta}/m]}\\
-            % v &= -\sqrt{g/\eta}\frac{\frac{(v_0-\sqrt{g/\eta})}{(v_0+\sqrt{g/\eta})}+\e[-2t\sqrt{g\eta}/m]}{\frac{(v_0-\sqrt{g/\eta})}{(v_0+\sqrt{g/\eta})}-\e[-2t\sqrt{g\eta}/m]}
+            mv' &= \eta v^2-mg\\
+            \frac{\dd{v}}{v^2-mg/\eta} &= \frac{\eta}{m}\dd{t}\\
+            \int_{v_0}^v\frac{\dd{w}}{w^2-mg/\eta} &= \int_0^t\frac{\eta}{m}\dd{\tau}\\
+            \sqrt{\frac{\eta}{mg}}\left[ \coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v \right) \right] &= \frac{\eta}{m}t\\
+            v(t) &= \sqrt{\frac{mg}{\eta}}\coth(\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\sqrt{\frac{g\eta}{m}}t)
         \end{align*}
-        Assuming the velocities are greater than one (a reasonable assumption; if not, change units), the hyperbolic cotangent is perfectly acceptable to use here. Returning the substitution $v=x'$, we can determine that
+        Returning the substitution $v=x'$, we can determine that
         \begin{align*}
-            x' &= \coth(\frac{\eta}{m}t+\coth^{-1}(v_0))\\
-            \int_H^x\dd{z} &= \int_0^t\coth(\frac{\eta}{m}\tau+\coth^{-1}(v_0))\dd\tau\\
-            x-H &= \frac{m}{\eta}\ln(\sinh(\frac{\eta}{m}t+\coth^{-1}(v_0))\sqrt{v_0^2-1})\\
-            \Aboxed{x &= H+\frac{m}{\eta}\ln(\sinh(\frac{\eta}{m}t+\coth^{-1}(v_0))\sqrt{v_0^2-1})}
+            x' &= \sqrt{\frac{mg}{\eta}}\coth(\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\sqrt{\frac{g\eta}{m}}t)\\
+            \int_H^x\dd\xi &= \int_0^t\sqrt{\frac{mg}{\eta}}\coth(\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\sqrt{\frac{g\eta}{m}}\tau)\dd\tau\\
+            x-H &= \left[ -\frac{m}{\eta}\ln(\sinh(\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\sqrt{\frac{g\eta}{m}}\tau)) \right]_0^t\\
+            \Aboxed{x(t) &= H-\frac{m}{\eta}\ln(\sinh(\coth^{-1}\left( \sqrt{\frac{\eta}{mg}}v_0 \right)-\sqrt{\frac{g\eta}{m}}t))+\frac{m}{\eta}\ln(\frac{1}{v_0\cdot\sqrt{\frac{\eta}{mg}-\frac{1}{v_0^2}}})}
         \end{align*}
-        The final velocity approaches $\boxed{1}$.
+        Since $\coth(t)\to -1$ as $t\to -\infty$, the final velocity approaches
+        \begin{equation*}
+            \boxed{v_\infty = -\sqrt{\frac{mg}{\eta}}}
+        \end{equation*}
+        Note that we can also solve for $v_\infty$ using physical considerations; at $t=\infty$, the drag and gravitational forces will balance, i.e., we will have
+        \begin{align*}
+            F_d &= F_g\\
+            \eta v_\infty^2 &= mg\\
+            v_\infty &= \pm\sqrt{\frac{mg}{\eta}}\\
+            &= -\sqrt{\frac{mg}{\eta}}
+        \end{align*}
     \end{proof}
 \end{enumerate}
 
@@ -522,8 +632,49 @@
     \item \textbf{The Catenoid.} Suppose there are two metal rings of radius $a$ placed parallel to each other in an $xyz$-coordinate space, with the $x$-axis passing through their centers. Suppose these two rings are contained in the planes $x=l$ and $x=-l$, respectively. An axial symmetric soap film is spanned by these two rings. Suppose its shape is obtained by rotating the graph of the function $y=y(x)$ with respect to the $x$-axis. In order to attain a stable configuration, the surface area is supposed to be minimal among all such surfaces of revolution.
     \begin{enumerate}
         \item Write down the surface area functional in terms of $y(x)$, its derivative, and the boundary conditions for this variational problem.
+        \begin{proof}
+            The surface area functional is\footnote{See SOR-SA.pdf from AP BC Calculus for a derivation.}
+            \begin{equation*}
+                \boxed{J[y] = \int_{-l}^l2\pi y\sqrt{1+\left( \dv{y}{x} \right)^2}\dd{x}}
+            \end{equation*}
+        \end{proof}
         \item Derive the Euler-Lagrange equation and find the solution. The shape is called a \textbf{catenoid}.
+        \begin{proof}
+            As in class with the Brachistochrone problem, our functional is of the form $J[y]=\int_a^bF(x,y(x),y'(x))\dd{x}$. Thus, the derivation of the relevant Euler-Lagrange equation is symmetric, and yields
+            \begin{equation*}
+                {\pdv{F}{z}}(x,y(x),y'(x))-\dv{x}\left[ {\pdv{F}{w}}(x,y(x),y'(x)) \right] = 0
+            \end{equation*}
+            as a necessary condition for $y$ to be an extrema of $J[y]$. Again, note that in our specific functional, $F(x,z,w)=F(z,w)$ (i.e., there is no dependence on $x$), allowing us to actually solve the above equation. We can take this even farther using the same logic from class to get
+            \begin{equation*}
+                F-\dv{F}{w}\dv{y}{x} = A
+            \end{equation*}
+            as a necessary condition, where $A\in\R$ depends on the initial/boundary conditions. In particular, we may now substitute in our specific definition of $F$ and solve for $y$ as follows.
+            \begin{align*}
+                A &= 2\pi y\sqrt{1+(y')^2}-\left[ 2\pi y\cdot\frac{1}{2\sqrt{1+(y')^2}}\cdot 2y' \right]\cdot y'\\
+                \frac{A}{2\pi y} &= \sqrt{1+(y')^2}-\frac{(y')^2}{\sqrt{1+(y')^2}}\\
+                \frac{A^2}{4\pi^2y^2} &= [1+(y')^2]-\frac{2(y')^2\sqrt{1+(y')^2}}{\sqrt{1+(y')^2}}+\frac{(y')^4}{1+(y')^2}\\
+                \frac{A^2}{4\pi^2y^2} &= 1-(y')^2+\frac{(y')^4}{1+(y')^2}\\
+                \frac{A^2}{4\pi^2y^2}+\frac{A^2}{4\pi^2y^2}(y')^2 &= [1+(y')^2]-[(y')^2+(y')^4]+(y')^4\\
+                \frac{A^2}{4\pi^2y^2}+\frac{A^2}{4\pi^2y^2}(y')^2 &= 1\\
+                (y')^2 &= \frac{4\pi^2y^2}{A^2}-1\\
+                \dv{y}{x} &= \frac{2\pi}{A}\sqrt{y^2-\frac{A^2}{4\pi^2}}\\
+                y(x) &= \cosh(\frac{2\pi}{A}x)
+            \end{align*}
+            Knowing that $y(l)=y(-l)=a$, we can determine that
+            \begin{align*}
+                a &= \cosh(\frac{2\pi l}{A})\\
+                A &= \frac{2\pi l}{\cosh^{-1}(a)}
+            \end{align*}
+            Therefore, our final solution is
+            \begin{equation*}
+                \boxed{y(x) = \cosh(\frac{\cosh^{-1}(a)}{l}x)}
+            \end{equation*}
+            Note that since we can easily construct surfaces of revolution with greater surface area, this is a minimum, not a maximum.
+        \end{proof}
         \item If the two rings are very far away from each other, i.e., $l$ is very large, will the catenoid still be of minimal area among all competing surfaces that span these two rings? You do not have to give a mathematically rigorous answer; just imagine the physical situation. (Hint: What about two distinct disks spanned by these two rings?)
+        \begin{proof}
+            Imagine pulling two rings spanned by a soap film farther and farther apart. The soap film won't be stable forever; indeed, at some point, it will collapse in the middle and the two halves will retreat onto their distinct rings. Indeed, at some point, the area $2\pi a^2$ will be smaller than the ever-increasing (and non-asymptotic) surface area of the catenoid. Thus, the catenoid is a local minimum of the variational problem, not necessarily a global minimum.
+        \end{proof}
     \end{enumerate}
     \item \textbf{A Formulation of the Isoperimetric Problem.} Recall from multivariable calculus that in order to find a local extremum of the function $f(x_1,\dots,x_n)$ under the constraint $g(x_1,\dots,x_n)=0$, we can introduce a parameter $\lambda$ called the \textbf{Lagrange multiplier} and find the stationary point of the function
     \begin{equation*}
@@ -531,6 +682,9 @@
     \end{equation*}
     \begin{enumerate}
         \item Write down the equations that must be satisfied by the stationary point $(x_1,\dots,x_n)$ of the function $f-\lambda g$ with the parameter $\lambda$ involved.
+        \begin{proof}
+            Based on my notes, I should be able to solve this problem with ease. The method of Lagrange multiplies is explained in \textcite{bib:CAAGThomasNotes}.
+        \end{proof}
         \item Use the Lagrange multiplier method to find the maxima and minima of $f(x,y)=x+y$ under the constraint $x^2+y^2=1$.
         \item Now let us generalize this method to functionals. If we aim to find the extrema of a functional
         \begin{equation*}
