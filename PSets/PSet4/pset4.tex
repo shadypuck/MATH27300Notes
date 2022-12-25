@@ -525,10 +525,120 @@
 \end{enumerate}
 
 
-% \subsection*{Bonus Problems}
-% \begin{enumerate}
-%     \item 
-% \end{enumerate}
+\subsection*{Bonus Problem}
+In this problem, we aim to explore more physical applications of the harmonic oscillator equation to the study of linear wave equations.
+\begin{enumerate}
+    \item Suppose we have a perfect string undergoing vertical vibrations of small amplitude within a given vertical plane. The following physical quantities are relevant.
+    \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+            \footnotesize
+            \draw (-0.5,0) -- (2,0);
+            \draw (0,0) node[below]{$x$} -- node[right]{$u(x,t)$} ++(0,1.5) coordinate (b1)
+                -- node[below]{$\Delta x$} ++(1.5,0) coordinate (a1)
+                -- node[right]{$\Delta u$} ++(0,1) coordinate (b2)
+                -- ++(1,0) coordinate (a2)
+            ;
+    
+            \draw [-latex] (b2) -- ++(1,0.5) coordinate (c2) node[right]{$T(x+\Delta x,t)$};
+            \pic [draw,angle radius=0.6cm,angle eccentricity=1.1,pic text={$\theta(x+\Delta x,t)$},pic text options={right,yshift=1pt}] {angle=a2--b2--c2};
+    
+            \draw [-latex] (b1) -- ++(-130:1cm) node[left]{$T(x,t)$};
+            \path (b1) -- ++(45:1cm) coordinate (c1);
+            \pic [draw,angle radius=0.6cm,angle eccentricity=1,pic text={$\theta(x,t)$},pic text options={right,yshift=1pt}] {angle=a1--b1--c1};
+    
+            \draw [ultra thick] (b1) to[out=50,in=-150,looseness=0.7] (b2);
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item $u(x,t)$: Vertical displacement of the string from the $x$ axis at position $x$ and time $t$.
+        \item $\theta(x,t)$: The angle between the string and a horizontal line at position $x$ and time $t$.
+        \item $T(x,t)\equiv T_0$: The tension in the string, which is assumed to be constant for a perfect string.
+        \item $\rho_0$: The mass density of the string, which is assumed to be constant for a perfect string.
+        \item $f(x,t)$: The external force exerted on the strong at position $x$ and time $t$.
+    \end{itemize}
+    Analyze the forces exerted on the small portion of the string highlighted in bold to derive the following partial differential equation.
+    \begin{equation*}
+        \rho_0\sqrt{1+\left( \pdv{u}{x} \right)^2}\pdv[2]{u}{t} = T_0\cos\theta\pdv{\theta}{x}+f(x,t)
+    \end{equation*}
+    When the displacement is small, conclude that this differential equation reduces to the linear wave equation
+    \begin{equation*}
+        \pdv[2]{u}{t}-c^2\pdv[2]{u}{x} = \frac{f(x,t)}{\rho_0}
+    \end{equation*}
+    where $c=\sqrt{T_0/\rho_0}$ has units of speed. \emph{Hint}: When the displacement is small, $\pdv*{u}{x}$ is small, and $\theta\approx\tan\theta\approx\pdv*{u}{x}$.\par
+    If the string is undergoing unconstrained vibration, that is, there is no boundary condition and the string extends to infinity, then with a linear change of variable $\xi=x+ct$, $\eta=x-ct$, and $w(\xi,\eta)=u(x,t)$, the linear wave equation becomes
+    \begin{equation*}
+        \pdv{w}{\xi}{\eta} = \frac{f(x,t)}{\rho_0}
+    \end{equation*}
+    Integrating twice, one can obtain the following theorem.
+    \begin{theorem}[d'Alembert]
+        The initial value problem for the linear wave equation
+        \begin{gather*}
+            \pdv[2]{u}{t}-c^2\pdv[2]{u}{x} = \frac{f(x,t)}{\rho_0}\\
+            u(x,0) = g(x)
+                ,\quad
+                {\pdv{u}{t}}(x,0) = h(x)
+        \end{gather*}
+        without boundary condition at infinity is uniquely solved by
+        \begin{equation*}
+            u(x,t) = \frac{1}{2}[g(x+ct)+g(x-ct)]+\frac{1}{2c}\int_{x-ct}^{x+ct}h(s)\dd{s}+\frac{1}{2c\rho_0}\int_0^t\int_{x-c(t-\tau)}^{x+c(t-\tau)}f(y,\tau)\dd{y}\dd\tau
+        \end{equation*}
+    \end{theorem}
+    Thus, the vibration of the string without boundary conditions at infinity is uniquely determined by its initial displacement and velocity. The first two terms in d'Alembert's formula can be considered as traveling waves moving at speed $c$, so the parameter $c$ is in fact the speed of transmission.
+    \item However, we are now more interested in vibration with constraints. We consider the homogeneous problem (without external force) first.
+    \begin{gather*}
+        \pdv[2]{u}{t}-c^2\pdv[2]{u}{x} = 0\\
+        u(0,t) = u(l,t) \equiv 0
+            ,\quad
+            {\pdv{u}{t}}(0,t) = {\pdv{u}{t}}(l,t) \equiv 0
+    \end{gather*}
+    That is, the string is fixed at the endpoints $x=0,l$. Note that the initial conditions (initial displacement and velocity) are not given yet. Determine all particular solutions of the form $u(x,t)=X(x)T(t)$, and explain why such a solution can be understood as a standing wave. Such a solution is called a \textbf{harmonic}. \emph{Hint}: To satisfy the wave equation, there must hold
+    \begin{equation*}
+        c^2\frac{X''(x)}{X(x)} = \frac{T''(t)}{T(t)}
+    \end{equation*}
+    Can $X''/X$ and $T''/T$ both equal something other than a constant? How should they match with the boundary condition?
+    \item Admit the following fact in the study of Fourier series.\par
+    \begingroup
+    \itshape
+    Any function $u(x)$ on the closed interval $[0,l]$ that has continuous derivatives vanishing at the endpoints up to order 3 can be uniquely represented as a convergent Fourier series
+    \begin{equation*}
+        u(x) = \sum_{n=1}^\infty c_n\sin\frac{n\pi x}{l}
+    \end{equation*}
+    where the Fourier coefficients
+    \begin{equation*}
+        c_n = \frac{2}{l}\int_0^lu(x)\sin\frac{n\pi x}{l}\dd{x}
+    \end{equation*}
+    The Fourier series can be differentiated twice termwise and still give rise to a convergent Fourier series.
+    \endgroup\par
+    Use this to solve the following initial-boundary value problem in terms of Fourier series.
+    \begin{gather*}
+        \pdv[2]{u}{t}-c^2\pdv[2]{u}{x} = 0\\
+        u(x,0) = g(x)
+            ,\quad
+            {\pdv{u}{t}}(x,0) = h(x)
+            ,\quad
+            u(0,t) = u(l,t) \equiv 0
+            ,\quad
+            {\pdv{u}{t}}(0,t) = {\pdv{u}{t}}(l,t) \equiv 0
+    \end{gather*}
+    Assume enough regularity of the known functions, and the Fourier coefficients of $g(x)$ and $h(x)$ are known as $g_n$ and $h_n$, respectively.
+    \item Now suppose that there is an external force exerted periodically on the string.
+    \begin{equation*}
+        f(x,t) = \cos\omega t\sum_{n=1}^\infty f_n\sin\frac{n\pi x}{l}
+    \end{equation*}
+    Solve the initial-boundary value problem in terms of Fourier series.
+    \begin{gather*}
+        \pdv[2]{u}{t}-c^2\pdv[2]{u}{x} = \frac{f(x,t)}{\rho_0}\\
+        u(x,0) = g(x)
+            ,\quad
+            {\pdv{u}{t}}(x,0) = h(x)
+            ,\quad
+            u(0,t) = u(l,t) \equiv 0
+            ,\quad
+            {\pdv{u}{t}}(0,t) = {\pdv{u}{t}}(l,t) \equiv 0
+    \end{gather*}
+    Assume enough regularity of the known functions, and the Fourier coefficients of $g(x)$ and $h(x)$ are known as $g_n$ and $h_n$, respectively.\par
+    From your expression of the solution, determine which frequencies $\omega$ of the external force $f(x,t)$ give rise to resonance. Explain why the string can play the role of a tuning fork to detect certain frequencies of vibration.
+\end{enumerate}
 
 
 
