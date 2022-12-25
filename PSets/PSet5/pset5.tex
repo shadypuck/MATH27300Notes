@@ -335,6 +335,118 @@
         You should prove that the sequence converges to zero faster than any geometric progression.\par
         Context: This algorithm is referred to as \textbf{Newton's method}. It is a rapidly converging algorithm to find zeros/fixed points of functions, capable of giving very precise approximations within very few steps. A variation of it, called the \textbf{Nash-Moser technique}, is a very powerful tool for proving the existence of solutions to nonlinear differential equations.
     \end{enumerate}
+    \item In this question, we aim to prove that a certain differential equation admits a unique periodic solution. Let $f(t)$ be a smooth, real-valued function of period 1, that is, $f(t+1)\equiv f(t)$.
+    \begin{enumerate}
+        \item Fix $a>0$. Prove that there exists only one $x\in\R$ such that the solution of the initial value problem
+        \begin{equation*}
+            y'+ay = f(t)
+            ,\quad
+            y(0) = x
+        \end{equation*}
+        has period 1, and express $x$ in terms of the integral of $f$.
+        \item Now let $g(w)$ be some smooth function such that $g'(0)=0$. Prove the following nonlinear perturbative result: For any period 1 continuous function $f$ close to 0, there is only one $x\in\R$ with small magnitude such that the solution of the perturbed initial value problem
+        \begin{equation*}
+            y'+ay+g(y) = f(t)
+            ,\quad
+            y(0) = x
+        \end{equation*}
+        has period 1. \emph{Hint}: Write the solution as $y(t;x)$ and consider the function $x\to y(1;x)$. Try to apply the continuous dependence result discussed in class to conclude that this function is a contraction near $0\in\R$.
+    \end{enumerate}
+\end{enumerate}
+
+
+\subsection*{Problems Related to the Calculation of Perturbation}
+\begin{enumerate}
+    \item Determine the approximate solution of the following initial value problems up to order $\mu$, where $\mu$ is the small perturbative parameter.
+    \begin{enumerate}
+        \item 
+        \begin{equation*}
+            y''+(1+\mu)y = 0
+            ,\quad
+            y(0) = a
+            ,\quad
+            y'(0) = b
+        \end{equation*}
+        This is in fact the harmonic oscillator equation. Compare your result with the actual solution, and estimate the time beyond which the approximate solution fails to match it well.
+        \item 
+        \begin{equation*}
+            y' = ry-\mu y^2
+            ,\quad
+            y(0) = a
+        \end{equation*}
+        This is in fact the logistic growing model with $\mu=r/M\ll 1$, $M$ being the capacity. Compare your result with the actual solution of the logistic differential equation, and estimate the time beyond which the approximate solution fails to match it well.\par
+        It should be stressed again that these approximate solutions only work for a fixed time interval, and usually fail to approximate the actual solution well for large $t$.
+    \end{enumerate}
+    \item Let $h$ be a small real number. Consider the function
+    \begin{equation*}
+        f(x) = \cos x+hx\sin x
+    \end{equation*}
+    We know that when $h=0$, the point $x=2\pi$ is a maximum point of $f(x)$. If $h\neq 0$, the extrema of $f$ cannot be explicitly determined. However, determine the first positive maximum point $x_1(h)$ of $f$ as a function of $h$, up to order $h$. \emph{Hint}: $x_1(h)$ is the zero of $f'(x)$ with $x_1(0)=2\pi$, and you may apply the implicit function theorem.
+    \item Let $A,B>0$ be fixed constants, $\mu$ be a real number of small magnitude compared to $A,B$. Determine the approximate solution of the following differential equation up to order $\mu$.
+    \begin{equation*}
+        \dv[2]{u}{\varphi}+u = A+\mu u^2
+        ,\quad
+        u(0) = A+B
+        ,\quad
+        u'(0) = 0
+    \end{equation*}
+    \emph{Hint}: For the zeroth order approximation, the solution can be easily guessed without using the Duhamel formula.
+\end{enumerate}
+
+
+\subsection*{Bonus Problem}
+We have already determined that the orbits of the two-body problem under Newtonian gravity are conic sections in the center of mass frame. However, in actual physical situations, there are multiple effects that lead to correction of the orbit. For Mercury, the closest known planet to the Sun, this correction is much easier to observe than with other planets. These effects break the closedness of the ideally elliptic orbit of Mercury, resulting in very slow precession of the perihelion of the orbit (see the picture, which is very much exaggerated).
+\begin{center}
+    \includegraphics[width=0.4\linewidth]{../ExtFiles/mercuryPrecession.png}
+\end{center}
+The total observed precession of the perihelion of Mercury is about \num{5600.73} arcsec per century. After deducing the effect of axial precession of the Earth itself, the causes of precession explainable by classical Newtonian gravity theory are shown below.
+\begin{center}
+    \small
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{cc}
+        \toprule
+        Amount, arcsec per century & Cause\\
+        \midrule
+        \num{532.3035} & Gravity of other solar bodies\\
+        \num{0.0286} & Quadrupole moment of the sun\\
+        \num{-0.0020} & Lense-Thirring precession\\
+        \num{532.3301} & Total of classical effects\\
+        \bottomrule
+    \end{tabular}
+\end{center}
+The observed total after deducing the axial precession of the Earth is, however, \num[separate-uncertainty=true]{574.10\pm 0.65} arcsec per century. There are about 42-43 arcsec per century that cannot be explained by any of the classical effects listed above. This anomalous precession was first observed by Urbain Le Verrier, who assumed that there should be another planet evolving inside the orbit of Mercury. However, his computation did not match with the observation of other planets. Celestial physicists came up with several other assumptions but none of them gave a result consistent with this case. It was only after Albert Einstein's discovery of general relativity that the correction-matching observation was finally obtained. Einstein computed the distortion of Kepler orbits under a special solution, called the \textbf{Schwarzchild solution}, of the relativistic gravitational equation, and his result matches very much for Mercury and for light rays from stars far away in space. These two cases are considered to be the initial powerful experimental supports for general relativity.\par
+In this problem, you will be able to reproduce Einstein's result. The physics has been reduced to a minimum and you will find that Einstein's core mathematical argument is a pure perturbative problem for ODEs.\par
+In Schwarzchild spacetime, we assume that there is only one static star (the Sun) whose gravitational field is present. The mass of the star is assumed to be $M$, and the spacetime is assumed to be \textbf{spherically symmetric}. The spacetime is parameterized by four coordinates: $t,r,\theta,\varphi$. The $t$ coordinate can be imagined as \emph{time}, and $r,\theta,\varphi$ can be imagined as the spherical coordinates. We describe the "distance" between spacetime points using the Schwarzchild metric
+\begin{equation*}
+    \dd{s}^2 = -\left( 1-\frac{r_s}{r} \right)c^2\dd{t}^2+\left( 1-\frac{r_s}{r} \right)^{-1}\dd{r}^2+r^2\left( \dd{\theta}^2+\sin^2\theta\dd{\varphi}^2 \right)
+\end{equation*}
+where $c$ is the speed of light in a vacuum, $G$ is the gravitational constant, and $r_s=2GM/c^2$ is the \textbf{Schwarzchild radius}.\par
+The trajectory of a planet in the spacetime is a curve parameterized by the parameter $\tau\in\R$ called the \textbf{proper time of the planet}. The orbit is a \textbf{geodesic} (which is a geometric object, but the definition does not really matter here) in four-dimensional spacetime. Some considerations in symmetry enable us to assume that $\theta\equiv\pi/2$ along the trajectory ("in the ecliptic plane"). Differential geometry guarantees that the spacetime inner product along the orbit should be a constant, i.e.,
+\begin{equation}\label{eqn:4.1}
+    -c^2 = -\left( 1-\frac{r_s}{r} \right)c^2\left( \dv{t}{\tau} \right)^2+\left( 1-\frac{r_s}{r} \right)^{-1}\left( \dv{r}{\tau} \right)^2+r^2\left( \dv{\varphi}{\tau} \right)^2
+\end{equation}
+Further considerations in symmetry guarantee that along the trajectory, there are two conserved quantities. These are the relativistic counterparts of total energy and angular momentum.
+\begin{align}\label{eqn:4.2}
+    \left( 1-\frac{r_s}{r} \right)\dv{t}{\tau} &= \frac{E}{mc^2}&
+    mr^2\dv{\varphi}{\tau} &= L
+\end{align}
+Here, $m$ is the mass of the planet, which is very small compared to $M$.
+\begin{enumerate}
+    \item We are now interested in the shape of the orbit that we observe as a curve in the ecliptic plane, which can be parameterized as a polar coordinate equation $r=r(\varphi)$. Equations \ref{eqn:4.1}-\ref{eqn:4.2} should imply a differential equation satisfied by $r=r(\varphi)$. Find that differential equation.
+    \item Introducing $u=1/r$ and differentiating that equation with respect to $\varphi$ again, you should arrive at an equation of identical form to that of Problem 3.3, i.e., of the form
+    \begin{equation*}
+        \dv[2]{u}{\varphi}+u = A+\mu u^2
+    \end{equation*}
+    It can be considered to be a perturbation of the equation presented in HW2 that gives the Kepler orbit. Determine the $A$ and $\mu$ here in terms of the physical constants $G,M,m,c,E,L$. \emph{Hint}: You need to cancel the term $(\dv*{t}{\tau})^2$ in Equation \ref{eqn:4.1} and try to express $(\dv*{r}{\varphi})^2$ in terms of $r$ alone, just as in HW2. This will be the perturbative problem that we are interested in.
+    \item Assuming that $\mu$ is small, the equation in the previous problem is a perturbation of the Kepler orbit equation. Thus, it is natural to choose the ray joining the Sun and the perihelion as the polar axis so that we can fix the initial conditions as
+    \begin{equation*}
+        u(0) = p
+        ,\quad
+        u'(0) = 0
+    \end{equation*}
+    where $p$ is the distance from the perihelion to the Sun. The perihelion of the planet corresponds to the maximum of $u$ in the previous problem. Determine the first value of $\varphi$ at which $u$ has a local maximum, up to order $\mu$. Its derivation with $2\pi$ is the \textbf{precession angle}, as the non-periodicity of the solution breaks the closedness of the orbit.\par
+    \emph{Hint}: This is in fact Problem 3.2. Your expression should not involve $p$.\par
+    Substitute in the following physical constants: $G=\SI{6.673e-11}{\kilo\gram\cubic\meter\per\second\squared}$, $M=\SI{1.989e30}{\kilo\gram}$, $c=\SI{2.998e8}{\meter\per\second}$. Also, the mass of Mercury is $m=\SI{3.301e23}{\kilo\gram}$, the angular momentum of Mercury is $L=\SI{8.983e38}{\kilo\gram\meter\squared\per\second}$, and the revolution period of Mercury is 88 days. Use a calculator to compute the precession angle and convert its unit to arcsec per century (the expression you obtain is, of course, in radians per revolution; also recall that $\SI{1}{arcsec}=\ang{1}/3600$), and compare it with the unexplained precession.
 \end{enumerate}
 
 
